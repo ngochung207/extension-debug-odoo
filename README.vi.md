@@ -17,7 +17,7 @@ Soi record, view, lời gọi RPC, quyền truy cập và hiệu năng server m�
 
 [Website](https://unclecatvn.github.io/extension-debug-odoo/) · [Cài đặt](#cài-đặt) · [Tính năng](#tính-năng) · [Sử dụng](#sử-dụng) · [Quyền riêng tư](#quyền-riêng-tư--quyền-hạn) · [Phát triển](#phát-triển) · [Changelog](CHANGELOG.md)
 
-<img src="website/screenshots/overview.png" alt="Bảng Odoo Debug mở cạnh một đơn bán hàng" width="100%">
+<img src="website/screenshots/overview.png" alt="Bảng Odoo Debug mở cạnh một đơn bán hàng, nửa giao diện sáng, nửa giao diện tối" width="100%">
 
 </div>
 

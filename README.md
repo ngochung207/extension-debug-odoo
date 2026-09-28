@@ -17,7 +17,7 @@ Inspect records, views, RPC calls, access rights and server performance without 
 
 [Website](https://unclecatvn.github.io/extension-debug-odoo/) · [Install](#installation) · [Features](#features) · [Usage](#usage) · [Privacy](#privacy--permissions) · [Development](#development) · [Changelog](CHANGELOG.md)
 
-<img src="website/screenshots/overview.png" alt="Odoo Debug panel open next to a sales order" width="100%">
+<img src="website/screenshots/overview.png" alt="Odoo Debug panel open next to a sales order, half light theme, half dark theme" width="100%">
 
 </div>
 
