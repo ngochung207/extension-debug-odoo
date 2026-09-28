@@ -14,6 +14,7 @@
 <meta property="og:image" content="https://unclecatvn.github.io/extension-debug-odoo/screenshots/overview.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Crect x='4' y='4' width='120' height='120' rx='28' fill='%23714b67'/%3E%3Cg stroke='%23fff' stroke-width='8' stroke-linecap='round' fill='none'%3E%3Cpath d='M36 62 H22 M36 80 H20 M40 96 L27 106 M92 62 H106 M92 80 H108 M88 96 L101 106 M54 38 L46 25 M74 38 L82 25'/%3E%3C/g%3E%3Cpath d='M44 46 a20 17 0 0 1 40 0 z' fill='%23fff'/%3E%3Crect x='36' y='50' width='56' height='60' rx='28' fill='%23fff'/%3E%3Cpath d='M64 60 V100' stroke='%23553250' stroke-width='6' stroke-linecap='round'/%3E%3Ccircle cx='98' cy='30' r='12' fill='%2321B799' stroke='%23fff' stroke-width='5'/%3E%3C/svg%3E">
+<script>/* saved theme before first paint: no flash */ try { const t = localStorage.getItem('theme'); if (t) document.documentElement.dataset.theme = t; } catch {}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -22,9 +23,29 @@
     --bg: #0b0a0d; --surface: #121015; --surface-2: #18151c; --line: rgba(255, 255, 255, .08); --line-strong: rgba(255, 255, 255, .14);
     --text: #ededf0; --muted: #9a95a3; --faint: #6c6773;
     --brand: #c58fb7; --brand-deep: #714b67; --accent: #5fd4b4; --star: #f5c451;
+    --header: rgba(11, 10, 13, .72); --hover-line: rgba(255, 255, 255, .3); --hover-fill: rgba(255, 255, 255, .05);
+    --btn-bg: #f4f2f6; --btn-bg-hover: #fff; --btn-text: #0b0a0d; --glow: rgba(113, 75, 103, .55); --dot: #3a3540;
+    --grad: linear-gradient(100deg, #f0c6e4 10%, #c58fb7 45%, #5fd4b4 95%); --shadow: 0 0 0 1px rgba(0, 0, 0, .4), 0 30px 80px -20px rgba(113, 75, 103, .45);
     --sans: Geist, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     --mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     color-scheme: dark;
+  }
+  /* Light theme: the visitor's system setting, unless they picked one with the ☀ / ☾ button (html[data-theme]) */
+  @media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) {
+    --bg: #fbfafc; --surface: #ffffff; --surface-2: #f4f1f4; --line: rgba(30, 15, 30, .09); --line-strong: rgba(30, 15, 30, .16);
+    --text: #17151b; --muted: #5d5864; --faint: #87828e; --brand: #8e4f80; --accent: #0e9474; --star: #d99a00;
+    --header: rgba(251, 250, 252, .78); --hover-line: rgba(30, 15, 30, .32); --hover-fill: rgba(30, 15, 30, .04);
+    --btn-bg: #17151b; --btn-bg-hover: #2c2832; --btn-text: #fff; --glow: rgba(197, 143, 183, .32); --dot: #d9d3da;
+    --grad: linear-gradient(100deg, #b3548f 10%, #714b67 50%, #0e9474 95%); --shadow: 0 0 0 1px rgba(30, 15, 30, .04), 0 30px 70px -24px rgba(113, 75, 103, .35);
+    color-scheme: light;
+  } }
+  :root[data-theme="light"] {
+    --bg: #fbfafc; --surface: #ffffff; --surface-2: #f4f1f4; --line: rgba(30, 15, 30, .09); --line-strong: rgba(30, 15, 30, .16);
+    --text: #17151b; --muted: #5d5864; --faint: #87828e; --brand: #8e4f80; --accent: #0e9474; --star: #d99a00;
+    --header: rgba(251, 250, 252, .78); --hover-line: rgba(30, 15, 30, .32); --hover-fill: rgba(30, 15, 30, .04);
+    --btn-bg: #17151b; --btn-bg-hover: #2c2832; --btn-text: #fff; --glow: rgba(197, 143, 183, .32); --dot: #d9d3da;
+    --grad: linear-gradient(100deg, #b3548f 10%, #714b67 50%, #0e9474 95%); --shadow: 0 0 0 1px rgba(30, 15, 30, .04), 0 30px 70px -24px rgba(113, 75, 103, .35);
+    color-scheme: light;
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
@@ -44,7 +65,7 @@
   .sub { color: var(--muted); font-size: 18px; max-width: 38em; margin: 0; }
 
   /* Nav */
-  header { position: sticky; top: 0; z-index: 10; background: rgba(11, 10, 13, .72); backdrop-filter: saturate(180%) blur(14px); border-bottom: 1px solid var(--line); }
+  header { position: sticky; top: 0; z-index: 10; background: var(--header); backdrop-filter: saturate(180%) blur(14px); border-bottom: 1px solid var(--line); }
   .nav { display: flex; align-items: center; gap: 28px; height: 60px; padding: 0 24px; }
   .logo { display: flex; align-items: center; gap: 10px; font-weight: 600; text-decoration: none; letter-spacing: -.01em; }
   .logo svg { width: 26px; height: 26px; }
@@ -52,48 +73,54 @@
   .nav nav a { color: var(--muted); text-decoration: none; font-size: 14px; }
   .nav nav a:hover { color: var(--text); }
   .nav .end { margin-left: auto; display: flex; gap: 8px; align-items: center; }
+  .icon-btn { display: grid; place-items: center; width: 32px; height: 32px; padding: 0; border: 1px solid var(--line-strong); background: transparent; color: var(--muted); border-radius: 8px; cursor: pointer; }
+  .icon-btn svg { width: 16px; height: 16px; }
+  .icon-btn .moon { display: none; }
+  @media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .icon-btn .sun { display: none; } :root:not([data-theme="dark"]) .icon-btn .moon { display: block; } }
+  :root[data-theme="light"] .icon-btn .sun { display: none; }
+  :root[data-theme="light"] .icon-btn .moon { display: block; }
   .lang { border: 1px solid var(--line-strong); background: transparent; color: var(--muted); border-radius: 8px; height: 32px; padding: 0 10px; font: 500 12px var(--mono); cursor: pointer; }
   .lang:hover { color: var(--text); }
   @media (max-width: 760px) { .nav { padding: 0 16px; gap: 12px; } .nav nav { display: none; } }
 
   /* Buttons */
   .btn { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 18px; border-radius: 10px; font-weight: 500; font-size: 15px; text-decoration: none; border: 1px solid transparent; transition: background .15s, border-color .15s; white-space: nowrap; }
-  .btn.primary { background: #f4f2f6; color: #0b0a0d; }
-  .btn.primary:hover { background: #fff; }
-  .btn.ghost { border-color: var(--line-strong); background: rgba(255, 255, 255, .02); }
-  .btn.ghost:hover { border-color: rgba(255, 255, 255, .3); background: rgba(255, 255, 255, .05); }
+  .btn.primary { background: var(--btn-bg); color: var(--btn-text); }
+  .btn.primary:hover { background: var(--btn-bg-hover); }
+  .btn.ghost { border-color: var(--line-strong); background: transparent; }
+  .btn.ghost:hover { border-color: var(--hover-line); background: var(--hover-fill); }
   .btn svg { width: 17px; height: 17px; flex: none; }
   .gh { display: inline-flex; align-items: stretch; height: 32px; border: 1px solid var(--line-strong); border-radius: 8px; overflow: hidden; font-size: 13px; font-weight: 500; text-decoration: none; }
   .gh > span { display: inline-flex; align-items: center; gap: 6px; padding: 0 10px; }
   .gh svg { width: 15px; height: 15px; }
   .gh .stars { border-left: 1px solid var(--line-strong); background: var(--surface-2); font-family: var(--mono); }
-  .gh:hover { border-color: rgba(255, 255, 255, .3); }
+  .gh:hover, .icon-btn:hover { border-color: var(--hover-line); color: var(--text); }
   .stars[hidden] { display: none !important; }
   .star-ic { color: var(--star); }
 
   /* Hero */
   .hero { position: relative; padding: 96px 48px 0; text-align: center; overflow: hidden; isolation: isolate; }
   .hero::before { content: ""; position: absolute; inset: -40% -20% auto; height: 900px; z-index: -1;
-    background: radial-gradient(50% 50% at 50% 50%, rgba(113, 75, 103, .55), transparent 70%); pointer-events: none; }
+    background: radial-gradient(50% 50% at 50% 50%, var(--glow), transparent 70%); pointer-events: none; }
   .hero::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
     background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
     background-size: 56px 56px; mask-image: radial-gradient(60% 55% at 50% 20%, #000, transparent 75%); }
   @media (max-width: 760px) { .hero { padding: 64px 16px 0; } }
-  .announce { display: inline-flex; align-items: center; gap: 10px; height: 32px; padding: 0 6px; border: 1px solid var(--line-strong); border-radius: 99px; background: rgba(18, 16, 21, .7); font-size: 13px; color: var(--muted); text-decoration: none; max-width: 100%; }
-  .announce b { font: 500 12px var(--mono); color: var(--text); background: var(--brand-deep); border-radius: 99px; padding: 3px 9px; white-space: nowrap; }
-  .announce:hover { border-color: rgba(255, 255, 255, .3); color: var(--text); }
+  .announce { display: inline-flex; align-items: center; gap: 10px; height: 32px; padding: 0 6px; border: 1px solid var(--line-strong); border-radius: 99px; background: var(--surface); font-size: 13px; color: var(--muted); text-decoration: none; max-width: 100%; }
+  .announce b { font: 500 12px var(--mono); color: #fff; background: var(--brand-deep); border-radius: 99px; padding: 3px 9px; white-space: nowrap; }
+  .announce:hover { border-color: var(--hover-line); color: var(--text); }
   .announce .arrow { padding-right: 8px; }
   .hero h1 { font-size: clamp(40px, 7vw, 76px); line-height: 1.02; letter-spacing: -.045em; font-weight: 700; margin: 28px auto 20px; max-width: 13em; }
-  .grad { background: linear-gradient(100deg, #f0c6e4 10%, #c58fb7 45%, #5fd4b4 95%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .grad { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
   .hero .lead { font-size: clamp(17px, 2vw, 19px); color: var(--muted); max-width: 36em; margin: 0 auto 32px; }
   .ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
   .meta { margin-top: 20px; font: 13px var(--mono); color: var(--faint); }
   .meta span + span::before { content: "·"; margin: 0 10px; }
 
   /* Window frame around screenshots */
-  .window { border: 1px solid var(--line-strong); border-radius: 12px; background: var(--surface); overflow: hidden; box-shadow: 0 0 0 1px rgba(0, 0, 0, .4), 0 30px 80px -20px rgba(113, 75, 103, .45); }
+  .window { border: 1px solid var(--line-strong); border-radius: 12px; background: var(--surface); overflow: hidden; box-shadow: var(--shadow); }
   .window .bar { display: flex; align-items: center; gap: 7px; height: 36px; padding: 0 14px; border-bottom: 1px solid var(--line); background: var(--surface-2); }
-  .window .bar i { width: 11px; height: 11px; border-radius: 50%; background: #3a3540; }
+  .window .bar i { width: 11px; height: 11px; border-radius: 50%; background: var(--dot); }
   .window .bar span { margin: 0 auto; font: 12px var(--mono); color: var(--faint); transform: translateX(-24px); }
   .hero .window { margin: 64px auto 0; max-width: 1080px; border-bottom-left-radius: 0; border-bottom-right-radius: 0; border-bottom: 0; }
 
@@ -152,9 +179,9 @@
 
   /* Closing */
   .closing { text-align: center; position: relative; overflow: hidden; isolation: isolate; }
-  .closing::before { content: ""; position: absolute; inset: auto -20% -60%; height: 600px; z-index: -1; background: radial-gradient(50% 50% at 50% 50%, rgba(113, 75, 103, .4), transparent 70%); }
+  .closing::before { content: ""; position: absolute; inset: auto -20% -60%; height: 600px; z-index: -1; background: radial-gradient(50% 50% at 50% 50%, var(--glow), transparent 70%); }
   .closing .sub { margin: 0 auto 32px; }
-  .big-star .stars { font-family: var(--mono); padding-left: 10px; margin-left: 2px; border-left: 1px solid rgba(0, 0, 0, .2); }
+  .big-star .stars { font-family: var(--mono); padding-left: 10px; margin-left: 2px; border-left: 1px solid color-mix(in srgb, var(--btn-text) 25%, transparent); }
 
   footer .row { display: flex; gap: 16px; flex-wrap: wrap; justify-content: space-between; align-items: center; padding: 28px 48px; border-top: 1px solid var(--line); color: var(--faint); font-size: 14px; }
   footer a { color: var(--muted); text-decoration: none; }
@@ -165,11 +192,11 @@
   .window { position: relative; }
   .window img { cursor: zoom-in; }
   .zoom-hint { position: absolute; right: 12px; bottom: 12px; display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 8px;
-    background: rgba(11, 10, 13, .82); border: 1px solid var(--line-strong); color: var(--text); font: 500 12px var(--mono); pointer-events: none; opacity: 0; transition: opacity .15s; }
+    background: rgba(11, 10, 13, .82); border: 1px solid rgba(255, 255, 255, .14); color: #ededf0; font: 500 12px var(--mono); pointer-events: none; opacity: 0; transition: opacity .15s; }
   .window:hover .zoom-hint { opacity: 1; }
   @media (hover: none) { .zoom-hint { opacity: 1; } }
   html:has(#zoom[open]) { overflow: hidden; }
-  #zoom { width: 100vw; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: #08070a; overflow: auto; overscroll-behavior: contain; }
+  #zoom { --text: #ededf0; --muted: #9a95a3; --line: rgba(255, 255, 255, .08); --line-strong: rgba(255, 255, 255, .14); --hover-line: rgba(255, 255, 255, .3); color-scheme: dark; color: var(--text); width: 100vw; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: #08070a; overflow: auto; overscroll-behavior: contain; }
   #zoom::backdrop { background: transparent; }
   #zoom .stage { min-width: 100%; min-height: 100%; display: grid; place-items: center; padding: 56px 16px 16px; }
   #zoom img { max-width: 100%; max-height: calc(100dvh - 72px); width: auto; border-radius: 8px; cursor: zoom-in; box-shadow: 0 20px 60px rgba(0, 0, 0, .6); }
@@ -179,7 +206,7 @@
   #zoom .bar b { color: var(--text); font-weight: 500; }
   #zoom .bar button { margin-left: auto; height: 32px; min-width: 32px; padding: 0 10px; border: 1px solid var(--line-strong); border-radius: 8px; background: transparent; color: var(--text); font: 500 13px var(--mono); cursor: pointer; }
   #zoom .bar button + button { margin-left: 0; }
-  #zoom .bar button:hover { border-color: rgba(255, 255, 255, .3); }
+  #zoom .bar button:hover { border-color: var(--hover-line); }
   @media (max-width: 760px) { footer .row { padding: 24px 16px; } }
 </style>
 </head>
@@ -187,6 +214,8 @@
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="gh" viewBox="0 0 16 16"><path fill="currentColor" d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"/></symbol>
   <symbol id="star" viewBox="0 0 16 16"><path fill="currentColor" d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"/></symbol>
+  <symbol id="sun" viewBox="0 0 16 16"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="3"/><path d="M8 1v1.5M8 13.5V15M1 8h1.5M13.5 8H15M3.05 3.05l1.06 1.06M11.89 11.89l1.06 1.06M3.05 12.95l1.06-1.06M11.89 4.11l1.06-1.06"/></g></symbol>
+  <symbol id="moon" viewBox="0 0 16 16"><path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z"/></symbol>
   <symbol id="dl" viewBox="0 0 16 16"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M8 2v8m0 0L4.5 6.5M8 10l3.5-3.5M2.5 13.5h11"/></symbol>
 </svg>
 
@@ -204,6 +233,7 @@
     </nav>
     <div class="end">
       <a class="gh" href="https://github.com/unclecatvn/extension-debug-odoo" aria-label="Star on GitHub"><span><svg><use href="#gh"/></svg>Star</span><span class="stars" hidden></span></a>
+      <button class="icon-btn" type="button" id="theme" aria-label="Toggle light / dark theme" title="Light / dark"><svg class="sun"><use href="#sun"/></svg><svg class="moon"><use href="#moon"/></svg></button>
       <button class="lang" type="button" id="lang" aria-label="Language / Ngôn ngữ"><span data-l="en">VI</span><span data-l="vi">EN</span></button>
     </div>
   </div>
@@ -374,6 +404,17 @@
   try { saved = localStorage.getItem('lang'); } catch {}
   setLang(saved || (navigator.language.toLowerCase().startsWith('vi') ? 'vi' : 'en'));
   document.getElementById('lang').onclick = () => setLang(root.lang === 'vi' ? 'en' : 'vi');
+
+  // Theme: system by default; the button flips the current one and remembers the choice.
+  const dark = () => root.dataset.theme ? root.dataset.theme === 'dark' : !matchMedia('(prefers-color-scheme: light)').matches;
+  const showTheme = () => document.querySelector('meta[name=theme-color]').content = dark() ? '#0b0a0d' : '#fbfafc';
+  showTheme();
+  matchMedia('(prefers-color-scheme: light)').addEventListener('change', showTheme);
+  document.getElementById('theme').onclick = () => {
+    root.dataset.theme = dark() ? 'light' : 'dark';
+    try { localStorage.setItem('theme', root.dataset.theme); } catch {}
+    showTheme();
+  };
 
   // GitHub data (unauthenticated API: 60 requests / hour / visitor IP). Failures keep the static fallbacks.
   const api = (path) => fetch(`https://api.github.com/repos/unclecatvn/extension-debug-odoo${path}`).then((r) => r.ok ? r.json() : Promise.reject(r.status));
