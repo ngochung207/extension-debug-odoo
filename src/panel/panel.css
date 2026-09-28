@@ -1,0 +1,177 @@
+/* Theme: light-dark() follows color-scheme, i.e. the system unless Settings forces one via [data-theme]. */
+:root {
+  color-scheme: light dark;
+  --bg: light-dark(#f6f5f7, #17161a); --surface: light-dark(#ffffff, #211f25); --fg: light-dark(#1f1d24, #ece9f1);
+  --muted: light-dark(#6b6775, #a09aab); --line: light-dark(#e6e3ea, #34303a);
+  --accent: light-dark(#714b67, #d5a6c8); --accent-soft: light-dark(#f1e9ef, #3a2a36);
+  --ok: light-dark(#188038, #81c995); --ok-soft: light-dark(#e6f4ea, #1e3326);
+  --warn: light-dark(#b06000, #fdd663); --warn-soft: light-dark(#fef3e0, #3a3020);
+  --err: light-dark(#c5221f, #f28b82); --err-soft: light-dark(#fce8e6, #3c2020);
+  --info: light-dark(#1a5fb4, #8ab4f8); --info-soft: light-dark(#e8f0fe, #1f2a3d);
+  --mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+:root[data-theme=light] { color-scheme: light; }
+:root[data-theme=dark] { color-scheme: dark; }
+
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+/* Header fixed, only <main> scrolls: toolbars can then stick to its top. */
+body { display: flex; flex-direction: column; font: 12px/1.45 system-ui, -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--fg); }
+button, input, select { font: inherit; color: inherit; }
+button { cursor: pointer; }
+code, pre, .mono { font-family: var(--mono); font-size: 11px; }
+.mono { word-break: break-word; }
+
+/* ---------- header ---------- */
+.top { flex: none; background: var(--surface); border-bottom: 1px solid var(--line); }
+.brand-row { display: flex; align-items: center; gap: 8px; padding: 8px 12px 4px; }
+.brand-row strong { font-size: 13px; }
+.spacer { flex: 1; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.seg button { border: 0; background: none; padding: 2px 8px; font-size: 11px; color: var(--muted); }
+.seg button + button { border-left: 1px solid var(--line); }
+.seg button.on { background: var(--accent); color: #fff; }
+.icon-btn { border: 1px solid var(--line); background: none; border-radius: 6px; width: 26px; height: 24px; font-size: 14px; line-height: 1; }
+.icon-btn:hover, .seg button:hover:not(.on), .chip:hover { background: var(--accent-soft); }
+.icon-btn.spin { animation: spin .8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.context { padding: 0 12px 6px; display: flex; gap: 6px; align-items: center; flex-wrap: wrap; color: var(--muted); min-height: 22px; }
+.context .model { font-family: var(--mono); font-weight: 600; color: var(--fg); }
+.tabs { display: flex; padding: 0 4px; overflow-x: auto; scrollbar-width: none; }
+.tabs button { flex: 1 0 auto; border: 0; background: none; padding: 7px 10px; color: var(--muted); border-bottom: 2px solid transparent; white-space: nowrap; }
+.tabs button.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+.count { display: inline-block; min-width: 16px; padding: 0 4px; border-radius: 8px; background: var(--accent-soft); color: var(--accent); font-size: 10px; font-weight: 600; }
+.count:empty { display: none; }
+
+/* ---------- content ---------- */
+main { flex: 1; min-height: 0; overflow: auto; container-type: inline-size; } /* container: lists turn into tables when wide */
+.tab { display: none; padding: 10px; } /* padding here, not on <main>: sticky would stop that far from the top */
+.tab.active { display: block; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; margin-bottom: 10px; overflow: clip; } /* clip, not hidden: hidden would trap sticky toolbars */
+.card h3 { margin: 0; padding: 8px 10px; font-size: 12px; font-weight: 600; border-bottom: 1px solid var(--line); }
+.card-body { padding: 8px 10px; }
+.card-body:has(.list, .findings, table, .verdict) { padding: 0; }
+.loading { color: var(--muted); }
+.empty { color: var(--muted); text-align: center; padding: 24px 12px; }
+.error { color: var(--err); white-space: pre-wrap; word-break: break-word; }
+.muted { color: var(--muted); }
+.note { color: var(--muted); font-size: 11px; margin: 8px 0 0; }
+/* spacing inside a padding-less .card-body (lists, tables…) */
+.pad { padding: 8px 10px; }
+.pad-top { padding: 8px 10px 0; }
+.pad-bottom { padding: 0 10px 8px; }
+.pad-x { padding: 0 10px; }
+.mt { margin-top: 6px; }
+
+.toolbar { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 8px; }
+/* Filters stay on top while the list scrolls. */
+.toolbar:has(input[type=search]) { position: sticky; top: 0; z-index: 1; background: var(--bg); padding-block: 6px; margin-block: -6px 2px; }
+.card .toolbar:has(input[type=search]) { margin: 0; padding: 8px 10px; background: var(--surface); border-bottom: 1px solid var(--line); }
+.toolbar input, .card input[type=search] { flex: 1; min-width: 0; }
+input[type=search], select { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 4px 8px; }
+input[type=search]:focus, select:focus { outline: 2px solid var(--accent-soft); border-color: var(--accent); }
+.chip { border: 1px solid var(--line); background: var(--surface); border-radius: 12px; padding: 2px 10px; white-space: nowrap; }
+.chip[aria-pressed=true] { background: var(--accent); color: #fff; border-color: var(--accent); }
+.btn { border: 1px solid var(--accent); background: none; color: var(--accent); border-radius: 6px; padding: 3px 10px; text-decoration: none; }
+.btn:hover { background: var(--accent-soft); }
+
+/* key/value */
+.kv { display: grid; grid-template-columns: max-content 1fr; gap: 3px 10px; margin: 0; }
+.kv dt { color: var(--muted); }
+.kv dd { margin: 0; font-family: var(--mono); font-size: 11px; word-break: break-word; }
+
+/* lists (fields, rpc, rules) */
+.list { list-style: none; margin: 0; padding: 0; }
+.list > li { padding: 6px 10px; border-top: 1px solid var(--line); cursor: pointer; }
+.list > li:first-child { border-top: 0; }
+.list > li:hover { background: var(--accent-soft); }
+.list > li:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.list > li[hidden] { display: none; }
+/* Rows wrap instead of overflowing: long names, labels and pills move to the next line, nothing is cut. */
+.row { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 6px; min-width: 0; }
+.name { font-family: var(--mono); font-size: 11px; font-weight: 600; overflow-wrap: anywhere; }
+.grow { flex: 1 1 auto; min-width: 0; overflow-wrap: anywhere; }
+.val { font-family: var(--mono); font-size: 11px; text-align: right; }
+.row .val { white-space: normal; word-break: break-word; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; } /* full value: click the row */
+.row .val.long { text-align: left; }
+.meta { color: var(--muted); font-size: 11px; margin-top: 1px; word-break: break-word; }
+.detail { display: none; margin-top: 6px; cursor: auto; }
+li.open > .detail { display: block; }
+.list-head { display: none; } /* narrow panel: no columns to name (before the @container rules, which override it) */
+/* Wide panel (full screen): each list row becomes a 2-column table row, main line | description, so rows stay short.
+   The columns line up because every row uses the same template. The expanded detail spans both columns. */
+@container (min-width: 760px) {
+  .list > li:not([hidden]) { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 12px; align-items: baseline; }
+  .list > li > .row { grid-column: 1; }
+  .list > li > :not(.row, .detail) { grid-column: 2; margin-top: 0; padding-left: 12px; border-left: 1px solid var(--line); }
+  .list > li > .detail { grid-column: 1 / -1; }
+  .list-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 12px; padding: 7px 10px;
+    color: var(--fg); font-size: 12px; font-weight: 600; background: var(--accent-soft); border-bottom: 1px solid var(--line); }
+  .list-head > span + span { padding-left: 12px; border-left: 1px solid var(--line); }
+  /* inside a sticky filter bar: a full-width last line, so the column names stick with it */
+  .toolbar > .list-head { flex-basis: calc(100% + 20px); margin: 2px -10px -8px; border-bottom: 0; border-top: 1px solid var(--line); }
+  .tab > .toolbar > .list-head { flex-basis: 100%; margin: 2px 0 -6px; border: 1px solid var(--line); border-radius: 6px 6px 0 0; }
+}
+.ms { color: var(--muted); font-size: 11px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ok); flex: none; align-self: center; }
+.is-err .dot { background: var(--err); }
+.is-err .name { color: var(--err); }
+li.current { box-shadow: inset 3px 0 var(--accent); background: var(--accent-soft); }
+li.inactive { opacity: .5; }
+
+/* pills */
+.pill { display: inline-block; padding: 0 6px; border-radius: 4px; font-size: 10px; font-weight: 600; line-height: 16px; background: var(--line); color: var(--muted); white-space: nowrap; }
+.pill.accent { background: var(--accent-soft); color: var(--accent); }
+.pill.ok { background: var(--ok-soft); color: var(--ok); }
+.pill.err, .pill.high { background: var(--err-soft); color: var(--err); }
+.pill.med { background: var(--warn-soft); color: var(--warn); }
+.pill.info { background: var(--info-soft); color: var(--info); }
+
+/* tables */
+table { border-collapse: collapse; width: 100%; }
+th, td { text-align: left; padding: 4px 8px; border-top: 1px solid var(--line); vertical-align: top; word-break: break-word; }
+th { color: var(--muted); font-weight: 500; font-size: 11px; border-top: 0; }
+td.c, th.c { text-align: center; width: 22px; padding: 4px 2px; }
+tr.mine td { background: var(--ok-soft); }
+
+/* findings */
+.findings { list-style: none; margin: 0; padding: 0; }
+.findings li { display: flex; gap: 8px; align-items: baseline; padding: 6px 10px; border-top: 1px solid var(--line); border-left: 3px solid transparent; }
+.findings li:first-child { border-top: 0; }
+.findings li.high { border-left-color: var(--err); }
+.findings li.med { border-left-color: var(--warn); }
+.findings li.low { border-left-color: var(--muted); }
+.findings li.info { border-left-color: var(--info); }
+.okline { color: var(--ok); padding: 8px 10px; }
+
+/* verdict */
+.verdict { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; padding: 8px 10px; }
+.verdict > div { border: 1px solid var(--line); border-radius: 6px; padding: 6px 8px; }
+.verdict b { display: block; font-family: var(--mono); font-size: 11px; }
+.verdict .why { color: var(--muted); font-size: 11px; }
+.verdict .allow { border-color: var(--ok); }
+.verdict .deny { border-color: var(--err); }
+.verdict + .list { border-top: 1px solid var(--line); }
+
+pre { margin: 0; padding: 8px; background: var(--bg); border: 1px solid var(--line); border-radius: 6px; white-space: pre-wrap; word-break: break-word; max-height: 50vh; overflow: auto; }
+details { margin-top: 6px; }
+summary { cursor: pointer; color: var(--muted); padding: 2px 0; }
+summary:hover { color: var(--fg); }
+.card-body > details:first-child { margin-top: 0; }
+.picker { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.picker select { flex: 1; min-width: 160px; }
+
+/* copy a name with one click (the row's own click still expands it) */
+.copy { border: 0; background: none; padding: 0; color: inherit; cursor: copy; text-align: left; overflow-wrap: anywhere; }
+.copy:hover { text-decoration: underline dotted; }
+.copy.copied::after { content: ' ✓'; color: var(--ok); }
+
+/* toolbar popup + options page (src/popup/) */
+body.popup { width: 320px; height: auto; display: block; padding-bottom: 12px; background: var(--surface); }
+.pop-head { display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: var(--bg); border-bottom: 1px solid var(--line); }
+.pop-head strong { font-size: 13px; }
+.pop-section { padding: 10px 12px 0; margin: 0; }
+.pop-label { color: var(--muted); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 6px; }
+.popup .seg { display: flex; }
+.popup .seg button { flex: 1; padding: 5px 8px; font-size: 12px; }
+.popup #host { color: var(--fg); }

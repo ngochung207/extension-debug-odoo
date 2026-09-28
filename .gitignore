@@ -1,0 +1,16 @@
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Node (no dependencies today, but keep it out if one appears)
+node_modules/
+
+# Build outputs: release zips are made by CI (.github/workflows/release.yml)
+*.zip
+icons/_tmp.html
+
+# Local tooling
+.claude/
+*.log

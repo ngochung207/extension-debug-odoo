@@ -1,0 +1,840 @@
+# Odoo Debug — Tiếng Việt
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Debug\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: vi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/features/access/access.js:35
+msgid "Session"
+msgstr "Phiên đăng nhập"
+
+#: src/features/access/access.js:42
+msgid "Companies"
+msgstr "Công ty"
+
+#: src/features/access/access.js:46
+msgid "Effective access on %s"
+msgstr "Quyền thực tế trên %s"
+
+#: src/features/access/access.js:53
+msgid "ACL (ir.model.access) — green = applies to you"
+msgstr "ACL (ir.model.access) — nền xanh = áp dụng cho bạn"
+
+#: src/features/access/access.js:55
+msgid "No ACL."
+msgstr "Không có ACL."
+
+#: src/features/access/access.js:56
+msgid "ACL / group"
+msgstr "ACL / group"
+
+#: src/features/access/access.js:58
+msgid "(all users)"
+msgstr "(mọi user)"
+
+#: src/features/access/access.js:61
+msgid "Record rules (ir.rule) — green = applies to you"
+msgstr "Record rules (ir.rule) — nền xanh = áp dụng cho bạn"
+
+#: src/features/access/access.js:63
+msgid "No record rule."
+msgstr "Không có record rule."
+
+#: src/features/access/access.js:64
+msgid "Rule / domain"
+msgstr "Rule / domain"
+
+#: src/features/access/access.js:71
+msgid "Your groups"
+msgstr "Group của bạn"
+
+#: src/features/access/access.js:73
+msgid "%s groups"
+msgstr "%s group"
+
+#: src/features/access/access.js:73
+msgid "No group."
+msgstr "Không có group."
+
+#: src/features/access/access.js:77
+msgid "Needs Settings rights (base.group_system)."
+msgstr "Cần quyền Settings (base.group_system)."
+
+#: src/features/access/access.js:79
+msgid "System parameters (ir.config_parameter)"
+msgstr "Tham số hệ thống (ir.config_parameter)"
+
+#: src/features/access/access.js:89
+msgid "Filter key / value"
+msgstr "Lọc key / giá trị"
+
+#: src/features/access/access.js:89
+msgid "%s parameters"
+msgstr "%s tham số"
+
+#: src/features/access/access.js:89
+msgid "%s/%s parameters"
+msgstr "%s/%s tham số"
+
+#: src/features/access/access.js:89
+msgid "Key"
+msgstr "Key"
+
+#: src/features/access/access.js:89
+msgid "Value"
+msgstr "Giá trị"
+
+#: src/features/access/access.js:89
+msgid "No parameter."
+msgstr "Không có tham số."
+
+#: src/features/access/access.js:92
+msgid "Installed modules"
+msgstr "Module đã cài"
+
+#: src/features/access/access.js:104
+msgid "Filter name / title / author"
+msgstr "Lọc tên / tiêu đề / tác giả"
+
+#: src/features/access/access.js:104
+msgid "%s modules"
+msgstr "%s module"
+
+#: src/features/access/access.js:104
+msgid "%s/%s modules"
+msgstr "%s/%s module"
+
+#: src/features/access/access.js:105
+msgid "Module · title · version"
+msgstr "Module · tiêu đề · phiên bản"
+
+#: src/features/access/access.js:105
+msgid "Author"
+msgstr "Tác giả"
+
+#: src/features/perf/perf.js:14
+msgid "Cannot call /web/set_profiling"
+msgstr "Không gọi được /web/set_profiling"
+
+#: src/features/perf/perf.js:22
+msgid "Profiling is not enabled on this database.\nEnable it for 5 minutes? (writes ir.config_parameter base.profiling_enabled_until)"
+msgstr "Profiling chưa được bật cho database này.\nBật trong 5 phút? (ghi ir.config_parameter base.profiling_enabled_until)"
+
+#: src/features/perf/perf.js:26
+msgid "Profiling could not be enabled."
+msgstr "Vẫn chưa bật được profiling."
+
+#: src/features/perf/perf.js:35
+msgid "Server profiler"
+msgstr "Profiler server"
+
+#: src/features/perf/perf.js:43
+msgid "Stop profiling"
+msgstr "Tắt profiling"
+
+#: src/features/perf/perf.js:43
+msgid "Start profiling"
+msgstr "Bật profiling"
+
+#: src/features/perf/perf.js:45
+msgid "RECORDING"
+msgstr "ĐANG ĐO"
+
+#: src/features/perf/perf.js:45
+msgid "off"
+msgstr "tắt"
+
+#: src/features/perf/perf.js:46
+msgid "Every request of this session will record its SQL + Python stacks."
+msgstr "Mỗi request của phiên này sẽ được ghi SQL + stack Python."
+
+#: src/features/perf/perf.js:47
+msgid "Uses Odoo's built-in profiler, needs base.group_system. While recording, each request writes one ir.profile row to the DB; Odoo stops it when it expires. Press ⟳ to reload the list."
+msgstr "Dùng profiler có sẵn của Odoo, cần base.group_system. Mỗi request khi đang đo ghi 1 dòng ir.profile vào DB, Odoo tự tắt khi hết hạn. Bấm ⟳ để tải danh sách mới."
+
+#: src/features/perf/perf.js:50
+msgid "Profiled requests"
+msgstr "Request đã đo"
+
+#: src/features/perf/perf.js:55
+msgid "No request yet: use the Odoo page, then press ⟳."
+msgstr "Chưa có request nào, thao tác trên trang Odoo rồi bấm ⟳."
+
+#: src/features/perf/perf.js:55
+msgid "No profile data yet."
+msgstr "Chưa có dữ liệu profile."
+
+#: src/features/perf/perf.js:57
+msgid "Latest session: %s"
+msgstr "Phiên gần nhất: %s"
+
+#: src/features/perf/perf.js:58
+msgid "Request · SQL · duration"
+msgstr "Request · SQL · thời gian"
+
+#: src/features/perf/perf.js:58
+msgid "Id · date · CPU"
+msgstr "Id · ngày · CPU"
+
+#: src/features/perf/perf.js:67
+msgid "Flame graph (speedscope)"
+msgstr "Flame graph (speedscope)"
+
+#: src/features/perf/perf.js:75
+msgid "No SQL recorded."
+msgstr "Không có SQL nào được ghi."
+
+#: src/features/perf/perf.js:80
+msgid "Full SQL + stack"
+msgstr "SQL đầy đủ + stack"
+
+#: src/features/perf/perf.js:82
+msgid "%s queries · SQL %s / total %s · Python ≈ %s"
+msgstr "%s query · SQL %s / tổng %s · Python ≈ %s"
+
+#: src/features/perf/perf.js:84
+msgid "Repeated queries — N+1 suspects (%s)"
+msgstr "Query lặp lại — nghi N+1 (%s)"
+
+#: src/features/perf/perf.js:84
+msgid "Count · caller · time"
+msgstr "Số lần · nơi gọi · thời gian"
+
+#: src/features/perf/perf.js:84
+#: src/features/perf/perf.js:87
+msgid "Query"
+msgstr "Câu truy vấn"
+
+#: src/features/perf/perf.js:86
+msgid "✓ No repeated query."
+msgstr "✓ Không có query lặp lại."
+
+#: src/features/perf/perf.js:87
+msgid "Slowest queries (%s)"
+msgstr "Query chậm nhất (%s)"
+
+#: src/features/perf/perf.js:87
+msgid "Caller · time"
+msgstr "Nơi gọi · thời gian"
+
+#: src/features/record/record.js:8
+msgid "This screen is not bound to a model."
+msgstr "Màn hình này không gắn với model nào."
+
+#: src/features/record/record.js:10
+msgid "Identity & metadata"
+msgstr "Định danh & metadata"
+
+#: src/features/record/record.js:15
+msgid "(none / several records)"
+msgstr "(chưa có / nhiều record)"
+
+#: src/features/record/record.js:17
+msgid "created by"
+msgstr "tạo bởi"
+
+#: src/features/record/record.js:17
+msgid "last updated by"
+msgstr "sửa bởi"
+
+#: src/features/record/record.js:21
+msgid "Fields"
+msgstr "Fields"
+
+#: src/features/record/record.js:40
+msgid "change → recomputes %s"
+msgstr "đổi → tính lại %s"
+
+#: src/features/record/record.js:48
+msgid "%s fields"
+msgstr "%s field"
+
+#: src/features/record/record.js:49
+msgid "Filter name / label / value / type / module"
+msgstr "Lọc tên / nhãn / giá trị / type / module"
+
+#: src/features/record/record.js:50
+msgid "%s/%s fields"
+msgstr "%s/%s field"
+
+#: src/features/record/record.js:52
+msgid "Field · type · value"
+msgstr "Field · kiểu · giá trị"
+
+#: src/features/record/record.js:52
+msgid "Label · storage · compute · module"
+msgstr "Nhãn · lưu trữ · compute · module"
+
+#: src/features/rpc/rpc.js:14
+msgid "Filter model / method"
+msgstr "Lọc model / method"
+
+#: src/features/rpc/rpc.js:16
+msgid "Errors only"
+msgstr "Chỉ lỗi"
+
+#: src/features/rpc/rpc.js:22
+msgid "Clear"
+msgstr "Xoá"
+
+#: src/features/rpc/rpc.js:24
+msgid "No RPC yet. Use the Odoo page to record some."
+msgstr "Chưa có RPC nào. Thao tác trên trang Odoo để ghi lại."
+
+#: src/features/rpc/rpc.js:25
+msgid "Method · model · duration"
+msgstr "Method · model · thời gian"
+
+#: src/features/rpc/rpc.js:25
+msgid "Time · route"
+msgstr "Giờ · route"
+
+#: src/features/rpc/rpc.js:36
+msgid "error"
+msgstr "lỗi"
+
+#: src/features/rpc/rpc.js:43
+#: src/features/rpc/rpc.js:47
+msgid "Parameters"
+msgstr "Tham số"
+
+#: src/features/rpc/rpc.js:44
+msgid "Why was it blocked? → Security"
+msgstr "Vì sao bị chặn? → Security"
+
+#: src/features/rpc/rpc.js:48
+msgid "Result"
+msgstr "Kết quả"
+
+#: src/features/rpc/rpc.js:48
+msgid "… (%s characters)"
+msgstr "… (%s ký tự)"
+
+#: src/features/security/logic.js:37
+msgid "No ACL grants this to the user's groups."
+msgstr "Không ACL nào cấp quyền này cho group của user."
+
+#: src/features/security/logic.js:39
+msgid "ACL: %s. No record to check the rules against."
+msgstr "ACL: %s. Chưa có record để kiểm rule."
+
+#: src/features/security/logic.js:44
+msgid "Blocked by a record rule (see below)."
+msgstr "Bị record rule chặn (xem bên dưới)."
+
+#: src/features/security/logic.js:45
+msgid "A rule could not be evaluated, not certain."
+msgstr "Có rule không eval được, chưa chắc chắn."
+
+#: src/features/security/logic.js:46
+msgid "ACL: %s · %s rules pass."
+msgstr "ACL: %s · %s rule đạt."
+
+#: src/features/security/logic.js:78
+msgid "No ACL: only the superuser can access this model."
+msgstr "Không có ACL nào: chỉ superuser truy cập được model này."
+
+#: src/features/security/logic.js:81
+msgid "ACL \"%s\" has no group → applies to EVERY user, portal/public included (%s)."
+msgstr "ACL \"%s\" không có group → áp dụng cho MỌI user, kể cả portal/public (%s)."
+
+#: src/features/security/logic.js:82
+msgid "ACL \"%s\" grants %s to %s."
+msgstr "ACL \"%s\" cấp %s cho %s."
+
+#: src/features/security/logic.js:86
+msgid "Has company_id but no global multi-company rule → records may leak across companies."
+msgstr "Có company_id nhưng không có global rule multi-company → record có thể lộ giữa các công ty."
+
+#: src/features/security/logic.js:88
+msgid "Field \"%s\" looks sensitive but has no groups=."
+msgstr "Field \"%s\" có vẻ nhạy cảm nhưng không có groups=."
+
+#: src/features/security/logic.js:98
+msgid "Not served over HTTPS."
+msgstr "Không chạy HTTPS."
+
+#: src/features/security/logic.js:99
+msgid "Cannot read the session_id cookie."
+msgstr "Không đọc được cookie session_id."
+
+#: src/features/security/logic.js:101
+msgid "session_id cookie is not HttpOnly → readable by JS/XSS."
+msgstr "Cookie session_id không HttpOnly → JS/XSS đọc được."
+
+#: src/features/security/logic.js:102
+msgid "session_id cookie lacks the Secure flag."
+msgstr "Cookie session_id không có cờ Secure."
+
+#: src/features/security/logic.js:103
+msgid "session_id cookie is SameSite=None → larger CSRF surface."
+msgstr "Cookie session_id SameSite=None → tăng bề mặt CSRF."
+
+#: src/features/security/logic.js:106
+msgid "Missing Strict-Transport-Security (HSTS) header."
+msgstr "Thiếu header Strict-Transport-Security (HSTS)."
+
+#: src/features/security/logic.js:107
+msgid "Missing X-Frame-Options / CSP frame-ancestors → clickjacking."
+msgstr "Thiếu X-Frame-Options / CSP frame-ancestors → clickjacking."
+
+#: src/features/security/logic.js:108
+msgid "Missing X-Content-Type-Options: nosniff."
+msgstr "Thiếu X-Content-Type-Options: nosniff."
+
+#: src/features/security/logic.js:109
+msgid "Missing Content-Security-Policy."
+msgstr "Thiếu Content-Security-Policy."
+
+#: src/features/security/logic.js:110
+msgid "Header %s discloses a version: %s"
+msgstr "Header %s lộ phiên bản: %s"
+
+#: src/features/security/logic.js:112
+msgid "Database manager has NO master password (default \"admin\")!"
+msgstr "Database manager KHÔNG có master password (mặc định \"admin\")!"
+
+#: src/features/security/logic.js:113
+msgid "/web/database/manager is reachable → block /web/database/* at the proxy or set list_db = False."
+msgstr "/web/database/manager truy cập được → chặn /web/database/* ở proxy hoặc đặt list_db = False."
+
+#: src/features/security/logic.js:114
+msgid "list_db is on: database names are exposed (%s)."
+msgstr "list_db đang bật: lộ tên database (%s)."
+
+#: src/features/security/logic.js:115
+msgid "Server version is public via /web/webclient/version_info: %s"
+msgstr "Phiên bản server công khai qua /web/webclient/version_info: %s"
+
+#: src/features/security/logic.js:123
+msgid "__system__ (superuser): bypasses every ACL and record rule."
+msgstr "__system__ (superuser): bỏ qua mọi ACL và record rule."
+
+#: src/features/security/logic.js:124
+msgid "Settings administrator (base.group_system)."
+msgstr "Quản trị Settings (base.group_system)."
+
+#: src/features/security/logic.js:125
+msgid "Access Rights manager (base.group_erp_manager): can grant itself any group."
+msgstr "Quản lý Access Rights (base.group_erp_manager): tự cấp được mọi group."
+
+#: src/features/security/logic.js:126
+msgid "Has Technical Features (base.group_no_one)."
+msgstr "Có Technical Features (base.group_no_one)."
+
+#: src/features/security/logic.js:127
+msgid "Public user."
+msgstr "User public."
+
+#: src/features/security/logic.js:127
+msgid "Portal user (share)."
+msgstr "User portal (share)."
+
+#: src/features/security/logic.js:128
+msgid "Login \"admin\" is the default, easy to guess."
+msgstr "Login \"admin\" là mặc định, dễ đoán."
+
+#: src/features/security/logic.js:129
+msgid "auth_totp is not installed → no 2FA."
+msgstr "Chưa cài auth_totp → không có 2FA."
+
+#: src/features/security/logic.js:130
+msgid "2FA (TOTP) is not enabled."
+msgstr "Chưa bật 2FA (TOTP)."
+
+#: src/features/security/logic.js:131
+msgid "%s API key(s): direct RPC calls with this user's rights."
+msgstr "Có %s API key: gọi RPC trực tiếp bằng quyền của user này."
+
+#: src/features/security/logic.js:132
+msgid "User is archived."
+msgstr "User đang bị lưu trữ (archived)."
+
+#: src/features/security/page.js:8
+msgid "py_js is not loaded"
+msgstr "py_js chưa được tải"
+
+#: src/features/security/security.js:13
+msgid "HIGH"
+msgstr "CAO"
+
+#: src/features/security/security.js:13
+msgid "MEDIUM"
+msgstr "VỪA"
+
+#: src/features/security/security.js:13
+msgid "LOW"
+msgstr "THẤP"
+
+#: src/features/security/security.js:13
+msgid "INFO"
+msgstr "INFO"
+
+#: src/features/security/security.js:19
+msgid "✓ No issue found."
+msgstr "✓ Không phát hiện vấn đề."
+
+#: src/features/security/security.js:47
+msgid "Simulated user"
+msgstr "Người dùng mô phỏng"
+
+#: src/features/security/security.js:48
+msgid "Loading users…"
+msgstr "Đang tải danh sách user…"
+
+#: src/features/security/security.js:49
+msgid "View as user"
+msgstr "Xem như user"
+
+#: src/features/security/security.js:51
+msgid "My user"
+msgstr "User của tôi"
+
+#: src/features/security/security.js:52
+msgid "Simulates the selected user's rights without logging in as them (reading other users' groups needs admin rights)."
+msgstr "Mô phỏng quyền của user được chọn mà không cần đăng nhập tài khoản đó (cần quyền admin để đọc group của người khác)."
+
+#: src/features/security/security.js:54
+msgid "Odoo's built-in /web/become route, base.group_system only"
+msgstr "Route /web/become sẵn có của Odoo, chỉ base.group_system dùng được"
+
+#: src/features/security/security.js:55
+msgid "Switch the current session to superuser (bypasses every rule)?"
+msgstr "Chuyển phiên hiện tại sang superuser (bỏ qua mọi rule)?"
+
+#: src/features/security/security.js:56
+msgid "Become superuser"
+msgstr "Chuyển sang superuser"
+
+#: src/features/security/security.js:60
+msgid "me"
+msgstr "tôi"
+
+#: src/features/security/security.js:61
+msgid "Cannot read the user list"
+msgstr "Không đọc được danh sách user"
+
+#: src/features/security/security.js:63
+msgid "User risks"
+msgstr "Rủi ro của user"
+
+#: src/features/security/security.js:67
+msgid "%s · %s · #%s · %s (%s companies) · %s groups"
+msgstr "%s · %s · #%s · %s (%s công ty) · %s group"
+
+#: src/features/security/security.js:74
+msgid "Why allowed / blocked — %s"
+msgstr "Vì sao được / bị chặn — %s"
+
+#: src/features/security/security.js:76
+msgid "Fields hidden from the user (groups=)"
+msgstr "Field bị ẩn với user (groups=)"
+
+#: src/features/security/security.js:79
+msgid "No field declares groups=."
+msgstr "Không field nào khai báo groups=."
+
+#: src/features/security/security.js:83
+msgid "Field · label · for this user"
+msgstr "Field · nhãn · với user này"
+
+#: src/features/security/security.js:85
+msgid "visible"
+msgstr "thấy"
+
+#: src/features/security/security.js:85
+#: src/features/view/view.js:64
+msgid "hidden"
+msgstr "ẩn"
+
+#: src/features/security/security.js:89
+msgid "Model configuration audit"
+msgstr "Audit cấu hình model"
+
+#: src/features/security/security.js:95
+msgid "Instance check"
+msgstr "Kiểm tra instance"
+
+#: src/features/security/security.js:98
+msgid "Check failed"
+msgstr "Không kiểm tra được"
+
+#: src/features/security/security.js:103
+msgid "Raw data"
+msgstr "Dữ liệu thô"
+
+#: src/features/security/security.js:104
+msgid "Check again"
+msgstr "Kiểm tra lại"
+
+#: src/features/security/security.js:121
+msgid "no result"
+msgstr "không có kết quả"
+
+#: src/features/security/security.js:122
+msgid "cannot evaluate: %s"
+msgstr "không eval được: %s"
+
+#: src/features/security/security.js:125
+msgid "You cannot read this record yourself, so its rules cannot be checked."
+msgstr "Chính bạn không đọc được record này nên không kiểm được rule."
+
+#: src/features/security/security.js:136
+msgid "ALLOWED"
+msgstr "CHO PHÉP"
+
+#: src/features/security/security.js:136
+msgid "BLOCKED"
+msgstr "CHẶN"
+
+#: src/features/security/security.js:136
+msgid "UNKNOWN"
+msgstr "KHÔNG RÕ"
+
+#: src/features/security/security.js:144
+msgid "not applicable"
+msgstr "không áp dụng"
+
+#: src/features/security/security.js:153
+msgid "Rule · operations · result"
+msgstr "Rule · thao tác · kết quả"
+
+#: src/features/security/security.js:153
+msgid "Groups · domain"
+msgstr "Group · domain"
+
+#: src/features/security/security.js:154
+msgid "This model has no record rule."
+msgstr "Model này không có record rule."
+
+#: src/features/security/security.js:156
+msgid "Assumes the user selected every allowed company. Rules of parent models through _inherits are not counted. This is a simulation; for an exact answer about yourself, see the Access tab (has_access runs on the server)."
+msgstr "Giả định user chọn tất cả công ty được phép. Rule của model cha qua _inherits không được tính. Đây là mô phỏng; muốn kết quả chính xác cho chính bạn, xem tab Access (has_access chạy thật trên server)."
+
+#: src/features/view/page.js:9
+msgid "Webclient internals are not reachable."
+msgstr "Không truy cập được webclient."
+
+#: src/features/view/page.js:17
+msgid "No form view is open."
+msgstr "Không có form view đang mở."
+
+#: src/features/view/view.js:15
+msgid "Inherited views — %s"
+msgstr "View kế thừa — %s"
+
+#: src/features/view/view.js:29
+msgid "inactive"
+msgstr "inactive"
+
+#: src/features/view/view.js:30
+msgid "View · mode · priority"
+msgstr "View · mode · priority"
+
+#: src/features/view/view.js:30
+msgid "Name · id · file"
+msgstr "Tên · id · file"
+
+#: src/features/view/view.js:31
+msgid "Combined arch (view #%s)"
+msgstr "Arch đã gộp (view #%s)"
+
+#: src/features/view/view.js:36
+msgid "Action"
+msgstr "Action"
+
+#: src/features/view/view.js:45
+msgid "Open action record ↗"
+msgstr "Mở bản ghi action ↗"
+
+#: src/features/view/view.js:46
+msgid "Full action (JSON)"
+msgstr "Action đầy đủ (JSON)"
+
+#: src/features/view/view.js:50
+msgid "Form fields — invisible / readonly / required"
+msgstr "Field trên form — invisible / readonly / required"
+
+#: src/features/view/view.js:52
+msgid "Context & domain"
+msgstr "Context & domain"
+
+#: src/features/view/view.js:52
+msgid "Context"
+msgstr "Context"
+
+#: src/features/view/view.js:52
+msgid "Domain"
+msgstr "Domain"
+
+#: src/features/view/view.js:58
+msgid "Cannot read the form."
+msgstr "Không đọc được form."
+
+#: src/features/view/view.js:64
+msgid "not shown"
+msgstr "không hiển thị"
+
+#: src/features/view/view.js:70
+msgid "The field is not invisible itself but is not on screen: it is on another notebook page, or a parent node (group/page/div) is invisible."
+msgstr "Field không tự ẩn nhưng không có trên màn hình: nằm trong tab notebook khác hoặc node cha (group/page/div) bị invisible."
+
+#: src/features/view/view.js:72
+msgid "Values used in the expressions"
+msgstr "Giá trị dùng trong biểu thức"
+
+#: src/features/view/view.js:73
+msgid "Full node"
+msgstr "Node đầy đủ"
+
+#: src/features/view/view.js:76
+msgid "Filter name / label / widget"
+msgstr "Lọc tên / nhãn / widget"
+
+#: src/features/view/view.js:78
+msgid "Click a field on the Odoo page (Esc to cancel)"
+msgstr "Click vào một field trên trang Odoo (Esc để huỷ)"
+
+#: src/features/view/view.js:79
+msgid "Picking… (Esc to cancel)"
+msgstr "Đang chọn… (Esc để huỷ)"
+
+#: src/features/view/view.js:80
+msgid "⌖ Pick on page"
+msgstr "⌖ Chọn trên trang"
+
+#: src/features/view/view.js:87
+msgid "Field · widget · label · state"
+msgstr "Field · widget · nhãn · trạng thái"
+
+#: src/features/view/view.js:87
+msgid "Modifier expressions"
+msgstr "Biểu thức modifier"
+
+#: src/features/view/view.js:88
+msgid "The form is read-only: every field is readonly."
+msgstr "Form đang ở chế độ chỉ đọc: mọi field đều readonly."
+
+#: src/panel/main.js:30
+msgid "Cannot read this tab: %s"
+msgstr "Không đọc được tab này: %s"
+
+#: src/panel/main.js:30
+msgid "The current tab is not an Odoo page."
+msgstr "Tab hiện tại không phải trang Odoo."
+
+#: src/panel/main.js:55
+msgid "Not an Odoo page"
+msgstr "Không phải trang Odoo"
+
+#: src/panel/panel.html:16
+msgid "Odoo debug mode"
+msgstr "Chế độ debug của Odoo"
+
+#: src/panel/panel.html:17
+msgid "Turn debug off"
+msgstr "Tắt debug"
+
+#: src/panel/panel.html:21
+#: src/panel/panel.html:21
+msgid "Reload data"
+msgstr "Tải lại dữ liệu"
+
+#: src/panel/panel.html:22
+msgid "Full screen (Esc to exit)"
+msgstr "Toàn màn hình (Esc để thoát)"
+
+#: src/panel/panel.html:22
+msgid "Full screen"
+msgstr "Toàn màn hình"
+
+#: src/panel/panel.html:24
+msgid "Connecting…"
+msgstr "Đang kết nối…"
+
+#: src/panel/panel.html:26
+msgid "Record"
+msgstr "Record"
+
+#: src/panel/panel.html:27
+msgid "View"
+msgstr "View"
+
+#: src/panel/panel.html:28
+msgid "RPC"
+msgstr "RPC"
+
+#: src/panel/panel.html:29
+msgid "Access"
+msgstr "Access"
+
+#: src/panel/panel.html:30
+msgid "Security"
+msgstr "Security"
+
+#: src/panel/panel.html:31
+msgid "Perf"
+msgstr "Perf"
+
+#: src/popup/popup.html:17
+msgid "This page"
+msgstr "Trang hiện tại"
+
+#: src/popup/popup.html:20
+msgid "Show / hide panel"
+msgstr "Hiện / ẩn panel"
+
+#: src/popup/popup.html:24
+msgid "Language"
+msgstr "Ngôn ngữ"
+
+#: src/popup/popup.html:28
+msgid "Theme"
+msgstr "Giao diện"
+
+#: src/popup/popup.html:31
+msgid "Tip: ⌥/Alt + click a field on the Odoo page to copy its technical name."
+msgstr "Mẹo: ⌥/Alt + click vào một field trên trang Odoo để copy tên kỹ thuật."
+
+#: src/popup/popup.js:6
+msgid "System"
+msgstr "Hệ thống"
+
+#: src/popup/popup.js:6
+msgid "Light"
+msgstr "Sáng"
+
+#: src/popup/popup.js:6
+msgid "Dark"
+msgstr "Tối"
+
+#: src/shared/ui.js:12
+msgid "No tab is open."
+msgstr "Không có tab đang mở."
+
+#: src/shared/ui.js:30
+msgid "No response — is this an Odoo page?"
+msgstr "Không có phản hồi — đây có phải trang Odoo?"
+
+#: src/shared/ui.js:86
+msgid "Traceback"
+msgstr "Traceback"
+
+#: src/shared/ui.js:99
+msgid "Open /odoo/%s"
+msgstr "Mở /odoo/%s"
+
+#: src/shared/ui.js:109
+#: src/shared/ui.js:155
+msgid "Loading…"
+msgstr "Đang tải…"
+
+#: src/shared/ui.js:118
+msgid "Click to copy"
+msgstr "Bấm để copy"

@@ -1,0 +1,840 @@
+# Odoo Debug — English
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Debug\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/features/access/access.js:35
+msgid "Session"
+msgstr "Session"
+
+#: src/features/access/access.js:42
+msgid "Companies"
+msgstr "Companies"
+
+#: src/features/access/access.js:46
+msgid "Effective access on %s"
+msgstr "Effective access on %s"
+
+#: src/features/access/access.js:53
+msgid "ACL (ir.model.access) — green = applies to you"
+msgstr "ACL (ir.model.access) — green = applies to you"
+
+#: src/features/access/access.js:55
+msgid "No ACL."
+msgstr "No ACL."
+
+#: src/features/access/access.js:56
+msgid "ACL / group"
+msgstr "ACL / group"
+
+#: src/features/access/access.js:58
+msgid "(all users)"
+msgstr "(all users)"
+
+#: src/features/access/access.js:61
+msgid "Record rules (ir.rule) — green = applies to you"
+msgstr "Record rules (ir.rule) — green = applies to you"
+
+#: src/features/access/access.js:63
+msgid "No record rule."
+msgstr "No record rule."
+
+#: src/features/access/access.js:64
+msgid "Rule / domain"
+msgstr "Rule / domain"
+
+#: src/features/access/access.js:71
+msgid "Your groups"
+msgstr "Your groups"
+
+#: src/features/access/access.js:73
+msgid "%s groups"
+msgstr "%s groups"
+
+#: src/features/access/access.js:73
+msgid "No group."
+msgstr "No group."
+
+#: src/features/access/access.js:77
+msgid "Needs Settings rights (base.group_system)."
+msgstr "Needs Settings rights (base.group_system)."
+
+#: src/features/access/access.js:79
+msgid "System parameters (ir.config_parameter)"
+msgstr "System parameters (ir.config_parameter)"
+
+#: src/features/access/access.js:89
+msgid "Filter key / value"
+msgstr "Filter key / value"
+
+#: src/features/access/access.js:89
+msgid "%s parameters"
+msgstr "%s parameters"
+
+#: src/features/access/access.js:89
+msgid "%s/%s parameters"
+msgstr "%s/%s parameters"
+
+#: src/features/access/access.js:89
+msgid "Key"
+msgstr "Key"
+
+#: src/features/access/access.js:89
+msgid "Value"
+msgstr "Value"
+
+#: src/features/access/access.js:89
+msgid "No parameter."
+msgstr "No parameter."
+
+#: src/features/access/access.js:92
+msgid "Installed modules"
+msgstr "Installed modules"
+
+#: src/features/access/access.js:104
+msgid "Filter name / title / author"
+msgstr "Filter name / title / author"
+
+#: src/features/access/access.js:104
+msgid "%s modules"
+msgstr "%s modules"
+
+#: src/features/access/access.js:104
+msgid "%s/%s modules"
+msgstr "%s/%s modules"
+
+#: src/features/access/access.js:105
+msgid "Module · title · version"
+msgstr "Module · title · version"
+
+#: src/features/access/access.js:105
+msgid "Author"
+msgstr "Author"
+
+#: src/features/perf/perf.js:14
+msgid "Cannot call /web/set_profiling"
+msgstr "Cannot call /web/set_profiling"
+
+#: src/features/perf/perf.js:22
+msgid "Profiling is not enabled on this database.\nEnable it for 5 minutes? (writes ir.config_parameter base.profiling_enabled_until)"
+msgstr "Profiling is not enabled on this database.\nEnable it for 5 minutes? (writes ir.config_parameter base.profiling_enabled_until)"
+
+#: src/features/perf/perf.js:26
+msgid "Profiling could not be enabled."
+msgstr "Profiling could not be enabled."
+
+#: src/features/perf/perf.js:35
+msgid "Server profiler"
+msgstr "Server profiler"
+
+#: src/features/perf/perf.js:43
+msgid "Stop profiling"
+msgstr "Stop profiling"
+
+#: src/features/perf/perf.js:43
+msgid "Start profiling"
+msgstr "Start profiling"
+
+#: src/features/perf/perf.js:45
+msgid "RECORDING"
+msgstr "RECORDING"
+
+#: src/features/perf/perf.js:45
+msgid "off"
+msgstr "off"
+
+#: src/features/perf/perf.js:46
+msgid "Every request of this session will record its SQL + Python stacks."
+msgstr "Every request of this session will record its SQL + Python stacks."
+
+#: src/features/perf/perf.js:47
+msgid "Uses Odoo's built-in profiler, needs base.group_system. While recording, each request writes one ir.profile row to the DB; Odoo stops it when it expires. Press ⟳ to reload the list."
+msgstr "Uses Odoo's built-in profiler, needs base.group_system. While recording, each request writes one ir.profile row to the DB; Odoo stops it when it expires. Press ⟳ to reload the list."
+
+#: src/features/perf/perf.js:50
+msgid "Profiled requests"
+msgstr "Profiled requests"
+
+#: src/features/perf/perf.js:55
+msgid "No request yet: use the Odoo page, then press ⟳."
+msgstr "No request yet: use the Odoo page, then press ⟳."
+
+#: src/features/perf/perf.js:55
+msgid "No profile data yet."
+msgstr "No profile data yet."
+
+#: src/features/perf/perf.js:57
+msgid "Latest session: %s"
+msgstr "Latest session: %s"
+
+#: src/features/perf/perf.js:58
+msgid "Request · SQL · duration"
+msgstr "Request · SQL · duration"
+
+#: src/features/perf/perf.js:58
+msgid "Id · date · CPU"
+msgstr "Id · date · CPU"
+
+#: src/features/perf/perf.js:67
+msgid "Flame graph (speedscope)"
+msgstr "Flame graph (speedscope)"
+
+#: src/features/perf/perf.js:75
+msgid "No SQL recorded."
+msgstr "No SQL recorded."
+
+#: src/features/perf/perf.js:80
+msgid "Full SQL + stack"
+msgstr "Full SQL + stack"
+
+#: src/features/perf/perf.js:82
+msgid "%s queries · SQL %s / total %s · Python ≈ %s"
+msgstr "%s queries · SQL %s / total %s · Python ≈ %s"
+
+#: src/features/perf/perf.js:84
+msgid "Repeated queries — N+1 suspects (%s)"
+msgstr "Repeated queries — N+1 suspects (%s)"
+
+#: src/features/perf/perf.js:84
+msgid "Count · caller · time"
+msgstr "Count · caller · time"
+
+#: src/features/perf/perf.js:84
+#: src/features/perf/perf.js:87
+msgid "Query"
+msgstr "Query"
+
+#: src/features/perf/perf.js:86
+msgid "✓ No repeated query."
+msgstr "✓ No repeated query."
+
+#: src/features/perf/perf.js:87
+msgid "Slowest queries (%s)"
+msgstr "Slowest queries (%s)"
+
+#: src/features/perf/perf.js:87
+msgid "Caller · time"
+msgstr "Caller · time"
+
+#: src/features/record/record.js:8
+msgid "This screen is not bound to a model."
+msgstr "This screen is not bound to a model."
+
+#: src/features/record/record.js:10
+msgid "Identity & metadata"
+msgstr "Identity & metadata"
+
+#: src/features/record/record.js:15
+msgid "(none / several records)"
+msgstr "(none / several records)"
+
+#: src/features/record/record.js:17
+msgid "created by"
+msgstr "created by"
+
+#: src/features/record/record.js:17
+msgid "last updated by"
+msgstr "last updated by"
+
+#: src/features/record/record.js:21
+msgid "Fields"
+msgstr "Fields"
+
+#: src/features/record/record.js:40
+msgid "change → recomputes %s"
+msgstr "change → recomputes %s"
+
+#: src/features/record/record.js:48
+msgid "%s fields"
+msgstr "%s fields"
+
+#: src/features/record/record.js:49
+msgid "Filter name / label / value / type / module"
+msgstr "Filter name / label / value / type / module"
+
+#: src/features/record/record.js:50
+msgid "%s/%s fields"
+msgstr "%s/%s fields"
+
+#: src/features/record/record.js:52
+msgid "Field · type · value"
+msgstr "Field · type · value"
+
+#: src/features/record/record.js:52
+msgid "Label · storage · compute · module"
+msgstr "Label · storage · compute · module"
+
+#: src/features/rpc/rpc.js:14
+msgid "Filter model / method"
+msgstr "Filter model / method"
+
+#: src/features/rpc/rpc.js:16
+msgid "Errors only"
+msgstr "Errors only"
+
+#: src/features/rpc/rpc.js:22
+msgid "Clear"
+msgstr "Clear"
+
+#: src/features/rpc/rpc.js:24
+msgid "No RPC yet. Use the Odoo page to record some."
+msgstr "No RPC yet. Use the Odoo page to record some."
+
+#: src/features/rpc/rpc.js:25
+msgid "Method · model · duration"
+msgstr "Method · model · duration"
+
+#: src/features/rpc/rpc.js:25
+msgid "Time · route"
+msgstr "Time · route"
+
+#: src/features/rpc/rpc.js:36
+msgid "error"
+msgstr "error"
+
+#: src/features/rpc/rpc.js:43
+#: src/features/rpc/rpc.js:47
+msgid "Parameters"
+msgstr "Parameters"
+
+#: src/features/rpc/rpc.js:44
+msgid "Why was it blocked? → Security"
+msgstr "Why was it blocked? → Security"
+
+#: src/features/rpc/rpc.js:48
+msgid "Result"
+msgstr "Result"
+
+#: src/features/rpc/rpc.js:48
+msgid "… (%s characters)"
+msgstr "… (%s characters)"
+
+#: src/features/security/logic.js:37
+msgid "No ACL grants this to the user's groups."
+msgstr "No ACL grants this to the user's groups."
+
+#: src/features/security/logic.js:39
+msgid "ACL: %s. No record to check the rules against."
+msgstr "ACL: %s. No record to check the rules against."
+
+#: src/features/security/logic.js:44
+msgid "Blocked by a record rule (see below)."
+msgstr "Blocked by a record rule (see below)."
+
+#: src/features/security/logic.js:45
+msgid "A rule could not be evaluated, not certain."
+msgstr "A rule could not be evaluated, not certain."
+
+#: src/features/security/logic.js:46
+msgid "ACL: %s · %s rules pass."
+msgstr "ACL: %s · %s rules pass."
+
+#: src/features/security/logic.js:78
+msgid "No ACL: only the superuser can access this model."
+msgstr "No ACL: only the superuser can access this model."
+
+#: src/features/security/logic.js:81
+msgid "ACL \"%s\" has no group → applies to EVERY user, portal/public included (%s)."
+msgstr "ACL \"%s\" has no group → applies to EVERY user, portal/public included (%s)."
+
+#: src/features/security/logic.js:82
+msgid "ACL \"%s\" grants %s to %s."
+msgstr "ACL \"%s\" grants %s to %s."
+
+#: src/features/security/logic.js:86
+msgid "Has company_id but no global multi-company rule → records may leak across companies."
+msgstr "Has company_id but no global multi-company rule → records may leak across companies."
+
+#: src/features/security/logic.js:88
+msgid "Field \"%s\" looks sensitive but has no groups=."
+msgstr "Field \"%s\" looks sensitive but has no groups=."
+
+#: src/features/security/logic.js:98
+msgid "Not served over HTTPS."
+msgstr "Not served over HTTPS."
+
+#: src/features/security/logic.js:99
+msgid "Cannot read the session_id cookie."
+msgstr "Cannot read the session_id cookie."
+
+#: src/features/security/logic.js:101
+msgid "session_id cookie is not HttpOnly → readable by JS/XSS."
+msgstr "session_id cookie is not HttpOnly → readable by JS/XSS."
+
+#: src/features/security/logic.js:102
+msgid "session_id cookie lacks the Secure flag."
+msgstr "session_id cookie lacks the Secure flag."
+
+#: src/features/security/logic.js:103
+msgid "session_id cookie is SameSite=None → larger CSRF surface."
+msgstr "session_id cookie is SameSite=None → larger CSRF surface."
+
+#: src/features/security/logic.js:106
+msgid "Missing Strict-Transport-Security (HSTS) header."
+msgstr "Missing Strict-Transport-Security (HSTS) header."
+
+#: src/features/security/logic.js:107
+msgid "Missing X-Frame-Options / CSP frame-ancestors → clickjacking."
+msgstr "Missing X-Frame-Options / CSP frame-ancestors → clickjacking."
+
+#: src/features/security/logic.js:108
+msgid "Missing X-Content-Type-Options: nosniff."
+msgstr "Missing X-Content-Type-Options: nosniff."
+
+#: src/features/security/logic.js:109
+msgid "Missing Content-Security-Policy."
+msgstr "Missing Content-Security-Policy."
+
+#: src/features/security/logic.js:110
+msgid "Header %s discloses a version: %s"
+msgstr "Header %s discloses a version: %s"
+
+#: src/features/security/logic.js:112
+msgid "Database manager has NO master password (default \"admin\")!"
+msgstr "Database manager has NO master password (default \"admin\")!"
+
+#: src/features/security/logic.js:113
+msgid "/web/database/manager is reachable → block /web/database/* at the proxy or set list_db = False."
+msgstr "/web/database/manager is reachable → block /web/database/* at the proxy or set list_db = False."
+
+#: src/features/security/logic.js:114
+msgid "list_db is on: database names are exposed (%s)."
+msgstr "list_db is on: database names are exposed (%s)."
+
+#: src/features/security/logic.js:115
+msgid "Server version is public via /web/webclient/version_info: %s"
+msgstr "Server version is public via /web/webclient/version_info: %s"
+
+#: src/features/security/logic.js:123
+msgid "__system__ (superuser): bypasses every ACL and record rule."
+msgstr "__system__ (superuser): bypasses every ACL and record rule."
+
+#: src/features/security/logic.js:124
+msgid "Settings administrator (base.group_system)."
+msgstr "Settings administrator (base.group_system)."
+
+#: src/features/security/logic.js:125
+msgid "Access Rights manager (base.group_erp_manager): can grant itself any group."
+msgstr "Access Rights manager (base.group_erp_manager): can grant itself any group."
+
+#: src/features/security/logic.js:126
+msgid "Has Technical Features (base.group_no_one)."
+msgstr "Has Technical Features (base.group_no_one)."
+
+#: src/features/security/logic.js:127
+msgid "Public user."
+msgstr "Public user."
+
+#: src/features/security/logic.js:127
+msgid "Portal user (share)."
+msgstr "Portal user (share)."
+
+#: src/features/security/logic.js:128
+msgid "Login \"admin\" is the default, easy to guess."
+msgstr "Login \"admin\" is the default, easy to guess."
+
+#: src/features/security/logic.js:129
+msgid "auth_totp is not installed → no 2FA."
+msgstr "auth_totp is not installed → no 2FA."
+
+#: src/features/security/logic.js:130
+msgid "2FA (TOTP) is not enabled."
+msgstr "2FA (TOTP) is not enabled."
+
+#: src/features/security/logic.js:131
+msgid "%s API key(s): direct RPC calls with this user's rights."
+msgstr "%s API key(s): direct RPC calls with this user's rights."
+
+#: src/features/security/logic.js:132
+msgid "User is archived."
+msgstr "User is archived."
+
+#: src/features/security/page.js:8
+msgid "py_js is not loaded"
+msgstr "py_js is not loaded"
+
+#: src/features/security/security.js:13
+msgid "HIGH"
+msgstr "HIGH"
+
+#: src/features/security/security.js:13
+msgid "MEDIUM"
+msgstr "MEDIUM"
+
+#: src/features/security/security.js:13
+msgid "LOW"
+msgstr "LOW"
+
+#: src/features/security/security.js:13
+msgid "INFO"
+msgstr "INFO"
+
+#: src/features/security/security.js:19
+msgid "✓ No issue found."
+msgstr "✓ No issue found."
+
+#: src/features/security/security.js:47
+msgid "Simulated user"
+msgstr "Simulated user"
+
+#: src/features/security/security.js:48
+msgid "Loading users…"
+msgstr "Loading users…"
+
+#: src/features/security/security.js:49
+msgid "View as user"
+msgstr "View as user"
+
+#: src/features/security/security.js:51
+msgid "My user"
+msgstr "My user"
+
+#: src/features/security/security.js:52
+msgid "Simulates the selected user's rights without logging in as them (reading other users' groups needs admin rights)."
+msgstr "Simulates the selected user's rights without logging in as them (reading other users' groups needs admin rights)."
+
+#: src/features/security/security.js:54
+msgid "Odoo's built-in /web/become route, base.group_system only"
+msgstr "Odoo's built-in /web/become route, base.group_system only"
+
+#: src/features/security/security.js:55
+msgid "Switch the current session to superuser (bypasses every rule)?"
+msgstr "Switch the current session to superuser (bypasses every rule)?"
+
+#: src/features/security/security.js:56
+msgid "Become superuser"
+msgstr "Become superuser"
+
+#: src/features/security/security.js:60
+msgid "me"
+msgstr "me"
+
+#: src/features/security/security.js:61
+msgid "Cannot read the user list"
+msgstr "Cannot read the user list"
+
+#: src/features/security/security.js:63
+msgid "User risks"
+msgstr "User risks"
+
+#: src/features/security/security.js:67
+msgid "%s · %s · #%s · %s (%s companies) · %s groups"
+msgstr "%s · %s · #%s · %s (%s companies) · %s groups"
+
+#: src/features/security/security.js:74
+msgid "Why allowed / blocked — %s"
+msgstr "Why allowed / blocked — %s"
+
+#: src/features/security/security.js:76
+msgid "Fields hidden from the user (groups=)"
+msgstr "Fields hidden from the user (groups=)"
+
+#: src/features/security/security.js:79
+msgid "No field declares groups=."
+msgstr "No field declares groups=."
+
+#: src/features/security/security.js:83
+msgid "Field · label · for this user"
+msgstr "Field · label · for this user"
+
+#: src/features/security/security.js:85
+msgid "visible"
+msgstr "visible"
+
+#: src/features/security/security.js:85
+#: src/features/view/view.js:64
+msgid "hidden"
+msgstr "hidden"
+
+#: src/features/security/security.js:89
+msgid "Model configuration audit"
+msgstr "Model configuration audit"
+
+#: src/features/security/security.js:95
+msgid "Instance check"
+msgstr "Instance check"
+
+#: src/features/security/security.js:98
+msgid "Check failed"
+msgstr "Check failed"
+
+#: src/features/security/security.js:103
+msgid "Raw data"
+msgstr "Raw data"
+
+#: src/features/security/security.js:104
+msgid "Check again"
+msgstr "Check again"
+
+#: src/features/security/security.js:121
+msgid "no result"
+msgstr "no result"
+
+#: src/features/security/security.js:122
+msgid "cannot evaluate: %s"
+msgstr "cannot evaluate: %s"
+
+#: src/features/security/security.js:125
+msgid "You cannot read this record yourself, so its rules cannot be checked."
+msgstr "You cannot read this record yourself, so its rules cannot be checked."
+
+#: src/features/security/security.js:136
+msgid "ALLOWED"
+msgstr "ALLOWED"
+
+#: src/features/security/security.js:136
+msgid "BLOCKED"
+msgstr "BLOCKED"
+
+#: src/features/security/security.js:136
+msgid "UNKNOWN"
+msgstr "UNKNOWN"
+
+#: src/features/security/security.js:144
+msgid "not applicable"
+msgstr "not applicable"
+
+#: src/features/security/security.js:153
+msgid "Rule · operations · result"
+msgstr "Rule · operations · result"
+
+#: src/features/security/security.js:153
+msgid "Groups · domain"
+msgstr "Groups · domain"
+
+#: src/features/security/security.js:154
+msgid "This model has no record rule."
+msgstr "This model has no record rule."
+
+#: src/features/security/security.js:156
+msgid "Assumes the user selected every allowed company. Rules of parent models through _inherits are not counted. This is a simulation; for an exact answer about yourself, see the Access tab (has_access runs on the server)."
+msgstr "Assumes the user selected every allowed company. Rules of parent models through _inherits are not counted. This is a simulation; for an exact answer about yourself, see the Access tab (has_access runs on the server)."
+
+#: src/features/view/page.js:9
+msgid "Webclient internals are not reachable."
+msgstr "Webclient internals are not reachable."
+
+#: src/features/view/page.js:17
+msgid "No form view is open."
+msgstr "No form view is open."
+
+#: src/features/view/view.js:15
+msgid "Inherited views — %s"
+msgstr "Inherited views — %s"
+
+#: src/features/view/view.js:29
+msgid "inactive"
+msgstr "inactive"
+
+#: src/features/view/view.js:30
+msgid "View · mode · priority"
+msgstr "View · mode · priority"
+
+#: src/features/view/view.js:30
+msgid "Name · id · file"
+msgstr "Name · id · file"
+
+#: src/features/view/view.js:31
+msgid "Combined arch (view #%s)"
+msgstr "Combined arch (view #%s)"
+
+#: src/features/view/view.js:36
+msgid "Action"
+msgstr "Action"
+
+#: src/features/view/view.js:45
+msgid "Open action record ↗"
+msgstr "Open action record ↗"
+
+#: src/features/view/view.js:46
+msgid "Full action (JSON)"
+msgstr "Full action (JSON)"
+
+#: src/features/view/view.js:50
+msgid "Form fields — invisible / readonly / required"
+msgstr "Form fields — invisible / readonly / required"
+
+#: src/features/view/view.js:52
+msgid "Context & domain"
+msgstr "Context & domain"
+
+#: src/features/view/view.js:52
+msgid "Context"
+msgstr "Context"
+
+#: src/features/view/view.js:52
+msgid "Domain"
+msgstr "Domain"
+
+#: src/features/view/view.js:58
+msgid "Cannot read the form."
+msgstr "Cannot read the form."
+
+#: src/features/view/view.js:64
+msgid "not shown"
+msgstr "not shown"
+
+#: src/features/view/view.js:70
+msgid "The field is not invisible itself but is not on screen: it is on another notebook page, or a parent node (group/page/div) is invisible."
+msgstr "The field is not invisible itself but is not on screen: it is on another notebook page, or a parent node (group/page/div) is invisible."
+
+#: src/features/view/view.js:72
+msgid "Values used in the expressions"
+msgstr "Values used in the expressions"
+
+#: src/features/view/view.js:73
+msgid "Full node"
+msgstr "Full node"
+
+#: src/features/view/view.js:76
+msgid "Filter name / label / widget"
+msgstr "Filter name / label / widget"
+
+#: src/features/view/view.js:78
+msgid "Click a field on the Odoo page (Esc to cancel)"
+msgstr "Click a field on the Odoo page (Esc to cancel)"
+
+#: src/features/view/view.js:79
+msgid "Picking… (Esc to cancel)"
+msgstr "Picking… (Esc to cancel)"
+
+#: src/features/view/view.js:80
+msgid "⌖ Pick on page"
+msgstr "⌖ Pick on page"
+
+#: src/features/view/view.js:87
+msgid "Field · widget · label · state"
+msgstr "Field · widget · label · state"
+
+#: src/features/view/view.js:87
+msgid "Modifier expressions"
+msgstr "Modifier expressions"
+
+#: src/features/view/view.js:88
+msgid "The form is read-only: every field is readonly."
+msgstr "The form is read-only: every field is readonly."
+
+#: src/panel/main.js:30
+msgid "Cannot read this tab: %s"
+msgstr "Cannot read this tab: %s"
+
+#: src/panel/main.js:30
+msgid "The current tab is not an Odoo page."
+msgstr "The current tab is not an Odoo page."
+
+#: src/panel/main.js:55
+msgid "Not an Odoo page"
+msgstr "Not an Odoo page"
+
+#: src/panel/panel.html:16
+msgid "Odoo debug mode"
+msgstr "Odoo debug mode"
+
+#: src/panel/panel.html:17
+msgid "Turn debug off"
+msgstr "Turn debug off"
+
+#: src/panel/panel.html:21
+#: src/panel/panel.html:21
+msgid "Reload data"
+msgstr "Reload data"
+
+#: src/panel/panel.html:22
+msgid "Full screen (Esc to exit)"
+msgstr "Full screen (Esc to exit)"
+
+#: src/panel/panel.html:22
+msgid "Full screen"
+msgstr "Full screen"
+
+#: src/panel/panel.html:24
+msgid "Connecting…"
+msgstr "Connecting…"
+
+#: src/panel/panel.html:26
+msgid "Record"
+msgstr "Record"
+
+#: src/panel/panel.html:27
+msgid "View"
+msgstr "View"
+
+#: src/panel/panel.html:28
+msgid "RPC"
+msgstr "RPC"
+
+#: src/panel/panel.html:29
+msgid "Access"
+msgstr "Access"
+
+#: src/panel/panel.html:30
+msgid "Security"
+msgstr "Security"
+
+#: src/panel/panel.html:31
+msgid "Perf"
+msgstr "Perf"
+
+#: src/popup/popup.html:17
+msgid "This page"
+msgstr "This page"
+
+#: src/popup/popup.html:20
+msgid "Show / hide panel"
+msgstr "Show / hide panel"
+
+#: src/popup/popup.html:24
+msgid "Language"
+msgstr "Language"
+
+#: src/popup/popup.html:28
+msgid "Theme"
+msgstr "Theme"
+
+#: src/popup/popup.html:31
+msgid "Tip: ⌥/Alt + click a field on the Odoo page to copy its technical name."
+msgstr "Tip: ⌥/Alt + click a field on the Odoo page to copy its technical name."
+
+#: src/popup/popup.js:6
+msgid "System"
+msgstr "System"
+
+#: src/popup/popup.js:6
+msgid "Light"
+msgstr "Light"
+
+#: src/popup/popup.js:6
+msgid "Dark"
+msgstr "Dark"
+
+#: src/shared/ui.js:12
+msgid "No tab is open."
+msgstr "No tab is open."
+
+#: src/shared/ui.js:30
+msgid "No response — is this an Odoo page?"
+msgstr "No response — is this an Odoo page?"
+
+#: src/shared/ui.js:86
+msgid "Traceback"
+msgstr "Traceback"
+
+#: src/shared/ui.js:99
+msgid "Open /odoo/%s"
+msgstr "Open /odoo/%s"
+
+#: src/shared/ui.js:109
+#: src/shared/ui.js:155
+msgid "Loading…"
+msgstr "Loading…"
+
+#: src/shared/ui.js:118
+msgid "Click to copy"
+msgstr "Click to copy"
