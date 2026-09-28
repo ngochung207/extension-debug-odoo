@@ -156,6 +156,26 @@
   footer a { color: var(--muted); text-decoration: none; }
   footer a:hover { color: var(--text); }
   footer .links { display: flex; gap: 20px; flex-wrap: wrap; }
+
+  /* Zoomable screenshots: click → fit to screen, click again → actual size (pan by scrolling), Esc / ✕ / backdrop → close */
+  .window { position: relative; }
+  .window img { cursor: zoom-in; }
+  .zoom-hint { position: absolute; right: 12px; bottom: 12px; display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 8px;
+    background: rgba(11, 10, 13, .82); border: 1px solid var(--line-strong); color: var(--text); font: 500 12px var(--mono); pointer-events: none; opacity: 0; transition: opacity .15s; }
+  .window:hover .zoom-hint { opacity: 1; }
+  @media (hover: none) { .zoom-hint { opacity: 1; } }
+  html:has(#zoom[open]) { overflow: hidden; }
+  #zoom { width: 100vw; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: #08070a; overflow: auto; overscroll-behavior: contain; }
+  #zoom::backdrop { background: transparent; }
+  #zoom .stage { min-width: 100%; min-height: 100%; display: grid; place-items: center; padding: 56px 16px 16px; }
+  #zoom img { max-width: 100%; max-height: calc(100dvh - 72px); width: auto; border-radius: 8px; cursor: zoom-in; box-shadow: 0 20px 60px rgba(0, 0, 0, .6); }
+  #zoom.full .stage { place-items: start; }
+  #zoom.full img { max-width: none; max-height: none; width: calc(var(--w) * 1px); cursor: zoom-out; }
+  #zoom .bar { position: fixed; top: 0; inset-inline: 0; display: flex; align-items: center; gap: 12px; height: 48px; padding: 0 16px; background: rgba(11, 10, 13, .85); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); font: 13px var(--mono); color: var(--muted); z-index: 1; }
+  #zoom .bar b { color: var(--text); font-weight: 500; }
+  #zoom .bar button { margin-left: auto; height: 32px; min-width: 32px; padding: 0 10px; border: 1px solid var(--line-strong); border-radius: 8px; background: transparent; color: var(--text); font: 500 13px var(--mono); cursor: pointer; }
+  #zoom .bar button + button { margin-left: 0; }
+  #zoom .bar button:hover { border-color: rgba(255, 255, 255, .3); }
   @media (max-width: 760px) { footer .row { padding: 24px 16px; } }
 </style>
 </head>
@@ -341,6 +361,16 @@
   </section>
 </main>
 
+<dialog id="zoom" aria-label="Screenshot">
+  <div class="bar">
+    <b id="zoom-title"></b>
+    <span data-l="en">click the image to zoom</span><span data-l="vi">bấm vào ảnh để phóng to</span>
+    <button type="button" id="zoom-toggle" aria-label="Zoom">+</button>
+    <button type="button" id="zoom-close" aria-label="Close">✕</button>
+  </div>
+  <div class="stage"><img alt=""></div>
+</dialog>
+
 <footer>
   <div class="frame row">
     <span><span data-l="en">Made by</span><span data-l="vi">Phát triển bởi</span> <a href="https://unclecatvn.com/" rel="author">UncleCat</a></span>
@@ -374,6 +404,38 @@
     a.querySelector('span[data-l="en"]').textContent = 'is out · see what\'s new';
     a.querySelector('span[data-l="vi"]').textContent = 'đã phát hành · xem có gì mới';
   }).catch(() => {});
+
+  // Zoomable screenshots. ponytail: native <dialog>, one zoom step + scroll to pan; pinch-zoom on phones comes from the browser.
+  const zoom = document.getElementById('zoom');
+  const zimg = zoom.querySelector('img');
+  const toggle = (e) => {
+    const r = zimg.getBoundingClientRect();
+    const fx = e ? (e.clientX - r.left) / r.width : .5; // keep the clicked spot under the cursor
+    const fy = e ? (e.clientY - r.top) / r.height : .5;
+    // zoomed width: 2× the fitted size, at least the screenshot's sharp 1:1 (they are 2x images)
+    if (!zoom.classList.contains('full')) zimg.style.setProperty('--w', Math.max(zimg.naturalWidth / 2, r.width * 2));
+    zoom.classList.toggle('full');
+    const full = zoom.classList.contains('full');
+    document.getElementById('zoom-toggle').textContent = full ? '−' : '+';
+    if (full) zoom.scrollTo(fx * zimg.offsetWidth - zoom.clientWidth / 2, fy * zimg.offsetHeight - zoom.clientHeight / 2 + 56);
+  };
+  document.querySelectorAll('.window').forEach((w) => {
+    const img = w.querySelector('img');
+    w.insertAdjacentHTML('beforeend', '<span class="zoom-hint">⤢ <span data-l="en">Click to zoom</span><span data-l="vi">Bấm để phóng to</span></span>');
+    img.onclick = () => {
+      zimg.src = img.currentSrc || img.src;
+      zimg.alt = img.alt;
+      document.getElementById('zoom-title').textContent = w.querySelector('.bar span').textContent;
+      zoom.classList.remove('full');
+      document.getElementById('zoom-toggle').textContent = '+';
+      zoom.showModal();
+      zoom.scrollTo(0, 0);
+    };
+  });
+  zimg.onclick = toggle;
+  document.getElementById('zoom-toggle').onclick = () => toggle();
+  document.getElementById('zoom-close').onclick = () => zoom.close();
+  zoom.onclick = (e) => { if (e.target === zoom || e.target.classList.contains('stage')) zoom.close(); };
 
   // Feature tabs
   const tabs = [...document.querySelectorAll('[role=tab]')];
