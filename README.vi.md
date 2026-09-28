@@ -178,3 +178,7 @@ Rất hoan nghênh issue và pull request. Trước khi mở PR:
 3. Đã thử trên ít nhất một instance Odoo 18 hoặc 19; ghi rõ bản nào trong PR.
 
 Gặp lỗi? [Mở issue](https://github.com/unclecatvn/extension-debug-odoo/issues) kèm phiên bản Odoo, trang bạn đang mở và, nếu có, lỗi trong tab RPC.
+
+## Tác giả
+
+Phát triển bởi **UncleCat** · [unclecatvn.com](https://unclecatvn.com/)

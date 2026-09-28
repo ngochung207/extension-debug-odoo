@@ -196,3 +196,7 @@ Issues and pull requests are welcome. Before opening a PR:
 
 Found a bug? [Open an issue](https://github.com/unclecatvn/extension-debug-odoo/issues) with your Odoo version, the
 page you were on and, if relevant, the RPC tab's error.
+
+## Author
+
+Made by **UncleCat** · [unclecatvn.com](https://unclecatvn.com/)
