@@ -4,12 +4,12 @@
 
 # Odoo Debug
 
-**An in-page debug panel for Odoo 18 / 19 developers.**<br>
+**An in-page debug panel for Odoo developers.**<br>
 Inspect records, views, RPC calls, access rights and server performance without leaving the page you are debugging.
 
 [![Release](https://img.shields.io/github/v/release/unclecatvn/extension-debug-odoo?label=release)](https://github.com/unclecatvn/extension-debug-odoo/releases)
 [![Build](https://github.com/unclecatvn/extension-debug-odoo/actions/workflows/release.yml/badge.svg)](https://github.com/unclecatvn/extension-debug-odoo/actions/workflows/release.yml)
-![Odoo](https://img.shields.io/badge/Odoo-18%20%7C%2019-714B67)
+[![GitHub stars](https://img.shields.io/github/stars/unclecatvn/extension-debug-odoo?style=social)](https://github.com/unclecatvn/extension-debug-odoo)
 ![Chrome](https://img.shields.io/badge/Chrome-Manifest%20V3-4285F4?logo=googlechrome&logoColor=white)
 ![No build step](https://img.shields.io/badge/build%20step-none-success)
 
@@ -75,7 +75,7 @@ The extension is not on the Chrome Web Store yet; install it unpacked (Chrome, E
    (or `git clone https://github.com/unclecatvn/extension-debug-odoo.git`).
 2. Open `chrome://extensions` and turn on **Developer mode**.
 3. Click **Load unpacked** and select the unzipped folder (from a clone: the `extension/` folder).
-4. Open any Odoo 18 / 19 page: a round button appears in the bottom-right corner.
+4. Open any Odoo page: a round button appears in the bottom-right corner.
 
 ## Usage
 
@@ -190,12 +190,16 @@ Bump `version` in `extension/manifest.json`, add its section to [CHANGELOG.md](C
 
 Issues and pull requests are welcome. Before opening a PR:
 
-1. `npm test` passes and `npm run i18n` leaves `i18n/` unchanged (CI checks both).
+1. `npm test` passes and `npm run i18n` leaves `extension/i18n/` unchanged (CI checks both).
 2. New strings are translated in `extension/i18n/vi.po`.
-3. Tested on at least one Odoo 18 or 19 instance; say which in the PR.
+3. Tested on at least one Odoo instance; say which version in the PR.
 
 Found a bug? [Open an issue](https://github.com/unclecatvn/extension-debug-odoo/issues) with your Odoo version, the
 page you were on and, if relevant, the RPC tab's error.
+
+## Support the project
+
+If Odoo Debug saves you time, ⭐ [star it on GitHub](https://github.com/unclecatvn/extension-debug-odoo): it helps other Odoo developers find it.
 
 ## Author
 

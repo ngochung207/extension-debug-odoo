@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Odoo Debug · debug panel for Odoo 18 &amp; 19</title>
+<title>Odoo Debug · in-page debug panel for Odoo</title>
 <meta name="author" content="UncleCat">
-<meta name="description" content="Free Chrome extension for Odoo 18 & 19 developers: which module adds each field, view inheritance, live RPC log with tracebacks, why a record rule blocks a user, N+1 SQL queries. Right on the Odoo page.">
+<meta name="description" content="Free Chrome extension for Odoo developers: which module adds each field, view inheritance, live RPC log with tracebacks, why a record rule blocks a user, N+1 SQL queries. Right on the Odoo page.">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Odoo Debug · debug panel for Odoo 18 & 19">
+<meta property="og:title" content="Odoo Debug · in-page debug panel for Odoo">
 <meta property="og:description" content="Records, views, RPC calls, access rights and server performance, right on the Odoo page. Free and open source.">
 <meta property="og:url" content="https://unclecatvn.github.io/extension-debug-odoo/">
 <meta property="og:image" content="https://unclecatvn.github.io/extension-debug-odoo/screenshots/overview.png">
@@ -41,8 +41,9 @@
   .nav nav { display: flex; gap: 18px; margin-left: auto; }
   .nav nav a { color: var(--muted); text-decoration: none; font-size: 15px; }
   .nav nav a:hover { color: var(--text); }
+  .nav .star-btn { margin-left: 8px; }
   .lang { border: 1px solid var(--line); background: var(--card); color: var(--text); border-radius: 8px; padding: 5px 10px; font: inherit; font-size: 14px; cursor: pointer; }
-  @media (max-width: 760px) { .nav nav { display: none; } .lang { margin-left: auto; } }
+  @media (max-width: 760px) { .nav nav { display: none; } .nav .star-btn { margin-left: auto; } }
 
   .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 10px; font-weight: 600; text-decoration: none; border: 1px solid transparent; }
   .btn.primary { background: var(--brand); color: #fff; }
@@ -98,6 +99,17 @@
   .check li::before { content: "✓"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
 
   .cta { text-align: center; }
+  .stars { margin-left: 8px; padding: 1px 8px; border-radius: 99px; background: var(--brand-soft); color: var(--brand); font-weight: 700; font-size: .9em; }
+  .star-btn { display: inline-flex; align-items: center; padding: 5px 10px; border-radius: 8px; background: var(--brand); color: #fff; font-size: 14px; font-weight: 600; text-decoration: none; }
+  .star-btn .stars { background: rgba(255, 255, 255, .22); color: inherit; }
+  .star-btn:hover { background: var(--brand-strong); }
+  @media (prefers-color-scheme: dark) { .star-btn { color: #1f1d24; } .star-btn .stars { background: rgba(0, 0, 0, .15); } }
+  .star-card { display: block; max-width: 620px; margin: 0 auto 28px; padding: 28px; border-radius: 16px; background: var(--card); border: 2px solid var(--brand); box-shadow: var(--shadow); color: var(--text); text-decoration: none; }
+  .star-card:hover { transform: translateY(-2px); transition: transform .15s; }
+  .star-card .big { display: block; font-size: 44px; line-height: 1.1; color: #e3a008; font-weight: 800; margin-bottom: 8px; }
+  .star-card .big .stars { font-size: 38px; background: none; color: var(--text); padding: 0; margin-left: 4px; }
+  .star-card b { display: block; font-size: 20px; margin-bottom: 6px; }
+  .star-card > span:not(.big) { color: var(--muted); }
   footer { border-top: 1px solid var(--line); padding: 28px 0; color: var(--muted); font-size: 14px; }
   footer .wrap { display: flex; gap: 16px; flex-wrap: wrap; justify-content: space-between; }
 </style>
@@ -115,23 +127,24 @@
       <a href="#privacy"><span data-l="en">Privacy</span><span data-l="vi">Quyền riêng tư</span></a>
       <a href="https://github.com/unclecatvn/extension-debug-odoo">GitHub</a>
     </nav>
+    <a class="star-btn" href="https://github.com/unclecatvn/extension-debug-odoo" aria-label="Star on GitHub">★ Star<span class="stars" hidden></span></a>
     <button class="lang" type="button" id="lang" aria-label="Language / Ngôn ngữ"><span data-l="en">Tiếng Việt</span><span data-l="vi">English</span></button>
   </div>
 </header>
 
 <main id="top">
   <div class="wrap hero">
-    <span class="pill"><span data-l="en">Free &amp; open source · Odoo 18 &amp; 19</span><span data-l="vi">Miễn phí &amp; mã nguồn mở · Odoo 18 &amp; 19</span></span>
+    <span class="pill"><span data-l="en">Free &amp; open source</span><span data-l="vi">Miễn phí &amp; mã nguồn mở</span></span>
     <h1 data-l="en">Stop guessing. See <em>why</em> Odoo does what it does.</h1>
     <h1 data-l="vi">Đừng đoán nữa. Thấy ngay <em>vì sao</em> Odoo chạy như vậy.</h1>
     <p class="lead" data-l="en">A debug panel right on the Odoo page: which module adds a field, which inherited view changed the form, which RPC failed, which record rule blocks a user, which request fires 50 SQL queries.</p>
     <p class="lead" data-l="vi">Bảng debug ngay trên trang Odoo: module nào thêm field, view kế thừa nào sửa form, RPC nào lỗi, record rule nào chặn user, request nào bắn ra 50 câu SQL.</p>
     <div class="ctas">
       <a class="btn primary" href="https://github.com/unclecatvn/extension-debug-odoo/releases/latest"><span data-l="en">Download for Chrome</span><span data-l="vi">Tải cho Chrome</span></a>
-      <a class="btn ghost" href="https://github.com/unclecatvn/extension-debug-odoo">★ <span data-l="en">Star on GitHub</span><span data-l="vi">Star trên GitHub</span></a>
+      <a class="btn ghost" href="https://github.com/unclecatvn/extension-debug-odoo">★ <span data-l="en">Star on GitHub</span><span data-l="vi">Star trên GitHub</span><span class="stars" hidden></span></a>
     </div>
-    <div class="meta" data-l="en">Chrome, Edge, Brave · no backend, no analytics · works on any Odoo 18 / 19 instance</div>
-    <div class="meta" data-l="vi">Chrome, Edge, Brave · không backend, không analytics · chạy trên mọi instance Odoo 18 / 19</div>
+    <div class="meta" data-l="en">Chrome, Edge, Brave · no backend, no analytics · works on any Odoo instance</div>
+    <div class="meta" data-l="vi">Chrome, Edge, Brave · không backend, không analytics · chạy trên mọi instance Odoo</div>
     <div class="shot"><img src="screenshots/overview.png" width="2880" height="1800" alt="Odoo Debug panel open next to a sales order"></div>
   </div>
 
@@ -144,7 +157,7 @@
       <div class="why">
         <div><b data-l="en">Right on the page</b><b data-l="vi">Ngay trên trang</b><span data-l="en">A draggable button on every Odoo page. No DevTools, no switching windows.</span><span data-l="vi">Nút kéo thả trên mọi trang Odoo. Không cần DevTools, không chuyển cửa sổ.</span></div>
         <div><b data-l="en">Isolated</b><b data-l="vi">Cô lập</b><span data-l="en">Shadow DOM + iframe: Odoo's CSS and the panel's never mix.</span><span data-l="vi">Shadow DOM + iframe: CSS của Odoo và của bảng không bao giờ lẫn nhau.</span></div>
-        <div><b data-l="en">One build, 18 &amp; 19</b><b data-l="vi">Một bản cho 18 &amp; 19</b><span data-l="en">Differences are detected at runtime, never by version numbers.</span><span data-l="vi">Khác biệt được phát hiện lúc chạy, không so số phiên bản.</span></div>
+        <div><b data-l="en">One build, every version</b><b data-l="vi">Một bản cho mọi phiên bản</b><span data-l="en">Differences are detected at runtime, never by version numbers.</span><span data-l="vi">Khác biệt được phát hiện lúc chạy, không so số phiên bản.</span></div>
         <div><b data-l="en">Private</b><b data-l="vi">Riêng tư</b><span data-l="en">Talks only to your Odoo server, with your session. Nothing else.</span><span data-l="vi">Chỉ nói chuyện với server Odoo của bạn, bằng phiên của bạn. Không gì khác.</span></div>
       </div>
     </div>
@@ -154,8 +167,8 @@
     <div class="wrap">
       <h2 data-l="en">Six tabs, every answer</h2>
       <h2 data-l="vi">Sáu tab, đủ mọi câu trả lời</h2>
-      <p class="sub" data-l="en">Pick a tab to see it on a real Odoo 18 sales order.</p>
-      <p class="sub" data-l="vi">Chọn một tab để xem nó trên một đơn bán hàng Odoo 18 thật.</p>
+      <p class="sub" data-l="en">Pick a tab to see it on a real Odoo sales order.</p>
+      <p class="sub" data-l="vi">Chọn một tab để xem nó trên một đơn bán hàng Odoo thật.</p>
       <div class="tabs" role="tablist">
         <button role="tab" aria-selected="true" aria-controls="f-record">Record</button>
         <button role="tab" aria-selected="false" aria-controls="f-view">View</button>
@@ -226,7 +239,7 @@
         <li><span data-l="en">Download <code>odoo-debug-v&lt;version&gt;.zip</code> from <a href="https://github.com/unclecatvn/extension-debug-odoo/releases/latest">Releases</a> and unzip it.</span><span data-l="vi">Tải <code>odoo-debug-v&lt;version&gt;.zip</code> từ <a href="https://github.com/unclecatvn/extension-debug-odoo/releases/latest">Releases</a> rồi giải nén.</span></li>
         <li><span data-l="en">Open <code>chrome://extensions</code> and turn on <b>Developer mode</b>.</span><span data-l="vi">Mở <code>chrome://extensions</code> và bật <b>Developer mode</b>.</span></li>
         <li><span data-l="en">Click <b>Load unpacked</b> and select the unzipped folder.</span><span data-l="vi">Bấm <b>Load unpacked</b> và chọn thư mục vừa giải nén.</span></li>
-        <li><span data-l="en">Open any Odoo 18 / 19 page and click the round button.</span><span data-l="vi">Mở một trang Odoo 18 / 19 bất kỳ và bấm vào nút tròn.</span></li>
+        <li><span data-l="en">Open any Odoo page and click the round button.</span><span data-l="vi">Mở một trang Odoo bất kỳ và bấm vào nút tròn.</span></li>
       </ol>
     </div>
   </section>
@@ -255,7 +268,6 @@
         <h2 data-l="en">Compatibility</h2>
         <h2 data-l="vi">Tương thích</h2>
         <table>
-          <tr><th>Odoo</th><td>18.0, 19.0</td></tr>
           <tr><th data-l="en">Browser</th><th data-l="vi">Trình duyệt</th><td><span data-l="en">Chrome, Edge, Brave and other Chromium browsers (Manifest V3)</span><span data-l="vi">Chrome, Edge, Brave và các trình duyệt nhân Chromium (Manifest V3)</span></td></tr>
           <tr><th data-l="en">Languages</th><th data-l="vi">Ngôn ngữ</th><td>English, Tiếng Việt</td></tr>
           <tr><th data-l="en">Themes</th><th data-l="vi">Giao diện</th><td><span data-l="en">System, light, dark</span><span data-l="vi">Theo hệ thống, sáng, tối</span></td></tr>
@@ -270,8 +282,15 @@
       <h2 data-l="vi">Debug Odoo theo cách bạn luôn mong muốn</h2>
       <p class="sub" style="margin: 0 auto 28px" data-l="en">Free, open source, and built by Odoo developers. Issues and pull requests welcome.</p>
       <p class="sub" style="margin: 0 auto 28px" data-l="vi">Miễn phí, mã nguồn mở, do lập trình viên Odoo làm ra. Hoan nghênh issue và pull request.</p>
+      <a class="star-card" href="https://github.com/unclecatvn/extension-debug-odoo">
+        <span class="big">★ <span class="stars" hidden></span></span>
+        <b data-l="en">Enjoying Odoo Debug? Give it a star on GitHub</b><b data-l="vi">Thấy Odoo Debug hữu ích? Tặng một sao trên GitHub nhé</b>
+        <span data-l="en">It is free and always will be. A star is the easiest way to say thanks, and it helps other Odoo developers find it.</span>
+        <span data-l="vi">Extension miễn phí và sẽ luôn miễn phí. Một ngôi sao là cách cảm ơn đơn giản nhất, và giúp các lập trình viên Odoo khác tìm thấy nó.</span>
+      </a>
       <div class="ctas">
-        <a class="btn primary" href="https://github.com/unclecatvn/extension-debug-odoo/releases/latest"><span data-l="en">Download for Chrome</span><span data-l="vi">Tải cho Chrome</span></a>
+        <a class="btn primary" href="https://github.com/unclecatvn/extension-debug-odoo"><span data-l="en">★ Star on GitHub</span><span data-l="vi">★ Star trên GitHub</span></a>
+        <a class="btn ghost" href="https://github.com/unclecatvn/extension-debug-odoo/releases/latest"><span data-l="en">Download for Chrome</span><span data-l="vi">Tải cho Chrome</span></a>
         <a class="btn ghost" href="https://github.com/unclecatvn/extension-debug-odoo/issues"><span data-l="en">Report an issue</span><span data-l="vi">Báo lỗi</span></a>
       </div>
     </div>
@@ -280,7 +299,7 @@
 
 <footer>
   <div class="wrap">
-    <span><span data-l="en">Made by</span><span data-l="vi">Phát triển bởi</span> <a href="https://unclecatvn.com/" rel="author">UncleCat</a> · <span data-l="en">not affiliated with Odoo S.A.</span><span data-l="vi">không liên kết với Odoo S.A.</span></span>
+    <span><span data-l="en">Made by</span><span data-l="vi">Phát triển bởi</span> <a href="https://unclecatvn.com/" rel="author">UncleCat</a></span>
     <span><a href="https://github.com/unclecatvn/extension-debug-odoo">GitHub</a> · <a href="https://github.com/unclecatvn/extension-debug-odoo/blob/main/CHANGELOG.md">Changelog</a></span>
   </div>
 </footer>
@@ -293,6 +312,15 @@
   try { saved = localStorage.getItem('lang'); } catch {}
   setLang(saved || (navigator.language.toLowerCase().startsWith('vi') ? 'vi' : 'en'));
   document.getElementById('lang').onclick = () => setLang(root.lang === 'vi' ? 'en' : 'vi');
+
+  // GitHub stars: shown only once the count is known (unauthenticated API: 60 requests / hour / visitor IP).
+  fetch('https://api.github.com/repos/unclecatvn/extension-debug-odoo')
+    .then((r) => r.ok ? r.json() : Promise.reject(r.status))
+    .then(({ stargazers_count: n }) => document.querySelectorAll('.stars').forEach((e) => {
+      e.textContent = n >= 1000 ? `${(n / 1000).toFixed(1).replace(/\.0$/, '')}k` : n;
+      e.hidden = !n; // "0" is no selling point: show the count from the first star
+    }))
+    .catch(() => {});
 
   // Feature tabs
   const tabs = [...document.querySelectorAll('[role=tab]')];

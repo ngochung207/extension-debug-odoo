@@ -4,12 +4,12 @@
 
 # Odoo Debug
 
-**Bảng debug ngay trên trang dành cho lập trình viên Odoo 18 / 19.**<br>
+**Bảng debug ngay trên trang dành cho lập trình viên Odoo.**<br>
 Soi record, view, lời gọi RPC, quyền truy cập và hiệu năng server mà không phải rời trang đang debug.
 
 [![Release](https://img.shields.io/github/v/release/unclecatvn/extension-debug-odoo?label=release)](https://github.com/unclecatvn/extension-debug-odoo/releases)
 [![Build](https://github.com/unclecatvn/extension-debug-odoo/actions/workflows/release.yml/badge.svg)](https://github.com/unclecatvn/extension-debug-odoo/actions/workflows/release.yml)
-![Odoo](https://img.shields.io/badge/Odoo-18%20%7C%2019-714B67)
+[![GitHub stars](https://img.shields.io/github/stars/unclecatvn/extension-debug-odoo?style=social)](https://github.com/unclecatvn/extension-debug-odoo)
 ![Chrome](https://img.shields.io/badge/Chrome-Manifest%20V3-4285F4?logo=googlechrome&logoColor=white)
 ![No build step](https://img.shields.io/badge/build%20step-none-success)
 
@@ -70,7 +70,7 @@ Extension chưa có trên Chrome Web Store; cài dạng unpacked (Chrome, Edge, 
 1. Tải `odoo-debug-v<version>.zip` từ [Releases](https://github.com/unclecatvn/extension-debug-odoo/releases) rồi giải nén (hoặc `git clone https://github.com/unclecatvn/extension-debug-odoo.git`).
 2. Mở `chrome://extensions` và bật **Developer mode**.
 3. Bấm **Load unpacked** và chọn thư mục vừa giải nén (nếu clone: chọn thư mục `extension/`).
-4. Mở một trang Odoo 18 / 19 bất kỳ: nút tròn xuất hiện ở góc dưới bên phải.
+4. Mở một trang Odoo bất kỳ: nút tròn xuất hiện ở góc dưới bên phải.
 
 ## Sử dụng
 
@@ -175,9 +175,13 @@ Rất hoan nghênh issue và pull request. Trước khi mở PR:
 
 1. `npm test` chạy qua và `npm run i18n` không làm thay đổi `extension/i18n/` (CI kiểm tra cả hai).
 2. Chuỗi mới đã được dịch trong `extension/i18n/vi.po`.
-3. Đã thử trên ít nhất một instance Odoo 18 hoặc 19; ghi rõ bản nào trong PR.
+3. Đã thử trên ít nhất một instance Odoo; ghi rõ phiên bản trong PR.
 
 Gặp lỗi? [Mở issue](https://github.com/unclecatvn/extension-debug-odoo/issues) kèm phiên bản Odoo, trang bạn đang mở và, nếu có, lỗi trong tab RPC.
+
+## Ủng hộ dự án
+
+Nếu Odoo Debug giúp bạn tiết kiệm thời gian, hãy ⭐ [star trên GitHub](https://github.com/unclecatvn/extension-debug-odoo): nó giúp các lập trình viên Odoo khác tìm thấy dự án.
 
 ## Tác giả
 
