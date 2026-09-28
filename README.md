@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="icons/icon-128.png" width="96" height="96" alt="Odoo Debug">
+<img src="extension/icons/icon-128.png" width="96" height="96" alt="Odoo Debug">
 
 # Odoo Debug
 
@@ -13,7 +13,9 @@ Inspect records, views, RPC calls, access rights and server performance without 
 ![Chrome](https://img.shields.io/badge/Chrome-Manifest%20V3-4285F4?logo=googlechrome&logoColor=white)
 ![No build step](https://img.shields.io/badge/build%20step-none-success)
 
-[Install](#installation) · [Features](#features) · [Usage](#usage) · [Privacy](#privacy--permissions) · [Development](#development) · [Changelog](CHANGELOG.md)
+**English** · [Tiếng Việt](README.vi.md)
+
+[Website](https://unclecatvn.github.io/extension-debug-odoo/) · [Install](#installation) · [Features](#features) · [Usage](#usage) · [Privacy](#privacy--permissions) · [Development](#development) · [Changelog](CHANGELOG.md)
 
 <img src="website/screenshots/overview.png" alt="Odoo Debug panel open next to a sales order" width="100%">
 
@@ -182,7 +184,7 @@ fallbacks stay inline. If one spot grows past a couple of branches, that is the 
 ### Releasing
 
 Bump `version` in `extension/manifest.json`, add its section to [CHANGELOG.md](CHANGELOG.md) and push to `main`: CI tags
-`v<version>` and publishes the zip with that section as release notes.
+`v<version>` and publishes the zip with that section as release notes. Keep each CHANGELOG bullet on one line: GitHub release notes turn every newline into a line break.
 
 ## Contributing
 

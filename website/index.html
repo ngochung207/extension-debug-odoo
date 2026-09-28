@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Odoo Debug · debug panel for Odoo 18 &amp; 19</title>
+<meta name="description" content="Free Chrome extension for Odoo 18 & 19 developers: which module adds each field, view inheritance, live RPC log with tracebacks, why a record rule blocks a user, N+1 SQL queries. Right on the Odoo page.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Odoo Debug · debug panel for Odoo 18 & 19">
+<meta property="og:description" content="Records, views, RPC calls, access rights and server performance, right on the Odoo page. Free and open source.">
+<meta property="og:url" content="https://unclecatvn.github.io/extension-debug-odoo/">
+<meta property="og:image" content="https://unclecatvn.github.io/extension-debug-odoo/screenshots/overview.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Crect x='4' y='4' width='120' height='120' rx='28' fill='%23714b67'/%3E%3Cg stroke='%23fff' stroke-width='8' stroke-linecap='round' fill='none'%3E%3Cpath d='M36 62 H22 M36 80 H20 M40 96 L27 106 M92 62 H106 M92 80 H108 M88 96 L101 106 M54 38 L46 25 M74 38 L82 25'/%3E%3C/g%3E%3Cpath d='M44 46 a20 17 0 0 1 40 0 z' fill='%23fff'/%3E%3Crect x='36' y='50' width='56' height='60' rx='28' fill='%23fff'/%3E%3Cpath d='M64 60 V100' stroke='%23553250' stroke-width='6' stroke-linecap='round'/%3E%3Ccircle cx='98' cy='30' r='12' fill='%2321B799' stroke='%23fff' stroke-width='5'/%3E%3C/svg%3E">
+<style>
+  :root {
+    --bg: #fbfafc; --bg-alt: #f3eef2; --card: #ffffff; --text: #1f1d24; --muted: #5d5866; --line: #e6e0e5;
+    --brand: #714b67; --brand-strong: #553250; --brand-soft: #f1e6ee; --accent: #21b799; --shadow: 0 12px 40px rgba(60, 30, 55, .14);
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #151318; --bg-alt: #1c1920; --card: #221f27; --text: #eeeaf0; --muted: #a8a1ad; --line: #34303a;
+      --brand: #c58fb7; --brand-strong: #e0b3d5; --brand-soft: #2d2230; --shadow: 0 12px 40px rgba(0, 0, 0, .45);
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  html:not([lang="vi"]) [data-l="vi"], html[lang="vi"] [data-l="en"] { display: none; }
+  a { color: var(--brand); }
+  code, kbd { font-family: var(--mono); font-size: .88em; background: var(--brand-soft); padding: .1em .35em; border-radius: 5px; }
+  img { max-width: 100%; height: auto; display: block; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 16px; }
+
+  header { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 85%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  .nav { display: flex; align-items: center; gap: 20px; height: 60px; }
+  .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; color: var(--text); text-decoration: none; }
+  .logo svg { width: 30px; height: 30px; }
+  .nav nav { display: flex; gap: 18px; margin-left: auto; }
+  .nav nav a { color: var(--muted); text-decoration: none; font-size: 15px; }
+  .nav nav a:hover { color: var(--text); }
+  .lang { border: 1px solid var(--line); background: var(--card); color: var(--text); border-radius: 8px; padding: 5px 10px; font: inherit; font-size: 14px; cursor: pointer; }
+  @media (max-width: 760px) { .nav nav { display: none; } .lang { margin-left: auto; } }
+
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 10px; font-weight: 600; text-decoration: none; border: 1px solid transparent; }
+  .btn.primary { background: var(--brand); color: #fff; }
+  @media (prefers-color-scheme: dark) { .btn.primary { color: #1f1d24; } }
+  .btn.primary:hover { background: var(--brand-strong); }
+  .btn.ghost { border-color: var(--line); color: var(--text); background: var(--card); }
+  .btn.ghost:hover { border-color: var(--brand); }
+
+  .hero { padding: 72px 0 40px; text-align: center; }
+  .pill { display: inline-block; padding: 4px 12px; border-radius: 99px; background: var(--brand-soft); color: var(--brand); font-size: 14px; font-weight: 600; }
+  .hero h1 { font-size: clamp(34px, 5.5vw, 60px); line-height: 1.1; margin: 18px auto 16px; max-width: 16em; letter-spacing: -.02em; }
+  .hero h1 em { font-style: normal; color: var(--brand); }
+  .hero p.lead { font-size: clamp(17px, 2vw, 20px); color: var(--muted); max-width: 40em; margin: 0 auto 28px; }
+  .ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .shot { margin-top: 48px; border-radius: 14px; overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--line); }
+  .meta { margin-top: 14px; color: var(--muted); font-size: 14px; }
+
+  section { padding: 72px 0; }
+  section.alt { background: var(--bg-alt); }
+  h2 { font-size: clamp(26px, 3.5vw, 38px); line-height: 1.2; margin: 0 0 12px; letter-spacing: -.01em; }
+  .sub { color: var(--muted); max-width: 44em; margin: 0 0 36px; font-size: 18px; }
+
+  .why { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+  .why div { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 20px; }
+  .why b { display: block; margin-bottom: 6px; }
+  .why span { color: var(--muted); font-size: 15px; }
+
+  .tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 20px; }
+  .tabs button { border: 1px solid var(--line); background: var(--card); color: var(--text); padding: 8px 16px; border-radius: 99px; font: inherit; font-weight: 600; cursor: pointer; }
+  .tabs button[aria-selected="true"] { background: var(--brand); border-color: var(--brand); color: #fff; }
+  @media (prefers-color-scheme: dark) { .tabs button[aria-selected="true"] { color: #1f1d24; } }
+  .feature { display: grid; grid-template-columns: 1fr 2fr; gap: 32px; align-items: start; }
+  .feature[hidden] { display: none; }
+  .feature h3 { font-size: 24px; margin: 0 0 10px; }
+  .feature ul { padding-left: 20px; margin: 0; color: var(--muted); }
+  .feature li { margin-bottom: 6px; }
+  .feature img { border-radius: 12px; border: 1px solid var(--line); box-shadow: var(--shadow); }
+  @media (max-width: 860px) { .feature { grid-template-columns: 1fr; } }
+
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; counter-reset: s; padding: 0; list-style: none; }
+  .steps li { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 20px; counter-increment: s; }
+  .steps li::before { content: counter(s); display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--brand); color: #fff; font-weight: 700; margin-bottom: 10px; }
+  @media (prefers-color-scheme: dark) { .steps li::before { color: #1f1d24; } }
+
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  @media (max-width: 860px) { .grid2 { grid-template-columns: 1fr; } }
+  table { width: 100%; border-collapse: collapse; background: var(--card); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; font-size: 15px; }
+  th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { background: var(--brand-soft); }
+  tr:last-child td { border-bottom: 0; }
+  .check { list-style: none; padding: 0; margin: 0; }
+  .check li { padding-left: 28px; position: relative; margin-bottom: 10px; }
+  .check li::before { content: "✓"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+
+  .cta { text-align: center; }
+  footer { border-top: 1px solid var(--line); padding: 28px 0; color: var(--muted); font-size: 14px; }
+  footer .wrap { display: flex; gap: 16px; flex-wrap: wrap; justify-content: space-between; }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#top">
+      <svg viewBox="0 0 128 128" aria-hidden="true"><rect x="4" y="4" width="120" height="120" rx="28" fill="#714b67"/><g stroke="#fff" stroke-width="8" stroke-linecap="round" fill="none"><path d="M36 62 H22 M36 80 H20 M40 96 L27 106 M92 62 H106 M92 80 H108 M88 96 L101 106 M54 38 L46 25 M74 38 L82 25"/></g><path d="M44 46 a20 17 0 0 1 40 0 z" fill="#fff"/><rect x="36" y="50" width="56" height="60" rx="28" fill="#fff"/><path d="M64 60 V100" stroke="#553250" stroke-width="6" stroke-linecap="round"/><circle cx="98" cy="30" r="12" fill="#21B799" stroke="#fff" stroke-width="5"/></svg>
+      Odoo Debug
+    </a>
+    <nav>
+      <a href="#features"><span data-l="en">Features</span><span data-l="vi">Tính năng</span></a>
+      <a href="#install"><span data-l="en">Install</span><span data-l="vi">Cài đặt</span></a>
+      <a href="#privacy"><span data-l="en">Privacy</span><span data-l="vi">Quyền riêng tư</span></a>
+      <a href="https://github.com/unclecatvn/extension-debug-odoo">GitHub</a>
+    </nav>
+    <button class="lang" type="button" id="lang" aria-label="Language / Ngôn ngữ"><span data-l="en">Tiếng Việt</span><span data-l="vi">English</span></button>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap hero">
+    <span class="pill"><span data-l="en">Free &amp; open source · Odoo 18 &amp; 19</span><span data-l="vi">Miễn phí &amp; mã nguồn mở · Odoo 18 &amp; 19</span></span>
+    <h1 data-l="en">Stop guessing. See <em>why</em> Odoo does what it does.</h1>
+    <h1 data-l="vi">Đừng đoán nữa. Thấy ngay <em>vì sao</em> Odoo chạy như vậy.</h1>
+    <p class="lead" data-l="en">A debug panel right on the Odoo page: which module adds a field, which inherited view changed the form, which RPC failed, which record rule blocks a user, which request fires 50 SQL queries.</p>
+    <p class="lead" data-l="vi">Bảng debug ngay trên trang Odoo: module nào thêm field, view kế thừa nào sửa form, RPC nào lỗi, record rule nào chặn user, request nào bắn ra 50 câu SQL.</p>
+    <div class="ctas">
+      <a class="btn primary" href="https://github.com/unclecatvn/extension-debug-odoo/releases/latest"><span data-l="en">Download for Chrome</span><span data-l="vi">Tải cho Chrome</span></a>
+      <a class="btn ghost" href="https://github.com/unclecatvn/extension-debug-odoo">★ <span data-l="en">Star on GitHub</span><span data-l="vi">Star trên GitHub</span></a>
+    </div>
+    <div class="meta" data-l="en">Chrome, Edge, Brave · no backend, no analytics · works on any Odoo 18 / 19 instance</div>
+    <div class="meta" data-l="vi">Chrome, Edge, Brave · không backend, không analytics · chạy trên mọi instance Odoo 18 / 19</div>
+    <div class="shot"><img src="screenshots/overview.png" width="2880" height="1800" alt="Odoo Debug panel open next to a sales order"></div>
+  </div>
+
+  <section class="alt">
+    <div class="wrap">
+      <h2 data-l="en">Developer mode shows <em>what</em>. Odoo Debug shows <em>why</em>.</h2>
+      <h2 data-l="vi">Developer mode cho thấy <em>cái gì</em>. Odoo Debug cho thấy <em>vì sao</em>.</h2>
+      <p class="sub" data-l="en">Everything you usually dig out of the source code, the database or the server log, one click away on the page you are debugging.</p>
+      <p class="sub" data-l="vi">Mọi thứ bạn thường phải lục trong source code, database hay log server, giờ chỉ cách một cú click ngay trên trang đang debug.</p>
+      <div class="why">
+        <div><b data-l="en">Right on the page</b><b data-l="vi">Ngay trên trang</b><span data-l="en">A draggable button on every Odoo page. No DevTools, no switching windows.</span><span data-l="vi">Nút kéo thả trên mọi trang Odoo. Không cần DevTools, không chuyển cửa sổ.</span></div>
+        <div><b data-l="en">Isolated</b><b data-l="vi">Cô lập</b><span data-l="en">Shadow DOM + iframe: Odoo's CSS and the panel's never mix.</span><span data-l="vi">Shadow DOM + iframe: CSS của Odoo và của bảng không bao giờ lẫn nhau.</span></div>
+        <div><b data-l="en">One build, 18 &amp; 19</b><b data-l="vi">Một bản cho 18 &amp; 19</b><span data-l="en">Differences are detected at runtime, never by version numbers.</span><span data-l="vi">Khác biệt được phát hiện lúc chạy, không so số phiên bản.</span></div>
+        <div><b data-l="en">Private</b><b data-l="vi">Riêng tư</b><span data-l="en">Talks only to your Odoo server, with your session. Nothing else.</span><span data-l="vi">Chỉ nói chuyện với server Odoo của bạn, bằng phiên của bạn. Không gì khác.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="features">
+    <div class="wrap">
+      <h2 data-l="en">Six tabs, every answer</h2>
+      <h2 data-l="vi">Sáu tab, đủ mọi câu trả lời</h2>
+      <p class="sub" data-l="en">Pick a tab to see it on a real Odoo 18 sales order.</p>
+      <p class="sub" data-l="vi">Chọn một tab để xem nó trên một đơn bán hàng Odoo 18 thật.</p>
+      <div class="tabs" role="tablist">
+        <button role="tab" aria-selected="true" aria-controls="f-record">Record</button>
+        <button role="tab" aria-selected="false" aria-controls="f-view">View</button>
+        <button role="tab" aria-selected="false" aria-controls="f-rpc">RPC</button>
+        <button role="tab" aria-selected="false" aria-controls="f-access">Access</button>
+        <button role="tab" aria-selected="false" aria-controls="f-security">Security</button>
+        <button role="tab" aria-selected="false" aria-controls="f-perf">Perf</button>
+      </div>
+
+      <div class="feature" id="f-record" role="tabpanel">
+        <div>
+          <h3 data-l="en">Every field, fully explained</h3><h3 data-l="vi">Mọi field, giải thích đầy đủ</h3>
+          <ul data-l="en"><li>xmlids, <code>noupdate</code>, who created and last updated the record</li><li>Type, value, module, storage for every field</li><li>Compute / related source, <code>groups=</code></li><li>Which fields each one triggers a recompute of</li></ul>
+          <ul data-l="vi"><li>xmlid, <code>noupdate</code>, ai tạo và ai sửa record lần cuối</li><li>Kiểu, giá trị, module, cách lưu của mọi field</li><li>Nguồn compute / related, <code>groups=</code></li><li>Field nào kích hoạt tính lại những field nào</li></ul>
+        </div>
+        <img src="screenshots/full-record.png" width="2880" height="1800" loading="lazy" alt="Record tab">
+      </div>
+      <div class="feature" id="f-view" role="tabpanel" hidden>
+        <div>
+          <h3 data-l="en">Who changed this form?</h3><h3 data-l="vi">Ai đã sửa form này?</h3>
+          <ul data-l="en"><li>Inheritance tree: primary + extensions, priority, source file</li><li>Combined arch, as the webclient receives it</li><li>Action details</li><li><code>invisible</code> / <code>readonly</code> / <code>required</code> evaluated like the webclient, <em>Pick on page</em></li></ul>
+          <ul data-l="vi"><li>Cây kế thừa: primary + extension, priority, file nguồn</li><li>Arch đã gộp, đúng như webclient nhận được</li><li>Thông tin action</li><li><code>invisible</code> / <code>readonly</code> / <code>required</code> tính đúng như webclient, <em>Chọn trên trang</em></li></ul>
+        </div>
+        <img src="screenshots/side-view.png" width="2880" height="1800" loading="lazy" alt="View tab">
+      </div>
+      <div class="feature" id="f-rpc" role="tabpanel" hidden>
+        <div>
+          <h3 data-l="en">Every call, from page load</h3><h3 data-l="vi">Mọi lời gọi, từ lúc tải trang</h3>
+          <ul data-l="en"><li>Live log of JSON-RPC and JSON-2 calls with timing</li><li>Errors with the full Python traceback</li><li>“Why was it blocked?” jumps to Security for <code>AccessError</code>s</li></ul>
+          <ul data-l="vi"><li>Nhật ký trực tiếp JSON-RPC và JSON-2 kèm thời gian</li><li>Lỗi kèm đầy đủ traceback Python</li><li>“Vì sao bị chặn?” nhảy sang Security khi gặp <code>AccessError</code></li></ul>
+        </div>
+        <img src="screenshots/side-rpc.png" width="2880" height="1800" loading="lazy" alt="RPC tab">
+      </div>
+      <div class="feature" id="f-access" role="tabpanel" hidden>
+        <div>
+          <h3 data-l="en">Your session, your rights</h3><h3 data-l="vi">Phiên của bạn, quyền của bạn</h3>
+          <ul data-l="en"><li>db, version, <code>web.base.url</code>, <code>test_mode</code></li><li>Effective rights, ACLs, record rules, groups</li><li>System parameters, secrets masked</li><li>Installed modules</li></ul>
+          <ul data-l="vi"><li>db, version, <code>web.base.url</code>, <code>test_mode</code></li><li>Quyền thực tế, ACL, record rule, nhóm</li><li>Tham số hệ thống, giá trị bí mật được che</li><li>Các module đã cài</li></ul>
+        </div>
+        <img src="screenshots/full-access.png" width="2880" height="1800" loading="lazy" alt="Access tab">
+      </div>
+      <div class="feature" id="f-security" role="tabpanel" hidden>
+        <div>
+          <h3 data-l="en">Why is this user blocked?</h3><h3 data-l="vi">Vì sao user này bị chặn?</h3>
+          <ul data-l="en"><li>Simulate another user's rights without logging in as them</li><li>Rule by rule: which one allows, which one blocks</li><li>User risk audit, fields hidden by <code>groups=</code></li><li>Instance checks: HTTPS, cookie flags, security headers, database manager</li></ul>
+          <ul data-l="vi"><li>Giả lập quyền của user khác mà không cần đăng nhập bằng user đó</li><li>Từng rule một: rule nào cho phép, rule nào chặn</li><li>Đánh giá rủi ro user, field bị ẩn bởi <code>groups=</code></li><li>Kiểm tra instance: HTTPS, cờ cookie, security header, database manager</li></ul>
+        </div>
+        <img src="screenshots/full-security.png" width="2880" height="1800" loading="lazy" alt="Security tab">
+      </div>
+      <div class="feature" id="f-perf" role="tabpanel" hidden>
+        <div>
+          <h3 data-l="en">Find the N+1 before your users do</h3><h3 data-l="vi">Bắt N+1 trước khi người dùng than chậm</h3>
+          <ul data-l="en"><li>Odoo's built-in server profiler, one click to start / stop</li><li>SQL count and duration of every request</li><li>Repeated queries (N+1 suspects) and the slowest ones, with caller</li><li>Speedscope flame graph</li></ul>
+          <ul data-l="vi"><li>Profiler có sẵn của Odoo, một click để bật / tắt</li><li>Số câu SQL và thời gian của từng request</li><li>Câu lặp lại (nghi N+1) và câu chậm nhất, kèm nơi gọi</li><li>Flame graph speedscope</li></ul>
+        </div>
+        <img src="screenshots/full-perf.png" width="2880" height="1800" loading="lazy" alt="Perf tab">
+      </div>
+    </div>
+  </section>
+
+  <section class="alt" id="install">
+    <div class="wrap">
+      <h2 data-l="en">Install in a minute</h2>
+      <h2 data-l="vi">Cài trong một phút</h2>
+      <p class="sub" data-l="en">Not on the Chrome Web Store yet: install it unpacked in Chrome, Edge, Brave or any Chromium browser.</p>
+      <p class="sub" data-l="vi">Chưa có trên Chrome Web Store: cài dạng unpacked trên Chrome, Edge, Brave hoặc trình duyệt nhân Chromium bất kỳ.</p>
+      <ol class="steps">
+        <li><span data-l="en">Download <code>odoo-debug-v&lt;version&gt;.zip</code> from <a href="https://github.com/unclecatvn/extension-debug-odoo/releases/latest">Releases</a> and unzip it.</span><span data-l="vi">Tải <code>odoo-debug-v&lt;version&gt;.zip</code> từ <a href="https://github.com/unclecatvn/extension-debug-odoo/releases/latest">Releases</a> rồi giải nén.</span></li>
+        <li><span data-l="en">Open <code>chrome://extensions</code> and turn on <b>Developer mode</b>.</span><span data-l="vi">Mở <code>chrome://extensions</code> và bật <b>Developer mode</b>.</span></li>
+        <li><span data-l="en">Click <b>Load unpacked</b> and select the unzipped folder.</span><span data-l="vi">Bấm <b>Load unpacked</b> và chọn thư mục vừa giải nén.</span></li>
+        <li><span data-l="en">Open any Odoo 18 / 19 page and click the round button.</span><span data-l="vi">Mở một trang Odoo 18 / 19 bất kỳ và bấm vào nút tròn.</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="privacy">
+    <div class="wrap grid2">
+      <div>
+        <h2 data-l="en">Private by design</h2>
+        <h2 data-l="vi">Riêng tư ngay từ thiết kế</h2>
+        <ul class="check" data-l="en">
+          <li>Talks only to the Odoo server of the tab you are on, with your own session</li>
+          <li>No backend, no analytics, no tracking</li>
+          <li>The session cookie value is never read, only its flags</li>
+          <li>Odoo data only reaches the page through <code>textContent</code></li>
+          <li>Open source: read every line on GitHub</li>
+        </ul>
+        <ul class="check" data-l="vi">
+          <li>Chỉ nói chuyện với server Odoo của tab đang mở, bằng chính phiên của bạn</li>
+          <li>Không backend, không analytics, không theo dõi</li>
+          <li>Không bao giờ đọc giá trị cookie phiên, chỉ đọc các cờ của nó</li>
+          <li>Dữ liệu Odoo chỉ vào trang qua <code>textContent</code></li>
+          <li>Mã nguồn mở: đọc từng dòng trên GitHub</li>
+        </ul>
+      </div>
+      <div>
+        <h2 data-l="en">Compatibility</h2>
+        <h2 data-l="vi">Tương thích</h2>
+        <table>
+          <tr><th>Odoo</th><td>18.0, 19.0</td></tr>
+          <tr><th data-l="en">Browser</th><th data-l="vi">Trình duyệt</th><td><span data-l="en">Chrome, Edge, Brave and other Chromium browsers (Manifest V3)</span><span data-l="vi">Chrome, Edge, Brave và các trình duyệt nhân Chromium (Manifest V3)</span></td></tr>
+          <tr><th data-l="en">Languages</th><th data-l="vi">Ngôn ngữ</th><td>English, Tiếng Việt</td></tr>
+          <tr><th data-l="en">Themes</th><th data-l="vi">Giao diện</th><td><span data-l="en">System, light, dark</span><span data-l="vi">Theo hệ thống, sáng, tối</span></td></tr>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="alt cta">
+    <div class="wrap">
+      <h2 data-l="en">Debug Odoo the way you wish you always had</h2>
+      <h2 data-l="vi">Debug Odoo theo cách bạn luôn mong muốn</h2>
+      <p class="sub" style="margin: 0 auto 28px" data-l="en">Free, open source, and built by Odoo developers. Issues and pull requests welcome.</p>
+      <p class="sub" style="margin: 0 auto 28px" data-l="vi">Miễn phí, mã nguồn mở, do lập trình viên Odoo làm ra. Hoan nghênh issue và pull request.</p>
+      <div class="ctas">
+        <a class="btn primary" href="https://github.com/unclecatvn/extension-debug-odoo/releases/latest"><span data-l="en">Download for Chrome</span><span data-l="vi">Tải cho Chrome</span></a>
+        <a class="btn ghost" href="https://github.com/unclecatvn/extension-debug-odoo/issues"><span data-l="en">Report an issue</span><span data-l="vi">Báo lỗi</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Odoo Debug · <span data-l="en">not affiliated with Odoo S.A.</span><span data-l="vi">không liên kết với Odoo S.A.</span></span>
+    <span><a href="https://github.com/unclecatvn/extension-debug-odoo">GitHub</a> · <a href="https://github.com/unclecatvn/extension-debug-odoo/blob/main/CHANGELOG.md">Changelog</a></span>
+  </div>
+</footer>
+
+<script>
+  // Language: saved choice, else the browser's. Storage can be blocked: the page still works.
+  const root = document.documentElement;
+  const setLang = (l) => { root.lang = l; try { localStorage.setItem('lang', l); } catch {} };
+  let saved = null;
+  try { saved = localStorage.getItem('lang'); } catch {}
+  setLang(saved || (navigator.language.toLowerCase().startsWith('vi') ? 'vi' : 'en'));
+  document.getElementById('lang').onclick = () => setLang(root.lang === 'vi' ? 'en' : 'vi');
+
+  // Feature tabs
+  const tabs = [...document.querySelectorAll('[role=tab]')];
+  tabs.forEach((t) => t.onclick = () => tabs.forEach((o) => {
+    o.setAttribute('aria-selected', o === t);
+    document.getElementById(o.getAttribute('aria-controls')).hidden = o !== t;
+  }));
+</script>
+</body>
+</html>
