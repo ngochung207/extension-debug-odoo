@@ -1,54 +1,168 @@
+<div align="center">
+
+<img src="icons/icon-128.png" width="96" height="96" alt="Odoo Debug">
+
 # Odoo Debug
 
-In-page debug panel for Odoo 18/19 developers (Chrome, Manifest V3, no build step).
+**An in-page debug panel for Odoo 18 / 19 developers.**<br>
+Inspect records, views, RPC calls, access rights and server performance without leaving the page you are debugging.
 
-**Install**: download `odoo-debug-v<version>.zip` from [Releases](https://github.com/unclecatvn/extension-debug-odoo/releases),
-unzip it, then `chrome://extensions` → Developer mode → Load unpacked → pick the folder. Or clone this repo and load it
-directly. What changed: [CHANGELOG.md](CHANGELOG.md).
+[![Release](https://img.shields.io/github/v/release/unclecatvn/extension-debug-odoo?label=release)](https://github.com/unclecatvn/extension-debug-odoo/releases)
+[![Build](https://github.com/unclecatvn/extension-debug-odoo/actions/workflows/release.yml/badge.svg)](https://github.com/unclecatvn/extension-debug-odoo/actions/workflows/release.yml)
+![Odoo](https://img.shields.io/badge/Odoo-18%20%7C%2019-714B67)
+![Chrome](https://img.shields.io/badge/Chrome-Manifest%20V3-4285F4?logo=googlechrome&logoColor=white)
+![No build step](https://img.shields.io/badge/build%20step-none-success)
 
-On Odoo pages a round button appears: drag it anywhere (its position is kept per Odoo instance), click it to open or
-close the panel beside it. Nothing shows on other sites, and the toolbar icon is greyed out there.
+[Install](#installation) · [Features](#features) · [Usage](#usage) · [Privacy](#privacy--permissions) · [Development](#development) · [Changelog](CHANGELOG.md)
 
-- ⌥/Alt + click a field on the Odoo page (form field or label, list cell or column header) copies its technical name.
-- In the panel, click a field name, model or view xmlid to copy it. Filters stay on top while you scroll.
-- ⤢ in the panel header: full screen (Esc or ⤡ to leave); kept across reloads, like the panel being open.
-  When the panel is 760px wide or more, lists become 2-column tables (main line | description) with column names
-  (sticky with the filter bar): shorter rows.
-- Access tab: session (db, version, web.base.url, test_mode), rights, ACLs, rules, groups, system parameters
-  (click a key or value to copy it; secret-looking values stay masked but copy the real value) and installed modules. odoo.conf itself is never
-  reachable from a browser: Odoo doesn't expose it (it holds admin_passwd / db_password).
-- Click the toolbar icon (or right-click → Options): language, theme (system / light / dark), show / hide the panel.
+<img src="docs/screenshots/overview.png" alt="Odoo Debug panel open next to a sales order" width="100%">
+
+</div>
+
+## Why
+
+Odoo's built-in developer mode tells you *what* is on screen. Odoo Debug tells you *why*: which module added a field,
+which inherited view changed the form, which RPC failed and with what traceback, which record rule blocks a user,
+and which request fires 50 SQL queries. Everything lives in a draggable panel on the Odoo page itself, isolated in a
+shadow DOM so it never touches Odoo's styles.
+
+## Features
+
+| Tab | What you get |
+|---|---|
+| **Record** | Identity & metadata (xmlids, `noupdate`, create / write user), every field with its type, value, module, storage, compute / related source, `groups=` and the fields it triggers a recompute of. |
+| **View** | Inheritance tree of the current view (primary + extensions, priority, source file), combined arch, action details, form field modifiers (`invisible` / `readonly` / `required`) evaluated like the webclient, *Pick on page*. |
+| **RPC** | Live log of JSON-RPC and JSON-2 calls from page load: timing, errors with tracebacks, and a jump to the Security tab for `AccessError`s. |
+| **Access** | Session (db, version, `web.base.url`, `test_mode`), effective rights, ACLs, record rules, groups, system parameters (secrets masked) and installed modules. |
+| **Security** | Simulate another user's rights, explain rule by rule why an operation is allowed or blocked, user risk audit, fields hidden by `groups=`, instance checks (HTTPS, cookie flags, security headers, database manager). |
+| **Perf** | Odoo's built-in server profiler: start / stop, profiled requests, SQL summary with repeated queries (N+1 suspects), slowest queries, speedscope flame graph. |
+
+Plus: click any field name, model or xmlid in the panel to copy it, and <kbd>⌥ Alt</kbd> + click a field on the Odoo
+page to copy its technical name.
+
+### Screenshots
+
+<table>
+  <tr>
+    <td width="50%"><b>View</b>: inheritance tree and combined arch<br><img src="docs/screenshots/side-view.png" alt="View tab"></td>
+    <td width="50%"><b>RPC</b>: every call with its timing<br><img src="docs/screenshots/side-rpc.png" alt="RPC tab"></td>
+  </tr>
+</table>
+
+**Record** in full screen: from 760px wide, lists become 2-column tables with sticky headers.
+<img src="docs/screenshots/full-record.png" alt="Record tab in full screen">
+
+**Security**: why an operation is allowed or blocked, rule by rule, plus user risks.
+<img src="docs/screenshots/full-security.png" alt="Security tab">
+
+**Perf**: profiled requests, with N+1 suspects and the slowest queries of each one.
+<img src="docs/screenshots/full-perf.png" alt="Perf tab">
+
+<table>
+  <tr>
+    <td width="50%"><b>Access</b>: session, rights, ACLs<br><img src="docs/screenshots/full-access.png" alt="Access tab"></td>
+    <td width="50%"><b>Dark theme</b><br><img src="docs/screenshots/side-security-dark.png" alt="Dark theme"></td>
+  </tr>
+</table>
+
+## Installation
+
+The extension is not on the Chrome Web Store yet; install it unpacked (Chrome, Edge, Brave and other Chromium browsers):
+
+1. Download `odoo-debug-v<version>.zip` from [Releases](https://github.com/unclecatvn/extension-debug-odoo/releases) and unzip it
+   (or `git clone https://github.com/unclecatvn/extension-debug-odoo.git`).
+2. Open `chrome://extensions` and turn on **Developer mode**.
+3. Click **Load unpacked** and select the folder.
+4. Open any Odoo 18 / 19 page: a round button appears in the bottom-right corner.
+
+## Usage
+
+- **Open / close**: click the round button. Drag it anywhere; its position is kept per Odoo instance. Nothing shows on
+  non-Odoo sites, and the toolbar icon is greyed out there.
+- **Full screen**: <kbd>⤢</kbd> in the panel header, <kbd>Esc</kbd> or <kbd>⤡</kbd> to leave. Open state and full
+  screen survive page reloads.
+- **Debug mode**: the `off` / `debug` / `assets` switch in the header reloads Odoo in that mode.
+- **Copy**: click a field name, model, xmlid or parameter in the panel; <kbd>⌥ Alt</kbd> + click a form field, label,
+  list cell or column header on the page. Masked secret values still copy the real value.
+- **Reload data**: <kbd>⟳</kbd>. Stable server data (session info, `fields_get`, users) is cached until the page
+  reloads; ACLs, rules, views and record values are always re-read.
+- **Settings**: click the toolbar icon (or right-click → *Options*): language (English, Tiếng Việt), theme
+  (system / light / dark), show / hide the panel.
+
+### Compatibility
+
+| | Supported |
+|---|---|
+| Odoo | 18.0, 19.0 |
+| Browser | Chrome and Chromium-based browsers (Manifest V3) |
+| Languages | English, Tiếng Việt |
+
+One build serves every version: differences are detected at runtime (does the field / route exist?), never by
+comparing version numbers. See [Odoo versions](#odoo-versions).
+
+## Privacy & permissions
+
+Odoo Debug talks only to the Odoo server of the tab you are on, with your own session. It has no backend, no
+analytics and sends nothing anywhere else.
+
+| Permission | Why |
+|---|---|
+| `host_permissions: <all_urls>` | Odoo runs on any domain; the panel only activates on pages detected as Odoo. |
+| `scripting` | Read webclient state (current record, view, action) from the page. |
+| `cookies` | Report the session cookie's flags (`Secure`, `HttpOnly`, `SameSite`) in the Security tab. The value is never read. |
+| `storage` | Language and theme settings. |
+| `clipboardWrite` | Copy field names, xmlids and values. |
+| `declarativeContent` | Enable the toolbar icon on Odoo pages only. |
+
+Odoo data only reaches the DOM through `textContent`, and the panel page can't be framed by other sites.
+`odoo.conf` is never reachable from a browser (Odoo doesn't expose it), and the extension doesn't try.
+
+## Development
+
+No build step, no dependencies: edit, then reload the extension in `chrome://extensions`.
+
+```bash
+npm test
+```
+
+```bash
+npm run i18n
+```
+
+`npm test` runs every `tests/*.test.mjs` with Node's built-in runner; `npm run i18n` extracts strings to
+`i18n/odoo_debug.pot` and merges them into every `.po`.
+
+### Project structure
 
 ```
 manifest.json
 icons/                     extension icons (make-icons.sh)
 i18n/                      odoo_debug.pot + en.po, vi.po (read at runtime, no build step)
 tools/i18n.mjs             npm run i18n: extract strings → .pot, merge into every .po
-tests/                     *.test.mjs, one per logic module (npm test)
+tests/                     *.test.mjs, one per logic module
+docs/screenshots/          README images
 src/
   background.js            toolbar icon enabled on Odoo pages only (declarativeContent)
-  popup/                   toolbar popup = options page: language, theme, show/hide the panel (shared/settings.js)
+  popup/                   toolbar popup = options page: language, theme, show/hide the panel
   content/                 hook.js (MAIN world, records JSON-RPC), relay.js (forwards to the panel),
                            bubble.js (draggable button + the panel's iframe in a shadow root, ⌥/Alt+click copy)
   panel/                   panel.html / panel.css / main.js: header, tabs, binding to the tab it is embedded in
-  shared/                  ui.js (DOM, RPC, cached reads), page.js (core page functions), i18n.js, odoo.js
+  shared/                  ui.js (DOM, RPC, cached reads), page.js (core page functions), i18n.js, odoo.js, settings.js
   features/<tab>/          one folder per tab: record, view, rpc, access, security, perf
     <tab>.js               the tab UI: render(section, state)
     page.js                functions injected into the Odoo page (self-contained, no imports)
     logic.js               pure logic, no chrome.* / DOM
 ```
 
-- `npm test` runs every `tests/*.test.mjs` (node's built-in runner).
-- Every user-visible string goes through `_t('English text %s', value)` (or `N_('…')` where `_t` can't run,
-  e.g. page functions); static HTML uses `data-i18n`. Then run `npm run i18n` and translate the new entries in `i18n/vi.po`.
-- Stable server data (session info, `fields_get`, user list…) goes through `cached()` in `shared/ui.js`: kept until the
-  Odoo page reloads or ⟳ is pressed. ACLs, rules, views and record values are always re-read.
+### Conventions
 
-## Odoo versions
+- Every user-visible string goes through `_t('English text %s', value)` (or `N_('…')` where `_t` can't run, e.g. page
+  functions); static HTML uses `data-i18n`. Run `npm run i18n` and translate the new entries in `i18n/vi.po`.
+- Stable server data goes through `cached()` in `shared/ui.js`; anything that can change while you debug is always re-read.
 
-There is no per-version code: each difference is detected at runtime (does the field / module / route exist?),
-never by comparing version numbers, so one build serves 18 and 19. To support another version, check these spots
-and add a fallback next to the existing one:
+### Odoo versions
+
+There is no per-version code. To support another version, check these spots and add a fallback next to the existing one:
 
 | What differs | Where |
 |---|---|
@@ -61,5 +175,19 @@ and add a fallback next to the existing one:
 
 Keep pure fallbacks in `shared/odoo.js` (tested in `tests/odoo.test.mjs`). Page functions can't import, so their
 fallbacks stay inline. If one spot grows past a couple of branches, that is the time to add an adapter, not before.
-- Release: bump `version` in `manifest.json`, add its section to `CHANGELOG.md`, push to `main`: CI tags `v<version>`
-  and publishes the zip with that section as release notes.
+
+### Releasing
+
+Bump `version` in `manifest.json`, add its section to [CHANGELOG.md](CHANGELOG.md) and push to `main`: CI tags
+`v<version>` and publishes the zip with that section as release notes.
+
+## Contributing
+
+Issues and pull requests are welcome. Before opening a PR:
+
+1. `npm test` passes and `npm run i18n` leaves `i18n/` unchanged (CI checks both).
+2. New strings are translated in `i18n/vi.po`.
+3. Tested on at least one Odoo 18 or 19 instance; say which in the PR.
+
+Found a bug? [Open an issue](https://github.com/unclecatvn/extension-debug-odoo/issues) with your Odoo version, the
+page you were on and, if relevant, the RPC tab's error.

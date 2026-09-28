@@ -1,7 +1,6 @@
 # Changelog
 
-All notable changes to this project are documented here. Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
-versions: [Semantic Versioning](https://semver.org/). Each release on GitHub uses its section below as release notes.
+All notable changes to this project are documented here. Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), versions: [Semantic Versioning](https://semver.org/). Each release on GitHub uses its section below as release notes.
 
 ## [0.1.0] - 2026-09-28
 
@@ -9,29 +8,18 @@ First public release. Chrome extension (Manifest V3) for Odoo 18 / 19 developers
 
 ### Added
 
-- **In-page panel**: a draggable round button on Odoo pages opens the panel next to it (shadow DOM + iframe, so Odoo's
-  CSS and the panel's never mix). Position kept per Odoo instance; open state and full screen kept across reloads.
+- **In-page panel**: a draggable round button on Odoo pages opens the panel next to it (shadow DOM + iframe, so Odoo's CSS and the panel's never mix). Position kept per Odoo instance; open state and full screen kept across reloads.
 - **Full screen** (⤢, Esc to leave). From 760px wide, every list becomes a 2-column table with sticky column names.
-- **Record tab**: identity & metadata (xmlids, noupdate, create/write user), every field with its definition, value,
-  module, index, groups, and which fields it triggers a recompute of.
-- **View tab**: inheritance tree of the current view (primary + extensions, priority, file), combined arch, action
-  details, form field modifiers (invisible / readonly / required) evaluated like the webclient, "Pick on page".
-- **RPC tab**: live log of JSON-RPC and JSON-2 calls, recorded from page load; errors with tracebacks,
-  "why was it blocked?" jump to the Security tab for AccessErrors.
-- **Access tab**: session (db, version, web.base.url, test_mode), effective rights, ACLs, record rules, groups,
-  system parameters (secret-looking values masked) and installed modules.
-- **Security tab**: simulate another user's rights, explain why an operation is allowed or blocked rule by rule,
-  fields hidden by `groups=`, model configuration audit, instance checks (HTTPS, cookie flags, security headers,
-  database manager, list_db).
-- **Perf tab**: Odoo's built-in server profiler: start/stop, profiled requests, SQL summary with repeated queries
-  (N+1 suspects), slowest queries, speedscope link.
-- **Copy anywhere**: click a field name, model, xmlid or parameter value in the panel; ⌥/Alt + click a field,
-  label, list cell or column header on the Odoo page to copy its technical name.
-- **Toolbar popup** (also the options page): language (English, Tiếng Việt), theme (system / light / dark),
-  show / hide the panel. The toolbar icon is only enabled on Odoo pages.
+- **Record tab**: identity & metadata (xmlids, noupdate, create/write user), every field with its definition, value, module, index, groups, and which fields it triggers a recompute of.
+- **View tab**: inheritance tree of the current view (primary + extensions, priority, file), combined arch, action details, form field modifiers (invisible / readonly / required) evaluated like the webclient, "Pick on page".
+- **RPC tab**: live log of JSON-RPC and JSON-2 calls, recorded from page load; errors with tracebacks, "why was it blocked?" jump to the Security tab for AccessErrors.
+- **Access tab**: session (db, version, web.base.url, test_mode), effective rights, ACLs, record rules, groups, system parameters (secret-looking values masked) and installed modules.
+- **Security tab**: simulate another user's rights, explain why an operation is allowed or blocked rule by rule, fields hidden by `groups=`, model configuration audit, instance checks (HTTPS, cookie flags, security headers, database manager, list_db).
+- **Perf tab**: Odoo's built-in server profiler: start/stop, profiled requests, SQL summary with repeated queries (N+1 suspects), slowest queries, speedscope link.
+- **Copy anywhere**: click a field name, model, xmlid or parameter value in the panel; ⌥/Alt + click a field, label, list cell or column header on the Odoo page to copy its technical name.
+- **Toolbar popup** (also the options page): language (English, Tiếng Việt), theme (system / light / dark), show / hide the panel. The toolbar icon is only enabled on Odoo pages.
 - **i18n**: gettext `.po` catalogs read at runtime, `npm run i18n` to extract and merge.
-- **CI / release**: GitHub Actions run syntax checks, tests and the i18n check; bumping the manifest version on
-  `main` tags and publishes a release zip.
+- **CI / release**: GitHub Actions run syntax checks, tests and the i18n check; bumping the manifest version on `main` tags and publishes a release zip.
 
 ### Security
 
