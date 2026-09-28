@@ -106,21 +106,25 @@
   @media (max-width: 900px) { .strip { grid-template-columns: 1fr 1fr; } .strip > div:nth-child(3) { border-left: 0; } .strip > div:nth-child(n+3) { border-top: 1px solid var(--line); } }
   @media (max-width: 560px) { .strip { grid-template-columns: 1fr; } .strip > div { border-left: 0; border-top: 1px solid var(--line); padding: 24px 16px; } .strip > div:first-child { border-top: 0; } }
 
-  /* Feature tabs */
-  .tabs { display: flex; gap: 4px; margin: 40px 0 28px; padding: 4px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); width: fit-content; max-width: 100%; overflow-x: auto; }
-  .tabs button { border: 0; background: transparent; color: var(--muted); height: 34px; padding: 0 14px; border-radius: 8px; font: 500 13px var(--mono); cursor: pointer; white-space: nowrap; }
-  .tabs button:hover { color: var(--text); }
-  .tabs button[aria-selected="true"] { background: var(--surface-2); color: var(--text); box-shadow: inset 0 0 0 1px var(--line-strong); }
-  .feature[hidden] { display: none; }
-  .feature > div:first-child { display: grid; grid-template-columns: 5fr 7fr; gap: 48px; align-items: start; margin-bottom: 32px; }
-  .feature h3 { font-size: 26px; letter-spacing: -.03em; line-height: 1.2; font-weight: 600; margin: 0; }
-  .feature ul { list-style: none; padding: 0; margin: 0; }
-  .feature li { position: relative; padding: 10px 0 10px 26px; border-top: 1px solid var(--line); color: var(--muted); font-size: 15px; }
-  .feature li::before { content: ""; position: absolute; left: 4px; top: 19px; width: 8px; height: 8px; border-radius: 2px; background: var(--brand); }
-  .feature li:first-child { border-top: 0; padding-top: 0; }
-  .feature li:first-child::before { top: 9px; }
-  @media (max-width: 900px) { .feature > div:first-child { grid-template-columns: 1fr; gap: 18px; } }
-
+  /* Features: tab list on the left (active one expands), screenshot on the right */
+  .feat { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: 56px; align-items: center; margin-top: 48px; }
+  .feat-list { display: flex; flex-direction: column; border-left: 1px solid var(--line); }
+  .item { position: relative; padding: 16px 0 16px 24px; }
+  .item::before { content: ""; position: absolute; left: -1px; top: 0; bottom: 0; width: 2px; background: transparent; transition: background .2s; }
+  .item:has([aria-selected="true"])::before { background: linear-gradient(var(--brand), var(--accent)); }
+  .item button { display: block; width: 100%; padding: 0; border: 0; background: none; text-align: left; color: inherit; font: inherit; cursor: pointer; }
+  .item .t { display: block; font: 500 12px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--faint); margin-bottom: 4px; }
+  .item .h { display: block; font-size: 19px; font-weight: 600; letter-spacing: -.02em; color: var(--muted); transition: color .15s; }
+  .item button:hover .h, .item [aria-selected="true"] .h { color: var(--text); }
+  .item [aria-selected="true"] .t { color: var(--brand); }
+  .item .panel { display: none; }
+  .item [aria-selected="true"] + .panel { display: block; }
+  .panel ul { list-style: none; padding: 0; margin: 12px 0 0; }
+  .panel li { position: relative; padding: 5px 0 5px 20px; color: var(--muted); font-size: 15px; }
+  .panel li::before { content: ""; position: absolute; left: 2px; top: 14px; width: 6px; height: 6px; border-radius: 2px; background: var(--brand); }
+  .feat-shots { position: sticky; top: 96px; }
+  .feat-shots .window[hidden] { display: none; }
+  @media (max-width: 900px) { .feat { grid-template-columns: 1fr; gap: 32px; } .feat-shots { position: static; } }
   /* Install */
   .steps { display: grid; grid-template-columns: repeat(4, 1fr); margin: 40px 0 0; padding: 0; list-style: none; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
   .steps li { padding: 24px; border-left: 1px solid var(--line); background: var(--surface); font-size: 15px; color: var(--muted); }
@@ -240,62 +244,41 @@
     <h2 data-l="vi">Developer mode cho thấy cái gì.<br>Odoo Debug cho thấy vì sao.</h2>
     <p class="sub" data-l="en">Six tabs for what you usually dig out of the source code, the database or the server log.</p>
     <p class="sub" data-l="vi">Sáu tab cho những thứ bạn thường phải lục trong source code, database hay log server.</p>
-    <div class="tabs" role="tablist">
-      <button role="tab" aria-selected="true" aria-controls="f-record">Record</button>
-      <button role="tab" aria-selected="false" aria-controls="f-view">View</button>
-      <button role="tab" aria-selected="false" aria-controls="f-rpc">RPC</button>
-      <button role="tab" aria-selected="false" aria-controls="f-access">Access</button>
-      <button role="tab" aria-selected="false" aria-controls="f-security">Security</button>
-      <button role="tab" aria-selected="false" aria-controls="f-perf">Perf</button>
-    </div>
-
-    <div class="feature" id="f-record" role="tabpanel">
-      <div>
-        <h3 data-l="en">Every field, fully explained</h3><h3 data-l="vi">Mọi field, giải thích đầy đủ</h3>
-        <ul data-l="en"><li>xmlids, <code>noupdate</code>, who created and last updated the record</li><li>Type, value, module and storage of every field</li><li>Compute / related source, <code>groups=</code></li><li>Which fields each one triggers a recompute of</li></ul>
-        <ul data-l="vi"><li>xmlid, <code>noupdate</code>, ai tạo và ai sửa record lần cuối</li><li>Kiểu, giá trị, module, cách lưu của mọi field</li><li>Nguồn compute / related, <code>groups=</code></li><li>Field nào kích hoạt tính lại những field nào</li></ul>
+    <div class="feat">
+      <div class="feat-list" role="tablist" aria-orientation="vertical">
+        <div class="item">
+          <button role="tab" id="t-record" aria-selected="true" aria-controls="w-record"><span class="t">Record</span><span class="h" data-l="en">Every field, fully explained</span><span class="h" data-l="vi">Mọi field, giải thích đầy đủ</span></button>
+          <div class="panel"><ul data-l="en"><li>xmlids, <code>noupdate</code>, who created and last updated the record</li><li>Type, value, module and storage of every field</li><li>Compute / related source, <code>groups=</code></li><li>Which fields each one triggers a recompute of</li></ul><ul data-l="vi"><li>xmlid, <code>noupdate</code>, ai tạo và ai sửa record lần cuối</li><li>Kiểu, giá trị, module, cách lưu của mọi field</li><li>Nguồn compute / related, <code>groups=</code></li><li>Field nào kích hoạt tính lại những field nào</li></ul></div>
+        </div>
+        <div class="item">
+          <button role="tab" id="t-view" aria-selected="false" aria-controls="w-view"><span class="t">View</span><span class="h" data-l="en">Who changed this form?</span><span class="h" data-l="vi">Ai đã sửa form này?</span></button>
+          <div class="panel"><ul data-l="en"><li>Inheritance tree: primary + extensions, priority, source file</li><li>Combined arch, as the webclient receives it</li><li>Action details</li><li><code>invisible</code> / <code>readonly</code> / <code>required</code> evaluated like the webclient</li></ul><ul data-l="vi"><li>Cây kế thừa: primary + extension, priority, file nguồn</li><li>Arch đã gộp, đúng như webclient nhận được</li><li>Thông tin action</li><li><code>invisible</code> / <code>readonly</code> / <code>required</code> tính đúng như webclient</li></ul></div>
+        </div>
+        <div class="item">
+          <button role="tab" id="t-rpc" aria-selected="false" aria-controls="w-rpc"><span class="t">RPC</span><span class="h" data-l="en">Every call, from page load</span><span class="h" data-l="vi">Mọi lời gọi, từ lúc tải trang</span></button>
+          <div class="panel"><ul data-l="en"><li>Live log of JSON-RPC and JSON-2 calls with timing</li><li>Errors with the full Python traceback</li><li>“Why was it blocked?” jumps to Security for <code>AccessError</code>s</li></ul><ul data-l="vi"><li>Nhật ký trực tiếp JSON-RPC và JSON-2 kèm thời gian</li><li>Lỗi kèm đầy đủ traceback Python</li><li>“Vì sao bị chặn?” nhảy sang Security khi gặp <code>AccessError</code></li></ul></div>
+        </div>
+        <div class="item">
+          <button role="tab" id="t-access" aria-selected="false" aria-controls="w-access"><span class="t">Access</span><span class="h" data-l="en">Your session, your rights</span><span class="h" data-l="vi">Phiên của bạn, quyền của bạn</span></button>
+          <div class="panel"><ul data-l="en"><li>db, version, <code>web.base.url</code>, <code>test_mode</code></li><li>Effective rights, ACLs, record rules, groups</li><li>System parameters, secrets masked</li><li>Installed modules</li></ul><ul data-l="vi"><li>db, version, <code>web.base.url</code>, <code>test_mode</code></li><li>Quyền thực tế, ACL, record rule, nhóm</li><li>Tham số hệ thống, giá trị bí mật được che</li><li>Các module đã cài</li></ul></div>
+        </div>
+        <div class="item">
+          <button role="tab" id="t-security" aria-selected="false" aria-controls="w-security"><span class="t">Security</span><span class="h" data-l="en">Why is this user blocked?</span><span class="h" data-l="vi">Vì sao user này bị chặn?</span></button>
+          <div class="panel"><ul data-l="en"><li>Simulate another user's rights without logging in as them</li><li>Rule by rule: which one allows, which one blocks</li><li>User risk audit, fields hidden by <code>groups=</code></li><li>Instance checks: HTTPS, cookie flags, security headers, database manager</li></ul><ul data-l="vi"><li>Giả lập quyền của user khác mà không cần đăng nhập bằng user đó</li><li>Từng rule một: rule nào cho phép, rule nào chặn</li><li>Đánh giá rủi ro user, field bị ẩn bởi <code>groups=</code></li><li>Kiểm tra instance: HTTPS, cờ cookie, security header, database manager</li></ul></div>
+        </div>
+        <div class="item">
+          <button role="tab" id="t-perf" aria-selected="false" aria-controls="w-perf"><span class="t">Perf</span><span class="h" data-l="en">Find the N+1 before your users do</span><span class="h" data-l="vi">Bắt N+1 trước khi người dùng than chậm</span></button>
+          <div class="panel"><ul data-l="en"><li>Odoo's built-in server profiler, one click to start / stop</li><li>SQL count and duration of every request</li><li>Repeated queries (N+1 suspects) and the slowest ones, with caller</li><li>Speedscope flame graph</li></ul><ul data-l="vi"><li>Profiler có sẵn của Odoo, một click để bật / tắt</li><li>Số câu SQL và thời gian của từng request</li><li>Câu lặp lại (nghi N+1) và câu chậm nhất, kèm nơi gọi</li><li>Flame graph speedscope</li></ul></div>
+        </div>
       </div>
-      <div class="window"><div class="bar"><i></i><i></i><i></i><span>Record</span></div><img src="screenshots/full-record.png" width="2880" height="1800" loading="lazy" alt="Record tab"></div>
-    </div>
-    <div class="feature" id="f-view" role="tabpanel" hidden>
-      <div>
-        <h3 data-l="en">Who changed this form?</h3><h3 data-l="vi">Ai đã sửa form này?</h3>
-        <ul data-l="en"><li>Inheritance tree: primary + extensions, priority, source file</li><li>Combined arch, as the webclient receives it</li><li>Action details</li><li><code>invisible</code> / <code>readonly</code> / <code>required</code> evaluated like the webclient</li></ul>
-        <ul data-l="vi"><li>Cây kế thừa: primary + extension, priority, file nguồn</li><li>Arch đã gộp, đúng như webclient nhận được</li><li>Thông tin action</li><li><code>invisible</code> / <code>readonly</code> / <code>required</code> tính đúng như webclient</li></ul>
+      <div class="feat-shots">
+        <div class="window" id="w-record" role="tabpanel" aria-labelledby="t-record"><div class="bar"><i></i><i></i><i></i><span>Record</span></div><img src="screenshots/full-record.png" width="2880" height="1800" loading="lazy" alt="Record tab"></div>
+        <div class="window" id="w-view" role="tabpanel" aria-labelledby="t-view" hidden><div class="bar"><i></i><i></i><i></i><span>View</span></div><img src="screenshots/side-view.png" width="2880" height="1800" loading="lazy" alt="View tab"></div>
+        <div class="window" id="w-rpc" role="tabpanel" aria-labelledby="t-rpc" hidden><div class="bar"><i></i><i></i><i></i><span>RPC</span></div><img src="screenshots/side-rpc.png" width="2880" height="1800" loading="lazy" alt="RPC tab"></div>
+        <div class="window" id="w-access" role="tabpanel" aria-labelledby="t-access" hidden><div class="bar"><i></i><i></i><i></i><span>Access</span></div><img src="screenshots/full-access.png" width="2880" height="1800" loading="lazy" alt="Access tab"></div>
+        <div class="window" id="w-security" role="tabpanel" aria-labelledby="t-security" hidden><div class="bar"><i></i><i></i><i></i><span>Security</span></div><img src="screenshots/full-security.png" width="2880" height="1800" loading="lazy" alt="Security tab"></div>
+        <div class="window" id="w-perf" role="tabpanel" aria-labelledby="t-perf" hidden><div class="bar"><i></i><i></i><i></i><span>Perf</span></div><img src="screenshots/full-perf.png" width="2880" height="1800" loading="lazy" alt="Perf tab"></div>
       </div>
-      <div class="window"><div class="bar"><i></i><i></i><i></i><span>View</span></div><img src="screenshots/side-view.png" width="2880" height="1800" loading="lazy" alt="View tab"></div>
-    </div>
-    <div class="feature" id="f-rpc" role="tabpanel" hidden>
-      <div>
-        <h3 data-l="en">Every call, from page load</h3><h3 data-l="vi">Mọi lời gọi, từ lúc tải trang</h3>
-        <ul data-l="en"><li>Live log of JSON-RPC and JSON-2 calls with timing</li><li>Errors with the full Python traceback</li><li>“Why was it blocked?” jumps to Security for <code>AccessError</code>s</li></ul>
-        <ul data-l="vi"><li>Nhật ký trực tiếp JSON-RPC và JSON-2 kèm thời gian</li><li>Lỗi kèm đầy đủ traceback Python</li><li>“Vì sao bị chặn?” nhảy sang Security khi gặp <code>AccessError</code></li></ul>
-      </div>
-      <div class="window"><div class="bar"><i></i><i></i><i></i><span>RPC</span></div><img src="screenshots/side-rpc.png" width="2880" height="1800" loading="lazy" alt="RPC tab"></div>
-    </div>
-    <div class="feature" id="f-access" role="tabpanel" hidden>
-      <div>
-        <h3 data-l="en">Your session, your rights</h3><h3 data-l="vi">Phiên của bạn, quyền của bạn</h3>
-        <ul data-l="en"><li>db, version, <code>web.base.url</code>, <code>test_mode</code></li><li>Effective rights, ACLs, record rules, groups</li><li>System parameters, secrets masked</li><li>Installed modules</li></ul>
-        <ul data-l="vi"><li>db, version, <code>web.base.url</code>, <code>test_mode</code></li><li>Quyền thực tế, ACL, record rule, nhóm</li><li>Tham số hệ thống, giá trị bí mật được che</li><li>Các module đã cài</li></ul>
-      </div>
-      <div class="window"><div class="bar"><i></i><i></i><i></i><span>Access</span></div><img src="screenshots/full-access.png" width="2880" height="1800" loading="lazy" alt="Access tab"></div>
-    </div>
-    <div class="feature" id="f-security" role="tabpanel" hidden>
-      <div>
-        <h3 data-l="en">Why is this user blocked?</h3><h3 data-l="vi">Vì sao user này bị chặn?</h3>
-        <ul data-l="en"><li>Simulate another user's rights without logging in as them</li><li>Rule by rule: which one allows, which one blocks</li><li>User risk audit, fields hidden by <code>groups=</code></li><li>Instance checks: HTTPS, cookie flags, security headers, database manager</li></ul>
-        <ul data-l="vi"><li>Giả lập quyền của user khác mà không cần đăng nhập bằng user đó</li><li>Từng rule một: rule nào cho phép, rule nào chặn</li><li>Đánh giá rủi ro user, field bị ẩn bởi <code>groups=</code></li><li>Kiểm tra instance: HTTPS, cờ cookie, security header, database manager</li></ul>
-      </div>
-      <div class="window"><div class="bar"><i></i><i></i><i></i><span>Security</span></div><img src="screenshots/full-security.png" width="2880" height="1800" loading="lazy" alt="Security tab"></div>
-    </div>
-    <div class="feature" id="f-perf" role="tabpanel" hidden>
-      <div>
-        <h3 data-l="en">Find the N+1 before your users do</h3><h3 data-l="vi">Bắt N+1 trước khi người dùng than chậm</h3>
-        <ul data-l="en"><li>Odoo's built-in server profiler, one click to start / stop</li><li>SQL count and duration of every request</li><li>Repeated queries (N+1 suspects) and the slowest ones, with caller</li><li>Speedscope flame graph</li></ul>
-        <ul data-l="vi"><li>Profiler có sẵn của Odoo, một click để bật / tắt</li><li>Số câu SQL và thời gian của từng request</li><li>Câu lặp lại (nghi N+1) và câu chậm nhất, kèm nơi gọi</li><li>Flame graph speedscope</li></ul>
-      </div>
-      <div class="window"><div class="bar"><i></i><i></i><i></i><span>Perf</span></div><img src="screenshots/full-perf.png" width="2880" height="1800" loading="lazy" alt="Perf tab"></div>
     </div>
   </section>
 
