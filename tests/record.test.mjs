@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { fmtValue, reverseDeps } from '../src/features/record/logic.js';
+import { fmtValue, reverseDeps } from '../extension/src/features/record/logic.js';
 
 assert.equal(fmtValue([7, 'Azure'], 'many2one'), 'Azure (#7)');
 assert.equal(fmtValue(false, 'char'), '');

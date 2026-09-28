@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { parsePo, _t } from '../src/shared/i18n.js';
+import { parsePo, _t } from '../extension/src/shared/i18n.js';
 
 const po = parsePo(`# comment
 msgid ""

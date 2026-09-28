@@ -4,9 +4,9 @@
 // Existing translations are kept, new strings get an empty msgstr (en.po: msgstr = msgid), removed strings are dropped.
 import { readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs';
 import { join, relative } from 'node:path';
-import { parsePo, LANGS } from '../src/shared/i18n.js';
+import { parsePo, LANGS } from '../extension/src/shared/i18n.js';
 
-const ROOT = join(import.meta.dirname, '..');
+const ROOT = join(import.meta.dirname, '..', 'extension');
 const DIR = join(ROOT, 'i18n');
 const POT = join(DIR, 'odoo_debug.pot');
 

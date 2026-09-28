@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { parseRpc, parseRpcResponse } from '../src/features/rpc/logic.js';
+import { parseRpc, parseRpcResponse } from '../extension/src/features/rpc/logic.js';
 
 const raw = (url, body, method = 'POST', status = 200, response = '{"jsonrpc":"2.0","result":true}') =>
   ({ method, url, body: typeof body === 'string' ? body : JSON.stringify(body), status, ms: 12, at: 't', response });

@@ -9,7 +9,7 @@ node_modules/
 
 # Build outputs: release zips are made by CI (.github/workflows/release.yml)
 *.zip
-icons/_tmp.html
+extension/icons/_tmp.html
 
 # Local tooling
 .claude/

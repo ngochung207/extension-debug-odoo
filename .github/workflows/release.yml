@@ -1,5 +1,5 @@
 name: Release
-# Bump "version" in manifest.json (+ a CHANGELOG.md section) and push to main: CI runs, then tag v<version> + GitHub release (zip + notes).
+# Bump "version" in extension/manifest.json (+ a CHANGELOG.md section) and push to main: CI runs, then tag v<version> + GitHub release (zip + notes).
 # Pushes that keep the same version only run CI.
 on:
   push:
@@ -22,11 +22,11 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          VER=v$(jq -r .version manifest.json)
+          VER=v$(jq -r .version extension/manifest.json)
           if git rev-parse -q --verify "refs/tags/$VER" >/dev/null; then echo "$VER already released"; exit 0; fi
           PREV=$(git describe --tags --abbrev=0 2>/dev/null || true)
           # notes = this version's section of CHANGELOG.md, else the commit subjects since the previous tag
           awk -v v="[${VER#v}]" '/^## \[/ { p = index($0, v) > 0; next } p' CHANGELOG.md > notes.md 2>/dev/null || true
           [ -s notes.md ] || { echo "## Changes${PREV:+ since $PREV}"; git log --no-merges --pretty='- %s (%h)' ${PREV:+$PREV..}HEAD; } > notes.md
-          zip -r "odoo-debug-$VER.zip" manifest.json src icons i18n -x '*.DS_Store'
+          (cd extension && zip -r "../odoo-debug-$VER.zip" . -x "*.DS_Store" "icons/make-icons.sh")
           gh release create "$VER" "odoo-debug-$VER.zip" --target "$GITHUB_SHA" --title "$VER" --notes-file notes.md

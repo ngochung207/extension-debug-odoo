@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { aclGrants, rulesFor, rulesVerdict, modeVerdict, ruleEvalContext, auditModel, checkInstance, userRisks } from '../src/features/security/logic.js';
+import { aclGrants, rulesFor, rulesVerdict, modeVerdict, ruleEvalContext, auditModel, checkInstance, userRisks } from '../extension/src/features/security/logic.js';
 
 const P = (r, w, c, u) => ({ perm_read: r, perm_write: w, perm_create: c, perm_unlink: u });
 const mine = new Set([10, 11]);
