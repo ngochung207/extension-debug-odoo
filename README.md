@@ -1,21 +1,23 @@
 <div align="center">
 
-<img src="icons/icon-128.png" width="96" height="96" alt="Odoo Debug">
+<img src="extension/icons/icon-128.png" width="96" height="96" alt="Odoo Debug">
 
 # Odoo Debug
 
-**An in-page debug panel for Odoo 18 / 19 developers.**<br>
+**An in-page debug panel for Odoo developers.**<br>
 Inspect records, views, RPC calls, access rights and server performance without leaving the page you are debugging.
 
 [![Release](https://img.shields.io/github/v/release/unclecatvn/extension-debug-odoo?label=release)](https://github.com/unclecatvn/extension-debug-odoo/releases)
 [![Build](https://github.com/unclecatvn/extension-debug-odoo/actions/workflows/release.yml/badge.svg)](https://github.com/unclecatvn/extension-debug-odoo/actions/workflows/release.yml)
-![Odoo](https://img.shields.io/badge/Odoo-18%20%7C%2019-714B67)
+[![GitHub stars](https://img.shields.io/github/stars/unclecatvn/extension-debug-odoo?style=social)](https://github.com/unclecatvn/extension-debug-odoo)
 ![Chrome](https://img.shields.io/badge/Chrome-Manifest%20V3-4285F4?logo=googlechrome&logoColor=white)
 ![No build step](https://img.shields.io/badge/build%20step-none-success)
 
-[Install](#installation) · [Features](#features) · [Usage](#usage) · [Privacy](#privacy--permissions) · [Development](#development) · [Changelog](CHANGELOG.md)
+**English** · [Tiếng Việt](README.vi.md)
 
-<img src="docs/screenshots/overview.png" alt="Odoo Debug panel open next to a sales order" width="100%">
+[Website](https://unclecatvn.github.io/extension-debug-odoo/) · [Install](#installation) · [Features](#features) · [Usage](#usage) · [Privacy](#privacy--permissions) · [Development](#development) · [Changelog](CHANGELOG.md)
+
+<img src="website/screenshots/overview.png" alt="Odoo Debug panel open next to a sales order, half light theme, half dark theme" width="100%">
 
 </div>
 
@@ -44,24 +46,24 @@ page to copy its technical name.
 
 <table>
   <tr>
-    <td width="50%"><b>View</b>: inheritance tree and combined arch<br><img src="docs/screenshots/side-view.png" alt="View tab"></td>
-    <td width="50%"><b>RPC</b>: every call with its timing<br><img src="docs/screenshots/side-rpc.png" alt="RPC tab"></td>
+    <td width="50%"><b>View</b>: inheritance tree and combined arch<br><img src="website/screenshots/side-view.png" alt="View tab"></td>
+    <td width="50%"><b>RPC</b>: every call with its timing<br><img src="website/screenshots/side-rpc.png" alt="RPC tab"></td>
   </tr>
 </table>
 
 **Record** in full screen: from 760px wide, lists become 2-column tables with sticky headers.
-<img src="docs/screenshots/full-record.png" alt="Record tab in full screen">
+<img src="website/screenshots/full-record.png" alt="Record tab in full screen">
 
 **Security**: why an operation is allowed or blocked, rule by rule, plus user risks.
-<img src="docs/screenshots/full-security.png" alt="Security tab">
+<img src="website/screenshots/full-security.png" alt="Security tab">
 
 **Perf**: profiled requests, with N+1 suspects and the slowest queries of each one.
-<img src="docs/screenshots/full-perf.png" alt="Perf tab">
+<img src="website/screenshots/full-perf.png" alt="Perf tab">
 
 <table>
   <tr>
-    <td width="50%"><b>Access</b>: session, rights, ACLs<br><img src="docs/screenshots/full-access.png" alt="Access tab"></td>
-    <td width="50%"><b>Dark theme</b><br><img src="docs/screenshots/side-security-dark.png" alt="Dark theme"></td>
+    <td width="50%"><b>Access</b>: session, rights, ACLs<br><img src="website/screenshots/full-access.png" alt="Access tab"></td>
+    <td width="50%"><b>Dark theme</b><br><img src="website/screenshots/side-security-dark.png" alt="Dark theme"></td>
   </tr>
 </table>
 
@@ -72,8 +74,8 @@ The extension is not on the Chrome Web Store yet; install it unpacked (Chrome, E
 1. Download `odoo-debug-v<version>.zip` from [Releases](https://github.com/unclecatvn/extension-debug-odoo/releases) and unzip it
    (or `git clone https://github.com/unclecatvn/extension-debug-odoo.git`).
 2. Open `chrome://extensions` and turn on **Developer mode**.
-3. Click **Load unpacked** and select the folder.
-4. Open any Odoo 18 / 19 page: a round button appears in the bottom-right corner.
+3. Click **Load unpacked** and select the unzipped folder (from a clone: the `extension/` folder).
+4. Open any Odoo page: a round button appears in the bottom-right corner.
 
 ## Usage
 
@@ -130,29 +132,32 @@ npm run i18n
 ```
 
 `npm test` runs every `tests/*.test.mjs` with Node's built-in runner; `npm run i18n` extracts strings to
-`i18n/odoo_debug.pot` and merges them into every `.po`.
+`extension/i18n/odoo_debug.pot` and merges them into every `.po`.
 
 ### Project structure
 
 ```
-manifest.json
-icons/                     extension icons (make-icons.sh)
-i18n/                      odoo_debug.pot + en.po, vi.po (read at runtime, no build step)
-tools/i18n.mjs             npm run i18n: extract strings → .pot, merge into every .po
-tests/                     *.test.mjs, one per logic module
-docs/screenshots/          README images
-src/
-  background.js            toolbar icon enabled on Odoo pages only (declarativeContent)
-  popup/                   toolbar popup = options page: language, theme, show/hide the panel
-  content/                 hook.js (MAIN world, records JSON-RPC), relay.js (forwards to the panel),
+extension/                 the extension itself: exactly what the release zip contains (Load unpacked this folder)
+  manifest.json
+  icons/                   extension icons (make-icons.sh)
+  i18n/                    odoo_debug.pot + en.po, vi.po (read at runtime, no build step)
+  src/
+    background.js          toolbar icon enabled on Odoo pages only (declarativeContent)
+    popup/                 toolbar popup = options page: language, theme, show/hide the panel
+    content/               hook.js (MAIN world, records JSON-RPC), relay.js (forwards to the panel),
                            bubble.js (draggable button + the panel's iframe in a shadow root, ⌥/Alt+click copy)
-  panel/                   panel.html / panel.css / main.js: header, tabs, binding to the tab it is embedded in
-  shared/                  ui.js (DOM, RPC, cached reads), page.js (core page functions), i18n.js, odoo.js, settings.js
-  features/<tab>/          one folder per tab: record, view, rpc, access, security, perf
-    <tab>.js               the tab UI: render(section, state)
-    page.js                functions injected into the Odoo page (self-contained, no imports)
-    logic.js               pure logic, no chrome.* / DOM
+    panel/                 panel.html / panel.css / main.js: header, tabs, binding to the tab it is embedded in
+    shared/                ui.js (DOM, RPC, cached reads), page.js (core page functions), i18n.js, odoo.js, settings.js
+    features/<tab>/        one folder per tab: record, view, rpc, access, security, perf
+      <tab>.js             the tab UI: render(section, state)
+      page.js              functions injected into the Odoo page (self-contained, no imports)
+      logic.js             pure logic, no chrome.* / DOM
+website/                   project website; screenshots/ is shared with this README
+tests/                     *.test.mjs, one per logic module
+tools/i18n.mjs             npm run i18n: extract strings → .pot, merge into every .po
 ```
+
+Paths below are relative to `extension/`.
 
 ### Conventions
 
@@ -173,21 +178,29 @@ There is no per-version code. To support another version, check these spots and 
 | `/odoo/…` URLs (older versions: `/web#…`) | `shared/page.js` fallback |
 | Server methods: `has_access`, `res.users.has_groups`, `get_metadata`, `get_views`, `/web/become` | `features/access`, `features/security`, `features/record`, `features/view` |
 
-Keep pure fallbacks in `shared/odoo.js` (tested in `tests/odoo.test.mjs`). Page functions can't import, so their
+Keep pure fallbacks in `shared/odoo.js` (tested in `tests/odoo.test.mjs` at the repo root). Page functions can't import, so their
 fallbacks stay inline. If one spot grows past a couple of branches, that is the time to add an adapter, not before.
 
 ### Releasing
 
-Bump `version` in `manifest.json`, add its section to [CHANGELOG.md](CHANGELOG.md) and push to `main`: CI tags
-`v<version>` and publishes the zip with that section as release notes.
+Bump `version` in `extension/manifest.json`, add its section to [CHANGELOG.md](CHANGELOG.md) and push to `main`: CI tags
+`v<version>` and publishes the zip with that section as release notes. Keep each CHANGELOG bullet on one line: GitHub release notes turn every newline into a line break.
 
 ## Contributing
 
 Issues and pull requests are welcome. Before opening a PR:
 
-1. `npm test` passes and `npm run i18n` leaves `i18n/` unchanged (CI checks both).
-2. New strings are translated in `i18n/vi.po`.
-3. Tested on at least one Odoo 18 or 19 instance; say which in the PR.
+1. `npm test` passes and `npm run i18n` leaves `extension/i18n/` unchanged (CI checks both).
+2. New strings are translated in `extension/i18n/vi.po`.
+3. Tested on at least one Odoo instance; say which version in the PR.
 
 Found a bug? [Open an issue](https://github.com/unclecatvn/extension-debug-odoo/issues) with your Odoo version, the
 page you were on and, if relevant, the RPC tab's error.
+
+## Support the project
+
+If Odoo Debug saves you time, ⭐ [star it on GitHub](https://github.com/unclecatvn/extension-debug-odoo): it helps other Odoo developers find it.
+
+## Author
+
+Made by **UncleCat** · [unclecatvn.com](https://unclecatvn.com/)

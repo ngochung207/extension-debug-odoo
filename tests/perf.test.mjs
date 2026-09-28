@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { sqlSummary, appFrame } from '../src/features/perf/logic.js';
+import { sqlSummary, appFrame } from '../extension/src/features/perf/logic.js';
 
 const sq = sqlSummary([{ query: 'A', time: 1 }, { query: 'B', time: 5 }, { query: 'A', time: 2 }]);
 assert.equal(sq.count, 3); assert.equal(sq.time, 8);
