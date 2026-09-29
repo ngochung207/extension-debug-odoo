@@ -251,8 +251,14 @@ textarea.code:focus { outline: 2px solid var(--accent-soft); border-color: var(-
 /* Translations tab: installed modules to tick, scrolling inside the form */
 .module-picker { margin-top: 4px; }
 .picker-head { flex-wrap: nowrap; align-items: center; gap: 8px; }
-.row.fill { flex-wrap: nowrap; }
-.row.fill > .btn { flex: 1; text-align: center; } /* the buttons share the whole width */
+.row.fill { flex-wrap: nowrap; gap: 8px; }
+.row.fill > .btn { flex: 1; text-align: center; padding: 8px 10px; font-size: 13px; font-weight: 600; } /* the whole width, easy to hit */
+/* Apps: the module list takes the height the panel has left, the buttons stay at its bottom (short panel: main scrolls) */
+#apps.active { display: flex; flex-direction: column; height: 100%; }
+#apps > .card { flex: 1; min-height: 0; display: flex; flex-direction: column; margin-bottom: 0; }
+#apps .card-body, #apps .card-body > .pad, #apps .form { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+#apps .module-picker { flex: 1; min-height: 160px; display: flex; flex-direction: column; }
+#apps .module-picker .list { flex: 1; min-height: 0; max-height: none; }
 .picker-head > input { flex: 1; min-width: 0; }
 .count-note { font-weight: normal; }
 .module-picker .list { max-height: 240px; overflow: auto; border: 1px solid var(--line); border-radius: 6px; }
