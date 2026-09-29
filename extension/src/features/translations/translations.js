@@ -15,12 +15,13 @@ export function renderTranslations(s) {
       langIn.value = [...splitList(langIn.value), code].join('; ');
       langIn.focus();
     };
+    const count = el('span', { class: 'muted count-note' }); // how many installed modules match what is typed
     const log = el('ul', { class: 'steps' });
     const btn = el('button', { class: 'btn', type: 'submit' }, _t('Export & Download'));
     const form = el('form', { class: 'form' },
-      el('label', {}, _t('Apps To Export'), apps),
+      el('label', {}, el('span', { class: 'row' }, _t('Apps To Export'), el('span', { class: 'grow' }), count), apps),
       // no read access to ir.module.module: typing the names still works
-      await modulePicker(apps).catch(() => el('div', { class: 'note' }, _t('Technical names, separated by ;'))),
+      await modulePicker(apps, count).catch(() => el('div', { class: 'note' }, _t('Technical names, separated by ;'))),
       el('label', { class: 'mt' }, _t('Languages'), langIn),
       el('div', { class: 'row mt' }, el('span', { class: 'muted' }, _t('Active:')),
         langs.map((l) => el('button', { type: 'button', class: 'chip', title: l.name, onclick: () => add(l.code) }, l.code))),
@@ -40,14 +41,14 @@ export function renderTranslations(s) {
         btn.disabled = false;
       }
     });
-    return form;
+    return el('div', { class: 'pad' }, form);
   });
 }
 
 /** The installed modules below `input`, a checkbox each. One input for both: the word being typed (after the last ;)
  * searches them by name or title, ticking one puts its name in place of that word, typing a name ticks its box.
  * Enter picks the match (the exact name, else the first shown) instead of submitting while a word is being typed. */
-async function modulePicker(input) {
+async function modulePicker(input, count) {
   const mods = await installedModules();
   const known = new Set(mods.map((m) => m.name));
   const set = (value) => { input.value = value; input.dispatchEvent(new Event('input')); input.focus(); };
@@ -59,7 +60,6 @@ async function modulePicker(input) {
     li.dataset.name = m.name;
     return li;
   });
-  const count = el('span', { class: 'muted' });
   const refresh = () => {
     const picked = new Set(splitList(input.value));
     const q = lastToken(input.value).toLowerCase();
@@ -81,9 +81,7 @@ async function modulePicker(input) {
     if (hit) set(pickInList(input.value, hit.dataset.name, known));
   });
   refresh();
-  return el('div', { class: 'module-picker' },
-    el('div', { class: 'row note' }, el('span', { class: 'grow' }, _t('Type to search the installed modules, tick them, or type their technical names separated by ;')), count),
-    el('ul', { class: 'list' }, items));
+  return el('div', { class: 'module-picker' }, el('ul', { class: 'list' }, items));
 }
 
 /** One base.language.export run per language (template first); each file of its .tgz is downloaded on its own. */

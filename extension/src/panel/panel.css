@@ -249,8 +249,8 @@ textarea.code:focus { outline: 2px solid var(--accent-soft); border-color: var(-
 .suggest li .muted { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .suggest li[aria-selected=true] { background: var(--accent-soft); }
 /* Translations tab: installed modules to tick, scrolling inside the form */
-.module-picker { margin-top: 2px; }
-.module-picker > .note { margin-top: 0; }
+.module-picker { margin-top: 4px; }
+.count-note { font-weight: normal; }
 .module-picker .list { max-height: 240px; overflow: auto; border: 1px solid var(--line); border-radius: 6px; }
 .module-picker label.pick { flex-direction: row; align-items: center; gap: 6px; cursor: pointer; font-weight: normal; }
 .module-picker .list > li:not([hidden]) { display: block; } /* one line even in the wide 2-column layout */

@@ -113,7 +113,7 @@ msgstr "Đang chạy…"
 #: src/features/code/code.js:289
 #: src/features/code/code.js:328
 #: src/features/rpc/rpc.js:36
-#: src/features/translations/translations.js:114
+#: src/features/translations/translations.js:112
 msgid "error"
 msgstr "lỗi"
 
@@ -198,7 +198,7 @@ msgid "Not found: %s (Activate runs Update Apps List first)"
 msgstr "Không tìm thấy: %s (Kích hoạt sẽ cập nhật danh sách ứng dụng trước)"
 
 #: src/features/apps/apps.js:118
-#: src/features/translations/translations.js:23
+#: src/features/translations/translations.js:24
 msgid "Technical names, separated by ;"
 msgstr "Tên kỹ thuật, phân cách bằng ;"
 
@@ -1044,23 +1044,23 @@ msgstr "Xuất file dịch"
 msgid "Search or type: sale; stock; my_module"
 msgstr "Tìm hoặc gõ: sale; stock; my_module"
 
-#: src/features/translations/translations.js:19
+#: src/features/translations/translations.js:20
 msgid "Export & Download"
 msgstr "Xuất & tải về"
 
-#: src/features/translations/translations.js:21
+#: src/features/translations/translations.js:22
 msgid "Apps To Export"
 msgstr "Apps cần xuất"
 
-#: src/features/translations/translations.js:24
+#: src/features/translations/translations.js:25
 msgid "Languages"
 msgstr "Ngôn ngữ"
 
-#: src/features/translations/translations.js:25
+#: src/features/translations/translations.js:26
 msgid "Active:"
 msgstr "Đang bật:"
 
-#: src/features/translations/translations.js:27
+#: src/features/translations/translations.js:28
 msgid "Always exported too: New Language (Empty translation template), as <module>.pot."
 msgstr "Luôn xuất kèm: New Language (Empty translation template), thành file <module>.pot."
 
@@ -1068,39 +1068,35 @@ msgstr "Luôn xuất kèm: New Language (Empty translation template), thành fil
 msgid "%s/%s installed modules"
 msgstr "%s/%s module đã cài"
 
-#: src/features/translations/translations.js:85
-msgid "Type to search the installed modules, tick them, or type their technical names separated by ;"
-msgstr "Gõ để tìm module đã cài rồi tick chọn, hoặc gõ tên kỹ thuật cách nhau bằng ;"
-
-#: src/features/translations/translations.js:91
+#: src/features/translations/translations.js:89
 msgid "Enter at least one app."
 msgstr "Nhập ít nhất một app."
 
-#: src/features/translations/translations.js:93
+#: src/features/translations/translations.js:91
 msgid "Not an active language: %s. Active: %s"
 msgstr "Ngôn ngữ chưa được bật: %s. Đang bật: %s"
 
-#: src/features/translations/translations.js:96
+#: src/features/translations/translations.js:94
 msgid "Unknown app: %s"
 msgstr "Không có app: %s"
 
-#: src/features/translations/translations.js:97
+#: src/features/translations/translations.js:95
 msgid "Not installed: %s"
 msgstr "Chưa cài: %s"
 
-#: src/features/translations/translations.js:100
+#: src/features/translations/translations.js:98
 msgid "Exporting…"
 msgstr "Đang xuất…"
 
-#: src/features/translations/translations.js:103
+#: src/features/translations/translations.js:101
 msgid "Template (.pot)"
 msgstr "Template (.pot)"
 
-#: src/features/translations/translations.js:112
+#: src/features/translations/translations.js:110
 msgid "%s files"
 msgstr "%s file"
 
-#: src/features/translations/translations.js:112
+#: src/features/translations/translations.js:110
 msgid "nothing to export"
 msgstr "không có gì để xuất"
 
