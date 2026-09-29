@@ -185,10 +185,11 @@ extension/                 the extension itself: exactly what the release zip co
     popup/                 toolbar popup = options page: language, theme, show/hide the panel
     content/               hook.js (MAIN world, records JSON-RPC), relay.js (forwards to the panel),
                            bubble.js (draggable button + the panel's iframe in a shadow root, ⌥/Alt+click copy)
-    panel/                 panel.html / panel.css / main.js: header, tabs, binding to the tab it is embedded in
-    shared/                ui.js (DOM, RPC, cached reads), page.js (core page functions), i18n.js, odoo.js, settings.js
+    panel/                 panel.html / main.js: header, tabs, binding to the tab it is embedded in
+    shared/                bridge.js (page functions, RPC, cached reads), ui.js + ui.css (DOM, widgets, styles of the panel and popup),
+                           page.js (core page functions), list.js, picker.js, i18n.js, odoo.js, settings.js
     features/<tab>/        one folder per tab: record, view, rpc, code, access, security, translations, apps, perf
-      <tab>.js             the tab UI: render(section, state)
+      <tab>.js             the tab UI: render(section, state); big ones split into a file per part (code: suggest.js, help.js)
       page.js              functions injected into the Odoo page (self-contained, no imports)
       logic.js             pure logic, no chrome.* / DOM
 website/                   project website; screenshots/ is shared with this README
@@ -204,7 +205,7 @@ Paths below are relative to `extension/`.
 
 - Every user-visible string goes through `_t('English text %s', value)` (or `N_('…')` where `_t` can't run, e.g. page
   functions); static HTML uses `data-i18n`. Run `npm run i18n` and translate the new entries in `i18n/vi.po`.
-- Stable server data goes through `cached()` in `shared/ui.js`; anything that can change while you debug is always re-read.
+- Stable server data goes through `cached()` in `shared/bridge.js`; anything that can change while you debug is always re-read.
 
 ### Odoo versions
 

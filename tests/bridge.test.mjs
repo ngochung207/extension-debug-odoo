@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { cached, clearCache } from '../extension/src/shared/ui.js';
+import { cached, clearCache } from '../extension/src/shared/bridge.js';
 
 let n = 0;
 const fail = () => { n++; return Promise.reject(new Error('x')); };

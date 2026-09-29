@@ -167,10 +167,11 @@ extension/                 chính extension: đúng những gì có trong file z
     popup/                 popup trên thanh công cụ = trang options: ngôn ngữ, giao diện, hiện/ẩn bảng
     content/               hook.js (MAIN world, ghi lại JSON-RPC), relay.js (chuyển tiếp tới bảng),
                            bubble.js (nút kéo thả + iframe của bảng trong shadow root, copy bằng ⌥/Alt+click)
-    panel/                 panel.html / panel.css / main.js: thanh tiêu đề, các tab, gắn với tab đang nhúng
-    shared/                ui.js (DOM, RPC, đọc có cache), page.js (hàm lõi chạy trong trang), i18n.js, odoo.js, settings.js
+    panel/                 panel.html / main.js: thanh tiêu đề, các tab, gắn với tab đang nhúng
+    shared/                bridge.js (hàm chạy trong trang, RPC, đọc có cache), ui.js + ui.css (DOM, widget, style của bảng và popup),
+                           page.js (hàm lõi chạy trong trang), list.js, picker.js, i18n.js, odoo.js, settings.js
     features/<tab>/        mỗi tab một thư mục: record, view, rpc, code, access, security, translations, apps, perf
-      <tab>.js             giao diện tab: render(section, state)
+      <tab>.js             giao diện tab: render(section, state); tab lớn tách mỗi phần một file (code: suggest.js, help.js)
       page.js              hàm được inject vào trang Odoo (tự chứa, không import)
       logic.js             logic thuần, không chrome.* / DOM
 website/                   trang giới thiệu (GitHub Pages); screenshots/ dùng chung với README
@@ -185,7 +186,7 @@ Các đường dẫn bên dưới tính từ `extension/`.
 ### Quy ước
 
 - Mọi chuỗi người dùng nhìn thấy đều đi qua `_t('English text %s', value)` (hoặc `N_('…')` ở chỗ `_t` không chạy được, ví dụ hàm chạy trong trang); HTML tĩnh dùng `data-i18n`. Chạy `npm run i18n` rồi dịch các mục mới trong `i18n/vi.po`.
-- Dữ liệu ổn định của server đi qua `cached()` trong `shared/ui.js`; thứ gì có thể đổi trong lúc debug thì luôn đọc lại.
+- Dữ liệu ổn định của server đi qua `cached()` trong `shared/bridge.js`; thứ gì có thể đổi trong lúc debug thì luôn đọc lại.
 
 ### Các phiên bản Odoo
 

@@ -77,6 +77,7 @@ await panel.$eval('#code textarea.code', (t) => {
     'for (const so of orders) print(so.name, so.partner_id.name);',
     "return orders.read(['name', 'partner_id', 'amount_total']);",
   ].join('\n');
+  t.dispatchEvent(new Event('input')); // the editor paints on input
 });
 await click('#code .console .btn');
 await panel.waitForFunction(() => document.querySelector('#code .output table'), { timeout: 15_000 });

@@ -8,6 +8,7 @@
   --warn: light-dark(#b06000, #fdd663); --warn-soft: light-dark(#fef3e0, #3a3020);
   --err: light-dark(#c5221f, #f28b82); --err-soft: light-dark(#fce8e6, #3c2020);
   --info: light-dark(#1a5fb4, #8ab4f8); --info-soft: light-dark(#e8f0fe, #1f2a3d);
+  --kw: light-dark(#a626a4, #d6a0e8);
   --mono: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 :root[data-theme=light] { color-scheme: light; }
@@ -16,7 +17,7 @@
 * { box-sizing: border-box; }
 html, body { margin: 0; height: 100%; overflow: hidden; } /* only <main> scrolls: the header never scrolls away */
 /* Header fixed, only <main> scrolls: toolbars can then stick to its top. */
-body { display: flex; flex-direction: column; font: 12px/1.45 system-ui, -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--fg); }
+body { --sans: 12px/1.45 system-ui, -apple-system, 'Segoe UI', sans-serif; display: flex; flex-direction: column; font: var(--sans); background: var(--bg); color: var(--fg); }
 button, input, select { font: inherit; color: inherit; }
 button { cursor: pointer; }
 code, pre, .mono { font-family: var(--mono); font-size: 11px; }
@@ -209,19 +210,57 @@ body.popup { width: 320px; height: auto; display: block; padding-bottom: 12px; b
 .popup #host { color: var(--fg); }
 
 /* Code tab */
-.card-body:has(> .console) { padding: 8px 10px; } /* its result table must not drop the card's padding (rule above) */
+/* the console fills the tab: a bar, the editor (most of the height), the guide when asked, the result below */
+#code.active { display: flex; flex-direction: column; height: 100%; }
+#code > .card { flex: 1; min-height: 0; display: flex; flex-direction: column; margin-bottom: 0; }
+#code .card-body { flex: 1; min-height: 0; display: flex; flex-direction: column; padding: 8px 10px; }
+.console { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 6px; }
+.console-bar { flex-wrap: nowrap; align-items: center; gap: 10px; }
+.console-bar > * { flex: none; white-space: nowrap; } /* a label never breaks: the user's name gives way first */
+.console-bar .who { flex: 1 1 0; min-width: 0; text-align: right; overflow: hidden; text-overflow: ellipsis; font-family: var(--mono); font-size: 11px; }
+.btn.round { width: 24px; height: 24px; padding: 0; border-radius: 50%; font-weight: 700; }
+.btn.primary { background: var(--accent); color: var(--surface); font-weight: 600; }
+.btn.primary:hover { filter: brightness(1.1); background: var(--accent); }
+.btn.ghost { border-color: var(--line); color: var(--muted); }
+.btn.ghost[aria-pressed=true] { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+.console .editor { flex: 3 1 0; min-height: 140px; }
+.console .code-help { flex: 2 1 0; min-height: 100px; overflow: auto; margin: 0; padding: 6px 10px; border: 1px solid var(--line); border-radius: 6px; }
+.console .code-help[hidden] { display: none; }
+.console .output { flex: 2 1 0; min-height: 100px; overflow: auto; border: 1px solid var(--line); border-radius: 6px; padding: 0 8px 8px; }
+.console .output:empty { display: none; } /* before the first run: the editor takes it all */
+.console .output > .loading, .console .output > .error:first-child { margin-top: 8px; }
+.result-head { position: sticky; top: 0; z-index: 1; margin: 0 -8px 6px; padding: 5px 8px; background: var(--surface); border-bottom: 1px solid var(--line); }
 .mt0 { margin-top: 0; margin-bottom: 6px; }
-textarea.code { display: block; width: 100%; min-height: 120px; resize: vertical; font-family: var(--mono); font-size: 11px; line-height: 1.5;
-  tab-size: 2; background: var(--bg); color: var(--fg); border: 1px solid var(--line); border-radius: 6px; padding: 6px 8px; }
-textarea.code:focus { outline: 2px solid var(--accent-soft); border-color: var(--accent); }
-.writes-on textarea.code { border-color: var(--warn); }
+/* Editor: a transparent textarea over a <pre> with the same text in colours. Lines wrap: both layers must break them at
+   the same places, so they share font, padding, wrapping and the scrollbar's room. Line numbers: ::before of each line. */
+.editor { display: flex; background: var(--bg); border: 1px solid var(--line); border-radius: 6px; }
+.editor:focus-within { outline: 2px solid var(--accent-soft); border-color: var(--accent); }
+.writes-on .editor { border-color: var(--warn); }
+.editor-body { --gut: calc(var(--digits, 2) * 1ch + 14px); position: relative; flex: 1; min-width: 0; font: 11px/1.5 var(--mono);
+  background: linear-gradient(to right, var(--surface) var(--gut), var(--line) var(--gut) calc(var(--gut) + 1px), transparent 0);
+  border-radius: 5px; }
+.editor-body pre.hl, textarea.code { margin: 0; padding: 6px 8px 6px calc(var(--gut) + 8px); font: inherit; tab-size: 2;
+  white-space: pre-wrap; overflow-wrap: anywhere; word-break: normal; scrollbar-gutter: stable; }
+.editor-body pre.hl { position: absolute; inset: 0; overflow: hidden; border: 0; border-radius: 0; background: none; max-height: none;
+  color: var(--fg); pointer-events: none; counter-reset: ln; }
+.editor-body pre.hl > div { position: relative; min-height: 1.5em; counter-increment: ln; }
+.editor-body pre.hl > div::before { content: counter(ln); position: absolute; right: calc(100% + 14px); color: var(--muted); }
+textarea.code { position: relative; display: block; width: 100%; height: 100%; resize: none; overflow: hidden auto; border: 0; outline: 0;
+  background: none; color: transparent; caret-color: var(--fg); }
+textarea.code::placeholder { color: var(--muted); font-style: italic; }
+textarea.code::selection { background: color-mix(in srgb, var(--accent) 35%, transparent); color: transparent; }
+.tok-comment { color: var(--muted); font-style: italic; }
+.tok-string { color: var(--ok); }
+.tok-number { color: var(--warn); }
+.tok-kw { color: var(--kw); }
+.tok-builtin { color: var(--accent); font-weight: 600; }
+.tok-fn { color: var(--info); }
 .check { display: inline-flex; align-items: center; gap: 4px; cursor: pointer; }
 .check[hidden] { display: none; }
 .writes-on .writes-check { color: var(--warn); font-weight: 600; }
 .output pre.prints { margin-top: 6px; }
 .table-wrap { overflow: auto; max-height: 50vh; border: 1px solid var(--line); border-radius: 6px; margin-top: 4px; }
 .table-wrap th { position: sticky; top: 0; background: var(--surface); font-family: var(--mono); }
-.code-help { margin-top: 12px; padding-top: 8px; border-top: 1px solid var(--line); }
 .help-title { font-weight: 600; margin: 6px 0 2px; }
 .help-list { margin: 0 0 4px; padding-left: 14px; list-style: '- '; }
 .help-list li { margin: 2px 0; color: var(--muted); }
@@ -244,8 +283,8 @@ textarea.code:focus { outline: 2px solid var(--accent-soft); border-color: var(-
 .copy-btn:hover::before, .copy-btn:focus-visible::before, .copy-btn.copied::before { opacity: 1; }
 .copy-btn.copied::before { content: attr(data-done); }
 .table-wrap td { font-family: var(--mono); font-size: 11px; white-space: pre-wrap; }
-/* Code tab: suggestions under the editor */
-.suggest { position: relative; list-style: none; margin: 2px 0 0; padding: 2px 0; max-height: 180px; overflow: auto;
+/* Code tab: suggestions under the caret (left / top set by suggest.js) */
+.suggest { font: var(--sans); /* not the editor's monospace, which it sits in */ position: absolute; z-index: 5; min-width: 220px; max-width: 100%; list-style: none; margin: 0; padding: 2px 0; max-height: 180px; overflow: auto;
   border: 1px solid var(--line); border-radius: 6px; background: var(--surface); box-shadow: 0 4px 12px rgba(0,0,0,.15); }
 .suggest li { display: flex; gap: 8px; align-items: baseline; padding: 2px 8px; cursor: pointer; }
 .suggest li .name { white-space: nowrap; }

@@ -1,6 +1,7 @@
 // Record tab: identity/metadata of the current record and every field with its definition and value.
 import { fmtValue, reverseDeps } from './logic.js';
-import { call, cached, fieldsOf, el, pre, errBox, pill, empty, kv, block, expandable, filterBox, copyable, listHead } from '../../shared/ui.js';
+import { call, cached, fieldsOf } from '../../shared/bridge.js';
+import { el, pre, errBox, pill, empty, kv, block, expandable, filterBox, copyable, listHead } from '../../shared/ui.js';
 import { _t } from '../../shared/i18n.js';
 
 export function renderRecord(s, state) {

@@ -1,7 +1,8 @@
 // View tab: inheritance tree of the current view, the action, form field modifiers (+ page picker), context & domain.
 import { buildViewTree } from './logic.js';
 import { pageFormFields, pagePick } from './page.js';
-import { exec, execOrThrow, call, el, pre, pill, details, kv, block, expandable, filterBox, copyable, odooLink, listHead, splitRow } from '../../shared/ui.js';
+import { exec, execOrThrow, call } from '../../shared/bridge.js';
+import { el, pre, pill, details, kv, block, expandable, filterBox, copyable, odooLink, listHead, splitRow } from '../../shared/ui.js';
 import { _t, N_ } from '../../shared/i18n.js';
 
 let picked = null; // field name clicked with the page picker, shown once on the next render

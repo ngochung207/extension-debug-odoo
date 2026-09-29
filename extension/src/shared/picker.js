@@ -2,7 +2,7 @@
 // searching: the word being typed (after the last ;) filters the list by name / title / author, ticking a module puts
 // its name in place of that word, typing a name ticks its box. Enter picks the match (the exact name, else the first
 // shown) while a word is being typed; with nothing being typed ("sale; ") it is left to the form.
-import { splitList, lastToken, pickInList, unpickInList } from '../features/translations/logic.js';
+import { splitList, lastToken, pickInList, unpickInList } from './list.js';
 import { el } from './ui.js';
 
 /**

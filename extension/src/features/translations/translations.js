@@ -1,7 +1,9 @@
 // Translations tab: exports the .pot template + the .po of each language for several apps, with Odoo's own export
 // wizard, and downloads every file straight to Downloads/<module>/i18n/ (<module>.pot, <lang>.po): nothing to unpack.
-import { NEW_LANG, splitList, resolveLangs, resolveModules, b64ToBytes, gunzip, untar } from './logic.js';
-import { call, cached, installedModules, el, pill, card, errBox, formValues, saveForm } from '../../shared/ui.js';
+import { NEW_LANG, resolveLangs, resolveModules, b64ToBytes, gunzip, untar } from './logic.js';
+import { call, cached, installedModules } from '../../shared/bridge.js';
+import { el, pill, card, errBox, formValues, saveForm } from '../../shared/ui.js';
+import { splitList } from '../../shared/list.js';
 import { modulePicker } from '../../shared/picker.js';
 import { _t } from '../../shared/i18n.js';
 

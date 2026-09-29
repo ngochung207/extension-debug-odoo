@@ -1,7 +1,8 @@
 // Perf tab: Odoo's built-in server profiler (/web/set_profiling → ir.profile rows), read back per request.
 import { sqlSummary, appFrame } from './logic.js';
 import { pageFetch } from '../../shared/page.js';
-import { exec, rpc, call, fieldsOf, el, pre, pill, details, empty, card, errBox, expandable, filteredList, listHead, splitRow } from '../../shared/ui.js';
+import { exec, rpc, call, fieldsOf } from '../../shared/bridge.js';
+import { el, pre, pill, details, empty, card, errBox, expandable, filteredList, listHead, splitRow } from '../../shared/ui.js';
 import { _t, N_ } from '../../shared/i18n.js';
 
 const COLLECTORS = 'sql,traces_async';

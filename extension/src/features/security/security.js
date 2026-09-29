@@ -3,10 +3,8 @@ import { rulesFor, modeVerdict, ruleEvalContext, auditModel, checkInstance, user
 import { pageEvalDomains, pageProbe } from './page.js';
 import { MODES, pickGroupField } from '../../shared/odoo.js';
 import { pageGo } from '../../shared/page.js';
-import {
-  exec, call, cached, uncache, sessionInfo, fieldsOf, readAcls, readRules, cookieFlags,
-  el, pre, pill, triPill, details, empty, errBox, block, expandable, copyable, listHead,
-} from '../../shared/ui.js';
+import { exec, call, cached, uncache, sessionInfo, fieldsOf, readAcls, readRules, cookieFlags } from '../../shared/bridge.js';
+import { el, pre, pill, triPill, details, empty, errBox, block, expandable, copyable, listHead } from '../../shared/ui.js';
 import { _t, N_ } from '../../shared/i18n.js';
 
 const KEY_GROUPS = ['group_system', 'group_erp_manager', 'group_no_one', 'group_user', 'group_portal', 'group_public'];

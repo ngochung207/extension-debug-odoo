@@ -1,9 +1,8 @@
 // Panel shell (in an iframe inside the Odoo page): header (status), tab switching, binding to its tab.
-// The debug mode switch is in the toolbar popup (src/popup/).
-// Settings live in the toolbar popup (src/popup/).
-// Each tab's content lives in src/features/<tab>/.
+// The debug mode switch and the settings live in the toolbar popup (src/popup/); each tab's content in src/features/<tab>/.
 import { lang, loadLang, translateDom, _t } from '../shared/i18n.js';
-import { $, tabId, setTab, exec, el, pill, empty, clearCache, clearForms, copyable } from '../shared/ui.js';
+import { tabId, setTab, exec, clearCache } from '../shared/bridge.js';
+import { $, el, pill, empty, clearForms, copyable } from '../shared/ui.js';
 import { pageState } from '../shared/page.js';
 import { renderRecord } from '../features/record/record.js';
 import { renderView, setPicked } from '../features/view/view.js';

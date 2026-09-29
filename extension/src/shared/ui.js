@@ -1,51 +1,7 @@
-// Shared panel helpers: talking to the inspected tab, cached reads, a tiny DOM builder.
-import { pageRpc } from './page.js';
-import { MODES } from './odoo.js';
+// Panel UI helpers: a tiny DOM builder, the panel's widgets (cards, filtered lists, expandable rows), what was typed in the forms.
 import { _t } from './i18n.js';
 
-export let tabId = null;
-export const setTab = (t) => { tabId = t?.id ?? null; };
 export const $ = (s) => document.querySelector(s);
-
-/** Runs a self-contained page function in the tab's MAIN world, reusing the Odoo session. */
-export async function exec(func, ...args) {
-  if (tabId == null) return { error: _t('No tab is open.') };
-  try {
-    const [r] = await chrome.scripting.executeScript({ target: { tabId }, world: 'MAIN', func, args });
-    return r?.result ?? null;
-  } catch (e) {
-    return { error: String(e.message || e) };
-  }
-}
-
-/** exec() for page functions returning { error } with an N_-marked msgid: throws the translated message. */
-export async function execOrThrow(func, fallback, ...args) {
-  const r = await exec(func, ...args);
-  if (!r || r.error) throw new Error(_t(r?.error || fallback));
-  return r;
-}
-
-export async function rpc(route, params) {
-  const r = await exec(pageRpc, route, params);
-  if (!r) throw new Error(_t('No response — is this an Odoo page?'));
-  if (r.error) throw Object.assign(new Error(r.error), { traceback: r.traceback });
-  return r.result;
-}
-export const call = (model, method, args = [], kwargs = {}) =>
-  rpc(`/web/dataset/call_kw/${model}/${method}`, { model, method, args, kwargs });
-
-// ---------- cached reads: data that only changes on a page load, kept until then (or ⟳), shared by every tab ----------
-const cache = new Map();
-export function cached(key, fn) {
-  if (!cache.has(key)) {
-    const p = fn();
-    p.catch(() => cache.get(key) === p && cache.delete(key)); // a failure is retried on the next render
-    cache.set(key, p);
-  }
-  return cache.get(key);
-}
-export const uncache = (key) => cache.delete(key);
-export const clearCache = () => cache.clear();
 
 // ---------- what was typed in a tab's form: kept across re-renders and reloads, forgotten on ⟳ Reload Data ----------
 const FORM = 'odoo-debug-form:'; // localStorage of the panel (every instance): a per-viewer convenience only
@@ -53,29 +9,6 @@ export const formValues = (key) => { try { return JSON.parse(localStorage.getIte
 export const saveForm = (key, values) => { try { localStorage.setItem(FORM + key, JSON.stringify(values)); } catch { /* storage off */ } };
 export function clearForms() {
   try { for (const k of Object.keys(localStorage)) if (k.startsWith(FORM)) localStorage.removeItem(k); } catch { /* storage off */ }
-}
-
-const FIELD_ATTRS = ['string', 'type', 'relation', 'store', 'depends', 'related', 'readonly', 'required', 'groups'];
-export const sessionInfo = () => cached('session', () => rpc('/web/session/get_session_info', {}));
-export const fieldsOf = (model) => cached(`fields ${model}`, () => call(model, 'fields_get', [], { attributes: FIELD_ATTRS }));
-// latest_version = the version installed in the DB (installed_version is computed from the manifest on disk: slow)
-export const installedModules = () => cached('modules', () => call('ir.module.module', 'search_read', [[['state', '=', 'installed']]],
-  { fields: ['name', 'shortdesc', 'latest_version', 'author'], order: 'name' }));
-
-// ACLs and rules are not cached: they are what people edit while debugging.
-const PERMS = MODES.map((m) => `perm_${m}`);
-const ofModel = (model) => [[['model_id.model', '=', model]]];
-export const readAcls = (model) => call('ir.model.access', 'search_read', ofModel(model), { fields: ['name', 'group_id', ...PERMS] });
-export const readRules = (model) => call('ir.rule', 'search_read', ofModel(model), { fields: ['name', 'groups', 'domain_force', 'global', ...PERMS] });
-
-/** session_id cookie flags only: the token value never leaves this function. */
-export async function cookieFlags(url) {
-  try {
-    const c = await chrome.cookies.get({ url, name: 'session_id' });
-    return c && { httpOnly: c.httpOnly, secure: c.secure, sameSite: c.sameSite, session: c.session };
-  } catch {
-    return null;
-  }
 }
 
 // DOM builder: text only goes through textContent, Odoo data never touches innerHTML.
@@ -112,7 +45,7 @@ export const odooLink = (origin, path, text = '↗') => el('a', {
 export const splitRow = (info, ...actions) => el('div', { class: 'row split' },
   el('div', { class: 'row grow' }, info), el('div', { class: 'actions' }, actions));
 
-/** Column names of a .list, shown only when the list is laid out as a table (wide panel, see panel.css). */
+/** Column names of a .list, shown only when the list is laid out as a table (wide panel, see ui.css). */
 export const listHead = (main, desc) => el('div', { class: 'list-head', 'aria-hidden': 'true' }, el('span', {}, main), el('span', {}, desc));
 
 // Cards start closed; the ones opened stay open across re-renders and reloads (localStorage of the panel, every instance).
@@ -193,7 +126,7 @@ export function filterBox(items, placeholder, onCount) {
   return input;
 }
 
-/** List item that toggles open on click / Enter / Space (open shows everything below its .row, see panel.css)
+/** List item that toggles open on click / Enter / Space (open shows everything below its .row, see ui.css)
  * and builds its detail pane the first time (`detail` may be async, or omitted: the row only unfolds). */
 export function expandable(li, detail) {
   li.tabIndex = 0;

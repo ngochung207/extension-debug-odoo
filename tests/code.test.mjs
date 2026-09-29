@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { codeKey, formatValue, printText, cellText, toTable, callStats, isRecordset, completionAt, rankSuggestions } from '../extension/src/features/code/logic.js';
+import { codeKey, formatValue, printText, cellText, toTable, callStats, isRecordset, completionAt, rankSuggestions, tokenize, smartEdit } from '../extension/src/features/code/logic.js';
 import { pageRunCode, pageSoftReload } from '../extension/src/features/code/page.js';
 
 // ---------- logic ----------
@@ -239,12 +239,76 @@ test('completionAt: what to suggest where the cursor is', () => {
   assert.equal(at('x = 1 |'), null);
 });
 
+test('completionAt: a variable has the model it was assigned from, not the last env[...] written', () => {
+  const at = (s) => completionAt(s.replace('|', ''), s.indexOf('|'));
+  const code = "partners = await env['res.partner'].search([])\nconst orders = await env['sale.order'].search([])\n";
+  assert.deepEqual(at(code + 'partners.na|'), { kind: 'member', model: 'res.partner', path: [], prefix: 'na', from: code.length + 9, on: 'partners' });
+  assert.equal(at(code + 'orders.partner_id.na|').model, 'sale.order');
+  assert.deepEqual(at(code + 'orders.partner_id.na|').path, ['partner_id']);
+  // through another variable and a loop: the path follows the relations
+  const loop = code + 'const line_ids = orders.order_line\nfor (const l of orders.order_line) print(l.pro|';
+  assert.deepEqual([at(loop).model, at(loop).path], ['sale.order', ['order_line']]);
+  assert.deepEqual(at(code + 'const first = partners.partner_id\nfirst.na|').path, ['partner_id']);
+  // a variable reassigned goes with its new model; `==` is not an assignment
+  assert.equal(at(code + "partners = env['res.users'].browse(1)\npartners.lo|").model, 'res.users');
+  assert.equal(at("x = env['a.b']\nif (x == env['c.d']) x.f|").model, 'a.b');
+  // env.user & co
+  assert.deepEqual([at('env.user.partner_id.na|').model, at('env.user.partner_id.na|').path, at('env.user.partner_id.na|').on], ['res.users', ['partner_id'], null]);
+  assert.equal(at('u = env.company\nu.na|').model, 'res.company');
+  assert.equal(at("env['res.partner'];\nenv.us|").on, 'env');
+  // strings: the fields of the variable whose method is called
+  const so = code + "orders.mapped('partner_id.co|";
+  assert.deepEqual([at(so).kind, at(so).model, at(so).path, at(so).prefix], ['field', 'sale.order', ['partner_id'], 'co']);
+  assert.equal(at(code + "partners.filtered_domain([['na|").model, 'res.partner');
+  assert.equal(at(code + "env['sale.order'].search([['na|").model, 'sale.order'); // no variable: the last env[…]
+});
+
+test('tokenize: colours, half-typed code included, every character kept', () => {
+  const code = "const a = await env['sale.order'].search([['x', '=', 1]]) // hi\nprint('un";
+  const t = tokenize(code);
+  assert.equal(t.map(([, x]) => x).join(''), code);
+  const of = (type) => t.filter(([k]) => k === type).map(([, x]) => x);
+  assert.deepEqual(of('kw'), ['const', 'await']);
+  assert.deepEqual(of('builtin'), ['env', 'print']);
+  assert.deepEqual(of('string'), ["'sale.order'", "'x'", "'='", "'un"]);
+  assert.deepEqual(of('fn'), ['search']); // after a dot and before a "(": a call
+  assert.deepEqual(of('number'), ['1']);
+  assert.deepEqual(of('comment'), ['// hi']);
+  assert.deepEqual(tokenize('rec.state, a.b(1)').filter(([k]) => k).map(([k, x]) => `${k}:${x}`), ['prop:state', 'prop:b'.replace('prop', 'fn'), 'number:1']);
+  assert.deepEqual(tokenize('/* open'), [['comment', '/* open']]);
+});
+
+test('smartEdit: pairs, skipping the closer, Backspace, Enter', () => {
+  const edit = (s, key) => { // "|" is the caret, «…» a selection → [the text after the edit, the selection]
+    const sel = /«(.*)»/.exec(s);
+    const plain = s.replace(/[«»|]/g, '');
+    const from = sel ? sel.index : s.indexOf('|');
+    const e = smartEdit(plain, from, sel ? from + sel[1].length : from, key);
+    return e && [plain.slice(0, e.from) + e.text + plain.slice(e.to), e.select];
+  };
+  assert.deepEqual(edit('env|', '['), ['env[]', [4, 4]]);
+  assert.deepEqual(edit("env[|]", "'"), ["env['']", [5, 5]]);
+  assert.deepEqual(edit("env['|']", "'"), ["env['']", [6, 6]], 'the closing quote is skipped');
+  assert.deepEqual(edit('f(a|)', ')'), ['f(a)', [4, 4]]);
+  assert.deepEqual(edit('a|b', '('), null, 'not before a word');
+  assert.deepEqual(edit('don|', "'"), null, 'an apostrophe after a word');
+  assert.deepEqual(edit("'a|'", '('), null, 'nothing paired inside a string');
+  assert.deepEqual(edit('x = «ab»', '('), ['x = (ab)', [5, 7]], 'a selection is wrapped');
+  assert.deepEqual(edit('f(|)', 'Backspace'), ['f', [1, 1]], 'both of an empty pair');
+  assert.deepEqual(edit("f(a|)", 'Backspace'), null);
+  assert.deepEqual(edit('  a = 1|', 'Enter'), ['  a = 1\n  ', [10, 10]], 'keeps the indent');
+  assert.deepEqual(edit('f({|})', 'Enter'), ['f({\n  \n})', [6, 6]], 'the closer moves to its own line');
+  assert.deepEqual(edit('if (x) {|', 'Enter'), ['if (x) {\n  ', [11, 11]]);
+  assert.deepEqual(edit('a|', 'ArrowLeft'), null);
+});
+
 test('rankSuggestions: prefix matches first, then the ones containing it, not the word already typed', () => {
   const items = ['partner_id', 'partner_invoice_id', 'company_id', 'user_id'].map((label) => ({ label }));
   assert.deepEqual(rankSuggestions(items, 'part').map((i) => i.label), ['partner_id', 'partner_invoice_id']);
   assert.deepEqual(rankSuggestions(items, '_id').map((i) => i.label), ['partner_id', 'partner_invoice_id', 'company_id', 'user_id']);
   assert.deepEqual(rankSuggestions(items, 'user_id'), []);
   assert.equal(rankSuggestions(items, '').length, 4);
+  assert.deepEqual(rankSuggestions(['name_search', 'name_get', 'name', 'x'].map((label) => ({ label })), 'na').map((i) => i.label), ['name', 'name_get', 'name_search']);
 });
 
 test('assigning a field writes it, in order with the other calls', async () => {

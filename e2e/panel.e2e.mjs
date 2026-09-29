@@ -71,7 +71,7 @@ test('Code tab: a search runs as the logged-in user, writes are blocked by defau
   const run = async (code) => {
     await click('.tabs [data-tab="code"]');
     await panel.waitForSelector('#code textarea.code');
-    await panel.$eval('#code textarea.code', (t, v) => { t.value = v; }, code);
+    await panel.$eval('#code textarea.code', (t, v) => { t.value = v; t.dispatchEvent(new Event('input')); }, code);
     await click('#code .console .btn');
     await panel.waitForFunction(() => {
       const o = document.querySelector('#code .output');
@@ -99,6 +99,27 @@ test('Code tab: a search runs as the logged-in user, writes are blocked by defau
   assert.deepEqual([count.status, count.value], ['ok', '0'], 'the blocked create never reached the server');
 });
 
+test('Code tab: the editor colours the code and types smartly (pairs, indent, one undo step)', async () => {
+  await click('.tabs [data-tab="code"]');
+  await panel.$eval('#code textarea.code', (t) => { t.value = ''; t.dispatchEvent(new Event('input')); t.focus(); });
+  await page.keyboard.type("x = env['res.users'].search([['login', '=', 'admin']])");
+  await page.keyboard.press('Enter');
+  await page.keyboard.type('if (x) {');
+  await page.keyboard.press('Enter');
+  await page.keyboard.type('print(x)');
+  const editor = () => panel.$eval('#code', (s) => ({
+    value: s.querySelector('textarea.code').value,
+    strings: [...s.querySelectorAll('.tok-string')].map((n) => n.textContent),
+    builtins: [...s.querySelectorAll('.tok-builtin')].map((n) => n.textContent),
+    lines: s.querySelectorAll('pre.hl > div').length, // one numbered block per line
+  }));
+  const e = await editor();
+  assert.equal(e.value, "x = env['res.users'].search([['login', '=', 'admin']])\nif (x) {\n  print(x)\n}", 'pairs closed once, the } on its own line, indented');
+  assert.deepEqual(e.strings, ["'res.users'", "'login'", "'='", "'admin'"]);
+  assert.deepEqual(e.builtins, ['env', 'print']);
+  assert.equal(e.lines, 4);
+});
+
 test('Code tab: suggestions offer the installed models, their fields and the recordset methods', async () => {
   const hints = async (code) => {
     await panel.$eval('#code textarea.code', (t, v) => {
@@ -119,6 +140,35 @@ test('Code tab: suggestions offer the installed models, their fields and the rec
   await hints("env['res.us");
   await panel.$eval('#code textarea.code', (t) => t.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true })));
   assert.equal(await panel.$eval('#code textarea.code', (t) => t.value), "env['res.users", 'Enter inserts the first one');
+});
+
+test('Code tab: a pick replaces the word, also after a skipped closer and under an IME (Vietnamese Telex)', async () => {
+  await click('.tabs [data-tab="code"]');
+  const value = () => panel.$eval('#code textarea.code', (t) => t.value);
+  const open = () => panel.waitForFunction(() => !document.querySelector('#code .suggest').hidden, { timeout: 10_000 });
+  const reset = () => panel.$eval('#code textarea.code', (t) => { t.value = ''; t.dispatchEvent(new Event('input')); t.focus(); });
+
+  // typing ' then ] skips the closers the editor put in: the list of models must not stay open for Enter to pick from
+  await reset();
+  await page.keyboard.type("x = env['res.users']");
+  await page.keyboard.press('Enter');
+  assert.equal(await value(), "x = env['res.users']\n");
+
+  // Telex composes "search" (s is a tone key): Tab arrives while it composes, the IME commits the word after it
+  await reset();
+  await page.keyboard.type("env['res.users'].");
+  await panel.$eval('#code textarea.code', (t) => {
+    t.dispatchEvent(new CompositionEvent('compositionstart'));
+    t.setRangeText('search', t.selectionStart, t.selectionEnd, 'end');
+    t.dispatchEvent(new InputEvent('input', { isComposing: true }));
+  });
+  await open();
+  await panel.$eval('#code textarea.code', (t) => {
+    t.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', code: 'Tab', keyCode: 229, isComposing: true, bubbles: true, cancelable: true }));
+    t.dispatchEvent(new CompositionEvent('compositionend', { data: 'search' }));
+  });
+  await panel.waitForFunction(() => document.querySelector('#code textarea.code').value.endsWith('_read'), { timeout: 5_000 }).catch(() => {});
+  assert.equal(await value(), "env['res.users'].search_read");
 });
 
 test('Translations tab: one input searches the installed modules and holds the ticked ones', async () => {
