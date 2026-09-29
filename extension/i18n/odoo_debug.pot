@@ -220,25 +220,25 @@ msgstr ""
 
 #: src/features/apps/apps.js:132
 #: src/features/apps/apps.js:132
-#: src/features/apps/apps.js:145
+#: src/features/apps/apps.js:144
 msgid "Filters"
 msgstr ""
 
-#: src/features/apps/apps.js:141
+#: src/features/apps/apps.js:140
 msgid " or "
 msgstr ""
 
-#: src/features/apps/apps.js:142
-#: src/features/apps/apps.js:147
+#: src/features/apps/apps.js:141
+#: src/features/apps/apps.js:146
 msgid "Category"
 msgstr ""
 
-#: src/features/apps/apps.js:148
+#: src/features/apps/apps.js:147
 msgid "All Categories"
 msgstr ""
 
-#: src/features/apps/apps.js:152
-#: src/features/apps/apps.js:152
+#: src/features/apps/apps.js:151
+#: src/features/apps/apps.js:151
 msgid "Remove"
 msgstr ""
 

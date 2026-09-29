@@ -220,25 +220,25 @@ msgstr "Bổ sung"
 
 #: src/features/apps/apps.js:132
 #: src/features/apps/apps.js:132
-#: src/features/apps/apps.js:145
+#: src/features/apps/apps.js:144
 msgid "Filters"
 msgstr "Bộ lọc"
 
-#: src/features/apps/apps.js:141
+#: src/features/apps/apps.js:140
 msgid " or "
 msgstr " hoặc "
 
-#: src/features/apps/apps.js:142
-#: src/features/apps/apps.js:147
+#: src/features/apps/apps.js:141
+#: src/features/apps/apps.js:146
 msgid "Category"
 msgstr "Danh mục"
 
-#: src/features/apps/apps.js:148
+#: src/features/apps/apps.js:147
 msgid "All Categories"
 msgstr "Mọi danh mục"
 
-#: src/features/apps/apps.js:152
-#: src/features/apps/apps.js:152
+#: src/features/apps/apps.js:151
+#: src/features/apps/apps.js:151
 msgid "Remove"
 msgstr "Bỏ"
 
