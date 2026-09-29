@@ -59,7 +59,7 @@ page to copy its technical name.
 **Record** in full screen: from 760px wide, lists become 2-column tables with sticky headers.
 <img src="website/screenshots/full-record.png" alt="Record tab in full screen">
 
-**Security**: why an operation is allowed or blocked, rule by rule, plus user risks.
+**Security**: the picked user's groups (add / remove), and why an operation is allowed or blocked, rule by rule.
 <img src="website/screenshots/full-security.png" alt="Security tab">
 
 **Perf**: profiled requests, with N+1 suspects and the slowest queries of each one.

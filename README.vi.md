@@ -55,7 +55,7 @@ Ngoài ra: bấm vào tên field, model hay xmlid trong bảng để copy, và <
 **Record** ở chế độ toàn màn hình: từ 760px trở lên, danh sách thành bảng 2 cột với tiêu đề cố định.
 <img src="website/screenshots/full-record.png" alt="Tab Record toàn màn hình">
 
-**Security**: vì sao một thao tác được phép hay bị chặn, từng rule một, kèm rủi ro của user.
+**Security**: group của user đã chọn (thêm / gỡ), và vì sao một thao tác được phép hay bị chặn, từng rule một.
 <img src="website/screenshots/full-security.png" alt="Tab Security">
 
 **Perf**: các request đã đo, với câu SQL nghi N+1 và các câu chậm nhất của từng request.

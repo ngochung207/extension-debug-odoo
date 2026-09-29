@@ -92,7 +92,8 @@ await settings({ theme: 'light' });
 await full(true);
 await show('record', ['Identity', 'Fields']);
 await shot('full-record');
-await show('security', ['View as user', 'User risks', 'Why allowed']);
+await show('security', ['View as user', 'Groups', 'Why allowed']);
+await panel.$eval('#security .toolbar:has(+ .groups) input', (i) => { i.value = 'sales'; i.dispatchEvent(new Event('input')); }); // a few groups, with some to add
 await shot('full-security');
 
 // Perf: start the profiler, reload the page (the panel comes back, full screen, on this tab) so its requests are
