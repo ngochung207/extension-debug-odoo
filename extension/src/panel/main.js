@@ -12,7 +12,7 @@ import { renderSecurity } from '../features/security/security.js';
 import { renderPerf } from '../features/perf/perf.js';
 import { renderTranslations } from '../features/translations/translations.js';
 import { renderApps } from '../features/apps/apps.js';
-import { renderCode } from '../features/code/code.js';
+import { renderCode, forgetRun } from '../features/code/code.js';
 import { loadSettings } from '../shared/settings.js';
 
 const settings = await loadSettings();
@@ -105,7 +105,7 @@ try { saved = sessionStorage.getItem(TAB_KEY); } catch { /* storage off */ }
 if ([...document.querySelectorAll('.tabs button')].some((b) => b.dataset.tab === saved)) showTab(saved, false);
 for (const b of document.querySelectorAll('.tabs button')) b.addEventListener('click', () => showTab(b.dataset.tab));
 for (const b of document.querySelectorAll('[data-debug]')) b.addEventListener('click', () => exec(pageDebug, b.dataset.debug));
-$('#refresh').addEventListener('click', () => { clearCache(); clearForms(); refresh(); }); // every tab re-renders, forms empty
+$('#refresh').addEventListener('click', () => { clearCache(); clearForms(); forgetRun(); refresh(); }); // every tab re-renders, forms (and the Code tab's last run) empty
 
 // ---------- bound to the tab it is embedded in (iframe from src/content/bubble.js; a page reload recreates it) ----------
 let timer = null;

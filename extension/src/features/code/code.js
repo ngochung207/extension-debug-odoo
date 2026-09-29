@@ -1,19 +1,40 @@
 // Code tab: JS with an ORM-like `env` (env['sale.order'].search(...), .read(), .write()…), run in the Odoo page through
 // /web/dataset/call_kw with the logged-in session, so the server applies that user's rights to every call.
-// Read-only unless "Allow Writes" is ticked (never remembered): every call is its own transaction, committed at once.
+// Read-only unless "Allow Writes" is ticked (kept only while the panel lives): every call is committed at once.
 import { pageRunCode, pageSoftReload } from './page.js';
 import { codeKey, formatValue, printText, toTable, callStats, MAX_ROWS, completionAt, rankSuggestions, METHODS, ENV_MEMBERS, COMMAND_MEMBERS, GLOBALS } from './logic.js';
 import { exec, sessionInfo, el, pill, pre, details, block, copyable, cached, call, fieldsOf } from '../../shared/ui.js';
 import { _t } from '../../shared/i18n.js';
 
 // The code is kept in the panel's localStorage, one per Odoo origin (codeKey): a snippet written for one server is not
-// what opens on another. ⟳ Reload Data does not clear it: a snippet is work, not a filter. "Allow Writes" is never kept.
+// what opens on another. ⟳ Reload Data does not clear it: a snippet is work, not a filter.
 const loadCode = (key) => { try { return localStorage.getItem(key); } catch { return null; } };
 const saveCode = (key, code) => { try { localStorage.setItem(key, code); } catch { /* storage off */ } };
-// "Auto Refresh" is a preference, kept (every origin): it only acts once Allow Writes is ticked, which is never kept.
+// "Auto Refresh" is a preference, kept (every origin): it only acts once Allow Writes is ticked, which is never stored.
 const REFRESH_KEY = 'odoo-debug-auto-refresh';
 const loadRefresh = () => { try { return localStorage.getItem(REFRESH_KEY) === '1'; } catch { return false; } };
 const saveRefresh = (on) => { try { localStorage.setItem(REFRESH_KEY, on ? '1' : '0'); } catch { /* storage off */ } };
+
+// What a run leaves, kept while this panel lives: the tab is rebuilt on every panel refresh (Odoo navigation, and the
+// soft_reload that Auto Refresh triggers), which must not untick Allow Writes nor drop the result and calls.
+// ⟳ Reload Data forgets it (forgetRun), like the other tabs' forms; a page reload recreates the panel, so it starts over.
+const last = { writes: false, autoRefresh: loadRefresh(), running: false, result: null, refreshed: null };
+let view = null; // the console on screen: a run that ends after a rebuild is shown in the new one
+export function forgetRun() {
+  if (last.running) return; // the run in flight still ends where it should
+  Object.assign(last, { writes: false, result: null, refreshed: null });
+}
+
+/** Shows `last` in the console on screen: Running…, then the result (and whether the page was refreshed). */
+function paint() {
+  if (!view) return;
+  view.run.disabled = last.running;
+  if (last.running && !last.result) return view.output.replaceChildren(el('div', { class: 'loading' }, _t('Running…')));
+  if (!last.result) return view.output.replaceChildren();
+  const parts = result(last.result);
+  if (last.refreshed) parts[0].append(refreshPill(last.refreshed));
+  view.output.replaceChildren(...parts);
+}
 
 export function renderCode(s, state) {
   block(s, 'console', _t('ORM Console'), async () => {
@@ -25,24 +46,31 @@ export function renderCode(s, state) {
     });
     editor.setAttribute('autocapitalize', 'off');
     editor.setAttribute('autocomplete', 'off');
-    const writes = el('input', { type: 'checkbox' });
-    const autoRefresh = el('input', { type: 'checkbox', checked: loadRefresh() });
-    autoRefresh.addEventListener('change', () => saveRefresh(autoRefresh.checked));
+    const writes = el('input', { type: 'checkbox', checked: last.writes });
+    const autoRefresh = el('input', { type: 'checkbox', checked: last.autoRefresh });
+    autoRefresh.addEventListener('change', () => { last.autoRefresh = autoRefresh.checked; saveRefresh(autoRefresh.checked); });
     const refreshBox = el('label', { class: 'check', title: _t('After writes, reload the data of the view on screen (Odoo\'s soft_reload), without reloading the page') },
       autoRefresh, _t('Auto Refresh'));
     const run = el('button', { class: 'btn', type: 'button', title: _t('Run (⌘/Ctrl+Enter)') }, _t('Run'));
     const output = el('div', { class: 'output' });
 
     const go = async () => {
-      if (run.disabled) return;
-      run.disabled = true;
+      if (last.running) return;
+      Object.assign(last, { running: true, result: null, refreshed: null });
       saveCode(key, editor.value);
-      output.replaceChildren(el('div', { class: 'loading' }, _t('Running…')));
-      const r = await exec(pageRunCode, editor.value, { readonly: !writes.checked, context: info.user_context || {}, uid: info.uid });
-      run.disabled = false;
-      output.replaceChildren(...result(r));
-      // what the page shows is stale: reload the view's data, if asked to
-      if (autoRefresh.checked && callStats(r?.calls).written) output.firstChild?.append(await refreshPage());
+      paint();
+      try {
+        const r = await exec(pageRunCode, editor.value, { readonly: !last.writes, context: info.user_context || {}, uid: info.uid });
+        last.result = r;
+        paint();
+        // what the page shows is stale: reload the view's data, if asked to (the panel is rebuilt meanwhile: see `last`)
+        if (last.writes && last.autoRefresh && callStats(r?.calls).written) {
+          last.refreshed = await exec(pageSoftReload) || { error: 'No response — is this an Odoo page?' };
+        }
+      } finally {
+        last.running = false;
+        paint();
+      }
     };
     run.addEventListener('click', go);
     const hints = suggester(editor);
@@ -75,11 +103,14 @@ export function renderCode(s, state) {
       output,
       help());
     const flag = () => {
+      last.writes = writes.checked;
       root.classList.toggle('writes-on', writes.checked);
       refreshBox.hidden = !writes.checked; // nothing to refresh after a read-only run
     };
     writes.addEventListener('change', flag);
     flag();
+    view = { run, output };
+    paint(); // the last result, when the tab was rebuilt after (or during) a run
     return root;
   });
 }
@@ -244,12 +275,10 @@ function help() {
     el('div', { class: 'note' }, _t('The code runs in the Odoo page with its own JavaScript rights: only run code you understand. An endless loop freezes the page (reload it).')));
 }
 
-/** After writes: the view on screen reloads its data (Odoo's soft_reload), like web_refresher's button. */
-async function refreshPage() {
-  const r = await exec(pageSoftReload);
-  if (r?.ok) return pill(_t('page refreshed'), 'info');
-  const why = r?.error ? _t(r.error) : _t('No response — is this an Odoo page?');
-  return el('span', { class: 'pill', title: why }, _t('page not refreshed'));
+/** Outcome of Auto Refresh (pageSoftReload: { ok } or { error }) for the result header. */
+function refreshPill(r) {
+  if (r.ok) return pill(_t('page refreshed'), 'info');
+  return el('span', { class: 'pill', title: _t(r.error) }, _t('page not refreshed'));
 }
 
 /** The run's outcome: prints, error or return value, then the calls made. */
