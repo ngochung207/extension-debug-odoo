@@ -117,7 +117,7 @@ msgstr "Đang chạy…"
 #: src/features/code/code.js:289
 #: src/features/code/code.js:328
 #: src/features/rpc/rpc.js:36
-#: src/features/translations/translations.js:76
+#: src/features/translations/translations.js:88
 msgid "error"
 msgstr "lỗi"
 
@@ -1011,63 +1011,68 @@ msgstr "Model này không có record rule."
 msgid "Assumes the user selected every allowed company. Rules of parent models through _inherits are not counted. This is a simulation; for an exact answer about yourself, see the Access tab (has_access runs on the server)."
 msgstr "Giả định user chọn tất cả công ty được phép. Rule của model cha qua _inherits không được tính. Đây là mô phỏng; muốn kết quả chính xác cho chính bạn, xem tab Access (has_access chạy thật trên server)."
 
-#: src/features/translations/translations.js:21
-msgid "Export & Download"
-msgstr "Xuất & tải về"
-
-#: src/features/translations/translations.js:23
+#: src/features/translations/translations.js:12
 msgid "Apps To Export"
 msgstr "Apps cần xuất"
 
-#: src/features/translations/translations.js:26
+#: src/features/translations/translations.js:20
+msgid "Export & Download"
+msgstr "Xuất & tải về"
+
+#: src/features/translations/translations.js:20
+msgid "Export & Download · 1 file"
+msgstr "Xuất & tải về · 1 file"
+
+#: src/features/translations/translations.js:20
+msgid "Export & Download · %s files"
+msgstr "Xuất & tải về · %s file"
+
+#: src/features/translations/translations.js:37
 msgid "%s/%s installed modules"
 msgstr "%s/%s module đã cài"
 
-#: src/features/translations/translations.js:27
+#: src/features/translations/translations.js:38
 msgid "Technical names, separated by ;"
 msgstr "Tên kỹ thuật, phân cách bằng ;"
 
-#: src/features/translations/translations.js:28
-msgid "Languages"
-msgstr "Ngôn ngữ"
+#: src/features/translations/translations.js:39
+msgid "Languages:"
+msgstr "Ngôn ngữ:"
 
-#: src/features/translations/translations.js:29
-msgid "Active:"
-msgstr "Đang bật:"
+#: src/features/translations/translations.js:40
+msgid "Always exported: the empty template, as <module>.pot"
+msgstr "Luôn được xuất: file mẫu trống, thành <module>.pot"
 
-#: src/features/translations/translations.js:31
-msgid "Always exported too: New Language (Empty translation template), as <module>.pot."
-msgstr "Luôn xuất kèm: New Language (Empty translation template), thành file <module>.pot."
-
-#: src/features/translations/translations.js:53
-msgid "Enter at least one app."
-msgstr "Nhập ít nhất một app."
-
-#: src/features/translations/translations.js:55
-msgid "Not an active language: %s. Active: %s"
-msgstr "Ngôn ngữ chưa được bật: %s. Đang bật: %s"
-
-#: src/features/translations/translations.js:58
-msgid "Unknown app: %s"
-msgstr "Không có app: %s"
-
-#: src/features/translations/translations.js:59
-msgid "Not installed: %s"
-msgstr "Chưa cài: %s"
-
-#: src/features/translations/translations.js:62
-msgid "Exporting…"
-msgstr "Đang xuất…"
-
-#: src/features/translations/translations.js:65
+#: src/features/translations/translations.js:40
+#: src/features/translations/translations.js:77
 msgid "Template (.pot)"
 msgstr "Template (.pot)"
 
+#: src/features/translations/translations.js:65
+msgid "Enter at least one app."
+msgstr "Nhập ít nhất một app."
+
+#: src/features/translations/translations.js:67
+msgid "Not an active language: %s. Active: %s"
+msgstr "Ngôn ngữ chưa được bật: %s. Đang bật: %s"
+
+#: src/features/translations/translations.js:70
+msgid "Unknown app: %s"
+msgstr "Không có app: %s"
+
+#: src/features/translations/translations.js:71
+msgid "Not installed: %s"
+msgstr "Chưa cài: %s"
+
 #: src/features/translations/translations.js:74
+msgid "Exporting…"
+msgstr "Đang xuất…"
+
+#: src/features/translations/translations.js:86
 msgid "%s files"
 msgstr "%s file"
 
-#: src/features/translations/translations.js:74
+#: src/features/translations/translations.js:86
 msgid "nothing to export"
 msgstr "không có gì để xuất"
 

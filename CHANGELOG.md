@@ -16,7 +16,7 @@ All notable changes to this project are documented here. Format: [Keep a Changel
 - Tabs have no side padding (cards edge to edge), and a tab with a single card shows it without a title to click.
 - **Perf tab** in one card: status and Start / Stop on one line, a one-line note, then the requests with a filter and a count. Rows read like the RPC tab (method + model), with id · time · CPU below; the panel's own requests (ir.profile reads, session info) are left out.
 - **Apps tab** in one card: the modules to act on are typed or ticked in the list below the input, which searches every module (installed or not, with its state) as you type; with nothing typed it lists the installed modules, as the former Installed modules card did.
-- **Translations tab**: one input for the apps to export: the word being typed searches the installed modules (name or title) listed below it, ticking one puts its name in the input, Enter picks the match; typing the names still works.
+- **Translations tab**: one input for the apps to export: the word being typed searches the installed modules (name or title) listed below it, ticking one puts its name in the input, Enter picks the match; typing the names still works. Languages are toggles (the active ones, the choice remembered), next to a locked Template (.pot) chip; the list takes the panel's height and a full-width button at the bottom says how many files it will download.
 
 ## [0.1.1] - 2026-09-29
 

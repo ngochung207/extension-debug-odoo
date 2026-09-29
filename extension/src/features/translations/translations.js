@@ -9,35 +9,47 @@ export function renderTranslations(s) {
   card(s, async () => { // the tab's only card: no title to open it by
     const langs = await cached('active langs', () => call('res.lang', 'search_read', [[['active', '=', true]]], { fields: ['code', 'name'], order: 'code' }));
     const last = formValues('translations');
-    const apps = el('input', { type: 'text', placeholder: _t('Search or type: sale; stock; my_module'), value: last.apps || '', spellcheck: false });
-    const langIn = el('input', { type: 'text', placeholder: 'vi_VN; fr_BE; fr_CA', value: last.langs || '', spellcheck: false });
-    const add = (code) => {
-      if (splitList(langIn.value).includes(code)) return;
-      langIn.value = [...splitList(langIn.value), code].join('; ');
-      langIn.focus();
-    };
+    const apps = el('input', { type: 'text', placeholder: _t('Search or type: sale; stock; my_module'), 'aria-label': _t('Apps To Export'), value: last.apps || '', spellcheck: false });
+    // Languages: the active ones as toggles (the wizard exports nothing else), the last choice kept
+    const picked = new Set(resolveLangs(splitList(last.langs), langs.map((l) => l.code)).codes);
+    const save = () => saveForm('translations', { apps: apps.value, langs: [...picked].join('; ') });
     const count = el('span', { class: 'muted count-note' }); // how many installed modules match what is typed
+    const btn = el('button', { class: 'btn', type: 'submit' });
+    const summary = () => { // what the button will download: every app gets the template + one .po per language
+      const files = splitList(apps.value).length * (picked.size + 1);
+      btn.textContent = !files ? _t('Export & Download') : files === 1 ? _t('Export & Download · 1 file') : _t('Export & Download · %s files', files);
+    };
+    const chip = (l) => {
+      const b = el('button', { type: 'button', class: 'chip', title: l.name, 'aria-pressed': String(picked.has(l.code)) }, l.code);
+      b.addEventListener('click', () => {
+        if (picked.has(l.code)) picked.delete(l.code); else picked.add(l.code);
+        b.setAttribute('aria-pressed', String(picked.has(l.code)));
+        save();
+        summary();
+      });
+      return b;
+    };
     const log = el('ul', { class: 'steps' });
-    const btn = el('button', { class: 'btn', type: 'submit' }, _t('Export & Download'));
     const form = el('form', { class: 'form' },
-      el('label', {}, el('span', { class: 'row' }, _t('Apps To Export'), el('span', { class: 'grow' }), count), apps),
+      el('div', { class: 'row picker-head' }, apps, count), // no label: the placeholder and aria-label say what it is
       // no read access to ir.module.module: typing the names still works
       await installedModules().then(
         (mods) => modulePicker(apps, mods, { countEl: count, count: (n, total) => _t('%s/%s installed modules', n, total) }),
         () => el('div', { class: 'note' }, _t('Technical names, separated by ;'))),
-      el('label', { class: 'mt' }, _t('Languages'), langIn),
-      el('div', { class: 'row mt' }, el('span', { class: 'muted' }, _t('Active:')),
-        langs.map((l) => el('button', { type: 'button', class: 'chip', title: l.name, onclick: () => add(l.code) }, l.code))),
-      el('div', { class: 'note' }, _t('Always exported too: New Language (Empty translation template), as <module>.pot.')),
-      el('div', { class: 'mt' }, btn),
+      el('div', { class: 'row mt langs' }, el('span', { class: 'muted' }, _t('Languages:')),
+        el('button', { type: 'button', class: 'chip', 'aria-pressed': 'true', disabled: true, title: _t('Always exported: the empty template, as <module>.pot') }, _t('Template (.pot)')),
+        langs.map(chip)),
+      el('div', { class: 'row mt fill' }, btn),
       log);
+    apps.addEventListener('input', summary);
+    summary();
     form.addEventListener('submit', async (ev) => {
       ev.preventDefault();
-      saveForm('translations', { apps: apps.value, langs: langIn.value });
+      save();
       btn.disabled = true;
       log.replaceChildren();
       try {
-        await exportAll(splitList(apps.value), splitList(langIn.value), langs.map((l) => l.code), log);
+        await exportAll(splitList(apps.value), [...picked], langs.map((l) => l.code), log);
       } catch (e) {
         log.append(el('li', {}, errBox(e)));
       } finally {

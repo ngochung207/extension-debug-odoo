@@ -148,6 +148,14 @@ test('Translations tab: one input searches the installed modules and holds the t
 
   await tick('web');
   assert.equal((await state()).apps, 'base_import; base_setup; ', 'unticking removes it');
+
+  // languages are toggles; the button says how many files it will download (template + one .po per language, per app)
+  const button = () => panel.$eval('#translations button[type=submit]', (b) => b.textContent);
+  assert.equal(await button(), 'Export & Download · 2 files');
+  await panel.$eval('#translations .langs .chip:not(:disabled)', (c) => c.click());
+  assert.equal(await panel.$eval('#translations .langs .chip:not(:disabled)', (c) => c.getAttribute('aria-pressed')), 'true');
+  assert.equal(await button(), 'Export & Download · 4 files');
+  await panel.$eval('#translations .langs .chip:not(:disabled)', (c) => c.click()); // back off
 });
 
 test('Apps tab: installed modules listed, the others found by the word being typed', async () => {
