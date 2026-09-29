@@ -100,6 +100,28 @@ test('Code tab: a search runs as the logged-in user, writes are blocked by defau
   assert.deepEqual([count.status, count.value], ['ok', '0'], 'the blocked create never reached the server');
 });
 
+test('Code tab: suggestions offer the installed models, their fields and the recordset methods', async () => {
+  const hints = async (code) => {
+    await panel.$eval('#code textarea.code', (t, v) => {
+      document.querySelector('#code .suggest').hidden = true; // not the list of the previous call
+      t.focus();
+      t.value = v;
+      t.setSelectionRange(v.length, v.length);
+      t.dispatchEvent(new Event('input'));
+    }, code);
+    await panel.waitForFunction(() => !document.querySelector('#code .suggest').hidden, { timeout: 10_000 });
+    return panel.$$eval('#code .suggest li .name', (ns) => ns.map((n) => n.textContent));
+  };
+  assert.equal((await hints("env['res.us"))[0], 'res.users');
+  assert.ok((await hints("env['res.users'].search([['log")).includes('login'));
+  const members = await hints("u = env['res.users'];\nu.partner_id.");
+  assert.ok(members.includes('read') && members.includes('email'), `members: ${members}`); // email: a res.partner field
+
+  await hints("env['res.us");
+  await panel.$eval('#code textarea.code', (t) => t.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true })));
+  assert.equal(await panel.$eval('#code textarea.code', (t) => t.value), "env['res.users", 'Enter inserts the first one');
+});
+
 test('no error from the extension in the console', () => {
   assert.deepEqual(errors, []);
 });

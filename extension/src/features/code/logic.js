@@ -44,3 +44,74 @@ export function toTable(v, max = MAX_ROWS) {
 export function callStats(calls = []) {
   return { total: calls.length, writes: calls.filter((c) => c.write).length, errors: calls.filter((c) => c.error).length };
 }
+
+// ---------- suggestions in the editor ----------
+
+/** The recordset API of page.js (pageRunCode), suggested after a dot: [name, signature]. */
+export const METHODS = [
+  ['search', '(domain, { limit, order })'], ['search_read', '(domain, fields)'], ['search_count', '(domain)'],
+  ['read', '(fields)'], ['read_group', '(domain, fields, groupby)'], ['fields_get', '()'], ['name_search', '(name)'],
+  ['browse', '(ids)'], ['with_context', '(ctx)'], ['ensure_one', '()'], ['exists', '()'], ['mapped', "('a.b')"],
+  ['filtered_domain', '(domain)'], ['create', '(vals)'], ['write', '(vals)'], ['unlink', '()'], ['copy', '(defaults)'],
+  ['call', '(method, args, kwargs)'], ['ids', ''], ['id', ''], ['length', ''],
+];
+export const ENV_MEMBERS = [['user', ''], ['company', ''], ['companies', ''], ['uid', ''], ['context', ''], ['lang', ''], ['ref', "('module.xmlid')"]];
+export const COMMAND_MEMBERS = [['create', '(vals)'], ['update', '(id, vals)'], ['delete', '(id)'], ['unlink', '(id)'], ['link', '(id)'], ['clear', '()'], ['set', '(ids)']];
+export const GLOBALS = [['env', "['model']"], ['print', '(…)'], ['Command', '.create / link / set…'], ['await', ''], ['return', '']];
+
+/**
+ * What to suggest at `pos` in `code`, or null:
+ * - { kind: 'model', prefix }: inside env['…'
+ * - { kind: 'field', model, path, prefix }: inside a string ('state', 'partner_id.na'), fields of the last env['model']
+ *   before the cursor, following `path` (the relational fields before the last dot)
+ * - { kind: 'member', model, path, prefix, on }: after a dot (orders.partner_id.na): methods and fields; `on` is the
+ *   first word (env., Command. have their own members)
+ * - { kind: 'global', prefix }: a bare word (env, print…)
+ * `from` is where the replaced prefix starts. No type inference: every variable is taken as a recordset of the last
+ * env['model'] written before the cursor (ponytail: enough for one-model snippets; a real JS parser if it is not).
+ */
+export function completionAt(code, pos) {
+  const before = code.slice(0, pos);
+  const line = before.slice(before.lastIndexOf('\n') + 1);
+  const at = (prefix) => pos - prefix.length;
+  const envs = [...before.matchAll(/env\[\s*(['"])([\w.]+)\1\s*\]/g)];
+  const model = envs.at(-1)?.[2] || null;
+
+  let m = /env\[\s*(['"])([\w.]*)$/.exec(before);
+  if (m) return { kind: 'model', prefix: m[2], from: at(m[2]) };
+
+  m = /(['"])([\w.]*)$/.exec(line);
+  if (m) {
+    const quotes = line.slice(0, m.index).split(m[1]).length - 1;
+    if (quotes % 2) return null; // the closing quote of a string: nothing to suggest after it
+    if (!model) return null;
+    const parts = m[2].split('.');
+    const prefix = parts.pop();
+    return { kind: 'field', model, path: parts, prefix, from: at(prefix) };
+  }
+
+  // a.b.c.pre or env['x'].pre / (…).pre: the chain after the first word are fields
+  m = /(?:([A-Za-z_$][\w$]*)|[\])])((?:\.[A-Za-z_]\w*)*)\.([A-Za-z_]\w*)?$/.exec(line);
+  if (m) {
+    const prefix = m[3] || '';
+    const path = m[2].split('.').filter(Boolean);
+    return { kind: 'member', model, path, prefix, from: at(prefix), on: m[1] || null };
+  }
+
+  m = /(?:^|[^\w$.'"])([A-Za-z_]\w*)$/.exec(line);
+  if (m) return { kind: 'global', prefix: m[1], from: at(m[1]) };
+  return null;
+}
+
+/** items: [{ label, detail }] → the ones matching `prefix`: starting with it first, then containing it; at most `max`. */
+export function rankSuggestions(items, prefix, max = 50) {
+  const p = prefix.toLowerCase();
+  const starts = [], contains = [];
+  for (const it of items) {
+    const l = it.label.toLowerCase();
+    if (l === p) continue; // already typed in full
+    if (l.startsWith(p)) starts.push(it);
+    else if (p && l.includes(p)) contains.push(it);
+  }
+  return [...starts, ...contains].slice(0, max);
+}

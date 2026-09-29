@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { formatValue, printText, cellText, toTable, callStats, isRecordset } from '../extension/src/features/code/logic.js';
+import { formatValue, printText, cellText, toTable, callStats, isRecordset, completionAt, rankSuggestions } from '../extension/src/features/code/logic.js';
 import { pageRunCode } from '../extension/src/features/code/page.js';
 
 // ---------- logic ----------
@@ -216,4 +216,28 @@ test('using a field without await says so; scope keeps page globals safe', async
   assert.equal(globalThis.name, undefined); // … but `name = …` did not write one
   const undef = await run(`return missing_var`);
   assert.equal(undef.r.error.name, 'ReferenceError');
+});
+
+test('completionAt: what to suggest where the cursor is', () => {
+  const at = (s) => completionAt(s.replace('|', ''), s.indexOf('|'));
+  assert.deepEqual(at("env['sale.or|"), { kind: 'model', prefix: 'sale.or', from: 5 });
+  assert.deepEqual(at('env["|'), { kind: 'model', prefix: '', from: 5 });
+  const so = "const so = await env['sale.order'].search([['sta|";
+  assert.deepEqual(at(so), { kind: 'field', model: 'sale.order', path: [], prefix: 'sta', from: so.indexOf('|') - 3 });
+  assert.deepEqual(at("env['sale.order'];\nso.mapped('partner_id.coun|')").path, ['partner_id']);
+  assert.equal(at("env['sale.order'];\nprint('done'|"), null, 'after a closing quote');
+  assert.equal(at("print('x|"), null, 'a string before any env[...]');
+  assert.deepEqual(at("env['sale.order'];\nso.partner_id.na|"), { kind: 'member', model: 'sale.order', path: ['partner_id'], prefix: 'na', from: 33, on: 'so' });
+  assert.deepEqual(at("env['res.partner'].sea|"), { kind: 'member', model: 'res.partner', path: [], prefix: 'sea', from: 19, on: null });
+  assert.equal(at('env.|').on, 'env');
+  assert.deepEqual(at('ret|'), { kind: 'global', prefix: 'ret', from: 0 });
+  assert.equal(at('x = 1 |'), null);
+});
+
+test('rankSuggestions: prefix matches first, then the ones containing it, not the word already typed', () => {
+  const items = ['partner_id', 'partner_invoice_id', 'company_id', 'user_id'].map((label) => ({ label }));
+  assert.deepEqual(rankSuggestions(items, 'part').map((i) => i.label), ['partner_id', 'partner_invoice_id']);
+  assert.deepEqual(rankSuggestions(items, '_id').map((i) => i.label), ['partner_id', 'partner_invoice_id', 'company_id', 'user_id']);
+  assert.deepEqual(rankSuggestions(items, 'user_id'), []);
+  assert.equal(rankSuggestions(items, '').length, 4);
 });

@@ -224,3 +224,10 @@ textarea.code:focus { outline: 2px solid var(--accent-soft); border-color: var(-
 .help-list code { color: var(--fg); font-weight: 600; overflow-wrap: anywhere; }
 .code-help pre { margin-top: 4px; }
 .table-wrap td { font-family: var(--mono); font-size: 11px; white-space: pre-wrap; }
+/* Code tab: suggestions under the editor */
+.suggest { position: relative; list-style: none; margin: 2px 0 0; padding: 2px 0; max-height: 180px; overflow: auto;
+  border: 1px solid var(--line); border-radius: 6px; background: var(--surface); box-shadow: 0 4px 12px rgba(0,0,0,.15); }
+.suggest li { display: flex; gap: 8px; align-items: baseline; padding: 2px 8px; cursor: pointer; }
+.suggest li .name { white-space: nowrap; }
+.suggest li .muted { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.suggest li[aria-selected=true] { background: var(--accent-soft); }
