@@ -170,6 +170,26 @@ test('Apps tab: installed modules listed, the others found by the word being typ
   assert.ok((await shown()).some((m) => m.name === 'crm_sms'), 'a ticked module stays in the list');
 });
 
+test('every tab is in sight: the tab strip wraps instead of scrolling', async () => {
+  const hidden = await panel.$$eval('.tabs button', (bs) => {
+    const nav = bs[0].parentElement.getBoundingClientRect();
+    return bs.filter((b) => { const r = b.getBoundingClientRect(); return r.left < nav.left || r.right > nav.right; }).map((b) => b.dataset.tab);
+  });
+  assert.deepEqual(hidden, []);
+});
+
+test('toolbar popup: the debug mode of the page, switched from there', async () => {
+  const [ext] = (await browser.extensions()).values();
+  await ext.triggerAction(page);
+  const popup = await (await browser.waitForTarget((t) => t.url().endsWith('/src/popup/popup.html'))).asPage();
+  await popup.waitForSelector('#debug button.on');
+  assert.equal(await popup.$eval('#debug button.on', (b) => b.textContent), 'off');
+  await Promise.all([page.waitForNavigation(), popup.$$eval('#debug button', (bs) => bs.find((b) => b.textContent === 'debug').click())]);
+  assert.equal(await page.evaluate(() => window.odoo.debug), '1');
+  await page.goto(page.url().replace('debug=1', 'debug=0')); // back to off for what follows
+  await page.waitForSelector('.o_form_view');
+});
+
 test('no error from the extension in the console', () => {
   assert.deepEqual(errors, []);
 });

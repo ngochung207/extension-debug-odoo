@@ -202,7 +202,7 @@ msgid "Not found: %s (Activate runs Update Apps List first)"
 msgstr ""
 
 #: src/features/code/code.js:45
-#: src/panel/panel.html:30
+#: src/panel/panel.html:25
 msgid "Code"
 msgstr ""
 
@@ -1175,80 +1175,72 @@ msgstr ""
 msgid "The form is read-only: every field is readonly."
 msgstr ""
 
-#: src/panel/main.js:34
+#: src/panel/main.js:35
 msgid "Cannot read this tab: %s"
 msgstr ""
 
-#: src/panel/main.js:34
+#: src/panel/main.js:35
 msgid "The current tab is not an Odoo page."
 msgstr ""
 
-#: src/panel/main.js:90
+#: src/panel/main.js:87
 msgid "Not an Odoo page"
 msgstr ""
 
 #: src/panel/panel.html:16
-msgid "Odoo debug mode"
-msgstr ""
-
-#: src/panel/panel.html:17
-msgid "Turn Debug Off"
-msgstr ""
-
-#: src/panel/panel.html:21
-#: src/panel/panel.html:21
+#: src/panel/panel.html:16
 msgid "Reload Data"
 msgstr ""
 
-#: src/panel/panel.html:22
+#: src/panel/panel.html:17
 msgid "Minimize (the Odoo Debug button reopens it)"
 msgstr ""
 
-#: src/panel/panel.html:22
+#: src/panel/panel.html:17
 msgid "Minimize"
 msgstr ""
 
-#: src/panel/panel.html:23
+#: src/panel/panel.html:18
 msgid "Full Screen (Esc to exit)"
 msgstr ""
 
-#: src/panel/panel.html:23
+#: src/panel/panel.html:18
 msgid "Full Screen"
 msgstr ""
 
-#: src/panel/panel.html:25
+#: src/panel/panel.html:20
 msgid "Connecting…"
 msgstr ""
 
-#: src/panel/panel.html:27
+#: src/panel/panel.html:22
 msgid "Record"
 msgstr ""
 
-#: src/panel/panel.html:28
+#: src/panel/panel.html:23
 msgid "View"
 msgstr ""
 
-#: src/panel/panel.html:29
+#: src/panel/panel.html:24
 msgid "RPC"
 msgstr ""
 
-#: src/panel/panel.html:31
+#: src/panel/panel.html:26
 msgid "Access"
 msgstr ""
 
-#: src/panel/panel.html:32
+#: src/panel/panel.html:27
 msgid "Security"
 msgstr ""
 
-#: src/panel/panel.html:33
+#: src/panel/panel.html:28
 msgid "Translations"
 msgstr ""
 
-#: src/panel/panel.html:34
+#: src/panel/panel.html:29
 msgid "Apps"
 msgstr ""
 
-#: src/panel/panel.html:35
+#: src/panel/panel.html:30
 msgid "Perf"
 msgstr ""
 
@@ -1260,27 +1252,32 @@ msgstr ""
 msgid "Show / Hide Panel"
 msgstr ""
 
-#: src/popup/popup.html:24
+#: src/popup/popup.html:22
+#: src/popup/popup.html:23
+msgid "Debug Mode"
+msgstr ""
+
+#: src/popup/popup.html:26
 msgid "Language"
 msgstr ""
 
-#: src/popup/popup.html:28
+#: src/popup/popup.html:30
 msgid "Theme"
 msgstr ""
 
-#: src/popup/popup.html:31
+#: src/popup/popup.html:33
 msgid "Tip: ⌥/Alt + click a field on the Odoo page to copy its technical name."
 msgstr ""
 
-#: src/popup/popup.js:6
+#: src/popup/popup.js:7
 msgid "System"
 msgstr ""
 
-#: src/popup/popup.js:6
+#: src/popup/popup.js:7
 msgid "Light"
 msgstr ""
 
-#: src/popup/popup.js:6
+#: src/popup/popup.js:7
 msgid "Dark"
 msgstr ""
 

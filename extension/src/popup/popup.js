@@ -2,6 +2,7 @@
 import { LANGS, lang, loadLang, translateDom, _t, N_ } from '../shared/i18n.js';
 import { THEMES, applyTheme, loadSettings } from '../shared/settings.js';
 import { $, el } from '../shared/ui.js';
+import { pageDebug } from '../shared/page.js';
 
 const THEME_LABELS = { auto: N_('System'), light: N_('Light'), dark: N_('Dark') };
 
@@ -28,6 +29,14 @@ if (chrome.extension.getViews({ type: 'popup' }).includes(window)) {
   $('#host').textContent = tab?.url ? new URL(tab.url).host : '';
   $('#toggle').addEventListener('click', () => {
     chrome.tabs.sendMessage(tab.id, { type: 'odoo-toggle' }).catch(() => {}); // content script missing: page opened before install
+    window.close();
+  });
+  // Odoo's debug mode of this tab: reloads it with ?debug=0 / 1 / assets (Odoo keeps it in the session)
+  const [{ result: debug = '' } = {}] = await chrome.scripting.executeScript({ target: { tabId: tab.id }, world: 'MAIN', func: () => window.odoo?.debug || '' })
+    .catch(() => []); // not scriptable (chrome:// …): no current mode shown
+  const current = debug.split(',').includes('assets') ? 'assets' : debug ? '1' : '0';
+  segmented($('#debug'), [['0', 'off'], ['1', 'debug'], ['assets', 'assets']], current, async (mode) => {
+    await chrome.scripting.executeScript({ target: { tabId: tab.id }, world: 'MAIN', func: pageDebug, args: [mode] }).catch(() => {});
     window.close();
   });
   $('#page').hidden = false;

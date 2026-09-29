@@ -37,9 +37,11 @@ code, pre, .mono { font-family: var(--mono); font-size: 11px; }
 @keyframes spin { to { transform: rotate(360deg); } }
 .context { padding: 0 12px 6px; display: flex; gap: 6px; align-items: center; flex-wrap: wrap; color: var(--muted); min-height: 22px; }
 .context .model { font-family: var(--mono); font-weight: 600; color: var(--fg); }
-.tabs { display: flex; padding: 0 4px; overflow-x: auto; scrollbar-width: none; }
-.tabs button { flex: 1 0 auto; border: 0; background: none; padding: 7px 10px; color: var(--muted); border-bottom: 2px solid transparent; white-space: nowrap; }
+.tabs { display: flex; padding: 0 4px; }
+.tabs button { flex: 1 0 auto; border: 0; background: none; padding: 7px 8px; color: var(--muted); border-bottom: 2px solid transparent; white-space: nowrap; }
 .tabs button.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+/* every tab in sight, nothing to scroll: a narrow panel (beside the page) lays the 9 tabs out 5 + 4 */
+@media (max-width: 699px) { .tabs { display: grid; grid-template-columns: repeat(5, 1fr); } .tabs button { padding: 7px 2px; } }
 .count { display: inline-block; min-width: 16px; padding: 0 4px; border-radius: 8px; background: var(--accent-soft); color: var(--accent); font-size: 10px; font-weight: 600; }
 .count:empty { display: none; }
 

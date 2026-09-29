@@ -92,7 +92,7 @@ The extension is not on the Chrome Web Store yet; install it unpacked (Chrome, E
 - **Minimize**: <kbd>−</kbd> in the panel header hides the panel back to the round button, which reopens it as it was.
 - **Full screen**: <kbd>⤢</kbd> in the panel header, <kbd>Esc</kbd> or <kbd>⤡</kbd> to leave. Open state and full
   screen survive page reloads.
-- **Debug mode**: the `off` / `debug` / `assets` switch in the header reloads Odoo in that mode.
+- **Debug mode**: click the toolbar icon; its `off` / `debug` / `assets` switch shows the page's mode and reloads Odoo in the one picked.
 - **Cards**: each tab is a stack of cards, closed at first; a card loads its data once opened, and open / closed cards
   stay so across reloads. Click a list row to open its details (label, storage, module, full value…), again to close.
 - **Copy**: click a field name, model, xmlid or parameter in the panel; <kbd>⌥ Alt</kbd> + click a form field, label,

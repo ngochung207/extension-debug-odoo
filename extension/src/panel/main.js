@@ -1,9 +1,10 @@
-// Panel shell (in an iframe inside the Odoo page): header (status, debug switch), tab switching, binding to its tab.
+// Panel shell (in an iframe inside the Odoo page): header (status), tab switching, binding to its tab.
+// The debug mode switch is in the toolbar popup (src/popup/).
 // Settings live in the toolbar popup (src/popup/).
 // Each tab's content lives in src/features/<tab>/.
 import { lang, loadLang, translateDom, _t } from '../shared/i18n.js';
 import { $, tabId, setTab, exec, el, pill, empty, clearCache, clearForms, copyable } from '../shared/ui.js';
-import { pageState, pageDebug } from '../shared/page.js';
+import { pageState } from '../shared/page.js';
 import { renderRecord } from '../features/record/record.js';
 import { renderView, setPicked } from '../features/view/view.js';
 import { mountRpc, addRpc, reloadRpc } from '../features/rpc/rpc.js';
@@ -67,10 +68,6 @@ function showTab(name, render = true) {
     b.classList.toggle('active', b.dataset.tab === name);
     b.setAttribute('aria-selected', b.dataset.tab === name);
   }
-  // narrow panel: scroll the tab strip to it (not scrollIntoView, which may scroll the Odoo page around the iframe too)
-  const nav = $('.tabs'), b = $(`.tabs [data-tab="${name}"]`);
-  const nr = nav.getBoundingClientRect(), br = b.getBoundingClientRect();
-  if (br.left < nr.left || br.right > nr.right) nav.scrollLeft += br.left - nr.left - (nr.width - br.width) / 2;
   for (const s of document.querySelectorAll('.tab')) s.classList.toggle('active', s.id === name);
   restoreScroll(name);
   if (render) renderActive();
@@ -90,9 +87,6 @@ async function refresh() {
     ? [el('span', {}, _t('Not an Odoo page'))]
     : [model ? copyable(model, 'model') : el('span', { class: 'model' }, '—'), resId && pill(`#${resId}`, 'accent'), viewType && pill(viewType),
       state.action?.name && el('span', {}, state.action.name)].filter(Boolean))); // replaceChildren would print null/undefined
-  for (const b of document.querySelectorAll('.seg button')) {
-    b.classList.toggle('on', !!state.odoo && (b.dataset.debug === '0' ? !state.debug : state.debug.split(',').includes(b.dataset.debug)));
-  }
   rendered.clear();
   restoreScroll(active); // the re-render empties the tab first: keep where it was
   renderActive();
@@ -104,7 +98,6 @@ let saved = null;
 try { saved = sessionStorage.getItem(TAB_KEY); } catch { /* storage off */ }
 if ([...document.querySelectorAll('.tabs button')].some((b) => b.dataset.tab === saved)) showTab(saved, false);
 for (const b of document.querySelectorAll('.tabs button')) b.addEventListener('click', () => showTab(b.dataset.tab));
-for (const b of document.querySelectorAll('[data-debug]')) b.addEventListener('click', () => exec(pageDebug, b.dataset.debug));
 $('#refresh').addEventListener('click', () => { clearCache(); clearForms(); forgetRun(); refresh(); }); // every tab re-renders, forms (and the Code tab's last run) empty
 
 // ---------- bound to the tab it is embedded in (iframe from src/content/bubble.js; a page reload recreates it) ----------

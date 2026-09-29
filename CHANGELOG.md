@@ -11,6 +11,9 @@ All notable changes to this project are documented here. Format: [Keep a Changel
 
 ### Changed
 
+- Every tab in sight, nothing to scroll: beside the page the 9 tabs are laid out 5 + 4, in full screen on one row.
+- The debug mode switch (`off` / `debug` / `assets`) moves from the panel header to the toolbar popup, which shows the page's current mode.
+- Tabs have no side padding (cards edge to edge), and a tab with a single card shows it without a title to click.
 - **Perf tab** in one card: status and Start / Stop on one line, a one-line note, then the requests with a filter and a count. Rows read like the RPC tab (method + model), with id · time · CPU below; the panel's own requests (ir.profile reads, session info) are left out.
 - **Apps tab** in one card: the modules to act on are typed or ticked in the list below the input, which searches every module (installed or not, with its state) as you type; with nothing typed it lists the installed modules, as the former Installed modules card did.
 - **Translations tab**: one input for the apps to export: the word being typed searches the installed modules (name or title) listed below it, ticking one puts its name in the input, Enter picks the match; typing the names still works.
