@@ -1,13 +1,13 @@
 // End-to-end: the unpacked extension in Chrome (Puppeteer) against a real Odoo (e2e/compose.yml).
 //   ODOO_VERSION=19 docker compose -f e2e/compose.yml up -d --wait && npm run e2e
-// ODOO_URL (default http://localhost:8069), ODOO_DB / ODOO_LOGIN / ODOO_PASSWORD (default e2e / admin / admin, as in compose.yml).
 import assert from 'node:assert/strict';
 import { test, before, after } from 'node:test';
 import puppeteer from 'puppeteer';
+import { EXT, openForm, openPanel } from './odoo.mjs';
 
-const ODOO = process.env.ODOO_URL || 'http://localhost:8069';
-const EXT = new URL('../extension', import.meta.url).pathname;
 const ext = (s) => String(s).includes('chrome-extension://');
+// element.click(), not a mouse click: Puppeteer misplaces those in an iframe inside a closed shadow root
+const click = (sel) => panel.$eval(sel, (n) => n.click());
 
 let browser, page, panel;
 const errors = []; // uncaught errors, console.error and failed loads of the extension (the Odoo page's own ones are not ours)
@@ -36,35 +36,13 @@ before(async () => {
   page.on('pageerror', (e) => ext(e.stack) && errors.push(`page: ${e.message}`));
   page.on('console', (m) => m.type() === 'error' && ext(m.location()?.url) && errors.push(`console: ${m.text()}`));
 
-  // A fresh Odoo 19 database: the first webclient load stays blank, and so does every later one in the same browser
-  // profile (without the extension too). Take that first load in a throwaway context, then log in for real.
-  const warmup = await browser.createBrowserContext();
-  await openUserForm(await warmup.newPage(), 20_000).catch(() => {});
-  await warmup.close();
-  await openUserForm(page, 120_000);
+  await openForm(browser, page, 'action-base.action_res_users/2'); // Administrator's user form
 });
-
-/** Logs in and opens the Administrator's user form. */
-async function openUserForm(p, timeout) {
-  await p.goto(`${ODOO}/web/login`);
-  const uid = await p.evaluate(async (params) => { // not the login form: typing in it is flaky, this sets the same cookie
-    const r = await fetch('/web/session/authenticate', {
-      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ jsonrpc: '2.0', params }),
-    }).then((res) => res.json());
-    return r.result?.uid ?? JSON.stringify(r.error?.data?.message || r.error);
-  }, { db: process.env.ODOO_DB || 'e2e', login: process.env.ODOO_LOGIN || 'admin', password: process.env.ODOO_PASSWORD || 'admin' });
-  assert.equal(typeof uid, 'number', `login: ${uid}`);
-  await p.goto(`${ODOO}/odoo/action-base.action_res_users/2`);
-  await p.waitForSelector('.o_form_view', { timeout });
-}
 
 after(() => browser?.close());
 
 test('the button appears on the Odoo page and opens the panel', async () => {
-  await page.waitForSelector('odoo-debug-root'); // its shadow root is closed: click the button where it sits
-  const { w, h } = await page.evaluate(() => ({ w: innerWidth, h: innerHeight }));
-  await page.mouse.click(w - 16 - 20, h - 8 - 20); // default spot: bottom right, 16px from the side, 8px above the edge
-  panel = await page.waitForFrame((f) => f.url().endsWith('/src/panel/panel.html'), { timeout: 15_000 });
+  panel = await openPanel(page);
   await Promise.all(browser.targets().map(watch));
   await panel.waitForFunction(() => document.querySelector('#status')?.textContent.includes('res.users'), { timeout: 15_000 });
 });
@@ -73,7 +51,8 @@ test('every tab opens its cards without an error', async () => {
   const tabs = await panel.$$eval('.tabs button', (bs) => bs.map((b) => b.dataset.tab));
   assert.ok(tabs.length >= 9, `tabs: ${tabs}`);
   for (const tab of tabs) {
-    await panel.click(`.tabs [data-tab="${tab}"]`);
+    await click(`.tabs [data-tab="${tab}"]`);
+    assert.equal(await panel.$eval(`#${tab}`, (s) => s.classList.contains('active')), true, `${tab} tab shown`);
     await panel.$$eval(`#${tab} details.card`, (cards) => cards.forEach((c) => { c.open = true; }));
     await panel.waitForFunction((t) => [...document.querySelectorAll(`#${t} .card-body`)] // opened cards fill in async
       .every((b) => b.childElementCount && !b.querySelector(':scope > .loading')), { timeout: 30_000 }, tab);
@@ -83,18 +62,18 @@ test('every tab opens its cards without an error', async () => {
 });
 
 test('RPC tab: the calls the webclient made to load the form are listed', async () => {
-  await panel.click('.tabs [data-tab="rpc"]');
+  await click('.tabs [data-tab="rpc"]');
   const methods = await panel.$$eval('#rpc .list .name', (ns) => ns.map((n) => n.textContent));
   assert.ok(methods.includes('web_read'), `methods: ${methods}`);
 });
 
 test('Code tab: a search runs as the logged-in user, writes are blocked by default', async () => {
   const run = async (code) => {
-    await panel.click('.tabs [data-tab="code"]');
+    await click('.tabs [data-tab="code"]');
     await panel.$eval('#code details.card', (c) => { c.open = true; });
     await panel.waitForSelector('#code textarea.code');
     await panel.$eval('#code textarea.code', (t, v) => { t.value = v; }, code);
-    await panel.click('#code .console .btn');
+    await click('#code .console .btn');
     await panel.waitForFunction(() => {
       const o = document.querySelector('#code .output');
       return o.childElementCount && !o.querySelector('.loading');

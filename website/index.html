@@ -272,8 +272,8 @@
     <span class="label" data-l="en">Features</span><span class="label" data-l="vi">Tính năng</span>
     <h2 data-l="en">Developer mode shows what.<br>Odoo Debug shows why.</h2>
     <h2 data-l="vi">Developer mode cho thấy cái gì.<br>Odoo Debug cho thấy vì sao.</h2>
-    <p class="sub" data-l="en">Six tabs for what you usually dig out of the source code, the database or the server log.</p>
-    <p class="sub" data-l="vi">Sáu tab cho những thứ bạn thường phải lục trong source code, database hay log server.</p>
+    <p class="sub" data-l="en">Seven tabs for what you usually dig out of the source code, the database or the server log.</p>
+    <p class="sub" data-l="vi">Bảy tab cho những thứ bạn thường phải lục trong source code, database hay log server.</p>
     <div class="feat">
       <div class="feat-list" role="tablist" aria-orientation="vertical">
         <div class="item">
@@ -287,6 +287,10 @@
         <div class="item">
           <button role="tab" id="t-rpc" aria-selected="false" aria-controls="w-rpc"><span class="t">RPC</span><span class="h" data-l="en">Every call, from page load</span><span class="h" data-l="vi">Mọi lời gọi, từ lúc tải trang</span></button>
           <div class="panel"><ul data-l="en"><li>Live log of JSON-RPC and JSON-2 calls with timing</li><li>Errors with the full Python traceback</li><li>“Why was it blocked?” jumps to Security for <code>AccessError</code>s</li></ul><ul data-l="vi"><li>Nhật ký trực tiếp JSON-RPC và JSON-2 kèm thời gian</li><li>Lỗi kèm đầy đủ traceback Python</li><li>“Vì sao bị chặn?” nhảy sang Security khi gặp <code>AccessError</code></li></ul></div>
+        </div>
+        <div class="item">
+          <button role="tab" id="t-code" aria-selected="false" aria-controls="w-code"><span class="t">Code</span><span class="h" data-l="en">The ORM, as the logged-in user</span><span class="h" data-l="vi">ORM, dưới quyền user đang đăng nhập</span></button>
+          <div class="panel"><ul data-l="en"><li>JavaScript with an ORM-like <code>env</code>: <code>search</code>, <code>read</code>, <code>mapped</code>, any public method</li><li>Fields read like in Python: <code>rec.partner_id.name</code></li><li>Runs with the page's session: that user's ACLs, record rules and companies apply</li><li>Read-only by default; results as a table, with every call made</li></ul><ul data-l="vi"><li>JavaScript với <code>env</code> kiểu ORM: <code>search</code>, <code>read</code>, <code>mapped</code>, mọi method public</li><li>Đọc field như Python: <code>rec.partner_id.name</code></li><li>Chạy bằng phiên của trang: áp ACL, record rule và công ty của user đó</li><li>Mặc định chỉ đọc; kết quả dạng bảng, kèm mọi lời gọi</li></ul></div>
         </div>
         <div class="item">
           <button role="tab" id="t-access" aria-selected="false" aria-controls="w-access"><span class="t">Access</span><span class="h" data-l="en">Your session, your rights</span><span class="h" data-l="vi">Phiên của bạn, quyền của bạn</span></button>
@@ -305,6 +309,7 @@
         <div class="window" id="w-record" role="tabpanel" aria-labelledby="t-record"><div class="bar"><i></i><i></i><i></i><span>Record</span></div><img src="screenshots/full-record.png" width="2880" height="1800" loading="lazy" alt="Record tab"></div>
         <div class="window" id="w-view" role="tabpanel" aria-labelledby="t-view" hidden><div class="bar"><i></i><i></i><i></i><span>View</span></div><img src="screenshots/side-view.png" width="2880" height="1800" loading="lazy" alt="View tab"></div>
         <div class="window" id="w-rpc" role="tabpanel" aria-labelledby="t-rpc" hidden><div class="bar"><i></i><i></i><i></i><span>RPC</span></div><img src="screenshots/side-rpc.png" width="2880" height="1800" loading="lazy" alt="RPC tab"></div>
+        <div class="window" id="w-code" role="tabpanel" aria-labelledby="t-code" hidden><div class="bar"><i></i><i></i><i></i><span>Code</span></div><img src="screenshots/side-code.png" width="2880" height="1800" loading="lazy" alt="Code tab"></div>
         <div class="window" id="w-access" role="tabpanel" aria-labelledby="t-access" hidden><div class="bar"><i></i><i></i><i></i><span>Access</span></div><img src="screenshots/full-access.png" width="2880" height="1800" loading="lazy" alt="Access tab"></div>
         <div class="window" id="w-security" role="tabpanel" aria-labelledby="t-security" hidden><div class="bar"><i></i><i></i><i></i><span>Security</span></div><img src="screenshots/full-security.png" width="2880" height="1800" loading="lazy" alt="Security tab"></div>
         <div class="window" id="w-perf" role="tabpanel" aria-labelledby="t-perf" hidden><div class="bar"><i></i><i></i><i></i><span>Perf</span></div><img src="screenshots/full-perf.png" width="2880" height="1800" loading="lazy" alt="Perf tab"></div>

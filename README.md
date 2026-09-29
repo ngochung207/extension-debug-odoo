@@ -54,6 +54,9 @@ page to copy its technical name.
   </tr>
 </table>
 
+**Code**: the ORM from JavaScript, run as the logged-in user.
+<img src="website/screenshots/side-code.png" alt="Code tab: an ORM search and its result table">
+
 **Record** in full screen: from 760px wide, lists become 2-column tables with sticky headers.
 <img src="website/screenshots/full-record.png" alt="Record tab in full screen">
 
@@ -159,6 +162,16 @@ npm run e2e
 
 `docker compose -f e2e/compose.yml down -v` drops the database; do it before switching `ODOO_VERSION`.
 
+The screenshots in `website/screenshots/` (this README and the website) come from the same setup, with Sales and CRM demo data; retake them after a UI change:
+
+```bash
+ODOO_VERSION=18 ODOO_MODULES=sale_management,crm ODOO_ARGS= docker compose -f e2e/compose.yml up -d --wait
+```
+
+```bash
+npm run screenshots
+```
+
 ### Project structure
 
 ```
@@ -179,8 +192,9 @@ extension/                 the extension itself: exactly what the release zip co
       logic.js             pure logic, no chrome.* / DOM
 website/                   project website; screenshots/ is shared with this README
 tests/                     *.test.mjs, one per logic module
-e2e/                       panel.e2e.mjs (Puppeteer) + compose.yml (Odoo 18 / 19 + PostgreSQL)
+e2e/                       panel.e2e.mjs (Puppeteer) + compose.yml (Odoo 18 / 19 + PostgreSQL) + odoo.mjs (login, open the panel)
 tools/i18n.mjs             npm run i18n: extract strings → .pot, merge into every .po
+tools/screenshots.mjs      npm run screenshots: retake website/screenshots/*.png from a real Odoo
 ```
 
 Paths below are relative to `extension/`.

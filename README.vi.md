@@ -50,6 +50,9 @@ Ngoài ra: bấm vào tên field, model hay xmlid trong bảng để copy, và <
   </tr>
 </table>
 
+**Code**: gọi ORM bằng JavaScript, dưới quyền user đang đăng nhập.
+<img src="website/screenshots/side-code.png" alt="Tab Code: một lệnh search ORM và bảng kết quả">
+
 **Record** ở chế độ toàn màn hình: từ 760px trở lên, danh sách thành bảng 2 cột với tiêu đề cố định.
 <img src="website/screenshots/full-record.png" alt="Tab Record toàn màn hình">
 
@@ -141,6 +144,16 @@ npm run e2e
 
 `docker compose -f e2e/compose.yml down -v` xoá database; chạy lệnh này trước khi đổi `ODOO_VERSION`.
 
+Ảnh trong `website/screenshots/` (README này và website) được chụp từ cùng bộ dựng đó, với dữ liệu demo của Sales và CRM; chụp lại sau mỗi lần đổi giao diện:
+
+```bash
+ODOO_VERSION=18 ODOO_MODULES=sale_management,crm ODOO_ARGS= docker compose -f e2e/compose.yml up -d --wait
+```
+
+```bash
+npm run screenshots
+```
+
 ### Cấu trúc dự án
 
 ```
@@ -161,8 +174,9 @@ extension/                 chính extension: đúng những gì có trong file z
       logic.js             logic thuần, không chrome.* / DOM
 website/                   trang giới thiệu (GitHub Pages); screenshots/ dùng chung với README
 tests/                     *.test.mjs, mỗi module logic một file
-e2e/                       panel.e2e.mjs (Puppeteer) + compose.yml (Odoo 18 / 19 + PostgreSQL)
+e2e/                       panel.e2e.mjs (Puppeteer) + compose.yml (Odoo 18 / 19 + PostgreSQL) + odoo.mjs (đăng nhập, mở panel)
 tools/i18n.mjs             npm run i18n: trích chuỗi → .pot, gộp vào mọi .po
+tools/screenshots.mjs      npm run screenshots: chụp lại website/screenshots/*.png từ Odoo thật
 ```
 
 Các đường dẫn bên dưới tính từ `extension/`.
