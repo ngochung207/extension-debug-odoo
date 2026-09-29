@@ -109,8 +109,9 @@ export function completionAt(code, pos) {
   return null;
 }
 
-/** items: [{ label, detail }] → the ones matching `prefix`: starting with it first, then containing it; at most `max`. */
-export function rankSuggestions(items, prefix, max = 50) {
+/** items: [{ label, detail }] → the ones matching `prefix`: starting with it first, then containing it; at most `max`
+ * (every field of a big model: right after a dot the list must reach them all by scrolling). */
+export function rankSuggestions(items, prefix, max = 500) {
   const p = prefix.toLowerCase();
   const starts = [], contains = [];
   for (const it of items) {
