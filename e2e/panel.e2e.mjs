@@ -70,7 +70,6 @@ test('RPC tab: the calls the webclient made to load the form are listed', async 
 test('Code tab: a search runs as the logged-in user, writes are blocked by default', async () => {
   const run = async (code) => {
     await click('.tabs [data-tab="code"]');
-    await panel.$eval('#code details.card', (c) => { c.open = true; });
     await panel.waitForSelector('#code textarea.code');
     await panel.$eval('#code textarea.code', (t, v) => { t.value = v; }, code);
     await click('#code .console .btn');
@@ -124,7 +123,6 @@ test('Code tab: suggestions offer the installed models, their fields and the rec
 
 test('Translations tab: one input searches the installed modules and holds the ticked ones', async () => {
   await click('.tabs [data-tab="translations"]');
-  await panel.$eval('#translations details.card', (c) => { c.open = true; });
   await panel.waitForSelector('#translations .module-picker li');
   const state = () => panel.$eval('#translations', (s) => ({
     apps: s.querySelector('form input[type=text]').value,

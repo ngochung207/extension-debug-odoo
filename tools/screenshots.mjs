@@ -32,7 +32,7 @@ async function show(tab, cards, sections = []) {
   await panel.$$eval(`#${tab} details.card`, (cs, titles) => cs.forEach((c) => {
     c.open = !titles || titles.some((t) => c.querySelector('h3').textContent.startsWith(t));
   }), cards ?? null);
-  await panel.waitForFunction((t) => [...document.querySelectorAll(`#${t} details.card[open] .card-body`)]
+  await panel.waitForFunction((t) => [...document.querySelectorAll(`#${t} .card-body`)].filter((b) => b.closest('details')?.open ?? true) // titleless cards: always open
     .every((b) => b.childElementCount && !b.querySelector(':scope > .loading')), { timeout: 30_000 }, tab);
   // collapsible sections inside the cards (Combined arch, user_context…), by the start of their summary
   await panel.$$eval(`#${tab} .card-body details`, (ds, names) => ds.forEach((d) => {
@@ -70,7 +70,7 @@ await shot('side-view');
 await show('rpc');
 await shot('side-rpc');
 
-await show('code', ['ORM Console']);
+await show('code');
 await panel.$eval('#code textarea.code', (t) => {
   t.value = [
     "const orders = await env['sale.order'].search([['state', '=', 'sale']], { limit: 5 });",
@@ -98,7 +98,7 @@ await shot('full-security');
 
 // Perf: start the profiler, reload the page (the panel comes back, full screen, on this tab) so its requests are
 // recorded, then unfold the form's web_read.
-await show('perf', ['Server profiler']);
+await show('perf');
 await click('#perf .card .btn');
 await panel.waitForFunction(() => document.querySelector('#perf .pill.ok'), { timeout: 15_000 });
 await page.reload();

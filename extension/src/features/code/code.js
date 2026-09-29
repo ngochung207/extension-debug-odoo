@@ -3,7 +3,7 @@
 // Read-only unless "Allow Writes" is ticked (kept only while the panel lives): every call is committed at once.
 import { pageRunCode, pageSoftReload } from './page.js';
 import { codeKey, formatValue, printText, toTable, callStats, MAX_ROWS, completionAt, rankSuggestions, METHODS, ENV_MEMBERS, COMMAND_MEMBERS, GLOBALS } from './logic.js';
-import { exec, sessionInfo, el, pill, pre, details, block, copyable, cached, call, fieldsOf } from '../../shared/ui.js';
+import { exec, sessionInfo, el, pill, pre, details, card, copyable, cached, call, fieldsOf } from '../../shared/ui.js';
 import { _t } from '../../shared/i18n.js';
 
 // The code is kept in the panel's localStorage, one per Odoo origin (codeKey): a snippet written for one server is not
@@ -37,7 +37,7 @@ function paint() {
 }
 
 export function renderCode(s, state) {
-  block(s, 'console', _t('ORM Console'), async () => {
+  card(s, async () => { // the tab's only card: no title to open it by
     const info = await sessionInfo();
     const key = codeKey(state.origin);
     const editor = el('textarea', {

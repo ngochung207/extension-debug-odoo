@@ -201,10 +201,6 @@ msgstr "Đã mở %s tab: %s"
 msgid "Not found: %s (Activate runs Update Apps List first)"
 msgstr "Không tìm thấy: %s (Kích hoạt sẽ cập nhật danh sách ứng dụng trước)"
 
-#: src/features/code/code.js:40
-msgid "ORM Console"
-msgstr "ORM Console"
-
 #: src/features/code/code.js:45
 #: src/panel/panel.html:30
 msgid "Code"
@@ -483,10 +479,6 @@ msgstr "Profiling chưa được bật cho database này.\nBật trong 5 phút? 
 #: src/features/perf/perf.js:26
 msgid "Profiling could not be enabled."
 msgstr "Vẫn chưa bật được profiling."
-
-#: src/features/perf/perf.js:34
-msgid "Server profiler"
-msgstr "Profiler server"
 
 #: src/features/perf/perf.js:43
 msgid "Stop Profiling"
@@ -1018,10 +1010,6 @@ msgstr "Model này không có record rule."
 #: src/features/security/security.js:206
 msgid "Assumes the user selected every allowed company. Rules of parent models through _inherits are not counted. This is a simulation; for an exact answer about yourself, see the Access tab (has_access runs on the server)."
 msgstr "Giả định user chọn tất cả công ty được phép. Rule của model cha qua _inherits không được tính. Đây là mô phỏng; muốn kết quả chính xác cho chính bạn, xem tab Access (has_access chạy thật trên server)."
-
-#: src/features/translations/translations.js:9
-msgid "Export translations"
-msgstr "Xuất file dịch"
 
 #: src/features/translations/translations.js:21
 msgid "Export & Download"

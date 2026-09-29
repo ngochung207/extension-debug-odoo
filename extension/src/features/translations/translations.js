@@ -1,12 +1,12 @@
 // Translations tab: exports the .pot template + the .po of each language for several apps, with Odoo's own export
 // wizard, and downloads every file straight to Downloads/<module>/i18n/ (<module>.pot, <lang>.po): nothing to unpack.
 import { NEW_LANG, splitList, resolveLangs, resolveModules, b64ToBytes, gunzip, untar } from './logic.js';
-import { call, cached, installedModules, el, pill, block, errBox, formValues, saveForm } from '../../shared/ui.js';
+import { call, cached, installedModules, el, pill, card, errBox, formValues, saveForm } from '../../shared/ui.js';
 import { modulePicker } from '../../shared/picker.js';
 import { _t } from '../../shared/i18n.js';
 
 export function renderTranslations(s) {
-  block(s, 'export', _t('Export translations'), async () => {
+  card(s, async () => { // the tab's only card: no title to open it by
     const langs = await cached('active langs', () => call('res.lang', 'search_read', [[['active', '=', true]]], { fields: ['code', 'name'], order: 'code' }));
     const last = formValues('translations');
     const apps = el('input', { type: 'text', placeholder: _t('Search or type: sale; stock; my_module'), value: last.apps || '', spellcheck: false });

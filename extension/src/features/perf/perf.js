@@ -1,7 +1,7 @@
 // Perf tab: Odoo's built-in server profiler (/web/set_profiling → ir.profile rows), read back per request.
 import { sqlSummary, appFrame } from './logic.js';
 import { pageFetch } from '../../shared/page.js';
-import { exec, rpc, call, fieldsOf, el, pre, pill, details, empty, block, errBox, expandable, filteredList, listHead, splitRow } from '../../shared/ui.js';
+import { exec, rpc, call, fieldsOf, el, pre, pill, details, empty, card, errBox, expandable, filteredList, listHead, splitRow } from '../../shared/ui.js';
 import { _t, N_ } from '../../shared/i18n.js';
 
 const COLLECTORS = 'sql,traces_async';
@@ -31,7 +31,7 @@ export function renderPerf(s, state) {
   const rerender = () => { s.replaceChildren(); renderPerf(s, state); };
 
   // One card: the recording switch on top, the requests it recorded below.
-  block(s, 'profiler', _t('Server profiler'), async () => {
+  card(s, async () => { // the tab's only card: no title to open it by
     // not sessionInfo(): profile_session changes with the button
     const { profile_session: session } = await rpc('/web/session/get_session_info', {});
     const btn = el('button', {

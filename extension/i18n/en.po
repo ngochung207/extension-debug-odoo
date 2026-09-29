@@ -201,10 +201,6 @@ msgstr "Opened %s tab(s): %s"
 msgid "Not found: %s (Activate runs Update Apps List first)"
 msgstr "Not found: %s (Activate runs Update Apps List first)"
 
-#: src/features/code/code.js:40
-msgid "ORM Console"
-msgstr "ORM Console"
-
 #: src/features/code/code.js:45
 #: src/panel/panel.html:30
 msgid "Code"
@@ -483,10 +479,6 @@ msgstr "Profiling is not enabled on this database.\nEnable it for 5 minutes? (wr
 #: src/features/perf/perf.js:26
 msgid "Profiling could not be enabled."
 msgstr "Profiling could not be enabled."
-
-#: src/features/perf/perf.js:34
-msgid "Server profiler"
-msgstr "Server profiler"
 
 #: src/features/perf/perf.js:43
 msgid "Stop Profiling"
@@ -1018,10 +1010,6 @@ msgstr "This model has no record rule."
 #: src/features/security/security.js:206
 msgid "Assumes the user selected every allowed company. Rules of parent models through _inherits are not counted. This is a simulation; for an exact answer about yourself, see the Access tab (has_access runs on the server)."
 msgstr "Assumes the user selected every allowed company. Rules of parent models through _inherits are not counted. This is a simulation; for an exact answer about yourself, see the Access tab (has_access runs on the server)."
-
-#: src/features/translations/translations.js:9
-msgid "Export translations"
-msgstr "Export translations"
 
 #: src/features/translations/translations.js:21
 msgid "Export & Download"
