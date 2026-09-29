@@ -5,6 +5,7 @@
 import { rulesFor, modeVerdict, ruleEvalContext, auditModel, checkInstance, userRisks } from './logic.js';
 import { pageEvalDomains, pageProbe } from './page.js';
 import { MODES, pickGroupField } from '../../shared/odoo.js';
+import { pageGo } from '../../shared/page.js';
 import { exec, call, cached, uncache, sessionInfo, fieldsOf, readAcls, readRules, cookieFlags } from '../../shared/bridge.js';
 import { el, pre, pill, triPill, details, empty, errBox, kv, block, card, expandable, filteredList, copyable, odooLink, listHead, splitRow } from '../../shared/ui.js';
 import { _t, N_ } from '../../shared/i18n.js';
@@ -141,7 +142,11 @@ export function renderSecurity(s, state) {
         user: `${i.name} (#${i.uid})`, login: i.username, db: i.db, version: i.server_version, admin: i.is_admin, system: i.is_system,
         'web.base.url': i['web.base.url'] || '—', test_mode: !!i.test_mode, // test_mode = odoo.conf test_enable
       }),
-      details('user_context', pre(i.user_context)), details(_t('Companies'), pre(i.user_companies)));
+      details('user_context', pre(i.user_context)), details(_t('Companies'), pre(i.user_companies)),
+      i.is_system ? el('div', { class: 'mt' }, el('button', {
+        class: 'btn', title: _t('Odoo\'s built-in /web/become route, base.group_system only'),
+        onclick: () => confirm(_t('Switch the current session to superuser (bypasses every rule)?')) && exec(pageGo, '/web/become'),
+      }, _t('Become Superuser'))) : null);
   });
 
   // base.group_system only: say so instead of showing an AccessError.

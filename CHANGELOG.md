@@ -11,12 +11,12 @@ All notable changes to this project are documented here. Format: [Keep a Changel
 
 ### Changed
 
-- **Access and Security are one tab (Security)**, in three parts: **User** (search, groups, risks), the current **model** for that user (why allowed / blocked, ACLs, fields hidden by `groups=`, configuration audit) and the **Instance** (session, system parameters, checks). Another user's groups, ACLs and record rules can be read, not only yours.
+- **Access and Security are one tab (Security)**, in three parts: **User** (search, groups, risks), the current **model** for that user (why allowed / blocked, ACLs, fields hidden by `groups=`, configuration audit) and the **Instance** (session with Become Superuser, system parameters, checks). Another user's groups, ACLs and record rules can be read, not only yours.
 - **Why allowed / blocked** shows the server's exact `has_access` answer next to each simulated verdict when the picked user is you (the separate Effective access card is gone). The Access tab's record rules table is gone too: this card lists every rule for the picked user.
 
 ### Removed
 
-- **Account switching** in the Security tab: Switch to This User (incognito login), Impersonate in This Session (OCA `impersonate_login`) and Become Superuser.
+- **Account switching** in the Security tab: Switch to This User (incognito login) and Impersonate in This Session (OCA `impersonate_login`). **Become Superuser** stays, in the Session card (Settings users only).
 
 ### Fixed
 

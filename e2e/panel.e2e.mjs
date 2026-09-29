@@ -62,7 +62,8 @@ test('every tab opens its cards without an error', async () => {
 });
 
 test('Security tab: another user is found by login and picked, then back to mine', async () => {
-  await rpc(page, '/web/dataset/call_kw', { model: 'res.users', method: 'create', args: [{ name: 'E2E Demo', login: 'e2e_demo' }], kwargs: {} });
+  const kw = (model, method, args) => rpc(page, '/web/dataset/call_kw', { model, method, args, kwargs: {} });
+  if (!(await kw('res.users', 'search_count', [[['login', '=', 'e2e_demo']]]))) await kw('res.users', 'create', [{ name: 'E2E Demo', login: 'e2e_demo' }]); // a rerun on the same database
   await click('#refresh'); // the user list is cached
   await click('.tabs [data-tab="security"]');
   const search = '#security .user-search input';

@@ -11,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: src/features/apps/apps.js:16
-#: src/features/security/security.js:149
+#: src/features/security/security.js:154
 msgid "Needs Settings rights (base.group_system)."
 msgstr "Cần quyền Settings (base.group_system)."
 
@@ -159,7 +159,7 @@ msgstr "Mọi danh mục"
 
 #: src/features/apps/searchbar.js:34
 #: src/features/apps/searchbar.js:34
-#: src/features/security/security.js:193
+#: src/features/security/security.js:198
 msgid "Remove"
 msgstr "Bỏ"
 
@@ -785,251 +785,263 @@ msgstr "User đang bị lưu trữ (archived)."
 msgid "py_js is not loaded"
 msgstr "py_js chưa được tải"
 
-#: src/features/security/security.js:13
+#: src/features/security/security.js:14
 msgid "HIGH"
 msgstr "CAO"
 
-#: src/features/security/security.js:13
+#: src/features/security/security.js:14
 msgid "MEDIUM"
 msgstr "VỪA"
 
-#: src/features/security/security.js:13
+#: src/features/security/security.js:14
 msgid "LOW"
 msgstr "THẤP"
 
-#: src/features/security/security.js:13
+#: src/features/security/security.js:14
 msgid "INFO"
 msgstr "INFO"
 
-#: src/features/security/security.js:21
+#: src/features/security/security.js:22
 msgid "✓ No issue found."
 msgstr "✓ Không phát hiện vấn đề."
 
-#: src/features/security/security.js:54
-#: src/features/security/security.js:54
+#: src/features/security/security.js:55
+#: src/features/security/security.js:55
 msgid "Search a user by name or login…"
 msgstr "Tìm user theo tên hoặc login…"
 
-#: src/features/security/security.js:85
+#: src/features/security/security.js:86
 msgid "User"
 msgstr "User"
 
-#: src/features/security/security.js:90
+#: src/features/security/security.js:91
 msgid "My User"
 msgstr "User của tôi"
 
-#: src/features/security/security.js:91
+#: src/features/security/security.js:92
 msgid "me"
 msgstr "tôi"
 
-#: src/features/security/security.js:92
+#: src/features/security/security.js:93
 msgid "%s · #%s · %s (%s companies) · %s groups"
 msgstr "%s · #%s · %s (%s công ty) · %s group"
 
-#: src/features/security/security.js:93
+#: src/features/security/security.js:94
 msgid "Simulates the selected user's rights without logging in as them (reading other users' groups needs admin rights)."
 msgstr "Mô phỏng quyền của user được chọn mà không cần đăng nhập tài khoản đó (cần quyền admin để đọc group của người khác)."
 
-#: src/features/security/security.js:95
+#: src/features/security/security.js:96
 msgid "Groups"
 msgstr "Group"
 
-#: src/features/security/security.js:96
+#: src/features/security/security.js:97
 msgid "User risks"
 msgstr "Rủi ro của user"
 
-#: src/features/security/security.js:105
+#: src/features/security/security.js:106
 msgid "Why allowed / blocked"
 msgstr "Vì sao được / bị chặn"
 
-#: src/features/security/security.js:107
+#: src/features/security/security.js:108
 msgid "ACL (ir.model.access) — green = applies to the user"
 msgstr "ACL (ir.model.access) — nền xanh = áp dụng cho user này"
 
-#: src/features/security/security.js:109
+#: src/features/security/security.js:110
 msgid "No ACL."
 msgstr "Không có ACL."
 
-#: src/features/security/security.js:110
+#: src/features/security/security.js:111
 msgid "ACL / group"
 msgstr "ACL / group"
 
-#: src/features/security/security.js:112
+#: src/features/security/security.js:113
 msgid "(all users)"
 msgstr "(mọi user)"
 
-#: src/features/security/security.js:116
+#: src/features/security/security.js:117
 msgid "Fields hidden from the user (groups=)"
 msgstr "Field bị ẩn với user (groups=)"
 
-#: src/features/security/security.js:119
+#: src/features/security/security.js:120
 msgid "No field declares groups=."
 msgstr "Không field nào khai báo groups=."
 
-#: src/features/security/security.js:123
+#: src/features/security/security.js:124
 msgid "Field · label · for this user"
 msgstr "Field · nhãn · với user này"
 
-#: src/features/security/security.js:125
+#: src/features/security/security.js:126
 msgid "visible"
 msgstr "thấy"
 
-#: src/features/security/security.js:125
+#: src/features/security/security.js:126
 #: src/features/view/view.js:65
 msgid "hidden"
 msgstr "ẩn"
 
-#: src/features/security/security.js:129
+#: src/features/security/security.js:130
 msgid "Model configuration audit"
 msgstr "Audit cấu hình model"
 
-#: src/features/security/security.js:136
+#: src/features/security/security.js:137
 msgid "Instance"
 msgstr "Instance"
 
-#: src/features/security/security.js:137
+#: src/features/security/security.js:138
 msgid "Session"
 msgstr "Phiên đăng nhập"
 
-#: src/features/security/security.js:144
+#: src/features/security/security.js:145
 msgid "Companies"
 msgstr "Công ty"
 
+#: src/features/security/security.js:147
+msgid "Odoo's built-in /web/become route, base.group_system only"
+msgstr "Route /web/become sẵn có của Odoo, chỉ base.group_system dùng được"
+
 #: src/features/security/security.js:148
+msgid "Switch the current session to superuser (bypasses every rule)?"
+msgstr "Chuyển phiên hiện tại sang superuser (bỏ qua mọi rule)?"
+
+#: src/features/security/security.js:149
+msgid "Become Superuser"
+msgstr "Chuyển sang superuser"
+
+#: src/features/security/security.js:153
 msgid "System parameters (ir.config_parameter)"
 msgstr "Tham số hệ thống (ir.config_parameter)"
 
-#: src/features/security/security.js:159
+#: src/features/security/security.js:164
 msgid "Filter key / value"
 msgstr "Lọc key / giá trị"
 
-#: src/features/security/security.js:159
+#: src/features/security/security.js:164
 msgid "%s parameters"
 msgstr "%s tham số"
 
-#: src/features/security/security.js:159
+#: src/features/security/security.js:164
 msgid "%s/%s parameters"
 msgstr "%s/%s tham số"
 
-#: src/features/security/security.js:159
+#: src/features/security/security.js:164
 msgid "Key"
 msgstr "Key"
 
-#: src/features/security/security.js:159
+#: src/features/security/security.js:164
 msgid "Value"
 msgstr "Giá trị"
 
-#: src/features/security/security.js:159
+#: src/features/security/security.js:164
 msgid "No parameter."
 msgstr "Không có tham số."
 
-#: src/features/security/security.js:162
+#: src/features/security/security.js:167
 msgid "Instance check"
 msgstr "Kiểm tra instance"
 
-#: src/features/security/security.js:165
+#: src/features/security/security.js:170
 msgid "Check failed"
 msgstr "Không kiểm tra được"
 
-#: src/features/security/security.js:170
+#: src/features/security/security.js:175
 msgid "Raw data"
 msgstr "Dữ liệu thô"
 
-#: src/features/security/security.js:171
+#: src/features/security/security.js:176
 msgid "Check Again"
 msgstr "Kiểm tra lại"
 
-#: src/features/security/security.js:192
+#: src/features/security/security.js:197
 msgid "Add %s to %s?"
 msgstr "Thêm %s cho %s?"
 
-#: src/features/security/security.js:192
+#: src/features/security/security.js:197
 msgid "+ Add"
 msgstr "+ Thêm"
 
-#: src/features/security/security.js:193
+#: src/features/security/security.js:198
 msgid "implied"
 msgstr "kế thừa"
 
-#: src/features/security/security.js:193
+#: src/features/security/security.js:198
 msgid "Remove %s from %s?"
 msgstr "Gỡ %s khỏi %s?"
 
-#: src/features/security/security.js:194
+#: src/features/security/security.js:199
 msgid "Implied by %s"
 msgstr "Kế thừa từ %s"
 
-#: src/features/security/security.js:201
-#: src/features/security/security.js:207
+#: src/features/security/security.js:206
+#: src/features/security/security.js:212
 msgid "%s groups"
 msgstr "%s group"
 
-#: src/features/security/security.js:203
-#: src/features/security/security.js:203
+#: src/features/security/security.js:208
+#: src/features/security/security.js:208
 msgid "Filter or add a group…"
 msgstr "Lọc hoặc thêm group…"
 
-#: src/features/security/security.js:207
+#: src/features/security/security.js:212
 msgid "%s/%s groups"
 msgstr "%s/%s group"
 
-#: src/features/security/security.js:230
+#: src/features/security/security.js:235
 msgid "no result"
 msgstr "không có kết quả"
 
-#: src/features/security/security.js:231
+#: src/features/security/security.js:236
 msgid "cannot evaluate: %s"
 msgstr "không eval được: %s"
 
-#: src/features/security/security.js:234
+#: src/features/security/security.js:239
 msgid "You cannot read this record yourself, so its rules cannot be checked."
 msgstr "Chính bạn không đọc được record này nên không kiểm được rule."
 
-#: src/features/security/security.js:244
+#: src/features/security/security.js:249
 msgid "server ✓"
 msgstr "server ✓"
 
-#: src/features/security/security.js:244
+#: src/features/security/security.js:249
 msgid "server ✗"
 msgstr "server ✗"
 
-#: src/features/security/security.js:244
+#: src/features/security/security.js:249
 msgid "server ?"
 msgstr "server ?"
 
-#: src/features/security/security.js:245
+#: src/features/security/security.js:250
 msgid "has_access, run by the server as you"
 msgstr "has_access, server chạy với quyền của bạn"
 
-#: src/features/security/security.js:248
+#: src/features/security/security.js:253
 msgid "ALLOWED"
 msgstr "CHO PHÉP"
 
-#: src/features/security/security.js:248
+#: src/features/security/security.js:253
 msgid "BLOCKED"
 msgstr "CHẶN"
 
-#: src/features/security/security.js:248
+#: src/features/security/security.js:253
 msgid "UNKNOWN"
 msgstr "KHÔNG RÕ"
 
-#: src/features/security/security.js:256
+#: src/features/security/security.js:261
 msgid "not applicable"
 msgstr "không áp dụng"
 
-#: src/features/security/security.js:265
+#: src/features/security/security.js:270
 msgid "Rule · operations · result"
 msgstr "Rule · thao tác · kết quả"
 
-#: src/features/security/security.js:265
+#: src/features/security/security.js:270
 msgid "Groups · domain"
 msgstr "Group · domain"
 
-#: src/features/security/security.js:266
+#: src/features/security/security.js:271
 msgid "This model has no record rule."
 msgstr "Model này không có record rule."
 
-#: src/features/security/security.js:268
+#: src/features/security/security.js:273
 msgid "Assumes the user selected every allowed company. Rules of parent models through _inherits are not counted. This is a simulation; for your own user, “server” is the exact answer (has_access)."
 msgstr "Giả định user chọn tất cả công ty được phép. Rule của model cha qua _inherits không được tính. Đây là mô phỏng; với chính user của bạn, “server” là kết quả chính xác (has_access)."
 
