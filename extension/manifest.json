@@ -26,6 +26,7 @@
     "cookies",
     "storage",
     "clipboardWrite",
+    "downloads",
     "declarativeContent"
   ],
   "host_permissions": [

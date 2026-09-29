@@ -37,6 +37,7 @@ shadow DOM so it never touches Odoo's styles.
 | **RPC** | Live log of JSON-RPC and JSON-2 calls from page load: timing, errors with tracebacks, and a jump to the Security tab for `AccessError`s. |
 | **Access** | Session (db, version, `web.base.url`, `test_mode`), effective rights, ACLs, record rules, groups, system parameters (secrets masked) and installed modules. |
 | **Security** | Simulate another user's rights, explain rule by rule why an operation is allowed or blocked, user risk audit, fields hidden by `groups=`, instance checks (HTTPS, cookie flags, security headers, database manager). |
+| **Translations** | Exports the `.pot` template and one `.po` per language for several apps with Odoo's own wizard, saved straight to `Downloads/<module>/i18n/`. |
 | **Perf** | Odoo's built-in server profiler: start / stop, profiled requests, SQL summary with repeated queries (N+1 suspects), slowest queries, speedscope flame graph. |
 
 Plus: click any field name, model or xmlid in the panel to copy it, and <kbd>⌥ Alt</kbd> + click a field on the Odoo
@@ -115,6 +116,7 @@ analytics and sends nothing anywhere else.
 | `cookies` | Report the session cookie's flags (`Secure`, `HttpOnly`, `SameSite`) in the Security tab. The value is never read. |
 | `storage` | Language and theme settings. |
 | `clipboardWrite` | Copy field names, xmlids and values. |
+| `downloads` | Save exported `.pot` / `.po` files to `Downloads/<module>/i18n/` (Translations tab). |
 | `declarativeContent` | Enable the toolbar icon on Odoo pages only. |
 
 Odoo data only reaches the DOM through `textContent`, and the panel page can't be framed by other sites.
@@ -149,7 +151,7 @@ extension/                 the extension itself: exactly what the release zip co
                            bubble.js (draggable button + the panel's iframe in a shadow root, ⌥/Alt+click copy)
     panel/                 panel.html / panel.css / main.js: header, tabs, binding to the tab it is embedded in
     shared/                ui.js (DOM, RPC, cached reads), page.js (core page functions), i18n.js, odoo.js, settings.js
-    features/<tab>/        one folder per tab: record, view, rpc, access, security, perf
+    features/<tab>/        one folder per tab: record, view, rpc, access, security, translations, perf
       <tab>.js             the tab UI: render(section, state)
       page.js              functions injected into the Odoo page (self-contained, no imports)
       logic.js             pure logic, no chrome.* / DOM

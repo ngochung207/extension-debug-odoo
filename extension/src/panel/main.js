@@ -10,6 +10,7 @@ import { mountRpc, addRpc, reloadRpc } from '../features/rpc/rpc.js';
 import { renderAccess } from '../features/access/access.js';
 import { renderSecurity } from '../features/security/security.js';
 import { renderPerf } from '../features/perf/perf.js';
+import { renderTranslations } from '../features/translations/translations.js';
 import { loadSettings } from '../shared/settings.js';
 
 const settings = await loadSettings();
@@ -19,7 +20,7 @@ translateDom();
 
 let state = {};
 let active = 'record';
-const RENDER = { record: renderRecord, view: renderView, access: renderAccess, security: renderSecurity, perf: renderPerf };
+const RENDER = { record: renderRecord, view: renderView, access: renderAccess, security: renderSecurity, perf: renderPerf, translations: renderTranslations };
 const rendered = new Set(); // tabs are rendered lazily, once per refresh
 
 function renderActive() {

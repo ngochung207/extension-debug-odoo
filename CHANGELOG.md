@@ -4,6 +4,11 @@ All notable changes to this project are documented here. Format: [Keep a Changel
 
 ## [Unreleased]
 
+### Added
+
+- **Translations tab**: exports the translation template (`.pot`) and the `.po` of each language for several apps
+  (`;`-separated), and downloads every file to `Downloads/<module>/i18n/`. Needs the new `downloads` permission.
+
 ### Changed
 
 - Lists in every tab show one line per row: the details below it (label, storage, module, domain, query…) open on a
@@ -11,6 +16,7 @@ All notable changes to this project are documented here. Format: [Keep a Changel
   them in its second column.
 - Every collapsible section (user_context, Companies, combined arch, parameters / result, queries…) starts closed.
 - Icon without the green dot.
+- The Perf tab is now the last one.
 
 ## [0.1.0] - 2026-09-28
 

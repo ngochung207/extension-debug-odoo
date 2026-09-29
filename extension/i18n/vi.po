@@ -296,6 +296,7 @@ msgid "Time · route"
 msgstr "Giờ · route"
 
 #: src/features/rpc/rpc.js:36
+#: src/features/translations/translations.js:75
 msgid "error"
 msgstr "lỗi"
 
@@ -617,6 +618,66 @@ msgstr "Model này không có record rule."
 msgid "Assumes the user selected every allowed company. Rules of parent models through _inherits are not counted. This is a simulation; for an exact answer about yourself, see the Access tab (has_access runs on the server)."
 msgstr "Giả định user chọn tất cả công ty được phép. Rule của model cha qua _inherits không được tính. Đây là mô phỏng; muốn kết quả chính xác cho chính bạn, xem tab Access (has_access chạy thật trên server)."
 
+#: src/features/translations/translations.js:12
+msgid "Export translations"
+msgstr "Xuất file dịch"
+
+#: src/features/translations/translations.js:23
+msgid "Export & download"
+msgstr "Xuất & tải về"
+
+#: src/features/translations/translations.js:25
+msgid "Apps to export"
+msgstr "Apps cần xuất"
+
+#: src/features/translations/translations.js:26
+msgid "Technical names, separated by ;"
+msgstr "Tên kỹ thuật, phân cách bằng ;"
+
+#: src/features/translations/translations.js:27
+msgid "Languages"
+msgstr "Ngôn ngữ"
+
+#: src/features/translations/translations.js:28
+msgid "Active:"
+msgstr "Đang bật:"
+
+#: src/features/translations/translations.js:30
+msgid "Always exported too: New Language (Empty translation template), as <module>.pot."
+msgstr "Luôn xuất kèm: New Language (Empty translation template), thành file <module>.pot."
+
+#: src/features/translations/translations.js:52
+msgid "Enter at least one app."
+msgstr "Nhập ít nhất một app."
+
+#: src/features/translations/translations.js:54
+msgid "Not an active language: %s. Active: %s"
+msgstr "Ngôn ngữ chưa được bật: %s. Đang bật: %s"
+
+#: src/features/translations/translations.js:57
+msgid "Unknown app: %s"
+msgstr "Không có app: %s"
+
+#: src/features/translations/translations.js:58
+msgid "Not installed: %s"
+msgstr "Chưa cài: %s"
+
+#: src/features/translations/translations.js:61
+msgid "Exporting…"
+msgstr "Đang xuất…"
+
+#: src/features/translations/translations.js:64
+msgid "Template (.pot)"
+msgstr "Template (.pot)"
+
+#: src/features/translations/translations.js:73
+msgid "%s files"
+msgstr "%s file"
+
+#: src/features/translations/translations.js:73
+msgid "nothing to export"
+msgstr "không có gì để xuất"
+
 #: src/features/view/page.js:9
 msgid "Webclient internals are not reachable."
 msgstr "Không truy cập được webclient."
@@ -721,15 +782,15 @@ msgstr "Biểu thức modifier"
 msgid "The form is read-only: every field is readonly."
 msgstr "Form đang ở chế độ chỉ đọc: mọi field đều readonly."
 
-#: src/panel/main.js:30
+#: src/panel/main.js:31
 msgid "Cannot read this tab: %s"
 msgstr "Không đọc được tab này: %s"
 
-#: src/panel/main.js:30
+#: src/panel/main.js:31
 msgid "The current tab is not an Odoo page."
 msgstr "Tab hiện tại không phải trang Odoo."
 
-#: src/panel/main.js:55
+#: src/panel/main.js:56
 msgid "Not an Odoo page"
 msgstr "Không phải trang Odoo"
 
@@ -779,6 +840,10 @@ msgid "Security"
 msgstr "Security"
 
 #: src/panel/panel.html:31
+msgid "Translations"
+msgstr "Translations"
+
+#: src/panel/panel.html:32
 msgid "Perf"
 msgstr "Perf"
 
@@ -826,15 +891,15 @@ msgstr "Không có phản hồi — đây có phải trang Odoo?"
 msgid "Traceback"
 msgstr "Traceback"
 
-#: src/shared/ui.js:99
+#: src/shared/ui.js:97
 msgid "Open /odoo/%s"
 msgstr "Mở /odoo/%s"
 
-#: src/shared/ui.js:109
+#: src/shared/ui.js:107
 #: src/shared/ui.js:155
 msgid "Loading…"
 msgstr "Đang tải…"
 
-#: src/shared/ui.js:118
+#: src/shared/ui.js:116
 msgid "Click to copy"
 msgstr "Bấm để copy"
