@@ -113,7 +113,7 @@ msgstr "Running…"
 #: src/features/code/code.js:289
 #: src/features/code/code.js:328
 #: src/features/rpc/rpc.js:36
-#: src/features/translations/translations.js:99
+#: src/features/translations/translations.js:114
 msgid "error"
 msgstr "error"
 
@@ -198,6 +198,7 @@ msgid "Not found: %s (Activate runs Update Apps List first)"
 msgstr "Not found: %s (Activate runs Update Apps List first)"
 
 #: src/features/apps/apps.js:118
+#: src/features/translations/translations.js:23
 msgid "Technical names, separated by ;"
 msgstr "Technical names, separated by ;"
 
@@ -1039,6 +1040,10 @@ msgstr "Assumes the user selected every allowed company. Rules of parent models 
 msgid "Export translations"
 msgstr "Export translations"
 
+#: src/features/translations/translations.js:11
+msgid "Search or type: sale; stock; my_module"
+msgstr "Search or type: sale; stock; my_module"
+
 #: src/features/translations/translations.js:19
 msgid "Export & Download"
 msgstr "Export & Download"
@@ -1046,10 +1051,6 @@ msgstr "Export & Download"
 #: src/features/translations/translations.js:21
 msgid "Apps To Export"
 msgstr "Apps To Export"
-
-#: src/features/translations/translations.js:22
-msgid "Technical names, separated by ; or ticked in the list below."
-msgstr "Technical names, separated by ; or ticked in the list below."
 
 #: src/features/translations/translations.js:24
 msgid "Languages"
@@ -1063,47 +1064,43 @@ msgstr "Active:"
 msgid "Always exported too: New Language (Empty translation template), as <module>.pot."
 msgstr "Always exported too: New Language (Empty translation template), as <module>.pot."
 
-#: src/features/translations/translations.js:68
-msgid "Search modules: name / title"
-msgstr "Search modules: name / title"
-
-#: src/features/translations/translations.js:68
-msgid "%s installed modules"
-msgstr "%s installed modules"
-
-#: src/features/translations/translations.js:68
+#: src/features/translations/translations.js:72
 msgid "%s/%s installed modules"
 msgstr "%s/%s installed modules"
 
-#: src/features/translations/translations.js:76
+#: src/features/translations/translations.js:85
+msgid "Type to search the installed modules, tick them, or type their technical names separated by ;"
+msgstr "Type to search the installed modules, tick them, or type their technical names separated by ;"
+
+#: src/features/translations/translations.js:91
 msgid "Enter at least one app."
 msgstr "Enter at least one app."
 
-#: src/features/translations/translations.js:78
+#: src/features/translations/translations.js:93
 msgid "Not an active language: %s. Active: %s"
 msgstr "Not an active language: %s. Active: %s"
 
-#: src/features/translations/translations.js:81
+#: src/features/translations/translations.js:96
 msgid "Unknown app: %s"
 msgstr "Unknown app: %s"
 
-#: src/features/translations/translations.js:82
+#: src/features/translations/translations.js:97
 msgid "Not installed: %s"
 msgstr "Not installed: %s"
 
-#: src/features/translations/translations.js:85
+#: src/features/translations/translations.js:100
 msgid "Exporting…"
 msgstr "Exporting…"
 
-#: src/features/translations/translations.js:88
+#: src/features/translations/translations.js:103
 msgid "Template (.pot)"
 msgstr "Template (.pot)"
 
-#: src/features/translations/translations.js:97
+#: src/features/translations/translations.js:112
 msgid "%s files"
 msgstr "%s files"
 
-#: src/features/translations/translations.js:97
+#: src/features/translations/translations.js:112
 msgid "nothing to export"
 msgstr "nothing to export"
 

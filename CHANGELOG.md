@@ -11,7 +11,7 @@ All notable changes to this project are documented here. Format: [Keep a Changel
 
 ### Changed
 
-- **Translations tab**: the apps to export are ticked in a searchable list of the installed modules (name or title), kept in step with the typed list, which still works.
+- **Translations tab**: one input for the apps to export: the word being typed searches the installed modules (name or title) listed below it, ticking one puts its name in the input, Enter picks the match; typing the names still works.
 
 ## [0.1.1] - 2026-09-29
 
