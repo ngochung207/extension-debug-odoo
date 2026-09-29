@@ -250,7 +250,11 @@ textarea.code:focus { outline: 2px solid var(--accent-soft); border-color: var(-
 .suggest li[aria-selected=true] { background: var(--accent-soft); }
 /* Translations tab: installed modules to tick, scrolling inside the form */
 .module-picker { margin-top: 4px; }
+.picker-head { flex-wrap: nowrap; align-items: center; gap: 8px; }
+.picker-head > input { flex: 1; min-width: 0; }
 .count-note { font-weight: normal; }
 .module-picker .list { max-height: 240px; overflow: auto; border: 1px solid var(--line); border-radius: 6px; }
-.module-picker label.pick { flex-direction: row; align-items: center; gap: 6px; cursor: pointer; font-weight: normal; }
+.module-picker label.pick { flex-direction: row; flex-wrap: nowrap; align-items: center; gap: 6px; cursor: pointer; font-weight: normal; }
+.module-picker label.pick > .name { flex: none; }
+.module-picker label.pick > .muted { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } /* one line per module */
 .module-picker .list > li:not([hidden]) { display: block; } /* one line even in the wide 2-column layout */

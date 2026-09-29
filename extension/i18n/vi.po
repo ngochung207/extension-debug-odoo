@@ -63,7 +63,7 @@ msgid "No group."
 msgstr "Không có group."
 
 #: src/features/access/access.js:69
-#: src/features/apps/apps.js:15
+#: src/features/apps/apps.js:14
 msgid "Needs Settings rights (base.group_system)."
 msgstr "Cần quyền Settings (base.group_system)."
 
@@ -95,140 +95,116 @@ msgstr "Giá trị"
 msgid "No parameter."
 msgstr "Không có tham số."
 
-#: src/features/apps/apps.js:18
-#: src/features/apps/apps.js:117
+#: src/features/apps/apps.js:17
+#: src/features/apps/apps.js:19
 msgid "Modules"
 msgstr "Module"
 
-#: src/features/apps/apps.js:32
-msgid "not found"
-msgstr "không tìm thấy"
+#: src/features/apps/apps.js:19
+#: src/features/translations/translations.js:12
+msgid "Search or type: sale; stock; my_module"
+msgstr "Tìm hoặc gõ: sale; stock; my_module"
 
-#: src/features/apps/apps.js:44
+#: src/features/apps/apps.js:26
+msgid "%s/%s modules"
+msgstr "%s/%s module"
+
+#: src/features/apps/apps.js:34
 #: src/features/code/code.js:32
 msgid "Running…"
 msgstr "Đang chạy…"
 
-#: src/features/apps/apps.js:46
+#: src/features/apps/apps.js:36
 #: src/features/code/code.js:289
 #: src/features/code/code.js:328
 #: src/features/rpc/rpc.js:36
-#: src/features/translations/translations.js:112
+#: src/features/translations/translations.js:76
 msgid "error"
 msgstr "lỗi"
 
-#: src/features/apps/apps.js:48
+#: src/features/apps/apps.js:38
 msgid "Reloading the Odoo page…"
 msgstr "Đang tải lại trang Odoo…"
 
-#: src/features/apps/apps.js:56
+#: src/features/apps/apps.js:46
 msgid "Enter at least one module."
 msgstr "Nhập ít nhất một module."
 
-#: src/features/apps/apps.js:73
+#: src/features/apps/apps.js:63
 msgid "Activate"
 msgstr "Kích hoạt"
 
-#: src/features/apps/apps.js:73
+#: src/features/apps/apps.js:63
 msgid "Update Apps List, then install every module (with its dependencies)"
 msgstr "Cập nhật danh sách ứng dụng, rồi cài mọi module (kèm các module phụ thuộc)"
 
-#: src/features/apps/apps.js:74
+#: src/features/apps/apps.js:64
 msgid "Update Apps List"
 msgstr "Cập nhật danh sách ứng dụng"
 
-#: src/features/apps/apps.js:76
+#: src/features/apps/apps.js:66
 msgid "%s updated · %s added"
 msgstr "%s cập nhật · %s thêm mới"
 
-#: src/features/apps/apps.js:80
+#: src/features/apps/apps.js:69
 msgid "Not found, even after Update Apps List: %s"
 msgstr "Không tìm thấy, kể cả sau khi cập nhật danh sách ứng dụng: %s"
 
-#: src/features/apps/apps.js:81
+#: src/features/apps/apps.js:70
 msgid "Not installable: %s"
 msgstr "Không cài được: %s"
 
-#: src/features/apps/apps.js:82
+#: src/features/apps/apps.js:71
 msgid "Waiting to be uninstalled: %s"
 msgstr "Đang chờ gỡ cài đặt: %s"
 
-#: src/features/apps/apps.js:83
+#: src/features/apps/apps.js:72
 msgid "Already installed: %s"
 msgstr "Đã cài sẵn: %s"
 
-#: src/features/apps/apps.js:85
+#: src/features/apps/apps.js:74
 msgid "Install %s"
 msgstr "Cài %s"
 
-#: src/features/apps/apps.js:91
+#: src/features/apps/apps.js:80
 msgid "Upgrade"
 msgstr "Nâng cấp"
 
-#: src/features/apps/apps.js:91
+#: src/features/apps/apps.js:80
 msgid "Upgrade every module (they must be installed)"
 msgstr "Nâng cấp mọi module (phải đã được cài)"
 
-#: src/features/apps/apps.js:95
+#: src/features/apps/apps.js:83
 msgid "Not found: %s"
 msgstr "Không tìm thấy: %s"
 
-#: src/features/apps/apps.js:96
+#: src/features/apps/apps.js:84
 msgid "Not installed (use Activate): %s"
 msgstr "Chưa cài (hãy dùng Kích hoạt): %s"
 
-#: src/features/apps/apps.js:97
+#: src/features/apps/apps.js:85
 msgid "Upgrade %s"
 msgstr "Nâng cấp %s"
 
-#: src/features/apps/apps.js:103
+#: src/features/apps/apps.js:91
 msgid "Open Forms ↗"
 msgstr "Mở form ↗"
 
-#: src/features/apps/apps.js:103
+#: src/features/apps/apps.js:91
 msgid "Open the form of every module in a new tab"
 msgstr "Mở form của từng module trong tab mới"
 
-#: src/features/apps/apps.js:111
+#: src/features/apps/apps.js:98
 msgid "Opened %s tab(s): %s"
 msgstr "Đã mở %s tab: %s"
 
-#: src/features/apps/apps.js:113
+#: src/features/apps/apps.js:100
 msgid "Not found: %s (Activate runs Update Apps List first)"
 msgstr "Không tìm thấy: %s (Kích hoạt sẽ cập nhật danh sách ứng dụng trước)"
 
-#: src/features/apps/apps.js:118
-#: src/features/translations/translations.js:24
-msgid "Technical names, separated by ;"
-msgstr "Tên kỹ thuật, phân cách bằng ;"
-
-#: src/features/apps/apps.js:120
+#: src/features/apps/apps.js:107
 msgid "Activate runs Update Apps List first. Install and upgrade reload the Odoo page when done."
 msgstr "Kích hoạt sẽ cập nhật danh sách ứng dụng trước. Cài và nâng cấp xong sẽ tải lại trang Odoo."
-
-#: src/features/apps/apps.js:126
-msgid "Installed modules"
-msgstr "Module đã cài"
-
-#: src/features/apps/apps.js:137
-msgid "Filter name / title / author"
-msgstr "Lọc tên / tiêu đề / tác giả"
-
-#: src/features/apps/apps.js:137
-msgid "%s modules"
-msgstr "%s module"
-
-#: src/features/apps/apps.js:137
-msgid "%s/%s modules"
-msgstr "%s/%s module"
-
-#: src/features/apps/apps.js:138
-msgid "Module · title · version"
-msgstr "Module · tiêu đề · phiên bản"
-
-#: src/features/apps/apps.js:138
-msgid "Author"
-msgstr "Tác giả"
 
 #: src/features/code/code.js:40
 msgid "ORM Console"
@@ -1048,67 +1024,67 @@ msgstr "Model này không có record rule."
 msgid "Assumes the user selected every allowed company. Rules of parent models through _inherits are not counted. This is a simulation; for an exact answer about yourself, see the Access tab (has_access runs on the server)."
 msgstr "Giả định user chọn tất cả công ty được phép. Rule của model cha qua _inherits không được tính. Đây là mô phỏng; muốn kết quả chính xác cho chính bạn, xem tab Access (has_access chạy thật trên server)."
 
-#: src/features/translations/translations.js:8
+#: src/features/translations/translations.js:9
 msgid "Export translations"
 msgstr "Xuất file dịch"
 
-#: src/features/translations/translations.js:11
-msgid "Search or type: sale; stock; my_module"
-msgstr "Tìm hoặc gõ: sale; stock; my_module"
-
-#: src/features/translations/translations.js:20
+#: src/features/translations/translations.js:21
 msgid "Export & Download"
 msgstr "Xuất & tải về"
 
-#: src/features/translations/translations.js:22
+#: src/features/translations/translations.js:23
 msgid "Apps To Export"
 msgstr "Apps cần xuất"
 
-#: src/features/translations/translations.js:25
-msgid "Languages"
-msgstr "Ngôn ngữ"
-
 #: src/features/translations/translations.js:26
-msgid "Active:"
-msgstr "Đang bật:"
-
-#: src/features/translations/translations.js:28
-msgid "Always exported too: New Language (Empty translation template), as <module>.pot."
-msgstr "Luôn xuất kèm: New Language (Empty translation template), thành file <module>.pot."
-
-#: src/features/translations/translations.js:72
 msgid "%s/%s installed modules"
 msgstr "%s/%s module đã cài"
 
-#: src/features/translations/translations.js:89
+#: src/features/translations/translations.js:27
+msgid "Technical names, separated by ;"
+msgstr "Tên kỹ thuật, phân cách bằng ;"
+
+#: src/features/translations/translations.js:28
+msgid "Languages"
+msgstr "Ngôn ngữ"
+
+#: src/features/translations/translations.js:29
+msgid "Active:"
+msgstr "Đang bật:"
+
+#: src/features/translations/translations.js:31
+msgid "Always exported too: New Language (Empty translation template), as <module>.pot."
+msgstr "Luôn xuất kèm: New Language (Empty translation template), thành file <module>.pot."
+
+#: src/features/translations/translations.js:53
 msgid "Enter at least one app."
 msgstr "Nhập ít nhất một app."
 
-#: src/features/translations/translations.js:91
+#: src/features/translations/translations.js:55
 msgid "Not an active language: %s. Active: %s"
 msgstr "Ngôn ngữ chưa được bật: %s. Đang bật: %s"
 
-#: src/features/translations/translations.js:94
+#: src/features/translations/translations.js:58
 msgid "Unknown app: %s"
 msgstr "Không có app: %s"
 
-#: src/features/translations/translations.js:95
+#: src/features/translations/translations.js:59
 msgid "Not installed: %s"
 msgstr "Chưa cài: %s"
 
-#: src/features/translations/translations.js:98
+#: src/features/translations/translations.js:62
 msgid "Exporting…"
 msgstr "Đang xuất…"
 
-#: src/features/translations/translations.js:101
+#: src/features/translations/translations.js:65
 msgid "Template (.pot)"
 msgstr "Template (.pot)"
 
-#: src/features/translations/translations.js:110
+#: src/features/translations/translations.js:74
 msgid "%s files"
 msgstr "%s file"
 
-#: src/features/translations/translations.js:110
+#: src/features/translations/translations.js:74
 msgid "nothing to export"
 msgstr "không có gì để xuất"
 

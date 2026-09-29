@@ -152,6 +152,27 @@ test('Translations tab: one input searches the installed modules and holds the t
   assert.equal((await state()).apps, 'base_import; base_setup; ', 'unticking removes it');
 });
 
+test('Apps tab: installed modules listed, the others found by the word being typed', async () => {
+  await click('.tabs [data-tab="apps"]');
+  await panel.$eval('#apps details.card', (c) => { c.open = true; });
+  await panel.waitForSelector('#apps .module-picker li');
+  const shown = () => panel.$$eval('#apps .module-picker li:not([hidden])', (lis) => lis.map((li) => ({
+    name: li.querySelector('.name').textContent, // a state pill only when not installed (the other pill is the version)
+    state: [...li.querySelectorAll('.pill')].map((p) => p.textContent).find((t) => !/^\d/.test(t)) || 'installed',
+  })));
+  const type = (v) => panel.$eval('#apps input[type=text]', (i, v) => { i.value = v; i.dispatchEvent(new Event('input')); }, v);
+
+  await type('');
+  const installed = await shown();
+  assert.ok(installed.some((m) => m.name === 'base'), 'base is installed');
+  assert.ok(installed.every((m) => m.state === 'installed'), 'nothing typed: installed modules only');
+  await type('crm_s');
+  assert.deepEqual((await shown()).find((m) => m.name === 'crm_sms'), { name: 'crm_sms', state: 'uninstalled' }, 'typing finds the others');
+  await panel.$eval('#apps .module-picker li:not([hidden]) input', (b) => b.click());
+  assert.equal(await panel.$eval('#apps input[type=text]', (i) => i.value), 'crm_sms; ');
+  assert.ok((await shown()).some((m) => m.name === 'crm_sms'), 'a ticked module stays in the list');
+});
+
 test('no error from the extension in the console', () => {
   assert.deepEqual(errors, []);
 });
