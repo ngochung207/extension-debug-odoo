@@ -5,7 +5,7 @@ import { MODES, pickGroupField } from '../../shared/odoo.js';
 import { pageGo } from '../../shared/page.js';
 import {
   exec, call, cached, uncache, sessionInfo, fieldsOf, readAcls, readRules, cookieFlags,
-  el, pre, pill, triPill, details, empty, block, card, expandable, copyable, listHead,
+  el, pre, pill, triPill, details, empty, block, expandable, copyable, listHead,
 } from '../../shared/ui.js';
 import { _t, N_ } from '../../shared/i18n.js';
 
@@ -46,21 +46,21 @@ export function renderSecurity(s, state) {
 
   const picker = el('select', { 'aria-label': _t('Simulated user'), onchange: () => { targets.set(origin, +picker.value); rerender(); } },
     el('option', {}, _t('Loading users…')));
-  s.append(card(_t('View as user'),
+  block(s, 'view-as', _t('View as user'), () => el('div', {},
     el('div', { class: 'picker' }, picker,
-      el('button', { class: 'chip', onclick: () => { targets.delete(origin); rerender(); } }, _t('My user'))),
+      el('button', { class: 'chip', onclick: () => { targets.delete(origin); rerender(); } }, _t('My User'))),
     el('div', { class: 'note' }, _t('Simulates the selected user\'s rights without logging in as them (reading other users\' groups needs admin rights).')),
     el('div', { class: 'mt' }, el('button', {
       class: 'btn', title: _t('Odoo\'s built-in /web/become route, base.group_system only'),
       onclick: () => confirm(_t('Switch the current session to superuser (bypasses every rule)?')) && exec(pageGo, '/web/become'),
-    }, _t('Become superuser')))));
+    }, _t('Become Superuser')))));
   t.then(({ uid, me, users }) => {
     const list = users.some((x) => x.id === uid) ? users : [{ id: uid, name: `#${uid}`, login: '' }, ...users]; // users is cached: don't mutate
     picker.replaceChildren(...list.map((x) => el('option', { value: x.id, selected: x.id === uid },
       `${x.name}${x.login ? ` (${x.login})` : ''}${x.share ? ' · portal' : ''}${x.id === me ? ` · ${_t('me')}` : ''}`)));
   }, () => picker.replaceChildren(el('option', {}, _t('Cannot read the user list'))));
 
-  block(s, _t('User risks'), async () => {
+  block(s, 'user-risks', _t('User risks'), async () => {
     const { u, has, groupIds } = await t;
     return el('div', {},
       el('div', { class: 'muted pad-top' },
@@ -71,9 +71,9 @@ export function renderSecurity(s, state) {
   if (model) {
     const modelSec = Promise.all([readAcls(model), readRules(model), fieldsOf(model)]);
 
-    block(s, _t('Why allowed / blocked — %s', `${model}${resId ? ` #${resId}` : ''}`), () => whyBlock(model, resId, t, modelSec));
+    block(s, 'why', _t('Why allowed / blocked — %s', `${model}${resId ? ` #${resId}` : ''}`), () => whyBlock(model, resId, t, modelSec));
 
-    block(s, _t('Fields hidden from the user (groups=)'), async () => {
+    block(s, 'hidden-fields', _t('Fields hidden from the user (groups=)'), async () => {
       const [{ uid }, [, , fields]] = await Promise.all([t, modelSec]);
       const restricted = Object.entries(fields).filter(([, f]) => f.groups);
       if (!restricted.length) return empty(_t('No field declares groups=.'));
@@ -86,13 +86,13 @@ export function renderSecurity(s, state) {
         el('div', { class: 'meta' }, f.groups))))));
     });
 
-    block(s, _t('Model configuration audit'), async () => {
+    block(s, 'model-audit', _t('Model configuration audit'), async () => {
       const [{ groupXml }, [acls, rules, fields]] = await Promise.all([t, modelSec]);
       return findings(auditModel({ fields, acls, rules, groupXml }));
     });
   }
 
-  block(s, _t('Instance check'), async () => {
+  block(s, 'instance', _t('Instance check'), async () => {
     const [probe, cookie] = await cached('probe', async () => {
       const r = await Promise.all([exec(pageProbe), cookieFlags(state.url)]);
       if (!r[0] || r[0].error) throw new Error(r[0]?.error || _t('Check failed'));
@@ -101,7 +101,7 @@ export function renderSecurity(s, state) {
     return el('div', {}, findings(checkInstance(probe, cookie)),
       el('div', { class: 'pad-bottom' },
         details(_t('Raw data'), pre({ ...probe, cookie })),
-        el('button', { class: 'chip mt', onclick: () => { uncache('probe'); rerender(); } }, _t('Check again'))));
+        el('button', { class: 'chip mt', onclick: () => { uncache('probe'); rerender(); } }, _t('Check Again'))));
   });
 }
 

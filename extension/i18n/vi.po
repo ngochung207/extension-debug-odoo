@@ -135,11 +135,11 @@ msgid "Server profiler"
 msgstr "Profiler server"
 
 #: src/features/perf/perf.js:43
-msgid "Stop profiling"
+msgid "Stop Profiling"
 msgstr "Tắt profiling"
 
 #: src/features/perf/perf.js:43
-msgid "Start profiling"
+msgid "Start Profiling"
 msgstr "Bật profiling"
 
 #: src/features/perf/perf.js:45
@@ -183,7 +183,7 @@ msgid "Id · date · CPU"
 msgstr "Id · ngày · CPU"
 
 #: src/features/perf/perf.js:67
-msgid "Flame graph (speedscope)"
+msgid "Flame Graph (speedscope)"
 msgstr "Flame graph (speedscope)"
 
 #: src/features/perf/perf.js:75
@@ -276,7 +276,7 @@ msgid "Filter model / method"
 msgstr "Lọc model / method"
 
 #: src/features/rpc/rpc.js:16
-msgid "Errors only"
+msgid "Errors Only"
 msgstr "Chỉ lỗi"
 
 #: src/features/rpc/rpc.js:22
@@ -296,7 +296,7 @@ msgid "Time · route"
 msgstr "Giờ · route"
 
 #: src/features/rpc/rpc.js:36
-#: src/features/translations/translations.js:75
+#: src/features/translations/translations.js:77
 msgid "error"
 msgstr "lỗi"
 
@@ -494,7 +494,7 @@ msgid "View as user"
 msgstr "Xem như user"
 
 #: src/features/security/security.js:51
-msgid "My user"
+msgid "My User"
 msgstr "User của tôi"
 
 #: src/features/security/security.js:52
@@ -510,7 +510,7 @@ msgid "Switch the current session to superuser (bypasses every rule)?"
 msgstr "Chuyển phiên hiện tại sang superuser (bỏ qua mọi rule)?"
 
 #: src/features/security/security.js:56
-msgid "Become superuser"
+msgid "Become Superuser"
 msgstr "Chuyển sang superuser"
 
 #: src/features/security/security.js:60
@@ -571,7 +571,7 @@ msgid "Raw data"
 msgstr "Dữ liệu thô"
 
 #: src/features/security/security.js:104
-msgid "Check again"
+msgid "Check Again"
 msgstr "Kiểm tra lại"
 
 #: src/features/security/security.js:121
@@ -618,63 +618,63 @@ msgstr "Model này không có record rule."
 msgid "Assumes the user selected every allowed company. Rules of parent models through _inherits are not counted. This is a simulation; for an exact answer about yourself, see the Access tab (has_access runs on the server)."
 msgstr "Giả định user chọn tất cả công ty được phép. Rule của model cha qua _inherits không được tính. Đây là mô phỏng; muốn kết quả chính xác cho chính bạn, xem tab Access (has_access chạy thật trên server)."
 
-#: src/features/translations/translations.js:12
+#: src/features/translations/translations.js:14
 msgid "Export translations"
 msgstr "Xuất file dịch"
 
-#: src/features/translations/translations.js:23
-msgid "Export & download"
+#: src/features/translations/translations.js:25
+msgid "Export & Download"
 msgstr "Xuất & tải về"
 
-#: src/features/translations/translations.js:25
-msgid "Apps to export"
+#: src/features/translations/translations.js:27
+msgid "Apps To Export"
 msgstr "Apps cần xuất"
 
-#: src/features/translations/translations.js:26
+#: src/features/translations/translations.js:28
 msgid "Technical names, separated by ;"
 msgstr "Tên kỹ thuật, phân cách bằng ;"
 
-#: src/features/translations/translations.js:27
+#: src/features/translations/translations.js:29
 msgid "Languages"
 msgstr "Ngôn ngữ"
 
-#: src/features/translations/translations.js:28
+#: src/features/translations/translations.js:30
 msgid "Active:"
 msgstr "Đang bật:"
 
-#: src/features/translations/translations.js:30
+#: src/features/translations/translations.js:32
 msgid "Always exported too: New Language (Empty translation template), as <module>.pot."
 msgstr "Luôn xuất kèm: New Language (Empty translation template), thành file <module>.pot."
 
-#: src/features/translations/translations.js:52
+#: src/features/translations/translations.js:54
 msgid "Enter at least one app."
 msgstr "Nhập ít nhất một app."
 
-#: src/features/translations/translations.js:54
+#: src/features/translations/translations.js:56
 msgid "Not an active language: %s. Active: %s"
 msgstr "Ngôn ngữ chưa được bật: %s. Đang bật: %s"
 
-#: src/features/translations/translations.js:57
+#: src/features/translations/translations.js:59
 msgid "Unknown app: %s"
 msgstr "Không có app: %s"
 
-#: src/features/translations/translations.js:58
+#: src/features/translations/translations.js:60
 msgid "Not installed: %s"
 msgstr "Chưa cài: %s"
 
-#: src/features/translations/translations.js:61
+#: src/features/translations/translations.js:63
 msgid "Exporting…"
 msgstr "Đang xuất…"
 
-#: src/features/translations/translations.js:64
+#: src/features/translations/translations.js:66
 msgid "Template (.pot)"
 msgstr "Template (.pot)"
 
-#: src/features/translations/translations.js:73
+#: src/features/translations/translations.js:75
 msgid "%s files"
 msgstr "%s file"
 
-#: src/features/translations/translations.js:73
+#: src/features/translations/translations.js:75
 msgid "nothing to export"
 msgstr "không có gì để xuất"
 
@@ -711,7 +711,7 @@ msgid "Action"
 msgstr "Action"
 
 #: src/features/view/view.js:45
-msgid "Open action record ↗"
+msgid "Open Action Record ↗"
 msgstr "Mở bản ghi action ↗"
 
 #: src/features/view/view.js:46
@@ -767,7 +767,7 @@ msgid "Picking… (Esc to cancel)"
 msgstr "Đang chọn… (Esc để huỷ)"
 
 #: src/features/view/view.js:80
-msgid "⌖ Pick on page"
+msgid "⌖ Pick on Page"
 msgstr "⌖ Chọn trên trang"
 
 #: src/features/view/view.js:87
@@ -799,20 +799,20 @@ msgid "Odoo debug mode"
 msgstr "Chế độ debug của Odoo"
 
 #: src/panel/panel.html:17
-msgid "Turn debug off"
+msgid "Turn Debug Off"
 msgstr "Tắt debug"
 
 #: src/panel/panel.html:21
 #: src/panel/panel.html:21
-msgid "Reload data"
+msgid "Reload Data"
 msgstr "Tải lại dữ liệu"
 
 #: src/panel/panel.html:22
-msgid "Full screen (Esc to exit)"
+msgid "Full Screen (Esc to exit)"
 msgstr "Toàn màn hình (Esc để thoát)"
 
 #: src/panel/panel.html:22
-msgid "Full screen"
+msgid "Full Screen"
 msgstr "Toàn màn hình"
 
 #: src/panel/panel.html:24
@@ -852,7 +852,7 @@ msgid "This page"
 msgstr "Trang hiện tại"
 
 #: src/popup/popup.html:20
-msgid "Show / hide panel"
+msgid "Show / Hide Panel"
 msgstr "Hiện / ẩn panel"
 
 #: src/popup/popup.html:24
@@ -895,11 +895,11 @@ msgstr "Traceback"
 msgid "Open /odoo/%s"
 msgstr "Mở /odoo/%s"
 
-#: src/shared/ui.js:107
-#: src/shared/ui.js:155
+#: src/shared/ui.js:126
+#: src/shared/ui.js:177
 msgid "Loading…"
 msgstr "Đang tải…"
 
-#: src/shared/ui.js:116
+#: src/shared/ui.js:138
 msgid "Click to copy"
 msgstr "Bấm để copy"

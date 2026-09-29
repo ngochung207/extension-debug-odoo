@@ -7,9 +7,11 @@ import { _t } from '../../shared/i18n.js';
 const KEY = 'odoo-debug-i18n-export'; // localStorage of the panel: the last apps / languages typed
 const load = () => { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch { return {}; } };
 const save = (v) => { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch { /* storage off: nothing to remember */ } };
+/** ⟳ Reload Data: forget the typed apps / languages, so the re-rendered form starts empty. */
+export const resetTranslations = () => { try { localStorage.removeItem(KEY); } catch { /* storage off: nothing kept */ } };
 
 export function renderTranslations(s) {
-  block(s, _t('Export translations'), async () => {
+  block(s, 'export', _t('Export translations'), async () => {
     const langs = await cached('active langs', () => call('res.lang', 'search_read', [[['active', '=', true]]], { fields: ['code', 'name'], order: 'code' }));
     const last = load();
     const apps = el('input', { type: 'text', placeholder: 'sale; stock; my_module', value: last.apps || '', spellcheck: false });
@@ -20,9 +22,9 @@ export function renderTranslations(s) {
       langIn.focus();
     };
     const log = el('ul', { class: 'steps' });
-    const btn = el('button', { class: 'btn', type: 'submit' }, _t('Export & download'));
+    const btn = el('button', { class: 'btn', type: 'submit' }, _t('Export & Download'));
     const form = el('form', { class: 'form' },
-      el('label', {}, _t('Apps to export'), apps),
+      el('label', {}, _t('Apps To Export'), apps),
       el('div', { class: 'note' }, _t('Technical names, separated by ;')),
       el('label', { class: 'mt' }, _t('Languages'), langIn),
       el('div', { class: 'row mt' }, el('span', { class: 'muted' }, _t('Active:')),

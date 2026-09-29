@@ -15,6 +15,11 @@ All notable changes to this project are documented here. Format: [Keep a Changel
   click on the row and close on the next one. Clicking a name still copies it. The wide 2-column table (760px+) keeps
   them in its second column.
 - Every collapsible section (user_context, Companies, combined arch, parameters / result, queries…) starts closed.
+- Every card of every tab starts closed and loads its data only once opened; the cards left open (or closed) stay so
+  after ⟳ Reload Data, a reload of the page or the panel.
+- Rows with an action button (↗) keep it in a right-hand column, lined up on every row.
+- Button labels and tooltips capitalised like Odoo's ("Export & Download", "Reload Data"…). ⟳ Reload Data also
+  empties the Translations form.
 - Icon without the green dot.
 - The Perf tab is now the last one.
 

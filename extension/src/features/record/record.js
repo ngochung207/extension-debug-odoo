@@ -7,7 +7,7 @@ export function renderRecord(s, state) {
   const { model, resId } = state;
   if (!model) return s.append(empty(_t('This screen is not bound to a model.')));
 
-  block(s, _t('Identity & metadata'), async () => {
+  block(s, 'identity', _t('Identity & metadata'), async () => {
     // get_metadata reads ir.model.data with sudo, so xmlids show even without access to ir.model.data.
     const [m] = resId ? await call(model, 'get_metadata', [[resId]]) : [];
     const who = (uid, date) => (uid ? `${uid[1]} (#${uid[0]}) · ${date}` : '—');
@@ -18,7 +18,7 @@ export function renderRecord(s, state) {
     });
   });
 
-  block(s, _t('Fields'), async () => {
+  block(s, 'fields', _t('Fields'), async () => {
     const [fields, irFields, values] = await Promise.all([
       fieldsOf(model),
       cached(`ir fields ${model}`, () => call('ir.model.fields', 'search_read', [[['model', '=', model]]], { fields: ['name', 'modules', 'index'] }))

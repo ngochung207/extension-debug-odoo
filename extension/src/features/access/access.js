@@ -4,7 +4,7 @@
 import { MODES, pickGroupField } from '../../shared/odoo.js';
 import {
   call, cached, sessionInfo, fieldsOf, readAcls, readRules,
-  el, pre, pill, triPill, details, empty, kv, block, expandable, filterBox, copyable, odooLink, listHead,
+  el, pre, pill, triPill, details, empty, kv, block, expandable, filterBox, copyable, odooLink, listHead, splitRow,
 } from '../../shared/ui.js';
 import { _t, N_ } from '../../shared/i18n.js';
 
@@ -32,7 +32,7 @@ export function renderAccess(s, state) {
   const { model, resId, origin } = state;
   const groupIds = myGroups().then((gs) => new Set(gs.map((g) => g.id)), () => new Set());
 
-  block(s, _t('Session'), async () => {
+  block(s, 'session', _t('Session'), async () => {
     const i = await sessionInfo();
     return el('div', {},
       kv({
@@ -43,14 +43,14 @@ export function renderAccess(s, state) {
   });
 
   if (model) {
-    block(s, _t('Effective access on %s', `${model}${resId ? ` #${resId}` : ''}`), async () => {
+    block(s, 'effective', _t('Effective access on %s', `${model}${resId ? ` #${resId}` : ''}`), async () => {
       const res = await Promise.all(MODES.map((op) => call(model, 'has_access', [resId ? [resId] : [], op]).catch(() => null)));
       return el('div', { class: 'row' }, MODES.map((op, i) => triPill(res[i], [`✓ ${op}`, `✗ ${op}`, `? ${op}`])));
     });
 
     const perm = (x) => MODES.map((m) => el('td', { class: 'c' }, x[`perm_${m}`] ? '✓' : ''));
     const rwcd = () => ['R', 'W', 'C', 'D'].map((h) => el('th', { class: 'c' }, h));
-    block(s, _t('ACL (ir.model.access) — green = applies to you'), async () => {
+    block(s, 'acl', _t('ACL (ir.model.access) — green = applies to you'), async () => {
       const [rows, mine] = await Promise.all([readAcls(model), groupIds]);
       if (!rows.length) return empty(_t('No ACL.'));
       return el('table', {}, el('thead', {}, el('tr', {}, el('th', {}, _t('ACL / group')), rwcd())), el('tbody', {}, rows.map((a) =>
@@ -58,7 +58,7 @@ export function renderAccess(s, state) {
           el('td', {}, a.name, el('div', { class: 'muted' }, a.group_id ? a.group_id[1] : _t('(all users)'))), perm(a)))));
     });
 
-    block(s, _t('Record rules (ir.rule) — green = applies to you'), async () => {
+    block(s, 'rules', _t('Record rules (ir.rule) — green = applies to you'), async () => {
       const [rows, mine] = await Promise.all([readRules(model), groupIds]);
       if (!rows.length) return empty(_t('No record rule.'));
       return el('table', {}, el('thead', {}, el('tr', {}, el('th', {}, _t('Rule / domain')), rwcd())), el('tbody', {}, rows.map((r) =>
@@ -68,7 +68,7 @@ export function renderAccess(s, state) {
     });
   }
 
-  block(s, _t('Your groups'), async () => {
+  block(s, 'groups', _t('Your groups'), async () => {
     const gs = await myGroups();
     return gs.length ? details(_t('%s groups', gs.length), pre(gs.map((g) => g.full_name).sort().join('\n'))) : empty(_t('No group.'));
   });
@@ -76,12 +76,12 @@ export function renderAccess(s, state) {
   // Both models are base.group_system only: say so instead of showing an AccessError.
   const adminOnly = async (fn) => ((await sessionInfo()).is_system ? fn() : empty(_t('Needs Settings rights (base.group_system).')));
 
-  block(s, _t('System parameters (ir.config_parameter)'), () => adminOnly(async () => {
+  block(s, 'params', _t('System parameters (ir.config_parameter)'), () => adminOnly(async () => {
     const rows = await call('ir.config_parameter', 'search_read', [[]], { fields: ['key', 'value'], order: 'key' }); // not cached: edited while debugging
     const items = rows.map((p) => {
       const secret = SECRET.test(p.key);
       const li = el('li', {},
-        el('div', { class: 'row' }, copyable(p.key), el('span', { class: 'grow' }), odooLink(origin, `ir.config_parameter/${p.id}`)),
+        splitRow(copyable(p.key), odooLink(origin, `ir.config_parameter/${p.id}`)),
         el('div', { class: 'meta mono' }, p.value ? copyable(p.value, '', secret ? '••••••' : p.value) : '')); // copies the real value, even masked
       li.dataset.q = `${p.key} ${secret ? '' : p.value}`.toLowerCase();
       return expandable(li, () => pre(p.value));
@@ -89,13 +89,13 @@ export function renderAccess(s, state) {
     return items.length ? filteredList(items, _t('Filter key / value'), N_('%s parameters'), N_('%s/%s parameters'), listHead(_t('Key'), _t('Value'))) : empty(_t('No parameter.'));
   }));
 
-  block(s, _t('Installed modules'), () => adminOnly(async () => {
+  block(s, 'modules', _t('Installed modules'), () => adminOnly(async () => {
     // latest_version = the version installed in the DB (installed_version is computed from the manifest on disk: slow)
     const mods = await cached('modules', () => call('ir.module.module', 'search_read', [[['state', '=', 'installed']]],
       { fields: ['name', 'shortdesc', 'latest_version', 'author'], order: 'name' }));
     const items = mods.map((m) => {
       const li = el('li', {},
-        el('div', { class: 'row' }, copyable(m.name), el('span', { class: 'grow muted' }, m.shortdesc), m.latest_version && pill(m.latest_version),
+        splitRow([copyable(m.name), el('span', { class: 'grow muted' }, m.shortdesc), m.latest_version && pill(m.latest_version)],
           odooLink(origin, `ir.module.module/${m.id}`)),
         m.author ? el('div', { class: 'meta' }, m.author) : null);
       li.dataset.q = `${m.name} ${m.shortdesc} ${m.author || ''}`.toLowerCase();

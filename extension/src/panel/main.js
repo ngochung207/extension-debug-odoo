@@ -10,7 +10,7 @@ import { mountRpc, addRpc, reloadRpc } from '../features/rpc/rpc.js';
 import { renderAccess } from '../features/access/access.js';
 import { renderSecurity } from '../features/security/security.js';
 import { renderPerf } from '../features/perf/perf.js';
-import { renderTranslations } from '../features/translations/translations.js';
+import { renderTranslations, resetTranslations } from '../features/translations/translations.js';
 import { loadSettings } from '../shared/settings.js';
 
 const settings = await loadSettings();
@@ -67,7 +67,7 @@ async function refresh() {
 mountRpc($('#rpc'), () => showTab('security'));
 for (const b of document.querySelectorAll('.tabs button')) b.addEventListener('click', () => showTab(b.dataset.tab));
 for (const b of document.querySelectorAll('[data-debug]')) b.addEventListener('click', () => exec(pageDebug, b.dataset.debug));
-$('#refresh').addEventListener('click', () => { clearCache(); refresh(); });
+$('#refresh').addEventListener('click', () => { clearCache(); resetTranslations(); refresh(); }); // every tab re-renders, forms empty
 
 // ---------- bound to the tab it is embedded in (iframe from src/content/bubble.js; a page reload recreates it) ----------
 let timer = null;

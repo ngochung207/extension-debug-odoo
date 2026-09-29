@@ -135,11 +135,11 @@ msgid "Server profiler"
 msgstr ""
 
 #: src/features/perf/perf.js:43
-msgid "Stop profiling"
+msgid "Stop Profiling"
 msgstr ""
 
 #: src/features/perf/perf.js:43
-msgid "Start profiling"
+msgid "Start Profiling"
 msgstr ""
 
 #: src/features/perf/perf.js:45
@@ -183,7 +183,7 @@ msgid "Id · date · CPU"
 msgstr ""
 
 #: src/features/perf/perf.js:67
-msgid "Flame graph (speedscope)"
+msgid "Flame Graph (speedscope)"
 msgstr ""
 
 #: src/features/perf/perf.js:75
@@ -276,7 +276,7 @@ msgid "Filter model / method"
 msgstr ""
 
 #: src/features/rpc/rpc.js:16
-msgid "Errors only"
+msgid "Errors Only"
 msgstr ""
 
 #: src/features/rpc/rpc.js:22
@@ -296,7 +296,7 @@ msgid "Time · route"
 msgstr ""
 
 #: src/features/rpc/rpc.js:36
-#: src/features/translations/translations.js:75
+#: src/features/translations/translations.js:77
 msgid "error"
 msgstr ""
 
@@ -494,7 +494,7 @@ msgid "View as user"
 msgstr ""
 
 #: src/features/security/security.js:51
-msgid "My user"
+msgid "My User"
 msgstr ""
 
 #: src/features/security/security.js:52
@@ -510,7 +510,7 @@ msgid "Switch the current session to superuser (bypasses every rule)?"
 msgstr ""
 
 #: src/features/security/security.js:56
-msgid "Become superuser"
+msgid "Become Superuser"
 msgstr ""
 
 #: src/features/security/security.js:60
@@ -571,7 +571,7 @@ msgid "Raw data"
 msgstr ""
 
 #: src/features/security/security.js:104
-msgid "Check again"
+msgid "Check Again"
 msgstr ""
 
 #: src/features/security/security.js:121
@@ -618,63 +618,63 @@ msgstr ""
 msgid "Assumes the user selected every allowed company. Rules of parent models through _inherits are not counted. This is a simulation; for an exact answer about yourself, see the Access tab (has_access runs on the server)."
 msgstr ""
 
-#: src/features/translations/translations.js:12
+#: src/features/translations/translations.js:14
 msgid "Export translations"
 msgstr ""
 
-#: src/features/translations/translations.js:23
-msgid "Export & download"
-msgstr ""
-
 #: src/features/translations/translations.js:25
-msgid "Apps to export"
-msgstr ""
-
-#: src/features/translations/translations.js:26
-msgid "Technical names, separated by ;"
+msgid "Export & Download"
 msgstr ""
 
 #: src/features/translations/translations.js:27
-msgid "Languages"
+msgid "Apps To Export"
 msgstr ""
 
 #: src/features/translations/translations.js:28
-msgid "Active:"
+msgid "Technical names, separated by ;"
+msgstr ""
+
+#: src/features/translations/translations.js:29
+msgid "Languages"
 msgstr ""
 
 #: src/features/translations/translations.js:30
+msgid "Active:"
+msgstr ""
+
+#: src/features/translations/translations.js:32
 msgid "Always exported too: New Language (Empty translation template), as <module>.pot."
 msgstr ""
 
-#: src/features/translations/translations.js:52
+#: src/features/translations/translations.js:54
 msgid "Enter at least one app."
 msgstr ""
 
-#: src/features/translations/translations.js:54
+#: src/features/translations/translations.js:56
 msgid "Not an active language: %s. Active: %s"
 msgstr ""
 
-#: src/features/translations/translations.js:57
+#: src/features/translations/translations.js:59
 msgid "Unknown app: %s"
 msgstr ""
 
-#: src/features/translations/translations.js:58
+#: src/features/translations/translations.js:60
 msgid "Not installed: %s"
 msgstr ""
 
-#: src/features/translations/translations.js:61
+#: src/features/translations/translations.js:63
 msgid "Exporting…"
 msgstr ""
 
-#: src/features/translations/translations.js:64
+#: src/features/translations/translations.js:66
 msgid "Template (.pot)"
 msgstr ""
 
-#: src/features/translations/translations.js:73
+#: src/features/translations/translations.js:75
 msgid "%s files"
 msgstr ""
 
-#: src/features/translations/translations.js:73
+#: src/features/translations/translations.js:75
 msgid "nothing to export"
 msgstr ""
 
@@ -711,7 +711,7 @@ msgid "Action"
 msgstr ""
 
 #: src/features/view/view.js:45
-msgid "Open action record ↗"
+msgid "Open Action Record ↗"
 msgstr ""
 
 #: src/features/view/view.js:46
@@ -767,7 +767,7 @@ msgid "Picking… (Esc to cancel)"
 msgstr ""
 
 #: src/features/view/view.js:80
-msgid "⌖ Pick on page"
+msgid "⌖ Pick on Page"
 msgstr ""
 
 #: src/features/view/view.js:87
@@ -799,20 +799,20 @@ msgid "Odoo debug mode"
 msgstr ""
 
 #: src/panel/panel.html:17
-msgid "Turn debug off"
+msgid "Turn Debug Off"
 msgstr ""
 
 #: src/panel/panel.html:21
 #: src/panel/panel.html:21
-msgid "Reload data"
+msgid "Reload Data"
 msgstr ""
 
 #: src/panel/panel.html:22
-msgid "Full screen (Esc to exit)"
+msgid "Full Screen (Esc to exit)"
 msgstr ""
 
 #: src/panel/panel.html:22
-msgid "Full screen"
+msgid "Full Screen"
 msgstr ""
 
 #: src/panel/panel.html:24
@@ -852,7 +852,7 @@ msgid "This page"
 msgstr ""
 
 #: src/popup/popup.html:20
-msgid "Show / hide panel"
+msgid "Show / Hide Panel"
 msgstr ""
 
 #: src/popup/popup.html:24
@@ -895,11 +895,11 @@ msgstr ""
 msgid "Open /odoo/%s"
 msgstr ""
 
-#: src/shared/ui.js:107
-#: src/shared/ui.js:155
+#: src/shared/ui.js:126
+#: src/shared/ui.js:177
 msgid "Loading…"
 msgstr ""
 
-#: src/shared/ui.js:116
+#: src/shared/ui.js:138
 msgid "Click to copy"
 msgstr ""

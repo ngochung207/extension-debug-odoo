@@ -13,7 +13,7 @@ export function mountRpc(section, whyBlocked) {
   onWhyBlocked = whyBlocked;
   filter = el('input', { type: 'search', placeholder: _t('Filter model / method') });
   filter.addEventListener('input', () => { for (const li of rows.children) applyFilter(li); });
-  const errBtn = el('button', { class: 'chip', 'aria-pressed': 'false' }, _t('Errors only'));
+  const errBtn = el('button', { class: 'chip', 'aria-pressed': 'false' }, _t('Errors Only'));
   errBtn.addEventListener('click', () => {
     onlyErrors = !onlyErrors;
     errBtn.setAttribute('aria-pressed', onlyErrors);

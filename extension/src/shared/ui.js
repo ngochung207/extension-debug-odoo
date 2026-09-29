@@ -97,17 +97,39 @@ export const odooLink = (origin, path, text = '↗') => el('a', {
   class: 'btn', href: `${origin}/odoo/${path}`, target: '_blank', rel: 'noopener', title: _t('Open /odoo/%s', path),
 }, text);
 
+/** A list row in two columns: `info` on the left (wraps as needed), `actions` (↗ buttons…) on the right, lined up on every row. */
+export const splitRow = (info, ...actions) => el('div', { class: 'row split' },
+  el('div', { class: 'row grow' }, info), el('div', { class: 'actions' }, actions));
+
 /** Column names of a .list, shown only when the list is laid out as a table (wide panel, see panel.css). */
 export const listHead = (main, desc) => el('div', { class: 'list-head', 'aria-hidden': 'true' }, el('span', {}, main), el('span', {}, desc));
 
-export const card = (title, ...kids) => el('section', { class: 'card' }, el('h3', {}, title), el('div', { class: 'card-body' }, ...kids));
+// Cards start closed; the ones opened stay open across re-renders and reloads (localStorage of the panel, every instance).
+const OPEN_CARDS = 'odoo-debug-open-cards';
+const openCards = () => { try { return new Set(JSON.parse(localStorage.getItem(OPEN_CARDS)) || []); } catch { return new Set(); } };
+function rememberCard(id, open) {
+  const ids = openCards();
+  if (open) ids.add(id); else ids.delete(id);
+  try { localStorage.setItem(OPEN_CARDS, JSON.stringify([...ids])); } catch { /* storage off: every card starts closed */ }
+}
 
-/** A card whose body loads async; a failing card (e.g. no ACL on ir.rule) doesn't blank the others. */
-export function block(parent, title, fn) {
-  const c = card(title, el('div', { class: 'loading' }, _t('Loading…')));
-  const body = c.lastChild;
+/** A collapsible card of the tab `parent`, remembered as `<tab>:<key>` (key: stable, the title is translated / dynamic).
+ * Its body is built the first time it opens (`fn` may be async); a failing card (e.g. no ACL on ir.rule) doesn't blank the others. */
+export function block(parent, key, title, fn) {
+  const id = `${parent.id}:${key}`;
+  const body = el('div', { class: 'card-body' });
+  const c = el('details', { class: 'card' }, el('summary', {}, el('h3', {}, title)), body);
+  let loaded = false;
+  const load = () => {
+    if (loaded) return;
+    loaded = true;
+    body.replaceChildren(el('div', { class: 'loading' }, _t('Loading…')));
+    Promise.resolve().then(fn).then((n) => body.replaceChildren(...[n].filter(Boolean)), (e) => body.replaceChildren(errBox(e)));
+  };
+  c.addEventListener('toggle', () => { rememberCard(id, c.open); if (c.open) load(); });
+  c.open = openCards().has(id);
+  if (c.open) load();
   parent.append(c);
-  Promise.resolve().then(fn).then((n) => body.replaceChildren(n), (e) => body.replaceChildren(errBox(e)));
 }
 
 /** `text` (a field name, xmlid…) as a button copying it to the clipboard; ✓ for a second after. `label`: shown instead (e.g. masked). */

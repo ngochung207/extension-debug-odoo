@@ -1,7 +1,7 @@
 // Perf tab: Odoo's built-in server profiler (/web/set_profiling → ir.profile rows), read back per request.
 import { sqlSummary, appFrame } from './logic.js';
 import { pageFetch } from '../../shared/page.js';
-import { exec, rpc, call, fieldsOf, el, pre, pill, details, empty, block, errBox, expandable, listHead } from '../../shared/ui.js';
+import { exec, rpc, call, fieldsOf, el, pre, pill, details, empty, block, errBox, expandable, listHead, splitRow } from '../../shared/ui.js';
 import { _t } from '../../shared/i18n.js';
 
 const COLLECTORS = 'sql,traces_async';
@@ -32,7 +32,7 @@ export function renderPerf(s, state) {
   const { origin } = state;
   const info = rpc('/web/session/get_session_info', {}); // not sessionInfo(): profile_session changes with the button
 
-  block(s, _t('Server profiler'), async () => {
+  block(s, 'profiler', _t('Server profiler'), async () => {
     const { profile_session: session } = await info;
     const btn = el('button', {
       class: 'btn',
@@ -40,14 +40,14 @@ export function renderPerf(s, state) {
         btn.disabled = true;
         try { session ? await setProfiling(false) : await enable(); rerender(); } catch (e) { btn.disabled = false; btn.after(errBox(e)); }
       },
-    }, session ? _t('Stop profiling') : _t('Start profiling'));
+    }, session ? _t('Stop Profiling') : _t('Start Profiling'));
     return el('div', { class: 'pad' },
       el('div', { class: 'row' }, pill(session ? _t('RECORDING') : _t('off'), session ? 'ok' : ''),
         el('span', { class: 'grow muted' }, session || _t('Every request of this session will record its SQL + Python stacks.')), btn),
       el('p', { class: 'note' }, _t('Uses Odoo\'s built-in profiler, needs base.group_system. While recording, each request writes one ir.profile row to the DB; Odoo stops it when it expires. Press ⟳ to reload the list.')));
   });
 
-  block(s, _t('Profiled requests'), async () => {
+  block(s, 'requests', _t('Profiled requests'), async () => {
     const { profile_session: session } = await info;
     const known = await fieldsOf('ir.profile');
     const rows = await call('ir.profile', 'search_read', [session ? [['session', '=', session]] : []],
@@ -62,9 +62,9 @@ export function renderPerf(s, state) {
 function profileItem(r, origin) {
   const slowSql = r.sql_count > 50;
   const li = el('li', {},
-    el('div', { class: 'row' }, el('span', { class: 'name grow' }, r.name.replace(/\?$/, '')),
-      pill(`${r.sql_count} SQL`, slowSql ? 'err' : ''), el('span', { class: 'ms' }, ms(r.duration)),
-      el('a', { class: 'btn', href: `${origin}/web/speedscope/${r.id}`, target: '_blank', rel: 'noopener', title: _t('Flame graph (speedscope)') }, '↗')),
+    splitRow([el('span', { class: 'name grow' }, r.name.replace(/\?$/, '')),
+      pill(`${r.sql_count} SQL`, slowSql ? 'err' : ''), el('span', { class: 'ms' }, ms(r.duration))],
+    el('a', { class: 'btn', href: `${origin}/web/speedscope/${r.id}`, target: '_blank', rel: 'noopener', title: _t('Flame Graph (speedscope)') }, '↗')),
     el('div', { class: 'meta' }, [`#${r.id}`, r.create_date, 'cpu_duration' in r && `CPU ${ms(r.cpu_duration)}`].filter(Boolean).join(' · ')));
   return expandable(li, async () => sqlDetail(r, await call('ir.profile', 'read', [[r.id], ['sql']])));
 }
