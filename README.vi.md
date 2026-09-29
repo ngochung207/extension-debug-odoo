@@ -113,7 +113,7 @@ Dữ liệu Odoo chỉ được đưa vào DOM qua `textContent`, và trang khá
 
 ## Phát triển
 
-Không có bước build, không có dependency: sửa code rồi reload extension trong `chrome://extensions`.
+Không có bước build, không có dependency lúc chạy: sửa code rồi reload extension trong `chrome://extensions`.
 
 ```bash
 npm test
@@ -124,6 +124,22 @@ npm run i18n
 ```
 
 `npm test` chạy mọi `tests/*.test.mjs` bằng test runner có sẵn của Node; `npm run i18n` trích chuỗi ra `extension/i18n/odoo_debug.pot` và gộp vào mọi file `.po`.
+
+Test end-to-end nạp extension vào Chrome headless (Puppeteer, dev dependency duy nhất) và chạy với Odoo thật dựng bằng Docker; CI chạy chúng trên mọi pull request với Odoo 18 và 19:
+
+```bash
+npm ci
+```
+
+```bash
+ODOO_VERSION=19 docker compose -f e2e/compose.yml up -d --wait
+```
+
+```bash
+npm run e2e
+```
+
+`docker compose -f e2e/compose.yml down -v` xoá database; chạy lệnh này trước khi đổi `ODOO_VERSION`.
 
 ### Cấu trúc dự án
 
@@ -145,6 +161,7 @@ extension/                 chính extension: đúng những gì có trong file z
       logic.js             logic thuần, không chrome.* / DOM
 website/                   trang giới thiệu (GitHub Pages); screenshots/ dùng chung với README
 tests/                     *.test.mjs, mỗi module logic một file
+e2e/                       panel.e2e.mjs (Puppeteer) + compose.yml (Odoo 18 / 19 + PostgreSQL)
 tools/i18n.mjs             npm run i18n: trích chuỗi → .pot, gộp vào mọi .po
 ```
 

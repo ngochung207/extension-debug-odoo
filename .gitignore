@@ -4,7 +4,7 @@
 .vscode/
 *.swp
 
-# Node (no dependencies today, but keep it out if one appears)
+# Node (dev dependencies only: Puppeteer for e2e/)
 node_modules/
 
 # Build outputs: release zips are made by CI (.github/workflows/release.yml)
