@@ -230,7 +230,7 @@ msgstr "Module · tiêu đề · phiên bản"
 msgid "Author"
 msgstr "Tác giả"
 
-#: src/features/code/code.js:16
+#: src/features/code/code.js:15
 msgid "ORM Console"
 msgstr "ORM Console"
 

@@ -1,9 +1,12 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { formatValue, printText, cellText, toTable, callStats, isRecordset, completionAt, rankSuggestions } from '../extension/src/features/code/logic.js';
+import { codeKey, formatValue, printText, cellText, toTable, callStats, isRecordset, completionAt, rankSuggestions } from '../extension/src/features/code/logic.js';
 import { pageRunCode } from '../extension/src/features/code/page.js';
 
 // ---------- logic ----------
+assert.equal(codeKey('http://localhost:8068'), 'odoo-debug-orm-code:http://localhost:8068');
+assert.notEqual(codeKey('http://localhost:8068'), codeKey('http://localhost:8069'));
+assert.equal(codeKey(undefined), 'odoo-debug-orm-code:');
 const rs = { $recordset: 'res.partner', ids: [1, 2] };
 assert.equal(isRecordset(rs), true);
 assert.equal(isRecordset([1]), false);

@@ -230,7 +230,7 @@ msgstr "Module · title · version"
 msgid "Author"
 msgstr "Author"
 
-#: src/features/code/code.js:16
+#: src/features/code/code.js:15
 msgid "ORM Console"
 msgstr "ORM Console"
 

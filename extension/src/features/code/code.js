@@ -2,21 +2,21 @@
 // /web/dataset/call_kw with the logged-in session, so the server applies that user's rights to every call.
 // Read-only unless "Allow writes" is ticked (never remembered): every call is its own transaction, committed at once.
 import { pageRunCode } from './page.js';
-import { formatValue, printText, toTable, callStats, MAX_ROWS, completionAt, rankSuggestions, METHODS, ENV_MEMBERS, COMMAND_MEMBERS, GLOBALS } from './logic.js';
+import { codeKey, formatValue, printText, toTable, callStats, MAX_ROWS, completionAt, rankSuggestions, METHODS, ENV_MEMBERS, COMMAND_MEMBERS, GLOBALS } from './logic.js';
 import { exec, sessionInfo, el, pill, pre, details, block, copyable, cached, call, fieldsOf } from '../../shared/ui.js';
 import { _t } from '../../shared/i18n.js';
 
-// The code is kept in the panel's localStorage (every instance), and ⟳ Reload Data does not clear it: a snippet is
-// work, not a filter. The "Allow writes" box is never kept.
-const CODE_KEY = 'odoo-debug-orm-code';
-const loadCode = () => { try { return localStorage.getItem(CODE_KEY); } catch { return null; } };
-const saveCode = (code) => { try { localStorage.setItem(CODE_KEY, code); } catch { /* storage off */ } };
+// The code is kept in the panel's localStorage, one per Odoo origin (codeKey): a snippet written for one server is not
+// what opens on another. ⟳ Reload Data does not clear it: a snippet is work, not a filter. "Allow writes" is never kept.
+const loadCode = (key) => { try { return localStorage.getItem(key); } catch { return null; } };
+const saveCode = (key, code) => { try { localStorage.setItem(key, code); } catch { /* storage off */ } };
 
-export function renderCode(s) {
+export function renderCode(s, state) {
   block(s, 'console', _t('ORM Console'), async () => {
     const info = await sessionInfo();
+    const key = codeKey(state.origin);
     const editor = el('textarea', {
-      class: 'code', rows: 10, spellcheck: false, value: loadCode() ?? '',
+      class: 'code', rows: 10, spellcheck: false, value: loadCode(key) ?? '',
       'aria-label': _t('Code'),
     });
     editor.setAttribute('autocapitalize', 'off');
@@ -28,7 +28,7 @@ export function renderCode(s) {
     const go = async () => {
       if (run.disabled) return;
       run.disabled = true;
-      saveCode(editor.value);
+      saveCode(key, editor.value);
       output.replaceChildren(el('div', { class: 'loading' }, _t('Running…')));
       const r = await exec(pageRunCode, editor.value, { readonly: !writes.checked, context: info.user_context || {}, uid: info.uid });
       run.disabled = false;
@@ -36,7 +36,7 @@ export function renderCode(s) {
     };
     run.addEventListener('click', go);
     const hints = suggester(editor);
-    editor.addEventListener('input', () => { saveCode(editor.value); hints.update(); });
+    editor.addEventListener('input', () => { saveCode(key, editor.value); hints.update(); });
     let escaped = false; // Esc, then Tab: leaves the editor (keyboard users are not trapped by the indenting Tab)
     editor.addEventListener('keydown', (ev) => {
       if (hints.key(ev)) { escaped = false; return; } // the suggestion list took the key
@@ -46,7 +46,7 @@ export function renderCode(s) {
       else if (ev.key === 'Tab' && !wasEscaped && !ev.shiftKey && !ev.altKey && !ev.metaKey && !ev.ctrlKey) {
         ev.preventDefault(); // indent instead of leaving the editor (Shift+Tab or Esc then Tab still leave it)
         editor.setRangeText('  ', editor.selectionStart, editor.selectionEnd, 'end');
-        saveCode(editor.value);
+        saveCode(key, editor.value);
       }
     });
 

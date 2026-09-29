@@ -2,6 +2,9 @@
 
 export const MAX_ROWS = 500; // table rows shown; the raw JSON below it still has everything
 
+/** localStorage key of the editor's code for an Odoo origin (scheme + host + port: two ports are two servers). */
+export const codeKey = (origin) => `odoo-debug-orm-code:${origin || ''}`;
+
 export const isRecordset = (v) => !!v && typeof v === 'object' && !Array.isArray(v) && typeof v.$recordset === 'string';
 export const recordsetText = (v) => `${v.$recordset}(${v.ids.join(', ')})`;
 
