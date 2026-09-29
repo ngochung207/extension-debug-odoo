@@ -235,7 +235,7 @@ msgid "ORM Console"
 msgstr ""
 
 #: src/features/code/code.js:20
-#: src/panel/panel.html:29
+#: src/panel/panel.html:30
 msgid "Code"
 msgstr ""
 
@@ -1202,46 +1202,54 @@ msgid "Reload Data"
 msgstr ""
 
 #: src/panel/panel.html:22
-msgid "Full Screen (Esc to exit)"
+msgid "Minimize (the Odoo Debug button reopens it)"
 msgstr ""
 
 #: src/panel/panel.html:22
+msgid "Minimize"
+msgstr ""
+
+#: src/panel/panel.html:23
+msgid "Full Screen (Esc to exit)"
+msgstr ""
+
+#: src/panel/panel.html:23
 msgid "Full Screen"
 msgstr ""
 
-#: src/panel/panel.html:24
+#: src/panel/panel.html:25
 msgid "Connecting…"
 msgstr ""
 
-#: src/panel/panel.html:26
+#: src/panel/panel.html:27
 msgid "Record"
 msgstr ""
 
-#: src/panel/panel.html:27
+#: src/panel/panel.html:28
 msgid "View"
 msgstr ""
 
-#: src/panel/panel.html:28
+#: src/panel/panel.html:29
 msgid "RPC"
 msgstr ""
 
-#: src/panel/panel.html:30
+#: src/panel/panel.html:31
 msgid "Access"
 msgstr ""
 
-#: src/panel/panel.html:31
+#: src/panel/panel.html:32
 msgid "Security"
 msgstr ""
 
-#: src/panel/panel.html:32
+#: src/panel/panel.html:33
 msgid "Translations"
 msgstr ""
 
-#: src/panel/panel.html:33
+#: src/panel/panel.html:34
 msgid "Apps"
 msgstr ""
 
-#: src/panel/panel.html:34
+#: src/panel/panel.html:35
 msgid "Perf"
 msgstr ""
 

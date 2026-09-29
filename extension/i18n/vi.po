@@ -235,7 +235,7 @@ msgid "ORM Console"
 msgstr "ORM Console"
 
 #: src/features/code/code.js:20
-#: src/panel/panel.html:29
+#: src/panel/panel.html:30
 msgid "Code"
 msgstr "Code"
 
@@ -1202,46 +1202,54 @@ msgid "Reload Data"
 msgstr "Tải lại dữ liệu"
 
 #: src/panel/panel.html:22
+msgid "Minimize (the Odoo Debug button reopens it)"
+msgstr "Thu nhỏ (bấm nút Odoo Debug để mở lại)"
+
+#: src/panel/panel.html:22
+msgid "Minimize"
+msgstr "Thu nhỏ"
+
+#: src/panel/panel.html:23
 msgid "Full Screen (Esc to exit)"
 msgstr "Toàn màn hình (Esc để thoát)"
 
-#: src/panel/panel.html:22
+#: src/panel/panel.html:23
 msgid "Full Screen"
 msgstr "Toàn màn hình"
 
-#: src/panel/panel.html:24
+#: src/panel/panel.html:25
 msgid "Connecting…"
 msgstr "Đang kết nối…"
 
-#: src/panel/panel.html:26
+#: src/panel/panel.html:27
 msgid "Record"
 msgstr "Record"
 
-#: src/panel/panel.html:27
+#: src/panel/panel.html:28
 msgid "View"
 msgstr "View"
 
-#: src/panel/panel.html:28
+#: src/panel/panel.html:29
 msgid "RPC"
 msgstr "RPC"
 
-#: src/panel/panel.html:30
+#: src/panel/panel.html:31
 msgid "Access"
 msgstr "Access"
 
-#: src/panel/panel.html:31
+#: src/panel/panel.html:32
 msgid "Security"
 msgstr "Security"
 
-#: src/panel/panel.html:32
+#: src/panel/panel.html:33
 msgid "Translations"
 msgstr "Translations"
 
-#: src/panel/panel.html:33
+#: src/panel/panel.html:34
 msgid "Apps"
 msgstr "Apps"
 
-#: src/panel/panel.html:34
+#: src/panel/panel.html:35
 msgid "Perf"
 msgstr "Perf"
 

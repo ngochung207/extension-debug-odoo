@@ -81,6 +81,7 @@ Extension chưa có trên Chrome Web Store; cài dạng unpacked (Chrome, Edge, 
 ## Sử dụng
 
 - **Mở / đóng**: bấm nút tròn; bảng mở ở mép dưới, đúng tab và vị trí cuộn lần trước. Kéo nút đi đâu cũng được; vị trí được nhớ riêng cho từng instance Odoo (thả lại gần mép dưới thì nút bám lại mép). Trên các trang không phải Odoo thì không có gì hiện ra, và icon trên thanh công cụ bị làm mờ.
+- **Thu nhỏ**: <kbd>−</kbd> trên thanh tiêu đề ẩn bảng về lại nút tròn; bấm nút là mở lại đúng như trước.
 - **Toàn màn hình**: <kbd>⤢</kbd> trên thanh tiêu đề của bảng, <kbd>Esc</kbd> hoặc <kbd>⤡</kbd> để thoát. Trạng thái mở và toàn màn hình được giữ khi tải lại trang.
 - **Chế độ debug**: công tắc `off` / `debug` / `assets` trên thanh tiêu đề tải lại Odoo ở chế độ tương ứng.
 - **Thẻ**: mỗi tab là một chồng thẻ, ban đầu đều đóng; thẻ chỉ tải dữ liệu khi được mở, và trạng thái mở / đóng được giữ qua các lần tải lại. Bấm vào một dòng trong list để xem chi tiết (nhãn, cách lưu, module, giá trị đầy đủ…), bấm lần nữa để đóng.

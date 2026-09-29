@@ -159,8 +159,10 @@
       if (btn && typeof msg.on === 'boolean') setFull(msg.on);
       return reply(full);
     }
-    if (msg?.type !== 'odoo-toggle') return;
-    if (btn) toggle();
-    else { mount(); toggle(true); }
+    if (msg?.type !== 'odoo-toggle') return; // { open }: from the panel's minimize button; none: the toolbar popup
+    if (btn) {
+      toggle(msg.open ?? frame.hidden);
+      if (msg.open === false) btn.focus(); // keyboard users land on the button that reopens it
+    } else { mount(); toggle(true); }
   });
 })();

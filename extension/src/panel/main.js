@@ -125,6 +125,9 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
   }
 });
 
+// ---------- minimize: back to the Odoo Debug button (content/bubble.js hides the frame; the panel keeps its state) ----------
+$('#minimize').addEventListener('click', () => chrome.tabs.sendMessage(tabId, { type: 'odoo-toggle', open: false }).catch(() => {}));
+
 // ---------- full screen: the frame belongs to content/bubble.js, which answers with the resulting state ----------
 const fullBtn = $('#full');
 const isFull = () => fullBtn.getAttribute('aria-pressed') === 'true';

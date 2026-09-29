@@ -89,6 +89,7 @@ The extension is not on the Chrome Web Store yet; install it unpacked (Chrome, E
   you left it. Drag the button anywhere; its position is kept per Odoo instance (dropped back near the bottom edge, it
   sticks to it again). Nothing shows on
   non-Odoo sites, and the toolbar icon is greyed out there.
+- **Minimize**: <kbd>−</kbd> in the panel header hides the panel back to the round button, which reopens it as it was.
 - **Full screen**: <kbd>⤢</kbd> in the panel header, <kbd>Esc</kbd> or <kbd>⤡</kbd> to leave. Open state and full
   screen survive page reloads.
 - **Debug mode**: the `off` / `debug` / `assets` switch in the header reloads Odoo in that mode.
