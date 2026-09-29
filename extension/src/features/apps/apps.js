@@ -154,7 +154,7 @@ function searchBar(input, count, f, cats, onChange) {
     if (ev.key === 'Backspace' && !input.value && facets.lastChild) { ev.preventDefault(); facets.lastChild.querySelector('.facet-x').click(); }
     if (ev.key === 'Escape' && !panel.hidden) { ev.preventDefault(); open(false); }
   });
-  const root = el('div', { class: 'searchbar' }, el('span', { class: 'search-icon', 'aria-hidden': 'true' }, '⌕'), facets, input, count, toggle, panel);
+  const root = el('div', { class: 'searchbar' }, facets, input, count, toggle, panel);
   document.addEventListener('pointerdown', (ev) => { if (!panel.hidden && !root.contains(ev.target)) open(false); });
   redraw();
   return { el: root, redraw };
