@@ -9,6 +9,10 @@ All notable changes to this project are documented here. Format: [Keep a Changel
 - **Code tab › ORM Console**: JavaScript with an ORM-like `env` (`env['sale.order'].search(…)`, `.read()`, `.mapped()`, `.write()`, any public method…) run in the Odoo page with the logged-in session, so the server applies that user's access rights, record rules and active companies. Fields read like in Python (`return rec.state`, `rec.partner_id.name`, prefetched when iterating a recordset) and written by assignment (`rec.state = 'sent'`, a `write` sent in order with the other calls). Suggestions while typing: the models of the installed modules after `env['`, their fields in strings and after a dot (following relations: `partner_id.country_id.`), the recordset methods. Read-only by default (writes are blocked before they are sent); **Allow Writes** lets them through, each committed at once. Results as a table, prints, errors with line and server traceback, and the list of calls made. The code is kept per Odoo server (origin). With **Auto Refresh** ticked (offered once Allow Writes is), the view on screen reloads its data after writes (Odoo's `soft_reload`, like web_refresher).
 - **Minimize** (− in the panel header): hides the panel back to the round button, which reopens it as it was.
 
+### Changed
+
+- **Translations tab**: the apps to export are ticked in a searchable list of the installed modules (name or title), kept in step with the typed list, which still works.
+
 ## [0.1.1] - 2026-09-29
 
 ### Added

@@ -113,7 +113,7 @@ msgstr "Running…"
 #: src/features/code/code.js:289
 #: src/features/code/code.js:328
 #: src/features/rpc/rpc.js:36
-#: src/features/translations/translations.js:71
+#: src/features/translations/translations.js:99
 msgid "error"
 msgstr "error"
 
@@ -198,7 +198,6 @@ msgid "Not found: %s (Activate runs Update Apps List first)"
 msgstr "Not found: %s (Activate runs Update Apps List first)"
 
 #: src/features/apps/apps.js:118
-#: src/features/translations/translations.js:22
 msgid "Technical names, separated by ;"
 msgstr "Technical names, separated by ;"
 
@@ -210,23 +209,23 @@ msgstr "Activate runs Update Apps List first. Install and upgrade reload the Odo
 msgid "Installed modules"
 msgstr "Installed modules"
 
-#: src/features/apps/apps.js:139
+#: src/features/apps/apps.js:137
 msgid "Filter name / title / author"
 msgstr "Filter name / title / author"
 
-#: src/features/apps/apps.js:139
+#: src/features/apps/apps.js:137
 msgid "%s modules"
 msgstr "%s modules"
 
-#: src/features/apps/apps.js:139
+#: src/features/apps/apps.js:137
 msgid "%s/%s modules"
 msgstr "%s/%s modules"
 
-#: src/features/apps/apps.js:140
+#: src/features/apps/apps.js:138
 msgid "Module · title · version"
 msgstr "Module · title · version"
 
-#: src/features/apps/apps.js:140
+#: src/features/apps/apps.js:138
 msgid "Author"
 msgstr "Author"
 
@@ -443,7 +442,7 @@ msgid "This page's Content-Security-Policy forbids running code (a proxy in fron
 msgstr "This page's Content-Security-Policy forbids running code (a proxy in front of Odoo adds script-src)."
 
 #: src/features/code/code.js:309
-#: src/shared/ui.js:94
+#: src/shared/ui.js:97
 msgid "Traceback"
 msgstr "Traceback"
 
@@ -1048,47 +1047,63 @@ msgstr "Export & Download"
 msgid "Apps To Export"
 msgstr "Apps To Export"
 
-#: src/features/translations/translations.js:23
+#: src/features/translations/translations.js:22
+msgid "Technical names, separated by ; or ticked in the list below."
+msgstr "Technical names, separated by ; or ticked in the list below."
+
+#: src/features/translations/translations.js:24
 msgid "Languages"
 msgstr "Languages"
 
-#: src/features/translations/translations.js:24
+#: src/features/translations/translations.js:25
 msgid "Active:"
 msgstr "Active:"
 
-#: src/features/translations/translations.js:26
+#: src/features/translations/translations.js:27
 msgid "Always exported too: New Language (Empty translation template), as <module>.pot."
 msgstr "Always exported too: New Language (Empty translation template), as <module>.pot."
 
-#: src/features/translations/translations.js:48
+#: src/features/translations/translations.js:68
+msgid "Search modules: name / title"
+msgstr "Search modules: name / title"
+
+#: src/features/translations/translations.js:68
+msgid "%s installed modules"
+msgstr "%s installed modules"
+
+#: src/features/translations/translations.js:68
+msgid "%s/%s installed modules"
+msgstr "%s/%s installed modules"
+
+#: src/features/translations/translations.js:76
 msgid "Enter at least one app."
 msgstr "Enter at least one app."
 
-#: src/features/translations/translations.js:50
+#: src/features/translations/translations.js:78
 msgid "Not an active language: %s. Active: %s"
 msgstr "Not an active language: %s. Active: %s"
 
-#: src/features/translations/translations.js:53
+#: src/features/translations/translations.js:81
 msgid "Unknown app: %s"
 msgstr "Unknown app: %s"
 
-#: src/features/translations/translations.js:54
+#: src/features/translations/translations.js:82
 msgid "Not installed: %s"
 msgstr "Not installed: %s"
 
-#: src/features/translations/translations.js:57
+#: src/features/translations/translations.js:85
 msgid "Exporting…"
 msgstr "Exporting…"
 
-#: src/features/translations/translations.js:60
+#: src/features/translations/translations.js:88
 msgid "Template (.pot)"
 msgstr "Template (.pot)"
 
-#: src/features/translations/translations.js:69
+#: src/features/translations/translations.js:97
 msgid "%s files"
 msgstr "%s files"
 
-#: src/features/translations/translations.js:69
+#: src/features/translations/translations.js:97
 msgid "nothing to export"
 msgstr "nothing to export"
 
@@ -1309,15 +1324,15 @@ msgstr "Dark"
 msgid "No tab is open."
 msgstr "No tab is open."
 
-#: src/shared/ui.js:105
+#: src/shared/ui.js:108
 msgid "Open /odoo/%s"
 msgstr "Open /odoo/%s"
 
-#: src/shared/ui.js:134
-#: src/shared/ui.js:193
+#: src/shared/ui.js:137
+#: src/shared/ui.js:196
 msgid "Loading…"
 msgstr "Loading…"
 
-#: src/shared/ui.js:146
+#: src/shared/ui.js:149
 msgid "Click to copy"
 msgstr "Click to copy"

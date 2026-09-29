@@ -122,6 +122,28 @@ test('Code tab: suggestions offer the installed models, their fields and the rec
   assert.equal(await panel.$eval('#code textarea.code', (t) => t.value), "env['res.users", 'Enter inserts the first one');
 });
 
+test('Translations tab: installed modules are searched and ticked into the list to export', async () => {
+  await click('.tabs [data-tab="translations"]');
+  await panel.$eval('#translations details.card', (c) => { c.open = true; });
+  await panel.waitForSelector('#translations .module-picker li');
+  const state = () => panel.$eval('#translations', (s) => ({
+    apps: s.querySelector('form input[type=text]').value,
+    shown: [...s.querySelectorAll('.module-picker li:not([hidden]) .name')].map((n) => n.textContent),
+    ticked: [...s.querySelectorAll('.module-picker li input:checked')].map((b) => b.closest('li').querySelector('.name').textContent),
+  }));
+  await panel.$eval('#translations .module-picker input[type=search]', (i) => { i.value = 'base_imp'; i.dispatchEvent(new Event('input')); });
+  const { shown } = await state();
+  assert.ok(shown.includes('base_import') && shown.every((n) => n.includes('base_imp')), `search by name: ${shown}`);
+  const tick = (name) => panel.$$eval('#translations .module-picker li', (lis, name) =>
+    lis.find((li) => li.querySelector('.name').textContent === name).querySelector('input').click(), name);
+  await tick('base_import');
+  assert.equal((await state()).apps, 'base_import', 'ticking adds it');
+  await panel.$eval('#translations form input[type=text]', (i) => { i.value = 'base_import; web'; i.dispatchEvent(new Event('input')); });
+  assert.deepEqual((await state()).ticked, ['base_import', 'web'], 'typing ticks the boxes');
+  await tick('base_import');
+  assert.equal((await state()).apps, 'web', 'unticking removes it');
+});
+
 test('no error from the extension in the console', () => {
   assert.deepEqual(errors, []);
 });

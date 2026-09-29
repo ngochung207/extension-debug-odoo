@@ -39,7 +39,7 @@ shadow DOM so it never touches Odoo's styles.
 | **Access** | Session (db, version, `web.base.url`, `test_mode`), effective rights, ACLs, record rules, groups, system parameters (secrets masked). |
 | **Apps** | For a `;`-separated list of modules: Activate (Update Apps List, then install with dependencies), Upgrade, Open Forms; every installed module below (Settings rights). |
 | **Security** | Simulate another user's rights, explain rule by rule why an operation is allowed or blocked, user risk audit, fields hidden by `groups=`, instance checks (HTTPS, cookie flags, security headers, database manager). **Switch to This User** opens an incognito window at that user's login, leaving your session alone (with OCA `impersonate_login`: impersonate in this session). |
-| **Translations** | Exports the `.pot` template and one `.po` per language for several apps with Odoo's own wizard, saved straight to `Downloads/<module>/i18n/`. |
+| **Translations** | Exports the `.pot` template and one `.po` per language for several apps (ticked in a searchable list of the installed modules, or typed) with Odoo's own wizard, saved straight to `Downloads/<module>/i18n/`. |
 | **Perf** | Odoo's built-in server profiler: start / stop, profiled requests, SQL summary with repeated queries (N+1 suspects), slowest queries, speedscope flame graph. |
 
 Plus: click any field name, model or xmlid in the panel to copy it, and <kbd>⌥ Alt</kbd> + click a field on the Odoo

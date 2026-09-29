@@ -4,7 +4,7 @@
 import { planInstall, planUpgrade, stateKind } from './logic.js';
 import { splitList } from '../translations/logic.js';
 import {
-  exec, tabId, call, cached, sessionInfo, el, pill, empty, block, errBox, copyable, odooLink, splitRow, expandable, filteredList, listHead,
+  exec, tabId, call, sessionInfo, installedModules, el, pill, empty, block, errBox, copyable, odooLink, splitRow, expandable, filteredList, listHead,
   formValues, saveForm,
 } from '../../shared/ui.js';
 import { _t, N_ } from '../../shared/i18n.js';
@@ -125,9 +125,7 @@ export function renderApps(s, state) {
 
   block(s, 'installed', _t('Installed modules'), async () => {
     if (!(await sessionInfo()).is_system) return needsAdmin();
-    // latest_version = the version installed in the DB (installed_version is computed from the manifest on disk: slow)
-    const mods = await cached('modules', () => call('ir.module.module', 'search_read', [[['state', '=', 'installed']]],
-      { fields: ['name', 'shortdesc', 'latest_version', 'author'], order: 'name' }));
+    const mods = await installedModules();
     const items = mods.map((m) => {
       const li = el('li', {},
         splitRow([copyable(m.name), el('span', { class: 'grow muted' }, m.shortdesc), m.latest_version && pill(m.latest_version)],

@@ -1,8 +1,8 @@
 // Translations tab: exports the .pot template + the .po of each language for several apps, with Odoo's own export
 // wizard, and downloads every file straight to Downloads/<module>/i18n/ (<module>.pot, <lang>.po): nothing to unpack.
 import { NEW_LANG, splitList, resolveLangs, resolveModules, b64ToBytes, gunzip, untar } from './logic.js';
-import { call, cached, el, pill, block, errBox, formValues, saveForm } from '../../shared/ui.js';
-import { _t } from '../../shared/i18n.js';
+import { call, cached, installedModules, el, pill, block, errBox, formValues, saveForm, filteredList } from '../../shared/ui.js';
+import { _t, N_ } from '../../shared/i18n.js';
 
 export function renderTranslations(s) {
   block(s, 'export', _t('Export translations'), async () => {
@@ -19,7 +19,8 @@ export function renderTranslations(s) {
     const btn = el('button', { class: 'btn', type: 'submit' }, _t('Export & Download'));
     const form = el('form', { class: 'form' },
       el('label', {}, _t('Apps To Export'), apps),
-      el('div', { class: 'note' }, _t('Technical names, separated by ;')),
+      el('div', { class: 'note' }, _t('Technical names, separated by ; or ticked in the list below.')),
+      await modulePicker(apps).catch((e) => errBox(e)), // no read access to ir.module.module: typing still works
       el('label', { class: 'mt' }, _t('Languages'), langIn),
       el('div', { class: 'row mt' }, el('span', { class: 'muted' }, _t('Active:')),
         langs.map((l) => el('button', { type: 'button', class: 'chip', title: l.name, onclick: () => add(l.code) }, l.code))),
@@ -41,6 +42,33 @@ export function renderTranslations(s) {
     });
     return form;
   });
+}
+
+/** The installed modules with a checkbox each and a search box; ticking adds / removes the name in `input`, and
+ * typing in `input` ticks the boxes. */
+async function modulePicker(input) {
+  const boxes = new Map();
+  const set = (name, on) => {
+    const names = splitList(input.value).filter((n) => n !== name);
+    input.value = (on ? [...names, name] : names).join('; ');
+  };
+  const items = (await installedModules()).map((m) => {
+    const box = el('input', { type: 'checkbox', onchange: () => set(m.name, box.checked) });
+    boxes.set(m.name, box);
+    const li = el('li', {}, el('label', { class: 'row pick' }, box, el('span', { class: 'name' }, m.name), el('span', { class: 'grow muted' }, m.shortdesc)));
+    li.dataset.q = `${m.name} ${m.shortdesc}`.toLowerCase();
+    return li;
+  });
+  const sync = () => {
+    const picked = new Set(splitList(input.value));
+    for (const [name, box] of boxes) box.checked = picked.has(name);
+  };
+  input.addEventListener('input', sync);
+  sync();
+  const list = filteredList(items, _t('Search modules: name / title'), N_('%s installed modules'), N_('%s/%s installed modules'));
+  list.classList.add('module-picker');
+  list.addEventListener('keydown', (ev) => { if (ev.key === 'Enter' && ev.target.type === 'search') ev.preventDefault(); }); // not a submit
+  return list;
 }
 
 /** One base.language.export run per language (template first); each file of its .tgz is downloaded on its own. */
