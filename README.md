@@ -129,7 +129,7 @@ Odoo data only reaches the DOM through `textContent`, and the panel page can't b
 
 ## Development
 
-No build step, no dependencies: edit, then reload the extension in `chrome://extensions`.
+No build step, no runtime dependencies: edit, then reload the extension in `chrome://extensions`.
 
 ```bash
 npm test
@@ -141,6 +141,23 @@ npm run i18n
 
 `npm test` runs every `tests/*.test.mjs` with Node's built-in runner; `npm run i18n` extracts strings to
 `extension/i18n/odoo_debug.pot` and merges them into every `.po`.
+
+End-to-end tests load the extension in headless Chrome (Puppeteer, the only dev dependency) against a real Odoo started
+with Docker; CI runs them on every pull request against Odoo 18 and 19:
+
+```bash
+npm ci
+```
+
+```bash
+ODOO_VERSION=19 docker compose -f e2e/compose.yml up -d --wait
+```
+
+```bash
+npm run e2e
+```
+
+`docker compose -f e2e/compose.yml down -v` drops the database; do it before switching `ODOO_VERSION`.
 
 ### Project structure
 
@@ -162,6 +179,7 @@ extension/                 the extension itself: exactly what the release zip co
       logic.js             pure logic, no chrome.* / DOM
 website/                   project website; screenshots/ is shared with this README
 tests/                     *.test.mjs, one per logic module
+e2e/                       panel.e2e.mjs (Puppeteer) + compose.yml (Odoo 18 / 19 + PostgreSQL)
 tools/i18n.mjs             npm run i18n: extract strings → .pot, merge into every .po
 ```
 
