@@ -49,7 +49,7 @@ test('the button appears on the Odoo page and opens the panel', async () => {
 
 test('every tab opens its cards without an error', async () => {
   const tabs = await panel.$$eval('.tabs button', (bs) => bs.map((b) => b.dataset.tab));
-  assert.ok(tabs.length >= 9, `tabs: ${tabs}`);
+  assert.ok(tabs.length >= 8, `tabs: ${tabs}`);
   for (const tab of tabs) {
     await click(`.tabs [data-tab="${tab}"]`);
     assert.equal(await panel.$eval(`#${tab}`, (s) => s.classList.contains('active')), true, `${tab} tab shown`);
@@ -59,6 +59,23 @@ test('every tab opens its cards without an error', async () => {
     const failed = await panel.$$eval(`#${tab} .card-body > .error, #${tab} > .empty`, (ns) => ns.filter((n) => !n.hidden).map((n) => n.textContent));
     assert.deepEqual(failed, [], `${tab} tab`);
   }
+});
+
+test('Security tab: a group is added to the user, then removed', async () => {
+  await click('.tabs [data-tab="security"]');
+  await panel.evaluate(() => { window.confirm = () => true; });
+  await panel.$$eval('#security details.card', (cs) => { cs.find((c) => c.querySelector('h3').textContent === 'Groups').open = true; });
+  // the button of the row `name` among `sel` rows, once it shows (the card re-renders after each write)
+  const press = (sel, name) => panel.waitForFunction((sel, n) => {
+    const li = [...document.querySelectorAll(`#security .groups > li${sel}`)].find((l) => !l.hidden && l.querySelector('.grow').textContent === n);
+    return li && (li.querySelector('button').click(), true);
+  }, { timeout: 15_000 }, sel, name);
+  await panel.waitForSelector('#security .groups');
+  const name = await panel.$eval('#security .groups > li.addable .grow', (n) => n.textContent); // a group the user doesn't have
+  await panel.$eval('#security .toolbar:has(+ .groups) input', (i, n) => { i.value = n; i.dispatchEvent(new Event('input')); }, name); // groups to add show while filtering
+  await press('.addable', name);
+  await press(':not(.addable)', name); // added: the user's now, and nothing else implies it
+  await panel.waitForFunction((n) => [...document.querySelectorAll('#security .groups > li.addable .grow')].some((g) => g.textContent === n), { timeout: 15_000 }, name);
 });
 
 test('RPC tab: the calls the webclient made to load the form are listed', async () => {

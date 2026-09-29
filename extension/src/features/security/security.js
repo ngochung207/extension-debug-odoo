@@ -1,29 +1,34 @@
-// Security tab: simulate another user's rights, explain why an operation is allowed/blocked, audit model & instance.
+// Security tab: pick a user (yourself by default) and every card follows: groups (add / remove), ACLs, why an operation is
+// allowed/blocked, hidden fields. Plus the logged-in session, system parameters and the model / instance audits.
+// odoo.conf itself is never exposed over HTTP by Odoo: it holds admin_passwd and db_password.
 import { rulesFor, modeVerdict, ruleEvalContext, auditModel, checkInstance, userRisks } from './logic.js';
 import { pageEvalDomains, pageProbe } from './page.js';
 import { MODES, pickGroupField } from '../../shared/odoo.js';
 import { pageGo } from '../../shared/page.js';
 import { exec, call, cached, uncache, sessionInfo, fieldsOf, readAcls, readRules, cookieFlags } from '../../shared/bridge.js';
-import { el, pre, pill, triPill, details, empty, errBox, block, expandable, copyable, listHead } from '../../shared/ui.js';
+import { el, pre, pill, triPill, details, empty, errBox, kv, block, expandable, filteredList, copyable, odooLink, listHead, splitRow } from '../../shared/ui.js';
 import { _t, N_ } from '../../shared/i18n.js';
 
 const KEY_GROUPS = ['group_system', 'group_erp_manager', 'group_no_one', 'group_user', 'group_portal', 'group_public'];
 const LABEL = { high: N_('HIGH'), med: N_('MEDIUM'), low: N_('LOW'), info: N_('INFO') };
 const LETTER = { read: 'R', write: 'W', create: 'C', unlink: 'D' };
+// ponytail: key-name heuristic, the value still shows when the row is expanded
+const SECRET = /secret|passw|token|api_?key|private_?key/i;
 const targets = new Map(); // origin → simulated uid (none = the logged-in user); the panel moves between instances
 
 const findings = (list) => list.length
   ? el('ul', { class: 'findings' }, list.map((f) => el('li', { class: f.level }, pill(_t(LABEL[f.level]), f.level), el('span', {}, f.msg))))
   : el('div', { class: 'okline' }, _t('✓ No issue found.'));
 
-/** The simulated user: profile, groups (implied included), base group xmlids. */
+/** The simulated user: profile, groups (implied included), the writable group field `wf`, base group xmlids. */
 async function loadTarget(origin) {
   const [info, ufields] = await Promise.all([sessionInfo(), fieldsOf('res.users')]);
   const uid = targets.get(origin) ?? info.uid;
   const gf = pickGroupField(ufields);
+  const wf = ['group_ids', 'groups_id'].find((f) => f in ufields); // 19: all_group_ids is computed, group_ids holds the direct ones
   const opt = ['totp_enabled', 'api_key_ids', 'employee_id', 'employee_ids'].filter((f) => f in ufields);
   const [[u], users, xml] = await Promise.all([
-    call('res.users', 'read', [[uid], ['name', 'login', 'active', 'share', 'partner_id', 'company_id', 'company_ids', gf, ...opt].filter(Boolean)],
+    call('res.users', 'read', [[uid], ['name', 'login', 'active', 'share', 'partner_id', 'company_id', 'company_ids', gf, wf !== gf && wf, ...opt].filter(Boolean)],
       { context: { active_test: false } }),
     cached('users', () => call('res.users', 'search_read', [[]], { fields: ['name', 'login', 'share'], order: 'share, name', limit: 1000 })), // ponytail: first 1000 active users
     cached('key groups', () => call('ir.model.data', 'search_read',
@@ -34,7 +39,7 @@ async function loadTarget(origin) {
   const groupIds = new Set(u[gf] || []);
   const groupXml = new Map(xml.map((x) => [x.res_id, `base.${x.name}`]));
   const has = (name) => xml.some((x) => x.name === name && groupIds.has(x.res_id));
-  return { me: info.uid, uid, u, users, groupIds, groupXml, has };
+  return { me: info.uid, uid, u, wf, users, groupIds, groupXml, has };
 }
 
 /** Opens an incognito window on Odoo's login page for `login`, landing back on `url` once logged in: this session is
@@ -108,6 +113,16 @@ export function renderSecurity(s, state) {
       `${x.name}${x.login ? ` (${x.login})` : ''}${x.share ? ' · portal' : ''}${x.id === me ? ` · ${_t('me')}` : ''}`)));
   }, () => picker.replaceChildren(el('option', {}, _t('Cannot read the user list'))));
 
+  block(s, 'session', _t('Session'), async () => {
+    const i = await sessionInfo();
+    return el('div', {},
+      kv({
+        user: `${i.name} (#${i.uid})`, login: i.username, db: i.db, version: i.server_version, admin: i.is_admin, system: i.is_system,
+        'web.base.url': i['web.base.url'] || '—', test_mode: !!i.test_mode, // test_mode = odoo.conf test_enable
+      }),
+      details('user_context', pre(i.user_context)), details(_t('Companies'), pre(i.user_companies)));
+  });
+
   block(s, 'user-risks', _t('User risks'), async () => {
     const { u, has, groupIds } = await t;
     return el('div', {},
@@ -116,10 +131,28 @@ export function renderSecurity(s, state) {
       findings(userRisks(u, has)));
   });
 
+  block(s, 'groups', _t('Groups'), () => groupsBlock(t, rerender));
+
   if (model) {
+    block(s, 'effective', _t('Effective access on %s', `${model}${resId ? ` #${resId}` : ''}`), async () => {
+      const { uid, me } = await t;
+      if (uid !== me) return empty(_t('has_access runs as the logged-in user only: see Why allowed / blocked for the selected user.'));
+      const res = await Promise.all(MODES.map((op) => call(model, 'has_access', [resId ? [resId] : [], op]).catch(() => null)));
+      return el('div', { class: 'row' }, MODES.map((op, i) => triPill(res[i], [`✓ ${op}`, `✗ ${op}`, `? ${op}`])));
+    });
+
     const modelSec = Promise.all([readAcls(model), readRules(model), fieldsOf(model)]);
 
     block(s, 'why', _t('Why allowed / blocked — %s', `${model}${resId ? ` #${resId}` : ''}`), () => whyBlock(model, resId, t, modelSec));
+
+    block(s, 'acl', _t('ACL (ir.model.access) — green = applies to the user'), async () => {
+      const [{ groupIds }, [rows]] = await Promise.all([t, modelSec]);
+      if (!rows.length) return empty(_t('No ACL.'));
+      return el('table', {}, el('thead', {}, el('tr', {}, el('th', {}, _t('ACL / group')), MODES.map((m) => el('th', { class: 'c' }, LETTER[m])))),
+        el('tbody', {}, rows.map((a) => el('tr', { class: !a.group_id || groupIds.has(a.group_id[0]) ? 'mine' : '' },
+          el('td', {}, a.name, el('div', { class: 'muted' }, a.group_id ? a.group_id[1] : _t('(all users)'))),
+          MODES.map((m) => el('td', { class: 'c' }, a[`perm_${m}`] ? '✓' : ''))))));
+    });
 
     block(s, 'hidden-fields', _t('Fields hidden from the user (groups=)'), async () => {
       const [{ uid }, [, , fields]] = await Promise.all([t, modelSec]);
@@ -140,6 +173,21 @@ export function renderSecurity(s, state) {
     });
   }
 
+  // base.group_system only: say so instead of showing an AccessError.
+  block(s, 'params', _t('System parameters (ir.config_parameter)'), async () => {
+    if (!(await sessionInfo()).is_system) return empty(_t('Needs Settings rights (base.group_system).'));
+    const rows = await call('ir.config_parameter', 'search_read', [[]], { fields: ['key', 'value'], order: 'key' }); // not cached: edited while debugging
+    const items = rows.map((p) => {
+      const secret = SECRET.test(p.key);
+      const li = el('li', {},
+        splitRow(copyable(p.key), odooLink(origin, `ir.config_parameter/${p.id}`)),
+        el('div', { class: 'meta mono' }, p.value ? copyable(p.value, '', secret ? '••••••' : p.value) : '')); // copies the real value, even masked
+      li.dataset.q = `${p.key} ${secret ? '' : p.value}`.toLowerCase();
+      return expandable(li, () => pre(p.value));
+    });
+    return items.length ? filteredList(items, _t('Filter key / value'), N_('%s parameters'), N_('%s/%s parameters'), listHead(_t('Key'), _t('Value'))) : empty(_t('No parameter.'));
+  });
+
   block(s, 'instance', _t('Instance check'), async () => {
     const [probe, cookie] = await cached('probe', async () => {
       const r = await Promise.all([exec(pageProbe), cookieFlags(state.url)]);
@@ -151,6 +199,46 @@ export function renderSecurity(s, state) {
         details(_t('Raw data'), pre({ ...probe, cookie })),
         el('button', { class: 'chip mt', onclick: () => { uncache('probe'); rerender(); } }, _t('Check Again'))));
   });
+}
+
+/** The user's groups, implied included, then (while filtering) the groups they don't have: add one, or remove a group
+ * nothing else implies (removing an implied one is undone by Odoo). Writing needs Access Rights (base.group_erp_manager). */
+async function groupsBlock(t, rerender) {
+  const { uid, u, wf, groupIds } = await t;
+  const gfields = await fieldsOf('res.groups');
+  const impf = ['all_implied_ids', 'trans_implied_ids'].find((f) => f in gfields); // 19 / 18
+  const all = await cached('all groups', () => call('res.groups', 'search_read', [[]], { fields: ['full_name', impf], order: 'full_name' }));
+  const impliedBy = new Map(); // group id → names of the user's other groups implying it
+  for (const g of all) {
+    if (!groupIds.has(g.id)) continue;
+    for (const h of g[impf]) if (h !== g.id) impliedBy.set(h, [...(impliedBy.get(h) || []), g.full_name]); // 19 counts the group itself
+  }
+  const box = el('div', {});
+  const edit = (msg, cmd) => confirm(msg) && call('res.users', 'write', [[uid], { [wf]: [cmd] }]).then(rerender, (e) => box.append(errBox(e)));
+  const row = (g, held) => {
+    const by = impliedBy.get(g.id);
+    const action = !held
+      ? el('button', { class: 'chip', onclick: () => edit(_t('Add %s to %s?', g.full_name, u.name), [4, g.id]) }, _t('+ Add'))
+      : by ? pill(_t('implied')) : el('button', { class: 'chip', onclick: () => edit(_t('Remove %s from %s?', g.full_name, u.name), [3, g.id]) }, _t('Remove'));
+    if (by) action.title = _t('Implied by %s', by.join(', '));
+    const li = el('li', { class: held ? '' : 'addable' }, splitRow(el('span', {}, g.full_name), action));
+    li.dataset.q = g.full_name.toLowerCase();
+    return { li, held };
+  };
+  const rows = [...all.filter((g) => groupIds.has(g.id)).map((g) => row(g, true)), ...all.filter((g) => !groupIds.has(g.id)).map((g) => row(g, false))];
+  const held = rows.filter((r) => r.held).length;
+  const count = el('span', { class: 'muted' }, _t('%s groups', held));
+  const input = el('input', {
+    type: 'search', placeholder: _t('Filter or add a group…'), 'aria-label': _t('Filter or add a group…'),
+    oninput: () => {
+      const q = input.value.trim().toLowerCase();
+      for (const r of rows) r.li.hidden = !r.li.dataset.q.includes(q) || (!r.held && !q); // groups to add: only while searching
+      count.textContent = q ? _t('%s/%s groups', rows.filter((r) => r.held && !r.li.hidden).length, held) : _t('%s groups', held);
+    },
+  });
+  for (const r of rows) r.li.hidden = !r.held;
+  box.append(el('div', { class: 'toolbar' }, input, count), el('ul', { class: 'list groups' }, rows.map((r) => r.li)));
+  return box;
 }
 
 async function whyBlock(model, resId, t, modelSec) {
@@ -201,5 +289,5 @@ async function whyBlock(model, resId, t, modelSec) {
     rules.length ? el('div', {}, listHead(_t('Rule · operations · result'), _t('Groups · domain')), el('ul', { class: 'list' }, ruleItems))
       : empty(_t('This model has no record rule.')),
     el('p', { class: 'note pad-bottom' },
-      _t('Assumes the user selected every allowed company. Rules of parent models through _inherits are not counted. This is a simulation; for an exact answer about yourself, see the Access tab (has_access runs on the server).')));
+      _t('Assumes the user selected every allowed company. Rules of parent models through _inherits are not counted. This is a simulation; for an exact answer about yourself, see Effective access (has_access runs on the server).')));
 }

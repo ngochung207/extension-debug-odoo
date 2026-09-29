@@ -2,6 +2,20 @@
 
 All notable changes to this project are documented here. Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), versions: [Semantic Versioning](https://semver.org/). Each release on GitHub uses its section below as release notes.
 
+## [Unreleased]
+
+### Added
+
+- **Security › Groups**: the picked user's groups, with one filter box that also lists the groups they don't have while typing, each with **+ Add**. **Remove** shows on the groups nothing else implies; an implied group is marked as such and says which group implies it (Odoo would add it back). Writing needs Access Rights and asks first.
+
+### Changed
+
+- **Access and Security are one tab (Security)**: the user picked at the top drives every card, so another user's groups, ACLs and record rules can be read, not only yours. Session, Effective access (yourself, checked by the server) and System parameters moved over from Access; its record rules table is gone, the **Why allowed / blocked** card already lists every rule for the picked user.
+
+### Fixed
+
+- **Security › Why allowed / blocked**: the four verdict boxes no longer overflow the panel when an ACL or model name is long.
+
 ## [1.0.0] - 2026-09-29
 
 ### Added

@@ -92,8 +92,6 @@ await settings({ theme: 'light' });
 await full(true);
 await show('record', ['Identity', 'Fields']);
 await shot('full-record');
-await show('access', ['Session', 'Effective', 'ACL'], ['user_context', 'Companies']);
-await shot('full-access');
 await show('security', ['View as user', 'User risks', 'Why allowed']);
 await shot('full-security');
 
