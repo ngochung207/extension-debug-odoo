@@ -47,6 +47,14 @@ export function cached(key, fn) {
 export const uncache = (key) => cache.delete(key);
 export const clearCache = () => cache.clear();
 
+// ---------- what was typed in a tab's form: kept across re-renders and reloads, forgotten on ⟳ Reload Data ----------
+const FORM = 'odoo-debug-form:'; // localStorage of the panel (every instance): a per-viewer convenience only
+export const formValues = (key) => { try { return JSON.parse(localStorage.getItem(FORM + key)) || {}; } catch { return {}; } };
+export const saveForm = (key, values) => { try { localStorage.setItem(FORM + key, JSON.stringify(values)); } catch { /* storage off */ } };
+export function clearForms() {
+  try { for (const k of Object.keys(localStorage)) if (k.startsWith(FORM)) localStorage.removeItem(k); } catch { /* storage off */ }
+}
+
 const FIELD_ATTRS = ['string', 'type', 'relation', 'store', 'depends', 'related', 'readonly', 'required', 'groups'];
 export const sessionInfo = () => cached('session', () => rpc('/web/session/get_session_info', {}));
 export const fieldsOf = (model) => cached(`fields ${model}`, () => call(model, 'fields_get', [], { attributes: FIELD_ATTRS }));

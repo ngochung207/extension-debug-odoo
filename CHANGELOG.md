@@ -8,6 +8,11 @@ All notable changes to this project are documented here. Format: [Keep a Changel
 
 - **Translations tab**: exports the translation template (`.pot`) and the `.po` of each language for several apps
   (`;`-separated), and downloads every file to `Downloads/<module>/i18n/`. Needs the new `downloads` permission.
+- **Switch to This User** (Security › View as user): opens an incognito window on the current page, at Odoo's login
+  of the picked user (their password is typed there); the current session is untouched. With the OCA module
+  `impersonate_login`, "Impersonate in This Session" and "Back to My User" are offered too.
+- **Apps tab**: for a `;`-separated list of modules, Activate (Update Apps List, then install them all with their
+  dependencies), Upgrade, or Open Forms (one new tab per module); each module's state is listed below.
 
 ### Changed
 
@@ -22,6 +27,10 @@ All notable changes to this project are documented here. Format: [Keep a Changel
   empties the Translations form.
 - Icon without the green dot.
 - The Perf tab is now the last one.
+- The panel is pinned to the bottom of the window (beside the button), so its header never goes off screen. The button
+  sits on the bottom edge too until dragged elsewhere; dropped back near that edge, it sticks to it again.
+- After a reload, the panel comes back on the tab you were on, scrolled where you left it (each tab keeps its own
+  position).
 
 ## [0.1.0] - 2026-09-28
 

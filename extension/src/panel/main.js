@@ -2,7 +2,7 @@
 // Settings live in the toolbar popup (src/popup/).
 // Each tab's content lives in src/features/<tab>/.
 import { lang, loadLang, translateDom, _t } from '../shared/i18n.js';
-import { $, tabId, setTab, exec, el, pill, empty, clearCache, copyable } from '../shared/ui.js';
+import { $, tabId, setTab, exec, el, pill, empty, clearCache, clearForms, copyable } from '../shared/ui.js';
 import { pageState, pageDebug } from '../shared/page.js';
 import { renderRecord } from '../features/record/record.js';
 import { renderView, setPicked } from '../features/view/view.js';
@@ -10,7 +10,8 @@ import { mountRpc, addRpc, reloadRpc } from '../features/rpc/rpc.js';
 import { renderAccess } from '../features/access/access.js';
 import { renderSecurity } from '../features/security/security.js';
 import { renderPerf } from '../features/perf/perf.js';
-import { renderTranslations, resetTranslations } from '../features/translations/translations.js';
+import { renderTranslations } from '../features/translations/translations.js';
+import { renderApps } from '../features/apps/apps.js';
 import { loadSettings } from '../shared/settings.js';
 
 const settings = await loadSettings();
@@ -19,8 +20,9 @@ document.documentElement.lang = lang;
 translateDom();
 
 let state = {};
+const TAB_KEY = 'odoo-debug-tab'; // sessionStorage (one per browser tab): the panel comes back on this tab after a reload
 let active = 'record';
-const RENDER = { record: renderRecord, view: renderView, access: renderAccess, security: renderSecurity, perf: renderPerf, translations: renderTranslations };
+const RENDER = { record: renderRecord, view: renderView, access: renderAccess, security: renderSecurity, perf: renderPerf, translations: renderTranslations, apps: renderApps };
 const rendered = new Set(); // tabs are rendered lazily, once per refresh
 
 function renderActive() {
@@ -32,14 +34,45 @@ function renderActive() {
   RENDER[active](s, state);
 }
 
-function showTab(name) {
+// ---------- each tab's scroll position, back after a reload / re-render (sessionStorage, like the tab) ----------
+const SCROLL_KEY = 'odoo-debug-scroll';
+const main = $('main');
+let scrolls = {};
+try { scrolls = JSON.parse(sessionStorage.getItem(SCROLL_KEY)) || {}; } catch { /* storage off or bad value */ }
+let restoring = null; // { tab, y, until }: cards load async, so the target is re-applied as the content grows
+function restoreScroll(tab) {
+  restoring = { tab, y: scrolls[tab] || 0, until: Date.now() + 10_000 };
+  applyScroll();
+}
+function applyScroll() {
+  if (!restoring) return;
+  if (restoring.tab !== active || Date.now() > restoring.until) { restoring = null; return; }
+  main.scrollTop = restoring.y; // clamped by the browser until the content is tall enough
+}
+const grows = new ResizeObserver(applyScroll); // a card loaded / opened: the content got taller
+for (const sec of document.querySelectorAll('.tab')) grows.observe(sec);
+for (const type of ['wheel', 'touchstart', 'keydown', 'pointerdown']) main.addEventListener(type, () => { restoring = null; }, { passive: true });
+main.addEventListener('scroll', () => {
+  if (restoring) return; // our own scrolling (or the content shrinking during a re-render) is not a position to keep
+  scrolls[active] = main.scrollTop;
+  try { sessionStorage.setItem(SCROLL_KEY, JSON.stringify(scrolls)); } catch { /* storage off */ }
+}, { passive: true });
+
+/** render = false: only select it (at startup, before the first refresh() has anything to render). */
+function showTab(name, render = true) {
   active = name;
+  try { sessionStorage.setItem(TAB_KEY, name); } catch { /* storage off: back to Record after a reload */ }
   for (const b of document.querySelectorAll('.tabs button')) {
     b.classList.toggle('active', b.dataset.tab === name);
     b.setAttribute('aria-selected', b.dataset.tab === name);
   }
+  // narrow panel: scroll the tab strip to it (not scrollIntoView, which may scroll the Odoo page around the iframe too)
+  const nav = $('.tabs'), b = $(`.tabs [data-tab="${name}"]`);
+  const nr = nav.getBoundingClientRect(), br = b.getBoundingClientRect();
+  if (br.left < nr.left || br.right > nr.right) nav.scrollLeft += br.left - nr.left - (nr.width - br.width) / 2;
   for (const s of document.querySelectorAll('.tab')) s.classList.toggle('active', s.id === name);
-  renderActive();
+  restoreScroll(name);
+  if (render) renderActive();
 }
 
 let seq = 0; // a slow refresh must not overwrite a newer one (fast navigation, ⟳)
@@ -60,14 +93,18 @@ async function refresh() {
     b.classList.toggle('on', !!state.odoo && (b.dataset.debug === '0' ? !state.debug : state.debug.split(',').includes(b.dataset.debug)));
   }
   rendered.clear();
+  restoreScroll(active); // the re-render empties the tab first: keep where it was
   renderActive();
 }
 
 // ---------- header ----------
 mountRpc($('#rpc'), () => showTab('security'));
+let saved = null;
+try { saved = sessionStorage.getItem(TAB_KEY); } catch { /* storage off */ }
+if ([...document.querySelectorAll('.tabs button')].some((b) => b.dataset.tab === saved)) showTab(saved, false);
 for (const b of document.querySelectorAll('.tabs button')) b.addEventListener('click', () => showTab(b.dataset.tab));
 for (const b of document.querySelectorAll('[data-debug]')) b.addEventListener('click', () => exec(pageDebug, b.dataset.debug));
-$('#refresh').addEventListener('click', () => { clearCache(); resetTranslations(); refresh(); }); // every tab re-renders, forms empty
+$('#refresh').addEventListener('click', () => { clearCache(); clearForms(); refresh(); }); // every tab re-renders, forms empty
 
 // ---------- bound to the tab it is embedded in (iframe from src/content/bubble.js; a page reload recreates it) ----------
 let timer = null;

@@ -5,7 +5,7 @@ import { MODES, pickGroupField } from '../../shared/odoo.js';
 import { pageGo } from '../../shared/page.js';
 import {
   exec, call, cached, uncache, sessionInfo, fieldsOf, readAcls, readRules, cookieFlags,
-  el, pre, pill, triPill, details, empty, block, expandable, copyable, listHead,
+  el, pre, pill, triPill, details, empty, errBox, block, expandable, copyable, listHead,
 } from '../../shared/ui.js';
 import { _t, N_ } from '../../shared/i18n.js';
 
@@ -39,6 +39,55 @@ async function loadTarget(origin) {
   return { me: info.uid, uid, u, users, groupIds, groupXml, has };
 }
 
+/** Opens an incognito window on Odoo's login page for `login`, landing back on `url` once logged in: this session is
+ * untouched (incognito has its own cookies). */
+async function openIncognito(origin, db, login, url) {
+  const { pathname, search, hash } = new URL(url);
+  const target = `${origin}/web/login?${new URLSearchParams({ db, login, redirect: pathname + search + hash })}`;
+  if (!(await chrome.extension.isAllowedIncognitoAccess())) {
+    await chrome.windows.create({ incognito: true, url: target }); // opens, but resolves to null: not our window to see
+    return;
+  }
+  // Incognito windows share one session: with a user still logged in there, /web/login?redirect= would skip the login.
+  const { tabs: [tab] } = await chrome.windows.create({ incognito: true, url: 'about:blank' });
+  try {
+    const store = (await chrome.cookies.getAllCookieStores()).find((st) => st.tabIds.includes(tab.id));
+    if (store) await chrome.cookies.remove({ url: origin, name: 'session_id', storeId: store.id });
+  } finally {
+    await chrome.tabs.update(tab.id, { url: target }); // the login page opens even if the cookie could not be dropped
+  }
+}
+
+/** Switch to the picked user in an incognito window (their password is typed on Odoo's login page; this tab stays
+ * yours). With OCA impersonate_login, impersonating in this very session is offered too. */
+function switchBox(t, state) {
+  const { origin, url } = state;
+  const box = el('div', { class: 'switch mt' });
+  const fail = (e) => box.append(errBox(e));
+  const reload = () => { targets.delete(origin); exec(pageGo, url); }; // the webclient restarts as the new user
+  Promise.all([t, sessionInfo(), chrome.extension.isAllowedIncognitoAccess()]).then(([{ uid, me, u }, info, clean]) => {
+    if (info.impersonate_from_uid) { // impersonate_login: this session is someone else's for now
+      box.append(el('div', { class: 'row' }, el('button', { class: 'btn', onclick: () => call('res.users', 'back_to_origin_login').then(reload, fail) }, _t('Back to My User'))),
+        el('div', { class: 'note' }, _t('This session is impersonating %s (Impersonate Login).', info.name)));
+    }
+    if (uid === me) return box.append(el('div', { class: 'note' }, _t('Pick another user above to open a session as them.')));
+    box.append(el('div', { class: 'row' },
+      el('button', {
+        class: 'btn', title: _t('Incognito window on this page, logged in as %s', u.login),
+        onclick: () => openIncognito(origin, info.db, u.login, url).catch(fail),
+      }, _t('Switch to This User')),
+      info.is_impersonate_user && !info.impersonate_from_uid ? el('button', {
+        class: 'chip', title: _t('Impersonate Login module: no password, but this session (every tab of this Odoo) becomes %s', u.login),
+        onclick: () => confirm(_t('Log this session in as %s? Every tab of this Odoo switches too.', u.name))
+          && call('res.users', 'impersonate_login', [[uid]]).then(reload, fail),
+      }, _t('Impersonate in This Session')) : null),
+    el('div', { class: 'note' }, _t('Opens an incognito window on this page, at the login of %s: type their password there. This session stays yours.', u.login)));
+    // not in box.append() above: the DOM append prints a null as "null" (only el() skips it)
+    if (!clean) box.append(el('div', { class: 'note' }, _t('Incognito windows share one session: close those already open on this Odoo first, or allow this extension in incognito (chrome://extensions) so each switch starts clean.')));
+  }, () => {});
+  return box;
+}
+
 export function renderSecurity(s, state) {
   const { model, resId, origin } = state;
   const t = loadTarget(origin);
@@ -50,6 +99,7 @@ export function renderSecurity(s, state) {
     el('div', { class: 'picker' }, picker,
       el('button', { class: 'chip', onclick: () => { targets.delete(origin); rerender(); } }, _t('My User'))),
     el('div', { class: 'note' }, _t('Simulates the selected user\'s rights without logging in as them (reading other users\' groups needs admin rights).')),
+    switchBox(t, state),
     el('div', { class: 'mt' }, el('button', {
       class: 'btn', title: _t('Odoo\'s built-in /web/become route, base.group_system only'),
       onclick: () => confirm(_t('Switch the current session to superuser (bypasses every rule)?')) && exec(pageGo, '/web/become'),

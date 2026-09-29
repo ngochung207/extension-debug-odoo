@@ -1,19 +1,13 @@
 // Translations tab: exports the .pot template + the .po of each language for several apps, with Odoo's own export
 // wizard, and downloads every file straight to Downloads/<module>/i18n/ (<module>.pot, <lang>.po): nothing to unpack.
 import { NEW_LANG, splitList, resolveLangs, resolveModules, b64ToBytes, gunzip, untar } from './logic.js';
-import { call, cached, el, pill, block, errBox } from '../../shared/ui.js';
+import { call, cached, el, pill, block, errBox, formValues, saveForm } from '../../shared/ui.js';
 import { _t } from '../../shared/i18n.js';
-
-const KEY = 'odoo-debug-i18n-export'; // localStorage of the panel: the last apps / languages typed
-const load = () => { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch { return {}; } };
-const save = (v) => { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch { /* storage off: nothing to remember */ } };
-/** ⟳ Reload Data: forget the typed apps / languages, so the re-rendered form starts empty. */
-export const resetTranslations = () => { try { localStorage.removeItem(KEY); } catch { /* storage off: nothing kept */ } };
 
 export function renderTranslations(s) {
   block(s, 'export', _t('Export translations'), async () => {
     const langs = await cached('active langs', () => call('res.lang', 'search_read', [[['active', '=', true]]], { fields: ['code', 'name'], order: 'code' }));
-    const last = load();
+    const last = formValues('translations');
     const apps = el('input', { type: 'text', placeholder: 'sale; stock; my_module', value: last.apps || '', spellcheck: false });
     const langIn = el('input', { type: 'text', placeholder: 'vi_VN; fr_BE; fr_CA', value: last.langs || '', spellcheck: false });
     const add = (code) => {
@@ -34,7 +28,7 @@ export function renderTranslations(s) {
       log);
     form.addEventListener('submit', async (ev) => {
       ev.preventDefault();
-      save({ apps: apps.value, langs: langIn.value });
+      saveForm('translations', { apps: apps.value, langs: langIn.value });
       btn.disabled = true;
       log.replaceChildren();
       try {
