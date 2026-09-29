@@ -38,7 +38,7 @@ export function renderTranslations(s) {
         () => el('div', { class: 'note' }, _t('Technical names, separated by ;'))),
       el('div', { class: 'row mt langs' }, el('span', { class: 'muted' }, _t('Languages:')),
         el('button', { type: 'button', class: 'chip', 'aria-pressed': 'true', disabled: true, title: _t('Always exported: the empty template, as <module>.pot') }, _t('Template (.pot)')),
-        langs.map(chip)),
+        [...langs].sort((a, b) => picked.has(b.code) - picked.has(a.code)).map(chip)), // the chosen ones first, in sight
       el('div', { class: 'row mt fill' }, btn),
       log);
     apps.addEventListener('input', summary);

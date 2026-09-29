@@ -263,8 +263,33 @@ textarea.code:focus { outline: 2px solid var(--accent-soft); border-color: var(-
 :is(#apps, #translations) .module-picker { flex: 1; min-height: 160px; display: flex; flex-direction: column; }
 :is(#apps, #translations) .module-picker .list { flex: 1; min-height: 0; max-height: none; }
 .chip:disabled { cursor: default; opacity: .85; } /* Translations: the template chip, always on */
+/* Translations: many active languages scroll inside two rows of chips instead of squeezing the module list */
+.langs { max-height: 58px; overflow-y: auto; align-items: center; }
+/* Apps: Odoo's search bar, the filters as facets inside it and ▾ opening them */
+.searchbar { position: relative; display: flex; flex-wrap: wrap; align-items: center; gap: 4px; padding: 2px 2px 2px 6px;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 6px; }
+.searchbar:focus-within { outline: 2px solid var(--accent-soft); border-color: var(--accent); }
+.searchbar .search-icon { color: var(--muted); }
+.searchbar .facets { display: contents; }
+.facet { display: inline-flex; align-items: center; gap: 2px; padding: 1px 2px 1px 6px; border-radius: 4px; background: var(--accent-soft); color: var(--accent); font-size: 11px; font-weight: 600; white-space: nowrap; }
+.facet-x { border: 0; background: none; color: inherit; padding: 0 3px; line-height: 1; cursor: pointer; }
+.form .searchbar input[type=text] { flex: 1; min-width: 90px; border: 0; background: none; outline: none; padding: 4px 2px; }
+.search-toggle { align-self: stretch; min-height: 26px; border: 0; border-left: 1px solid var(--line); background: none; color: var(--muted); padding: 0 10px; cursor: pointer; } /* ▾: easy to hit */
+.search-toggle[aria-expanded=true] { color: var(--accent); background: var(--accent-soft); }
+.search-panel { position: absolute; top: calc(100% + 4px); left: 0; right: 0; z-index: 3; display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+  padding: 8px; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; box-shadow: 0 6px 20px rgba(0,0,0,.25); }
+.search-panel[hidden] { display: none; }
+.search-col { display: flex; flex-direction: column; min-width: 0; }
+.search-col.cats { max-height: 260px; overflow-y: auto; border-left: 1px solid var(--line); padding-left: 8px; }
+.search-col hr { width: 100%; border: 0; border-top: 1px solid var(--line); margin: 4px 0; }
+.search-head { font-weight: 600; margin-bottom: 4px; }
+.search-item { flex: none; border: 0; background: none; text-align: left; padding: 3px 6px; border-radius: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.search-item:hover { background: var(--accent-soft); }
+.search-item[aria-pressed=true] { color: var(--accent); font-weight: 600; }
+.search-item[aria-pressed=true]::before { content: '✓ '; }
 .picker-head > input { flex: 1; min-width: 0; }
 .count-note { font-weight: normal; }
+.searchbar .count-note { font-size: 11px; white-space: nowrap; }
 .module-picker .list { max-height: 240px; overflow: auto; border: 1px solid var(--line); border-radius: 6px; }
 .module-picker label.pick { flex-direction: row; flex-wrap: nowrap; align-items: center; gap: 6px; cursor: pointer; font-weight: normal; }
 .module-picker label.pick > .name { flex: none; }

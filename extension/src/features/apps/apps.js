@@ -2,7 +2,7 @@
 // (Update Apps List, then install them all), Upgrade, or open their forms in new tabs. Same server methods as Odoo's
 // Apps menu; install / upgrade then reload the Odoo page. The list shows the installed modules, and every module
 // matching the word being typed, installed or not.
-import { planInstall, planUpgrade, stateKind } from './logic.js';
+import { planInstall, planUpgrade, stateKind, moduleFilter } from './logic.js';
 import { splitList } from '../translations/logic.js';
 import { exec, tabId, call, sessionInfo, el, pill, empty, card, errBox, odooLink, formValues, saveForm } from '../../shared/ui.js';
 import { modulePicker } from '../../shared/picker.js';
@@ -16,18 +16,28 @@ const needsAdmin = () => empty(_t('Needs Settings rights (base.group_system).'))
 export function renderApps(s, state) {
   card(s, async () => { // the tab's only card: no title to open it by
     if (!(await sessionInfo()).is_system) return needsAdmin();
-    const input = el('input', { type: 'text', placeholder: _t('Search or type: sale; stock; my_module'), 'aria-label': _t('Modules'), value: formValues('apps').modules || '', spellcheck: false });
+    const last = formValues('apps');
+    const input = el('input', { type: 'text', placeholder: _t('Search or type: sale; stock; my_module'), 'aria-label': _t('Modules'), value: last.modules || '', spellcheck: false });
+    // Odoo's Apps filters, kept across reloads (the list opens on the installed modules, as the Apps menu opens on Apps)
+    const f = last.filters || { installed: true };
+    if (typeof f.category !== 'string') f.category = null; // an id, saved before categories went by name
+    const save = () => saveForm('apps', { modules: input.value, filters: f });
     const count = el('span', { class: 'muted count-note' });
     const log = el('ul', { class: 'steps' });
     // every module (Update Apps List adds the new ones: they show after the page reloads)
-    const mods = await call('ir.module.module', 'search_read', [[]], { fields: ['name', 'shortdesc', 'state', 'latest_version', 'author'], order: 'name' });
+    const mods = await call('ir.module.module', 'search_read', [[]], { fields: ['name', 'shortdesc', 'state', 'latest_version', 'author', 'application', 'category_id'], order: 'name' });
+    let keep = moduleFilter(f);
     const list = modulePicker(input, mods, {
       countEl: count,
       count: (n, total) => _t('%s/%s modules', n, total),
       extra: (m) => [m.latest_version && m.state === 'installed' && pill(m.latest_version),
         m.state !== 'installed' && pill(m.state, stateKind(m.state)), odooLink(state.origin, formPath(m.id))],
-      shows: (m, q, picked) => !!q || picked || m.state === 'installed', // not installed: once searched for, or ticked
+      shows: (m, q, picked) => picked || keep(m), // a ticked module shows whatever the filters
     });
+    const refilter = () => { keep = moduleFilter(f); save(); bar.redraw(); input.dispatchEvent(new Event('input')); }; // the list redraws on input
+    // by name: Odoo has several categories of one name under different parents (Point of Sale, Delivery…)
+    const cats = [...new Set(mods.filter((m) => m.category_id).map((m) => m.category_id[1]))].sort((a, b) => a.localeCompare(b));
+    const bar = searchBar(input, count, f, cats, refilter);
 
     /** A log line with its outcome on the right. */
     const step = (text) => {
@@ -44,7 +54,7 @@ export function renderApps(s, state) {
         const typed = splitList(input.value);
         log.replaceChildren();
         if (!typed.length) return log.append(el('li', {}, errBox(new Error(_t('Enter at least one module.')))));
-        saveForm('apps', { modules: input.value });
+        save();
         for (const x of buttons) x.disabled = true;
         let current = null;
         try {
@@ -101,10 +111,51 @@ export function renderApps(s, state) {
     });
 
     const form = el('div', { class: 'form' },
-      el('div', { class: 'row picker-head' }, input, count), // no label: the placeholder and aria-label say what it is
+      bar.el,
       list,
       el('div', { class: 'row mt fill' }, activate, upgrade, open),
       log);
     return el('div', { class: 'pad' }, form);
   });
+}
+
+/** Odoo's search bar: the active filters as facets inside it (× or Backspace in an empty input removes one), the input,
+ * the count, and ▾ opening the filters (Installed / Not Installed, Apps / Extra) and the categories. `f` is changed in
+ * place; onChange() after each change. */
+function searchBar(input, count, f, cats, onChange) {
+  const GROUPS = [ // a group is one facet, its ticked options joined by "or" (OR'ed, as in Odoo)
+    { keys: [['installed', _t('Installed')], ['notInstalled', _t('Not Installed')]] },
+    { keys: [['apps', _t('Apps')], ['extra', _t('Extra')]] },
+  ];
+  const facets = el('span', { class: 'facets' });
+  const panel = el('div', { class: 'search-panel', hidden: true });
+  const toggle = el('button', { type: 'button', class: 'search-toggle', title: _t('Filters'), 'aria-label': _t('Filters'), 'aria-expanded': 'false' }, '▾');
+  const open = (on) => { panel.hidden = !on; toggle.setAttribute('aria-expanded', String(on)); if (on) redraw(); };
+  toggle.addEventListener('click', () => open(panel.hidden));
+
+  const item = (on, label, click) => el('button', { type: 'button', class: 'search-item', 'aria-pressed': String(on), onclick: click }, label);
+  function redraw() {
+    facets.replaceChildren(...[...GROUPS.map((g) => {
+      const on = g.keys.filter(([k]) => f[k]);
+      return on.length && facet(on.map(([, label]) => label).join(_t(' or ')), () => { for (const [k] of g.keys) f[k] = false; onChange(); });
+    }), f.category && facet(`${_t('Category')}: ${f.category}`, () => { f.category = null; onChange(); })].filter(Boolean)); // elements only: Backspace takes the last
+    if (panel.hidden) return;
+    panel.replaceChildren(
+      el('div', { class: 'search-col' }, el('div', { class: 'search-head' }, _t('Filters')),
+        GROUPS.flatMap((g, i) => [i ? el('hr') : null, ...g.keys.map(([k, label]) => item(!!f[k], label, () => { f[k] = !f[k]; onChange(); }))])),
+      el('div', { class: 'search-col cats' }, el('div', { class: 'search-head' }, _t('Category')),
+        item(!f.category, _t('All Categories'), () => { f.category = null; onChange(); }),
+        cats.map((name) => item(f.category === name, name, () => { f.category = f.category === name ? null : name; onChange(); }))));
+  }
+  const facet = (label, remove) => el('span', { class: 'facet' }, label,
+    el('button', { type: 'button', class: 'facet-x', title: _t('Remove'), 'aria-label': _t('Remove'), onclick: remove }, '×'));
+
+  input.addEventListener('keydown', (ev) => {
+    if (ev.key === 'Backspace' && !input.value && facets.lastChild) { ev.preventDefault(); facets.lastChild.querySelector('.facet-x').click(); }
+    if (ev.key === 'Escape' && !panel.hidden) { ev.preventDefault(); open(false); }
+  });
+  const root = el('div', { class: 'searchbar' }, el('span', { class: 'search-icon', 'aria-hidden': 'true' }, '⌕'), facets, input, count, toggle, panel);
+  document.addEventListener('pointerdown', (ev) => { if (!panel.hidden && !root.contains(ev.target)) open(false); });
+  redraw();
+  return { el: root, redraw };
 }

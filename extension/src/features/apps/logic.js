@@ -30,3 +30,18 @@ export function planUpgrade(names, rows) {
 
 /** ir.module.module state → pill kind. */
 export const stateKind = (state) => ({ installed: 'ok', 'to upgrade': 'med', 'to install': 'med', 'to remove': 'med', uninstallable: 'err' })[state] || '';
+
+/** Odoo's own "Installed" filter of the Apps menu (base/views/ir_module_views.xml); "Not Installed" is the rest. */
+export const INSTALLED = ['installed', 'to upgrade', 'to remove'];
+
+/** Odoo's Apps filters as a predicate on ir.module.module rows: in a group (Installed / Not Installed, Apps / Extra) the
+ * ticked facets are OR'ed, none or both ticked is no filter; the groups and the category are AND'ed.
+ * f: { installed, notInstalled, apps, extra, category (ir.module.category name: several share one) }. */
+export function moduleFilter(f) {
+  return (m) => {
+    const installed = INSTALLED.includes(m.state);
+    if (!!f.installed !== !!f.notInstalled && installed !== !!f.installed) return false;
+    if (!!f.apps !== !!f.extra && !!m.application !== !!f.apps) return false;
+    return !f.category || m.category_id?.[1] === f.category;
+  };
+}

@@ -95,25 +95,25 @@ msgstr "Value"
 msgid "No parameter."
 msgstr "No parameter."
 
-#: src/features/apps/apps.js:19
+#: src/features/apps/apps.js:20
 #: src/features/translations/translations.js:12
 msgid "Search or type: sale; stock; my_module"
 msgstr "Search or type: sale; stock; my_module"
 
-#: src/features/apps/apps.js:19
+#: src/features/apps/apps.js:20
 msgid "Modules"
 msgstr "Modules"
 
-#: src/features/apps/apps.js:26
+#: src/features/apps/apps.js:32
 msgid "%s/%s modules"
 msgstr "%s/%s modules"
 
-#: src/features/apps/apps.js:34
+#: src/features/apps/apps.js:44
 #: src/features/code/code.js:32
 msgid "Running…"
 msgstr "Running…"
 
-#: src/features/apps/apps.js:36
+#: src/features/apps/apps.js:46
 #: src/features/code/code.js:289
 #: src/features/code/code.js:328
 #: src/features/rpc/rpc.js:36
@@ -121,85 +121,126 @@ msgstr "Running…"
 msgid "error"
 msgstr "error"
 
-#: src/features/apps/apps.js:38
+#: src/features/apps/apps.js:48
 msgid "Reloading the Odoo page…"
 msgstr "Reloading the Odoo page…"
 
-#: src/features/apps/apps.js:46
+#: src/features/apps/apps.js:56
 msgid "Enter at least one module."
 msgstr "Enter at least one module."
 
-#: src/features/apps/apps.js:63
+#: src/features/apps/apps.js:73
 msgid "Activate"
 msgstr "Activate"
 
-#: src/features/apps/apps.js:63
+#: src/features/apps/apps.js:73
 msgid "Update Apps List, then install every module (with its dependencies)"
 msgstr "Update Apps List, then install every module (with its dependencies)"
 
-#: src/features/apps/apps.js:64
+#: src/features/apps/apps.js:74
 msgid "Update Apps List"
 msgstr "Update Apps List"
 
-#: src/features/apps/apps.js:66
+#: src/features/apps/apps.js:76
 msgid "%s updated · %s added"
 msgstr "%s updated · %s added"
 
-#: src/features/apps/apps.js:69
+#: src/features/apps/apps.js:79
 msgid "Not found, even after Update Apps List: %s"
 msgstr "Not found, even after Update Apps List: %s"
 
-#: src/features/apps/apps.js:70
+#: src/features/apps/apps.js:80
 msgid "Not installable: %s"
 msgstr "Not installable: %s"
 
-#: src/features/apps/apps.js:71
+#: src/features/apps/apps.js:81
 msgid "Waiting to be uninstalled: %s"
 msgstr "Waiting to be uninstalled: %s"
 
-#: src/features/apps/apps.js:72
+#: src/features/apps/apps.js:82
 msgid "Already installed: %s"
 msgstr "Already installed: %s"
 
-#: src/features/apps/apps.js:74
+#: src/features/apps/apps.js:84
 msgid "Install %s"
 msgstr "Install %s"
 
-#: src/features/apps/apps.js:80
+#: src/features/apps/apps.js:90
 msgid "Upgrade"
 msgstr "Upgrade"
 
-#: src/features/apps/apps.js:80
+#: src/features/apps/apps.js:90
 msgid "Upgrade every module (they must be installed)"
 msgstr "Upgrade every module (they must be installed)"
 
-#: src/features/apps/apps.js:83
+#: src/features/apps/apps.js:93
 msgid "Not found: %s"
 msgstr "Not found: %s"
 
-#: src/features/apps/apps.js:84
+#: src/features/apps/apps.js:94
 msgid "Not installed (use Activate): %s"
 msgstr "Not installed (use Activate): %s"
 
-#: src/features/apps/apps.js:85
+#: src/features/apps/apps.js:95
 msgid "Upgrade %s"
 msgstr "Upgrade %s"
 
-#: src/features/apps/apps.js:91
+#: src/features/apps/apps.js:101
 msgid "Open Forms ↗"
 msgstr "Open Forms ↗"
 
-#: src/features/apps/apps.js:91
+#: src/features/apps/apps.js:101
 msgid "Open the form of every module in a new tab"
 msgstr "Open the form of every module in a new tab"
 
-#: src/features/apps/apps.js:98
+#: src/features/apps/apps.js:108
 msgid "Opened %s tab(s): %s"
 msgstr "Opened %s tab(s): %s"
 
-#: src/features/apps/apps.js:100
+#: src/features/apps/apps.js:110
 msgid "Not found: %s (Activate runs Update Apps List first)"
 msgstr "Not found: %s (Activate runs Update Apps List first)"
+
+#: src/features/apps/apps.js:127
+msgid "Installed"
+msgstr "Installed"
+
+#: src/features/apps/apps.js:127
+msgid "Not Installed"
+msgstr "Not Installed"
+
+#: src/features/apps/apps.js:128
+#: src/panel/panel.html:29
+msgid "Apps"
+msgstr "Apps"
+
+#: src/features/apps/apps.js:128
+msgid "Extra"
+msgstr "Extra"
+
+#: src/features/apps/apps.js:132
+#: src/features/apps/apps.js:132
+#: src/features/apps/apps.js:145
+msgid "Filters"
+msgstr "Filters"
+
+#: src/features/apps/apps.js:141
+msgid " or "
+msgstr " or "
+
+#: src/features/apps/apps.js:142
+#: src/features/apps/apps.js:147
+msgid "Category"
+msgstr "Category"
+
+#: src/features/apps/apps.js:148
+msgid "All Categories"
+msgstr "All Categories"
+
+#: src/features/apps/apps.js:152
+#: src/features/apps/apps.js:152
+msgid "Remove"
+msgstr "Remove"
 
 #: src/features/code/code.js:45
 #: src/panel/panel.html:25
@@ -1240,10 +1281,6 @@ msgstr "Security"
 #: src/panel/panel.html:28
 msgid "Translations"
 msgstr "Translations"
-
-#: src/panel/panel.html:29
-msgid "Apps"
-msgstr "Apps"
 
 #: src/panel/panel.html:30
 msgid "Perf"

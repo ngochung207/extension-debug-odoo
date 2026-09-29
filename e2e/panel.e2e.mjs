@@ -158,7 +158,7 @@ test('Translations tab: one input searches the installed modules and holds the t
   await panel.$eval('#translations .langs .chip:not(:disabled)', (c) => c.click()); // back off
 });
 
-test('Apps tab: installed modules listed, the others found by the word being typed', async () => {
+test('Apps tab: Odoo\'s filters (Installed by default), the word being typed searches inside them', async () => {
   await click('.tabs [data-tab="apps"]');
   await panel.waitForSelector('#apps .module-picker li');
   const shown = () => panel.$$eval('#apps .module-picker li:not([hidden])', (lis) => lis.map((li) => ({
@@ -166,16 +166,32 @@ test('Apps tab: installed modules listed, the others found by the word being typ
     state: [...li.querySelectorAll('.pill')].map((p) => p.textContent).find((t) => !/^\d/.test(t)) || 'installed',
   })));
   const type = (v) => panel.$eval('#apps input[type=text]', (i, v) => { i.value = v; i.dispatchEvent(new Event('input')); }, v);
+  const facet = (label) => panel.$eval('#apps .searchbar', (bar, label) => { // ▾, then the filter: as in Odoo's search panel
+    if (bar.querySelector('.search-panel').hidden) bar.querySelector('.search-toggle').click();
+    [...bar.querySelectorAll('.search-item')].find((b) => b.textContent.replace('✓ ', '') === label).click();
+  }, label);
+  const facets = () => panel.$$eval('#apps .searchbar .facet', (fs) => fs.map((f) => f.firstChild.textContent));
 
   await type('');
   const installed = await shown();
   assert.ok(installed.some((m) => m.name === 'base'), 'base is installed');
-  assert.ok(installed.every((m) => m.state === 'installed'), 'nothing typed: installed modules only');
+  assert.ok(installed.every((m) => m.state === 'installed'), 'Installed filter by default');
+  assert.deepEqual(await facets(), ['Installed'], 'shown as a facet inside the search bar');
   await type('crm_s');
-  assert.deepEqual((await shown()).find((m) => m.name === 'crm_sms'), { name: 'crm_sms', state: 'uninstalled' }, 'typing finds the others');
+  assert.deepEqual(await shown(), [], 'the search stays inside the filters, as in Odoo');
+  await facet('Not Installed');
+  assert.deepEqual(await facets(), ['Installed or Not Installed'], 'one facet per group, its options OR\'ed');
+  assert.deepEqual((await shown()).find((m) => m.name === 'crm_sms'), { name: 'crm_sms', state: 'uninstalled' }, 'Installed or Not Installed');
+  await facet('Apps');
+  assert.equal((await shown()).find((m) => m.name === 'crm_sms'), undefined, 'crm_sms is not an application');
+  await panel.$eval('#apps input[type=text]', (i) => { i.value = ''; i.dispatchEvent(new KeyboardEvent('keydown', { key: 'Backspace', bubbles: true, cancelable: true })); });
+  assert.deepEqual(await facets(), ['Installed or Not Installed'], 'Backspace in the empty input removes the last facet (Apps)');
+  await type('crm_s');
   await panel.$eval('#apps .module-picker li:not([hidden]) input', (b) => b.click());
   assert.equal(await panel.$eval('#apps input[type=text]', (i) => i.value), 'crm_sms; ');
-  assert.ok((await shown()).some((m) => m.name === 'crm_sms'), 'a ticked module stays in the list');
+  await facet('Not Installed'); // back to the default filters
+  assert.deepEqual(await facets(), ['Installed']);
+  assert.ok((await shown()).some((m) => m.name === 'crm_sms'), 'a ticked module shows whatever the filters');
 });
 
 test('every tab is in sight: the tab strip wraps instead of scrolling', async () => {
