@@ -57,6 +57,7 @@ function server(log) {
       })])));
     }
     if (method === 'write' && model === 'res.country') { for (const id of args[0]) Object.assign(m.rows[id], args[1]); return reply(true); }
+    if (method === 'write' && !('name' in args[1])) { for (const id of args[0]) Object.assign(m.rows[id], args[1]); return reply(true); }
     if (method === 'write') return err('You are not allowed to modify this document', 'odoo.exceptions.AccessError');
     if (method === 'check_object_reference') return reply(['res.partner', 1]);
     if (method === 'action_confirm') return reply(true);
@@ -240,4 +241,56 @@ test('rankSuggestions: prefix matches first, then the ones containing it, not th
   assert.deepEqual(rankSuggestions(items, '_id').map((i) => i.label), ['partner_id', 'partner_invoice_id', 'company_id', 'user_id']);
   assert.deepEqual(rankSuggestions(items, 'user_id'), []);
   assert.equal(rankSuggestions(items, '').length, 4);
+});
+
+test('assigning a field writes it, in order with the other calls', async () => {
+  const { r, log } = await run(`a = env['res.country'].browse(10)\nreturn a.code = 'FR'`, { readonly: false });
+  assert.equal(r.ok, true, r.error?.message);
+  assert.equal(r.value, 'FR');
+  assert.deepEqual(log.map((c) => [c.method, c.args]), [['write', [[10], { code: 'FR' }]]]);
+
+  const seq = await run(`a = env['res.country'].browse(10)
+const before = await a.code
+a.code = 'DE'
+const after = await a.code
+a.code = 'VN'
+return [before, after]`, { readonly: false });
+  assert.deepEqual(seq.r.value, ['FR', 'DE']);
+  assert.deepEqual(seq.log.map((c) => c.method), ['fields_get', 'read', 'write', 'read', 'write']);
+});
+
+test('assignment through a path, of a recordset, on many records, on an empty one', async () => {
+  const { r, log } = await run(`const p = env['res.partner'].browse(1)
+p.country_id.code = 'JP'
+p.country_id = env['res.country'].browse(10)
+p.category_id = env['res.partner.category'].browse([5])
+env['res.partner'].browse([2, 3]).country_id = false
+env['res.partner'].browse([]).country_id = false
+return p.country_id.code`, { readonly: false });
+  assert.equal(r.ok, true, r.error?.message);
+  assert.equal(r.value, 'JP');
+  const writes = log.filter((c) => c.method === 'write').map((c) => [c.model, c.args]);
+  assert.deepEqual(writes, [
+    ['res.country', [[10], { code: 'JP' }]],
+    ['res.partner', [[1], { country_id: 10 }]],
+    ['res.partner', [[1], { category_id: [[6, 0, [5]]] }]],
+    ['res.partner', [[2, 3], { country_id: false }]],
+  ]);
+});
+
+test('assignment errors: read-only, server refusal (at the assignment line), members', async () => {
+  const ro = await run(`a = env['sale.order'].browse(25)\na.state = 'sent'`);
+  assert.equal(ro.r.ok, false);
+  assert.deepEqual(ro.r.error.args, ['sale.order.state']);
+  assert.equal(ro.r.error.line, 2);
+  assert.equal(ro.log.length, 0);
+
+  const refused = await run(`const p = env['res.partner'].browse(1)\np.name = 'X'\nprint('after')\nreturn await p.country_id.code`, { readonly: false });
+  assert.equal(refused.r.ok, false);
+  assert.equal(refused.r.error.type, 'odoo.exceptions.AccessError');
+  assert.equal(refused.r.error.line, 2);
+  assert.deepEqual(refused.log.map((c) => c.method), ['write']); // nothing after the failed write reaches the server
+
+  const member = await run(`env['res.partner'].browse(1).ids = [2]`, { readonly: false });
+  assert.equal(member.r.error.name, 'TypeError');
 });

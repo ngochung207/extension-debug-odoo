@@ -223,6 +223,11 @@ textarea.code:focus { outline: 2px solid var(--accent-soft); border-color: var(-
 .help-list li { margin: 2px 0; color: var(--muted); }
 .help-list code { color: var(--fg); font-weight: 600; overflow-wrap: anywhere; }
 .code-help pre { margin-top: 4px; }
+.example { position: relative; }
+.example pre { padding-right: 56px; }
+.example .copy-btn { position: absolute; top: 5px; right: 5px; border: 1px solid var(--accent); background: var(--surface);
+  color: var(--accent); padding: 1px 8px; font-size: 11px; cursor: pointer; }
+.example .copy-btn:hover { background: var(--accent-soft); text-decoration: none; }
 .table-wrap td { font-family: var(--mono); font-size: 11px; white-space: pre-wrap; }
 /* Code tab: suggestions under the editor */
 .suggest { position: relative; list-style: none; margin: 2px 0 0; padding: 2px 0; max-height: 180px; overflow: auto;

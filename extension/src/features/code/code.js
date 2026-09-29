@@ -3,7 +3,7 @@
 // Read-only unless "Allow writes" is ticked (never remembered): every call is its own transaction, committed at once.
 import { pageRunCode } from './page.js';
 import { formatValue, printText, toTable, callStats, MAX_ROWS, completionAt, rankSuggestions, METHODS, ENV_MEMBERS, COMMAND_MEMBERS, GLOBALS } from './logic.js';
-import { exec, sessionInfo, el, pill, pre, details, block, cached, call, fieldsOf } from '../../shared/ui.js';
+import { exec, sessionInfo, el, pill, pre, details, block, copyable, cached, call, fieldsOf } from '../../shared/ui.js';
 import { _t } from '../../shared/i18n.js';
 
 // The code is kept in the panel's localStorage (every instance), and ⟳ Reload Data does not clear it: a snippet is
@@ -183,6 +183,7 @@ function help() {
       ["browse, with_context, ensure_one, exists, mapped('a.b'), filtered_domain", _t('work like in Python')],
       ['rec.state, rec.partner_id.name', _t('field value of a single record, as in Python; await it inside an expression: if (await rec.state === \'sale\')')],
       ['for (const rec of rs)', _t('records one by one; each field is read once for all of them')],
+      ["rec.state = 'sent'", _t('writes the field, like in Python (needs "Allow writes"); later lines see the new value')],
       ['ids, id, length', _t('record ids, first id, count')],
       ['create, write, unlink, copy', _t('write to the server: need "Allow writes"')],
       ['rs.action_confirm()', _t('any other public method, called on these records (also needs "Allow writes")')],
@@ -196,7 +197,7 @@ function help() {
       ['↑ ↓, Enter / Tab, Esc, Ctrl+Space', _t('pick, insert, close, ask for suggestions')],
     ]),
     el('div', { class: 'help-title' }, _t('To show a result, return it: lists of records show as a table.')),
-    pre(EXAMPLE),
+    el('div', { class: 'example' }, pre(EXAMPLE), copyable(EXAMPLE, 'btn copy-btn', _t('Copy'))),
     el('div', { class: 'note' }, _t('JavaScript, not Python: await every server call, lists and objects in JS syntax (true / false / null).')),
     el('div', { class: 'note' }, _t('Every call goes through /web/dataset/call_kw as the logged-in user: no sudo(), no SQL, no private _methods. Methods that switch to sudo() inside still do so, as when clicked in Odoo.')),
     el('div', { class: 'note' }, _t('The code runs in the Odoo page with its own JavaScript rights: only run code you understand. An endless loop freezes the page (reload it).')));

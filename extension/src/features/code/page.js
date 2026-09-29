@@ -40,7 +40,19 @@ export async function pageRunCode(code, opts = {}) {
   const fail = (msgid, args, message) => Object.assign(new Error(message), { msgid, args });
   const short = (v) => { try { const s = JSON.stringify(v); return s.length > 300 ? `${s.slice(0, 300)}…` : s; } catch { return String(v); } };
 
-  async function callKw(model, method, args, kwargs, context) {
+  // Every call goes out in the order the code issued it, one at a time: `rec.state = 'sent'` (a write the code cannot
+  // await) is then sent before the next read. A failed assignment fails every later call, and the run.
+  let chain = Promise.resolve();
+  let assignError = null;
+  function callKw(...call) {
+    const p = chain.then(() => send(...call));
+    chain = p.catch(() => {});
+    return p;
+  }
+
+  /** One call_kw, right now (callKw queues it; only the queue itself and an assignment holding it call this). */
+  async function send(model, method, args, kwargs, context) {
+    if (assignError) throw assignError;
     const name = `${model}.${method}`;
     if (readonly && !READ.has(method)) {
       throw fail(N_('%s writes: blocked in read-only mode (tick "Allow writes" to run it)'), [name], `${name} writes: blocked in read-only mode`);
@@ -76,9 +88,9 @@ export async function pageRunCode(code, opts = {}) {
   const NUMERIC = ['integer', 'float', 'monetary'];
   const values = new Map(); // "model context" → Map(id → { field: value }): field values read during this run
   const fieldCache = new Map();
-  async function fieldInfo(rs, name) {
+  async function fieldInfo(rs, name, call = callKw) {
     const key = `${rs._name} ${name}`;
-    if (!fieldCache.has(key)) fieldCache.set(key, (await rs._model('fields_get', [[name]], { attributes: ['type', 'relation'] }))[name]);
+    if (!fieldCache.has(key)) fieldCache.set(key, (await call(rs._name, 'fields_get', [[name]], { attributes: ['type', 'relation'] }, rs._context))[name]);
     const info = fieldCache.get(key);
     if (!info) throw fail(N_('%s has no field %s'), [rs._name, name], `${rs._name} has no field ${name}`);
     return info;
@@ -86,7 +98,7 @@ export async function pageRunCode(code, opts = {}) {
 
   /** A field of a singleton, like rec.state in Python: read once for every record of its prefetch group (the recordset
    * it was iterated from), then served from `values` until something writes. */
-  async function fieldValue(rs, name) {
+  async function fieldValue(rs, name, call = callKw) {
     const key = `${rs._name} ${JSON.stringify(rs._context)}`;
     if (!values.has(key)) values.set(key, new Map());
     const cache = values.get(key);
@@ -94,7 +106,7 @@ export async function pageRunCode(code, opts = {}) {
     const has = (x) => cache.has(x) && name in cache.get(x);
     if (!has(id)) {
       const group = [id, ...rs._prefetch.filter((x) => x !== id && !has(x))].slice(0, 1000);
-      const read = (ids) => callKw(rs._name, 'read', [ids], { fields: [name], load: false }, rs._context);
+      const read = (ids) => call(rs._name, 'read', [ids], { fields: [name], load: false }, rs._context);
       let rows;
       try { rows = await read(group); } catch (e) {
         if (group.length === 1) throw e;
@@ -107,7 +119,7 @@ export async function pageRunCode(code, opts = {}) {
 
   /** rec.partner_id.country_id.code: each hop on a single record (Expected singleton otherwise, as in Python).
    * Relational end → recordset, other fields → value; on an empty recordset → false / 0 / an empty recordset. */
-  async function resolvePath(rs, path) {
+  async function resolvePath(rs, path, call = callKw) {
     let cur = rs;
     for (const [i, name] of path.entries()) {
       const last = i === path.length - 1;
@@ -116,11 +128,11 @@ export async function pageRunCode(code, opts = {}) {
         throw fail(N_('%s.%s is not relational'), [cur._name, name], `${cur._name}.${name} is not relational`);
       }
       if (cur.length > 1) throw fail(N_('Expected singleton: %s'), [String(cur)], `Expected singleton: ${cur}`);
-      const info = await fieldInfo(cur, name);
+      const info = await fieldInfo(cur, name, call);
       const relational = RELATIONAL.includes(info.type);
       if (!relational && !last) throw fail(N_('%s.%s is not relational'), [cur._name, name], `${cur._name}.${name} is not relational`);
-      if (!relational) return cur.length ? fieldValue(cur, name) : NUMERIC.includes(info.type) ? 0 : false;
-      const v = cur.length ? await fieldValue(cur, name) : false;
+      if (!relational) return cur.length ? fieldValue(cur, name, call) : NUMERIC.includes(info.type) ? 0 : false;
+      const v = cur.length ? await fieldValue(cur, name, call) : false;
       cur = wrap(info.relation, info.type === 'many2one' ? (v ? [v] : []) : v || [], cur._context);
     }
     return cur;
@@ -128,7 +140,32 @@ export async function pageRunCode(code, opts = {}) {
 
   /** What `rec.x` is when x is not a Recordset member: a field when awaited (`await rec.state`, or returned / printed),
    * a method when called (`await rec.action_confirm()`), and a longer path when followed (`rec.partner_id.name`). */
-  const lazies = new WeakSet();
+  const lazies = new WeakMap(); // lazy → { rs, path }: settle() resolves it with the caller it is given
+
+  /** rec.state = 'sent' → write({ state: 'sent' }) on rec, like in Python (rec.partner_id.name = … writes the partner).
+   * Queued at once, in order with every other call; its error surfaces at the next call or at the end of the run,
+   * reported at the line of the assignment (`origin`). */
+  function assign(rs, path, name, value, origin) {
+    const label = `${rs._name}.${[...path, name].join('.')}`;
+    if (readonly) throw fail(N_('%s writes: blocked in read-only mode (tick "Allow writes" to run it)'), [label], `${label} writes: blocked in read-only mode`);
+    values.clear(); // a read issued after this line must not be served what was read before it
+    const p = chain.then(async () => {
+      const target = path.length ? await resolvePath(rs, path, send) : rs;
+      if (!(target instanceof Recordset)) throw fail(N_('%s.%s is not relational'), [rs._name, path.join('.')], `${label}: not a recordset`);
+      if (!target.length) return;
+      let v = await settle(value, send);
+      if (v instanceof Recordset) { // rec.partner_id = partner / rec.tag_ids = tags
+        const info = await fieldInfo(target, name, send);
+        v = info.type === 'many2one' ? v.id : RELATIONAL.includes(info.type) ? [[6, 0, v.ids]] : v.id;
+      }
+      await send(target._name, 'write', [target.ids, { [name]: plain(v) }], {}, target._context);
+    }).catch((e) => {
+      e.stack = `${e.stack}\n${origin.stack}`; // the line of the assignment, not of the queue
+      assignError ??= e;
+    });
+    chain = p;
+  }
+
   function lazy(rs, path) {
     const label = `${rs._name}.${path.join('.')}`;
     const p = new Proxy(function field() {}, {
@@ -140,6 +177,11 @@ export async function pageRunCode(code, opts = {}) {
         if (typeof prop === 'symbol' || prop === 'toJSON') return undefined;
         return lazy(rs, [...path, prop]);
       },
+      set(_, prop, value) {
+        if (typeof prop === 'symbol') return false;
+        assign(rs, path, prop, value, new Error());
+        return true;
+      },
       async apply(_, __, args) {
         const target = path.length > 1 ? await resolvePath(rs, path.slice(0, -1)) : rs;
         const method = path.at(-1);
@@ -149,7 +191,7 @@ export async function pageRunCode(code, opts = {}) {
         return typeof target[method] === 'function' && method in target ? target[method](...args) : target.call(method, args);
       },
     });
-    lazies.add(p);
+    lazies.set(p, { rs, path });
     return p;
   }
 
@@ -238,6 +280,13 @@ export async function pageRunCode(code, opts = {}) {
         if (prop === 'then' || prop === 'toJSON' || prop.startsWith('_')) return undefined; // `await rs` must not call the server
         return lazy(receiver, [prop]);
       },
+      set(target, prop, value, receiver) {
+        if (typeof prop === 'symbol' || prop in target || prop.startsWith('_')) {
+          throw new TypeError(`${String(prop)} cannot be assigned on a recordset`);
+        }
+        assign(receiver, [], prop, value, new Error());
+        return true;
+      },
     });
   }
 
@@ -283,8 +332,9 @@ export async function pageRunCode(code, opts = {}) {
   }
   /** Awaits every field access / promise inside a value, so `return [rec.name, rec.state]` shows values.
    * Objects with nothing to await come back as they are (a cycle stays a cycle, for plain() to name). */
-  async function settle(v, path = new Set()) {
-    if (lazies.has(v) || v instanceof Promise) return settle(await v, path);
+  async function settle(v, call = callKw, path = new Set()) {
+    if (lazies.has(v)) { const { rs, path: fields } = lazies.get(v); return settle(await resolvePath(rs, fields, call), call, path); }
+    if (v instanceof Promise) return settle(await v, call, path);
     if (v === null || typeof v !== 'object' || v instanceof Recordset || path.has(v)) return v;
     const isArray = Array.isArray(v);
     const proto = Object.getPrototypeOf(v);
@@ -293,7 +343,7 @@ export async function pageRunCode(code, opts = {}) {
     let changed = false;
     const entries = [];
     for (const [k, x] of Object.entries(v)) { // in order: the calls log reads top to bottom
-      const y = await settle(x, path);
+      const y = await settle(x, call, path);
       changed ||= y !== x;
       entries.push([k, y]);
     }
@@ -333,6 +383,8 @@ export async function pageRunCode(code, opts = {}) {
     const fn = new AsyncFunction('__scope', `with (__scope) { ${code}\n}\n//# sourceURL=${SOURCE}`);
     const value = await settle(await fn(scope));
     await Promise.all(pending);
+    await chain; // assignments nothing awaited after them
+    if (assignError) throw assignError;
     return done({ ok: true, value: value === undefined ? undefined : plain(value), hasValue: value !== undefined });
   } catch (e) {
     const at = String(e?.stack || '').match(new RegExp(`${SOURCE.replace('.', '\\.')}:(\\d+):(\\d+)`));
