@@ -224,10 +224,21 @@ textarea.code:focus { outline: 2px solid var(--accent-soft); border-color: var(-
 .help-list code { color: var(--fg); font-weight: 600; overflow-wrap: anywhere; }
 .code-help pre { margin-top: 4px; }
 .example { position: relative; }
-.example pre { padding-right: 56px; }
-.example .copy-btn { position: absolute; top: 5px; right: 5px; border: 1px solid var(--accent); background: var(--surface);
-  color: var(--accent); padding: 1px 8px; font-size: 11px; cursor: pointer; }
-.example .copy-btn:hover { background: var(--accent-soft); text-decoration: none; }
+.example pre { padding-right: 36px; }
+/* icon-only copy button, tooltip above it (as on a code block) */
+.copy-btn { position: absolute; top: 4px; right: 4px; display: grid; place-items: center; width: 26px; height: 26px; padding: 0;
+  border: 0; border-radius: 6px; background: none; color: var(--muted); cursor: pointer; }
+.copy-btn:hover, .copy-btn:focus-visible { background: var(--line); color: var(--fg); text-decoration: none; }
+.copy-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.copy-btn .copy-icons { display: grid; }
+.copy-btn .i-check, .copy-btn.copied .i-copy { display: none; }
+.copy-btn.copied .i-check { display: block; color: var(--ok); }
+.copy-btn.copied::after { content: none; } /* the check icon replaces the ✓ text of other copy buttons */
+.copy-btn::before { content: attr(data-tip); position: absolute; bottom: calc(100% + 6px); right: 0; /* right-aligned: centred, it would be clipped by the card */
+  padding: 4px 8px; border-radius: 6px; background: light-dark(#1f1d24, #3d3a42); color: #fff; font-size: 11px; line-height: 1.3;
+  white-space: nowrap; pointer-events: none; opacity: 0; transition: opacity .12s; z-index: 2; }
+.copy-btn:hover::before, .copy-btn:focus-visible::before, .copy-btn.copied::before { opacity: 1; }
+.copy-btn.copied::before { content: attr(data-done); }
 .table-wrap td { font-family: var(--mono); font-size: 11px; white-space: pre-wrap; }
 /* Code tab: suggestions under the editor */
 .suggest { position: relative; list-style: none; margin: 2px 0 0; padding: 2px 0; max-height: 180px; overflow: auto;

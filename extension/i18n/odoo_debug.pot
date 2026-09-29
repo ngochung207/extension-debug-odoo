@@ -110,8 +110,8 @@ msgid "Running…"
 msgstr ""
 
 #: src/features/apps/apps.js:46
-#: src/features/code/code.js:211
-#: src/features/code/code.js:250
+#: src/features/code/code.js:237
+#: src/features/code/code.js:276
 #: src/features/rpc/rpc.js:36
 #: src/features/translations/translations.js:71
 msgid "error"
@@ -271,178 +271,183 @@ msgstr ""
 msgid "Suggestions"
 msgstr ""
 
-#: src/features/code/code.js:171
-msgid "Available variables:"
-msgstr ""
-
-#: src/features/code/code.js:173
-msgid "environment of the logged-in user, with their access rights and record rules; env['res.partner'] is a void recordset"
-msgstr ""
-
-#: src/features/code/code.js:174
-msgid "current user, current company, active companies"
-msgstr ""
-
-#: src/features/code/code.js:175
-msgid "user id, context sent with every call, language"
-msgstr ""
-
-#: src/features/code/code.js:176
-msgid "record of an external id, if you can read it"
-msgstr ""
-
-#: src/features/code/code.js:177
-msgid "shows values above the result"
-msgstr ""
-
-#: src/features/code/code.js:178
-msgid "x2many commands namespace: Command.create(vals), link(id), set(ids)…"
-msgstr ""
-
-#: src/features/code/code.js:180
-msgid "Recordsets:"
-msgstr ""
-
-#: src/features/code/code.js:182
-msgid "read from the server"
-msgstr ""
-
-#: src/features/code/code.js:183
-msgid "work like in Python"
-msgstr ""
-
-#: src/features/code/code.js:184
-msgid "field value of a single record, as in Python; await it inside an expression: if (await rec.state === 'sale')"
-msgstr ""
-
-#: src/features/code/code.js:185
-msgid "records one by one; each field is read once for all of them"
-msgstr ""
-
-#: src/features/code/code.js:186
-msgid "writes the field, like in Python (needs \"Allow writes\"); later lines see the new value"
-msgstr ""
-
-#: src/features/code/code.js:187
-msgid "record ids, first id, count"
-msgstr ""
-
 #: src/features/code/code.js:188
-msgid "write to the server: need \"Allow writes\""
-msgstr ""
-
 #: src/features/code/code.js:189
-msgid "any other public method, called on these records (also needs \"Allow writes\")"
+msgid "Copy code"
 msgstr ""
 
 #: src/features/code/code.js:190
-msgid "a method called on the model, without records"
-msgstr ""
-
-#: src/features/code/code.js:192
-msgid "Suggestions:"
-msgstr ""
-
-#: src/features/code/code.js:194
-msgid "models of the installed modules"
-msgstr ""
-
-#: src/features/code/code.js:195
-msgid "fields of the last env[…] model, following relations (partner_id.country_id.)"
-msgstr ""
-
-#: src/features/code/code.js:196
-msgid "recordset methods, env and Command members"
+msgid "Copied"
 msgstr ""
 
 #: src/features/code/code.js:197
-msgid "pick, insert, close, ask for suggestions"
+msgid "Available variables:"
 msgstr ""
 
 #: src/features/code/code.js:199
-msgid "To show a result, return it: lists of records show as a table."
+msgid "environment of the logged-in user, with their access rights and record rules; env['res.partner'] is a void recordset"
 msgstr ""
 
 #: src/features/code/code.js:200
-msgid "Copy"
+msgid "current user, current company, active companies"
 msgstr ""
 
 #: src/features/code/code.js:201
-msgid "JavaScript, not Python: await every server call, lists and objects in JS syntax (true / false / null)."
+msgid "user id, context sent with every call, language"
 msgstr ""
 
 #: src/features/code/code.js:202
-msgid "Every call goes through /web/dataset/call_kw as the logged-in user: no sudo(), no SQL, no private _methods. Methods that switch to sudo() inside still do so, as when clicked in Odoo."
+msgid "record of an external id, if you can read it"
 msgstr ""
 
 #: src/features/code/code.js:203
-msgid "The code runs in the Odoo page with its own JavaScript rights: only run code you understand. An endless loop freezes the page (reload it)."
+msgid "shows values above the result"
+msgstr ""
+
+#: src/features/code/code.js:204
+msgid "x2many commands namespace: Command.create(vals), link(id), set(ids)…"
+msgstr ""
+
+#: src/features/code/code.js:206
+msgid "Recordsets:"
 msgstr ""
 
 #: src/features/code/code.js:208
+msgid "read from the server"
+msgstr ""
+
+#: src/features/code/code.js:209
+msgid "work like in Python"
+msgstr ""
+
+#: src/features/code/code.js:210
+msgid "field value of a single record, as in Python; await it inside an expression: if (await rec.state === 'sale')"
+msgstr ""
+
+#: src/features/code/code.js:211
+msgid "records one by one; each field is read once for all of them"
+msgstr ""
+
+#: src/features/code/code.js:212
+msgid "writes the field, like in Python (needs \"Allow writes\"); later lines see the new value"
+msgstr ""
+
+#: src/features/code/code.js:213
+msgid "record ids, first id, count"
+msgstr ""
+
+#: src/features/code/code.js:214
+msgid "write to the server: need \"Allow writes\""
+msgstr ""
+
+#: src/features/code/code.js:215
+msgid "any other public method, called on these records (also needs \"Allow writes\")"
+msgstr ""
+
+#: src/features/code/code.js:216
+msgid "a method called on the model, without records"
+msgstr ""
+
+#: src/features/code/code.js:218
+msgid "Suggestions:"
+msgstr ""
+
+#: src/features/code/code.js:220
+msgid "models of the installed modules"
+msgstr ""
+
+#: src/features/code/code.js:221
+msgid "fields of the last env[…] model, following relations (partner_id.country_id.)"
+msgstr ""
+
+#: src/features/code/code.js:222
+msgid "recordset methods, env and Command members"
+msgstr ""
+
+#: src/features/code/code.js:223
+msgid "pick, insert, close, ask for suggestions"
+msgstr ""
+
+#: src/features/code/code.js:225
+msgid "To show a result, return it: lists of records show as a table."
+msgstr ""
+
+#: src/features/code/code.js:227
+msgid "JavaScript, not Python: await every server call, lists and objects in JS syntax (true / false / null)."
+msgstr ""
+
+#: src/features/code/code.js:228
+msgid "Every call goes through /web/dataset/call_kw as the logged-in user: no sudo(), no SQL, no private _methods. Methods that switch to sudo() inside still do so, as when clicked in Odoo."
+msgstr ""
+
+#: src/features/code/code.js:229
+msgid "The code runs in the Odoo page with its own JavaScript rights: only run code you understand. An endless loop freezes the page (reload it)."
+msgstr ""
+
+#: src/features/code/code.js:234
 #: src/shared/ui.js:30
 msgid "No response — is this an Odoo page?"
 msgstr ""
 
-#: src/features/code/code.js:211
+#: src/features/code/code.js:237
 msgid "ok"
 msgstr ""
 
-#: src/features/code/code.js:212
+#: src/features/code/code.js:238
 msgid "read-only"
 msgstr ""
 
-#: src/features/code/code.js:212
+#: src/features/code/code.js:238
 msgid "writes allowed"
 msgstr ""
 
-#: src/features/code/code.js:213
-#: src/features/code/code.js:251
+#: src/features/code/code.js:239
+#: src/features/code/code.js:277
 msgid "%s ms"
 msgstr ""
 
-#: src/features/code/code.js:214
+#: src/features/code/code.js:240
 msgid "%s calls"
 msgstr ""
 
-#: src/features/code/code.js:215
+#: src/features/code/code.js:241
 msgid "%s write calls"
 msgstr ""
 
-#: src/features/code/code.js:219
+#: src/features/code/code.js:245
 msgid "No return value: end with return … to see one."
 msgstr ""
 
-#: src/features/code/code.js:225
+#: src/features/code/code.js:251
 msgid "(line %s)"
 msgstr ""
 
-#: src/features/code/code.js:230
+#: src/features/code/code.js:256
 msgid "This page's Content-Security-Policy forbids running code (a proxy in front of Odoo adds script-src)."
 msgstr ""
 
-#: src/features/code/code.js:231
+#: src/features/code/code.js:257
 #: src/shared/ui.js:94
 msgid "Traceback"
 msgstr ""
 
-#: src/features/code/code.js:238
+#: src/features/code/code.js:264
 msgid "%s rows (first %s shown)"
 msgstr ""
 
-#: src/features/code/code.js:238
+#: src/features/code/code.js:264
 msgid "%s rows"
 msgstr ""
 
-#: src/features/code/code.js:242
+#: src/features/code/code.js:268
 msgid "JSON"
 msgstr ""
 
-#: src/features/code/code.js:246
+#: src/features/code/code.js:272
 msgid "Calls (%s)"
 msgstr ""
 
-#: src/features/code/code.js:249
+#: src/features/code/code.js:275
 msgid "write"
 msgstr ""
 
