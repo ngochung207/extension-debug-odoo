@@ -32,8 +32,10 @@ Chế độ developer có sẵn của Odoo cho bạn biết trên màn hình *c�
 | **Record** | Định danh & metadata (xmlid, `noupdate`, người tạo / sửa), mọi field kèm kiểu, giá trị, module, cách lưu, nguồn compute / related, `groups=` và các field mà nó kích hoạt tính lại. |
 | **View** | Cây kế thừa của view hiện tại (primary + extension, priority, file nguồn), arch đã gộp, thông tin action, modifier của field trên form (`invisible` / `readonly` / `required`) tính đúng như webclient, *Chọn trên trang*. |
 | **RPC** | Nhật ký trực tiếp các lời gọi JSON-RPC và JSON-2 từ lúc tải trang: thời gian, lỗi kèm traceback, và nút nhảy sang tab Security khi gặp `AccessError`. |
-| **Access** | Phiên làm việc (db, version, `web.base.url`, `test_mode`), quyền thực tế, ACL, record rule, nhóm, tham số hệ thống (giá trị bí mật được che) và các module đã cài. |
-| **Security** | Giả lập quyền của user khác, giải thích từng rule vì sao một thao tác được phép hay bị chặn, đánh giá rủi ro của user, field bị ẩn bởi `groups=`, kiểm tra instance (HTTPS, cờ cookie, security header, database manager). |
+| **Access** | Phiên làm việc (db, version, `web.base.url`, `test_mode`), quyền thực tế, ACL, record rule, nhóm, tham số hệ thống (giá trị bí mật được che). |
+| **Apps** | Với danh sách module cách nhau bởi `;`: Activate (Update Apps List rồi cài kèm dependency), Upgrade, Open Forms; bên dưới là mọi module đã cài (cần quyền Settings). |
+| **Security** | Giả lập quyền của user khác, giải thích từng rule vì sao một thao tác được phép hay bị chặn, đánh giá rủi ro của user, field bị ẩn bởi `groups=`, kiểm tra instance (HTTPS, cờ cookie, security header, database manager). **Switch to This User** mở cửa sổ ẩn danh tại trang đăng nhập của user đó, không đụng tới phiên của bạn (có OCA `impersonate_login`: impersonate ngay trong phiên này). |
+| **Translations** | Xuất file mẫu `.pot` và một `.po` cho mỗi ngôn ngữ của nhiều app bằng wizard có sẵn của Odoo, lưu thẳng vào `Downloads/<module>/i18n/`. |
 | **Perf** | Profiler có sẵn của Odoo: bật / tắt, danh sách request đã đo, tổng hợp SQL với các câu lặp lại (nghi N+1), câu chậm nhất, flame graph speedscope. |
 
 Ngoài ra: bấm vào tên field, model hay xmlid trong bảng để copy, và <kbd>⌥ Alt</kbd> + click vào một field trên trang Odoo để copy tên kỹ thuật của nó.
@@ -70,13 +72,14 @@ Extension chưa có trên Chrome Web Store; cài dạng unpacked (Chrome, Edge, 
 1. Tải `odoo-debug-v<version>.zip` từ [Releases](https://github.com/unclecatvn/extension-debug-odoo/releases) rồi giải nén (hoặc `git clone https://github.com/unclecatvn/extension-debug-odoo.git`).
 2. Mở `chrome://extensions` và bật **Developer mode**.
 3. Bấm **Load unpacked** và chọn thư mục vừa giải nén (nếu clone: chọn thư mục `extension/`).
-4. Mở một trang Odoo bất kỳ: nút tròn xuất hiện ở góc dưới bên phải.
+4. Mở một trang Odoo bất kỳ: nút tròn xuất hiện ở mép dưới.
 
 ## Sử dụng
 
-- **Mở / đóng**: bấm nút tròn. Kéo nó đi đâu cũng được; vị trí được nhớ riêng cho từng instance Odoo. Trên các trang không phải Odoo thì không có gì hiện ra, và icon trên thanh công cụ bị làm mờ.
+- **Mở / đóng**: bấm nút tròn; bảng mở ở mép dưới, đúng tab và vị trí cuộn lần trước. Kéo nút đi đâu cũng được; vị trí được nhớ riêng cho từng instance Odoo (thả lại gần mép dưới thì nút bám lại mép). Trên các trang không phải Odoo thì không có gì hiện ra, và icon trên thanh công cụ bị làm mờ.
 - **Toàn màn hình**: <kbd>⤢</kbd> trên thanh tiêu đề của bảng, <kbd>Esc</kbd> hoặc <kbd>⤡</kbd> để thoát. Trạng thái mở và toàn màn hình được giữ khi tải lại trang.
 - **Chế độ debug**: công tắc `off` / `debug` / `assets` trên thanh tiêu đề tải lại Odoo ở chế độ tương ứng.
+- **Thẻ**: mỗi tab là một chồng thẻ, ban đầu đều đóng; thẻ chỉ tải dữ liệu khi được mở, và trạng thái mở / đóng được giữ qua các lần tải lại. Bấm vào một dòng trong list để xem chi tiết (nhãn, cách lưu, module, giá trị đầy đủ…), bấm lần nữa để đóng.
 - **Copy**: bấm vào tên field, model, xmlid hay tham số trong bảng; <kbd>⌥ Alt</kbd> + click vào field, nhãn, ô trong list hoặc tiêu đề cột trên trang. Giá trị bí mật bị che vẫn copy ra giá trị thật.
 - **Tải lại dữ liệu**: <kbd>⟳</kbd>. Dữ liệu ổn định của server (session info, `fields_get`, danh sách user) được cache tới khi tải lại trang; ACL, rule, view và giá trị record luôn được đọc lại.
 - **Cài đặt**: bấm icon trên thanh công cụ (hoặc chuột phải → *Options*): ngôn ngữ (English, Tiếng Việt), giao diện (theo hệ thống / sáng / tối), hiện / ẩn bảng.
@@ -102,6 +105,7 @@ Odoo Debug chỉ nói chuyện với server Odoo của tab bạn đang mở, b�
 | `cookies` | Báo các cờ của cookie phiên (`Secure`, `HttpOnly`, `SameSite`) trong tab Security. Giá trị cookie không bao giờ bị đọc. |
 | `storage` | Lưu cài đặt ngôn ngữ và giao diện. |
 | `clipboardWrite` | Copy tên field, xmlid và giá trị. |
+| `downloads` | Lưu file `.pot` / `.po` đã xuất vào `Downloads/<module>/i18n/` (tab Translations). |
 | `declarativeContent` | Chỉ bật icon trên thanh công cụ ở trang Odoo. |
 
 Dữ liệu Odoo chỉ được đưa vào DOM qua `textContent`, và trang khác không thể nhúng (frame) bảng debug. `odoo.conf` không bao giờ truy cập được từ trình duyệt (Odoo không công khai nó), và extension cũng không thử.
@@ -134,7 +138,7 @@ extension/                 chính extension: đúng những gì có trong file z
                            bubble.js (nút kéo thả + iframe của bảng trong shadow root, copy bằng ⌥/Alt+click)
     panel/                 panel.html / panel.css / main.js: thanh tiêu đề, các tab, gắn với tab đang nhúng
     shared/                ui.js (DOM, RPC, đọc có cache), page.js (hàm lõi chạy trong trang), i18n.js, odoo.js, settings.js
-    features/<tab>/        mỗi tab một thư mục: record, view, rpc, access, security, perf
+    features/<tab>/        mỗi tab một thư mục: record, view, rpc, access, security, translations, apps, perf
       <tab>.js             giao diện tab: render(section, state)
       page.js              hàm được inject vào trang Odoo (tự chứa, không import)
       logic.js             logic thuần, không chrome.* / DOM

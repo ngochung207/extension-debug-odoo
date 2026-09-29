@@ -14,7 +14,7 @@
 :root[data-theme=dark] { color-scheme: dark; }
 
 * { box-sizing: border-box; }
-html, body { margin: 0; height: 100%; }
+html, body { margin: 0; height: 100%; overflow: hidden; } /* only <main> scrolls: the header never scrolls away */
 /* Header fixed, only <main> scrolls: toolbars can then stick to its top. */
 body { display: flex; flex-direction: column; font: 12px/1.45 system-ui, -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--fg); }
 button, input, select { font: inherit; color: inherit; }
@@ -48,7 +48,16 @@ main { flex: 1; min-height: 0; overflow: auto; container-type: inline-size; } /*
 .tab { display: none; padding: 10px; } /* padding here, not on <main>: sticky would stop that far from the top */
 .tab.active { display: block; }
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; margin-bottom: 10px; overflow: clip; } /* clip, not hidden: hidden would trap sticky toolbars */
-.card h3 { margin: 0; padding: 8px 10px; font-size: 12px; font-weight: 600; border-bottom: 1px solid var(--line); }
+/* cards are <details> (see block()): the title row opens / closes them */
+details.card { margin-top: 0; }
+.card > summary { display: flex; align-items: center; gap: 6px; padding: 8px 10px; list-style: none; color: var(--fg); }
+.card > summary::-webkit-details-marker { display: none; }
+.card > summary::before { content: '▶'; color: var(--muted); font-size: 9px; width: 10px; transition: transform .15s; }
+.card[open] > summary::before { transform: rotate(90deg); }
+.card[open] > summary { border-bottom: 1px solid var(--line); }
+.card > summary:hover { background: var(--accent-soft); }
+.card > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.card h3 { margin: 0; font-size: 12px; font-weight: 600; }
 .card-body { padding: 8px 10px; }
 .card-body:has(.list, .findings, table, .verdict) { padding: 0; }
 .loading { color: var(--muted); }
@@ -90,6 +99,12 @@ input[type=search]:focus, select:focus { outline: 2px solid var(--accent-soft); 
 /* Rows wrap instead of overflowing: long names, labels and pills move to the next line, nothing is cut. */
 .row { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 6px; min-width: 0; }
 .name { font-family: var(--mono); font-size: 11px; font-weight: 600; overflow-wrap: anywhere; }
+/* splitRow(): info wraps on the left, the action buttons keep the right column (top-aligned) on every row */
+.row.split { flex-wrap: nowrap; align-items: flex-start; gap: 8px; }
+.actions { flex: none; display: flex; gap: 4px; align-items: center; }
+/* tree mark + name side by side: a long name wraps inside, the mark never sits alone on its line */
+.name.tree { display: inline-flex; gap: 4px; min-width: 0; }
+.name.tree > .copy { min-width: 0; }
 .grow { flex: 1 1 auto; min-width: 0; overflow-wrap: anywhere; }
 .val { font-family: var(--mono); font-size: 11px; text-align: right; }
 .row .val { white-space: normal; word-break: break-word; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; } /* full value: click the row */
@@ -97,6 +112,9 @@ input[type=search]:focus, select:focus { outline: 2px solid var(--accent-soft); 
 .meta { color: var(--muted); font-size: 11px; margin-top: 1px; word-break: break-word; }
 .detail { display: none; margin-top: 6px; cursor: auto; }
 li.open > .detail { display: block; }
+/* Narrow panel: a row shows its main line only; the rest (label, meta, domain…) opens with it (see expandable()).
+   Wide panel: that rest is the second table column, still one line per row, so it stays. */
+@container (max-width: 759.98px) { .list > li:not(.open) > :not(.row) { display: none; } }
 .list-head { display: none; } /* narrow panel: no columns to name (before the @container rules, which override it) */
 /* Wide panel (full screen): each list row becomes a 2-column table row, main line | description, so rows stay short.
    The columns line up because every row uses the same template. The expanded detail spans both columns. */
@@ -158,6 +176,17 @@ details { margin-top: 6px; }
 summary { cursor: pointer; color: var(--muted); padding: 2px 0; }
 summary:hover { color: var(--fg); }
 .card-body > details:first-child { margin-top: 0; }
+/* forms (Translations tab) */
+.form label { display: flex; flex-direction: column; gap: 3px; font-weight: 600; }
+.form input[type=text] { font-weight: normal; font-family: var(--mono); font-size: 11px; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 5px 8px; }
+.form input[type=text]:focus { outline: 2px solid var(--accent-soft); border-color: var(--accent); }
+.form .note { margin-top: 3px; }
+.btn:disabled { opacity: .5; cursor: progress; }
+.switch .error { margin-top: 6px; }
+.pad + .list { border-top: 1px solid var(--line); }
+.steps { list-style: none; margin: 10px 0 0; padding: 0; }
+.steps li { padding: 4px 0; border-top: 1px solid var(--line); }
+.steps .meta { white-space: pre-line; }
 .picker { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
 .picker select { flex: 1; min-width: 160px; }
 

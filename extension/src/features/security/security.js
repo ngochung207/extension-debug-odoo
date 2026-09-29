@@ -5,7 +5,7 @@ import { MODES, pickGroupField } from '../../shared/odoo.js';
 import { pageGo } from '../../shared/page.js';
 import {
   exec, call, cached, uncache, sessionInfo, fieldsOf, readAcls, readRules, cookieFlags,
-  el, pre, pill, triPill, details, empty, block, card, copyable, listHead,
+  el, pre, pill, triPill, details, empty, errBox, block, expandable, copyable, listHead,
 } from '../../shared/ui.js';
 import { _t, N_ } from '../../shared/i18n.js';
 
@@ -39,6 +39,55 @@ async function loadTarget(origin) {
   return { me: info.uid, uid, u, users, groupIds, groupXml, has };
 }
 
+/** Opens an incognito window on Odoo's login page for `login`, landing back on `url` once logged in: this session is
+ * untouched (incognito has its own cookies). */
+async function openIncognito(origin, db, login, url) {
+  const { pathname, search, hash } = new URL(url);
+  const target = `${origin}/web/login?${new URLSearchParams({ db, login, redirect: pathname + search + hash })}`;
+  if (!(await chrome.extension.isAllowedIncognitoAccess())) {
+    await chrome.windows.create({ incognito: true, url: target }); // opens, but resolves to null: not our window to see
+    return;
+  }
+  // Incognito windows share one session: with a user still logged in there, /web/login?redirect= would skip the login.
+  const { tabs: [tab] } = await chrome.windows.create({ incognito: true, url: 'about:blank' });
+  try {
+    const store = (await chrome.cookies.getAllCookieStores()).find((st) => st.tabIds.includes(tab.id));
+    if (store) await chrome.cookies.remove({ url: origin, name: 'session_id', storeId: store.id });
+  } finally {
+    await chrome.tabs.update(tab.id, { url: target }); // the login page opens even if the cookie could not be dropped
+  }
+}
+
+/** Switch to the picked user in an incognito window (their password is typed on Odoo's login page; this tab stays
+ * yours). With OCA impersonate_login, impersonating in this very session is offered too. */
+function switchBox(t, state) {
+  const { origin, url } = state;
+  const box = el('div', { class: 'switch mt' });
+  const fail = (e) => box.append(errBox(e));
+  const reload = () => { targets.delete(origin); exec(pageGo, url); }; // the webclient restarts as the new user
+  Promise.all([t, sessionInfo(), chrome.extension.isAllowedIncognitoAccess()]).then(([{ uid, me, u }, info, clean]) => {
+    if (info.impersonate_from_uid) { // impersonate_login: this session is someone else's for now
+      box.append(el('div', { class: 'row' }, el('button', { class: 'btn', onclick: () => call('res.users', 'back_to_origin_login').then(reload, fail) }, _t('Back to My User'))),
+        el('div', { class: 'note' }, _t('This session is impersonating %s (Impersonate Login).', info.name)));
+    }
+    if (uid === me) return box.append(el('div', { class: 'note' }, _t('Pick another user above to open a session as them.')));
+    box.append(el('div', { class: 'row' },
+      el('button', {
+        class: 'btn', title: _t('Incognito window on this page, logged in as %s', u.login),
+        onclick: () => openIncognito(origin, info.db, u.login, url).catch(fail),
+      }, _t('Switch to This User')),
+      info.is_impersonate_user && !info.impersonate_from_uid ? el('button', {
+        class: 'chip', title: _t('Impersonate Login module: no password, but this session (every tab of this Odoo) becomes %s', u.login),
+        onclick: () => confirm(_t('Log this session in as %s? Every tab of this Odoo switches too.', u.name))
+          && call('res.users', 'impersonate_login', [[uid]]).then(reload, fail),
+      }, _t('Impersonate in This Session')) : null),
+    el('div', { class: 'note' }, _t('Opens an incognito window on this page, at the login of %s: type their password there. This session stays yours.', u.login)));
+    // not in box.append() above: the DOM append prints a null as "null" (only el() skips it)
+    if (!clean) box.append(el('div', { class: 'note' }, _t('Incognito windows share one session: close those already open on this Odoo first, or allow this extension in incognito (chrome://extensions) so each switch starts clean.')));
+  }, () => {});
+  return box;
+}
+
 export function renderSecurity(s, state) {
   const { model, resId, origin } = state;
   const t = loadTarget(origin);
@@ -46,21 +95,22 @@ export function renderSecurity(s, state) {
 
   const picker = el('select', { 'aria-label': _t('Simulated user'), onchange: () => { targets.set(origin, +picker.value); rerender(); } },
     el('option', {}, _t('Loading users…')));
-  s.append(card(_t('View as user'),
+  block(s, 'view-as', _t('View as user'), () => el('div', {},
     el('div', { class: 'picker' }, picker,
-      el('button', { class: 'chip', onclick: () => { targets.delete(origin); rerender(); } }, _t('My user'))),
+      el('button', { class: 'chip', onclick: () => { targets.delete(origin); rerender(); } }, _t('My User'))),
     el('div', { class: 'note' }, _t('Simulates the selected user\'s rights without logging in as them (reading other users\' groups needs admin rights).')),
+    switchBox(t, state),
     el('div', { class: 'mt' }, el('button', {
       class: 'btn', title: _t('Odoo\'s built-in /web/become route, base.group_system only'),
       onclick: () => confirm(_t('Switch the current session to superuser (bypasses every rule)?')) && exec(pageGo, '/web/become'),
-    }, _t('Become superuser')))));
+    }, _t('Become Superuser')))));
   t.then(({ uid, me, users }) => {
     const list = users.some((x) => x.id === uid) ? users : [{ id: uid, name: `#${uid}`, login: '' }, ...users]; // users is cached: don't mutate
     picker.replaceChildren(...list.map((x) => el('option', { value: x.id, selected: x.id === uid },
       `${x.name}${x.login ? ` (${x.login})` : ''}${x.share ? ' · portal' : ''}${x.id === me ? ` · ${_t('me')}` : ''}`)));
   }, () => picker.replaceChildren(el('option', {}, _t('Cannot read the user list'))));
 
-  block(s, _t('User risks'), async () => {
+  block(s, 'user-risks', _t('User risks'), async () => {
     const { u, has, groupIds } = await t;
     return el('div', {},
       el('div', { class: 'muted pad-top' },
@@ -71,28 +121,28 @@ export function renderSecurity(s, state) {
   if (model) {
     const modelSec = Promise.all([readAcls(model), readRules(model), fieldsOf(model)]);
 
-    block(s, _t('Why allowed / blocked — %s', `${model}${resId ? ` #${resId}` : ''}`), () => whyBlock(model, resId, t, modelSec));
+    block(s, 'why', _t('Why allowed / blocked — %s', `${model}${resId ? ` #${resId}` : ''}`), () => whyBlock(model, resId, t, modelSec));
 
-    block(s, _t('Fields hidden from the user (groups=)'), async () => {
+    block(s, 'hidden-fields', _t('Fields hidden from the user (groups=)'), async () => {
       const [{ uid }, [, , fields]] = await Promise.all([t, modelSec]);
       const restricted = Object.entries(fields).filter(([, f]) => f.groups);
       if (!restricted.length) return empty(_t('No field declares groups=.'));
       const specs = [...new Set(restricted.map(([, f]) => f.groups))];
       const ok = new Map(await Promise.all(specs.map(async (sp) => [sp, await call('res.users', 'has_groups', [[uid], sp]).catch(() => null)])));
       restricted.sort(([, a], [, b]) => Number(ok.get(a.groups)) - Number(ok.get(b.groups)));
-      return el('div', {}, listHead(_t('Field · label · for this user'), 'groups='), el('ul', { class: 'list' }, restricted.map(([name, f]) => el('li', {},
+      return el('div', {}, listHead(_t('Field · label · for this user'), 'groups='), el('ul', { class: 'list' }, restricted.map(([name, f]) => expandable(el('li', {},
         el('div', { class: 'row' }, copyable(name), el('span', { class: 'grow muted' }, f.string),
           triPill(ok.get(f.groups), [_t('visible'), _t('hidden'), '?'])),
-        el('div', { class: 'meta' }, f.groups)))));
+        el('div', { class: 'meta' }, f.groups))))));
     });
 
-    block(s, _t('Model configuration audit'), async () => {
+    block(s, 'model-audit', _t('Model configuration audit'), async () => {
       const [{ groupXml }, [acls, rules, fields]] = await Promise.all([t, modelSec]);
       return findings(auditModel({ fields, acls, rules, groupXml }));
     });
   }
 
-  block(s, _t('Instance check'), async () => {
+  block(s, 'instance', _t('Instance check'), async () => {
     const [probe, cookie] = await cached('probe', async () => {
       const r = await Promise.all([exec(pageProbe), cookieFlags(state.url)]);
       if (!r[0] || r[0].error) throw new Error(r[0]?.error || _t('Check failed'));
@@ -101,7 +151,7 @@ export function renderSecurity(s, state) {
     return el('div', {}, findings(checkInstance(probe, cookie)),
       el('div', { class: 'pad-bottom' },
         details(_t('Raw data'), pre({ ...probe, cookie })),
-        el('button', { class: 'chip mt', onclick: () => { uncache('probe'); rerender(); } }, _t('Check again'))));
+        el('button', { class: 'chip mt', onclick: () => { uncache('probe'); rerender(); } }, _t('Check Again'))));
   });
 }
 
@@ -139,14 +189,14 @@ async function whyBlock(model, resId, t, modelSec) {
 
   const ruleItems = rules.map((r) => {
     const modes = modesOf(r).map((m) => LETTER[m]).join('');
-    return el('li', { class: modes ? '' : 'inactive' },
+    return expandable(el('li', { class: modes ? '' : 'inactive' },
       el('div', { class: 'row' }, el('span', { class: 'grow' }, el('b', {}, r.name)),
         modes ? pill(modes, 'accent') : pill(_t('not applicable')),
         modes && resId ? triPill(note.has(r.id) ? null : passed.get(r.id), undefined, 'med') : null),
       el('div', { class: 'meta' }, r.global ? 'global' : r.groups.map((g) => gname.get(g) || g).join(', ')),
       el('div', { class: 'meta mono' }, r.domain_force || '[]'),
       evaluated.has(r.id) ? el('div', { class: 'mono' }, `→ ${JSON.stringify(evaluated.get(r.id))}`) : null,
-      note.has(r.id) ? el('div', { class: 'error' }, note.get(r.id)) : null);
+      note.has(r.id) ? el('div', { class: 'error' }, note.get(r.id)) : null));
   });
 
   return el('div', {}, verdict,

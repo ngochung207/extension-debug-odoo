@@ -10,111 +10,220 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/features/access/access.js:35
+#: src/features/access/access.js:27
 msgid "Session"
 msgstr "Session"
 
-#: src/features/access/access.js:42
+#: src/features/access/access.js:34
 msgid "Companies"
 msgstr "Companies"
 
-#: src/features/access/access.js:46
+#: src/features/access/access.js:38
 msgid "Effective access on %s"
 msgstr "Effective access on %s"
 
-#: src/features/access/access.js:53
+#: src/features/access/access.js:45
 msgid "ACL (ir.model.access) — green = applies to you"
 msgstr "ACL (ir.model.access) — green = applies to you"
 
-#: src/features/access/access.js:55
+#: src/features/access/access.js:47
 msgid "No ACL."
 msgstr "No ACL."
 
-#: src/features/access/access.js:56
+#: src/features/access/access.js:48
 msgid "ACL / group"
 msgstr "ACL / group"
 
-#: src/features/access/access.js:58
+#: src/features/access/access.js:50
 msgid "(all users)"
 msgstr "(all users)"
 
-#: src/features/access/access.js:61
+#: src/features/access/access.js:53
 msgid "Record rules (ir.rule) — green = applies to you"
 msgstr "Record rules (ir.rule) — green = applies to you"
 
-#: src/features/access/access.js:63
+#: src/features/access/access.js:55
 msgid "No record rule."
 msgstr "No record rule."
 
-#: src/features/access/access.js:64
+#: src/features/access/access.js:56
 msgid "Rule / domain"
 msgstr "Rule / domain"
 
-#: src/features/access/access.js:71
+#: src/features/access/access.js:63
 msgid "Your groups"
 msgstr "Your groups"
 
-#: src/features/access/access.js:73
+#: src/features/access/access.js:65
 msgid "%s groups"
 msgstr "%s groups"
 
-#: src/features/access/access.js:73
+#: src/features/access/access.js:65
 msgid "No group."
 msgstr "No group."
 
-#: src/features/access/access.js:77
+#: src/features/access/access.js:69
+#: src/features/apps/apps.js:15
 msgid "Needs Settings rights (base.group_system)."
 msgstr "Needs Settings rights (base.group_system)."
 
-#: src/features/access/access.js:79
+#: src/features/access/access.js:71
 msgid "System parameters (ir.config_parameter)"
 msgstr "System parameters (ir.config_parameter)"
 
-#: src/features/access/access.js:89
+#: src/features/access/access.js:81
 msgid "Filter key / value"
 msgstr "Filter key / value"
 
-#: src/features/access/access.js:89
+#: src/features/access/access.js:81
 msgid "%s parameters"
 msgstr "%s parameters"
 
-#: src/features/access/access.js:89
+#: src/features/access/access.js:81
 msgid "%s/%s parameters"
 msgstr "%s/%s parameters"
 
-#: src/features/access/access.js:89
+#: src/features/access/access.js:81
 msgid "Key"
 msgstr "Key"
 
-#: src/features/access/access.js:89
+#: src/features/access/access.js:81
 msgid "Value"
 msgstr "Value"
 
-#: src/features/access/access.js:89
+#: src/features/access/access.js:81
 msgid "No parameter."
 msgstr "No parameter."
 
-#: src/features/access/access.js:92
+#: src/features/apps/apps.js:18
+#: src/features/apps/apps.js:117
+msgid "Modules"
+msgstr "Modules"
+
+#: src/features/apps/apps.js:32
+msgid "not found"
+msgstr "not found"
+
+#: src/features/apps/apps.js:44
+msgid "Running…"
+msgstr "Running…"
+
+#: src/features/apps/apps.js:46
+#: src/features/rpc/rpc.js:36
+#: src/features/translations/translations.js:71
+msgid "error"
+msgstr "error"
+
+#: src/features/apps/apps.js:48
+msgid "Reloading the Odoo page…"
+msgstr "Reloading the Odoo page…"
+
+#: src/features/apps/apps.js:56
+msgid "Enter at least one module."
+msgstr "Enter at least one module."
+
+#: src/features/apps/apps.js:73
+msgid "Activate"
+msgstr "Activate"
+
+#: src/features/apps/apps.js:73
+msgid "Update Apps List, then install every module (with its dependencies)"
+msgstr "Update Apps List, then install every module (with its dependencies)"
+
+#: src/features/apps/apps.js:74
+msgid "Update Apps List"
+msgstr "Update Apps List"
+
+#: src/features/apps/apps.js:76
+msgid "%s updated · %s added"
+msgstr "%s updated · %s added"
+
+#: src/features/apps/apps.js:80
+msgid "Not found, even after Update Apps List: %s"
+msgstr "Not found, even after Update Apps List: %s"
+
+#: src/features/apps/apps.js:81
+msgid "Not installable: %s"
+msgstr "Not installable: %s"
+
+#: src/features/apps/apps.js:82
+msgid "Waiting to be uninstalled: %s"
+msgstr "Waiting to be uninstalled: %s"
+
+#: src/features/apps/apps.js:83
+msgid "Already installed: %s"
+msgstr "Already installed: %s"
+
+#: src/features/apps/apps.js:85
+msgid "Install %s"
+msgstr "Install %s"
+
+#: src/features/apps/apps.js:91
+msgid "Upgrade"
+msgstr "Upgrade"
+
+#: src/features/apps/apps.js:91
+msgid "Upgrade every module (they must be installed)"
+msgstr "Upgrade every module (they must be installed)"
+
+#: src/features/apps/apps.js:95
+msgid "Not found: %s"
+msgstr "Not found: %s"
+
+#: src/features/apps/apps.js:96
+msgid "Not installed (use Activate): %s"
+msgstr "Not installed (use Activate): %s"
+
+#: src/features/apps/apps.js:97
+msgid "Upgrade %s"
+msgstr "Upgrade %s"
+
+#: src/features/apps/apps.js:103
+msgid "Open Forms ↗"
+msgstr "Open Forms ↗"
+
+#: src/features/apps/apps.js:103
+msgid "Open the form of every module in a new tab"
+msgstr "Open the form of every module in a new tab"
+
+#: src/features/apps/apps.js:111
+msgid "Opened %s tab(s): %s"
+msgstr "Opened %s tab(s): %s"
+
+#: src/features/apps/apps.js:113
+msgid "Not found: %s (Activate runs Update Apps List first)"
+msgstr "Not found: %s (Activate runs Update Apps List first)"
+
+#: src/features/apps/apps.js:118
+#: src/features/translations/translations.js:22
+msgid "Technical names, separated by ;"
+msgstr "Technical names, separated by ;"
+
+#: src/features/apps/apps.js:120
+msgid "Activate runs Update Apps List first. Install and upgrade reload the Odoo page when done."
+msgstr "Activate runs Update Apps List first. Install and upgrade reload the Odoo page when done."
+
+#: src/features/apps/apps.js:126
 msgid "Installed modules"
 msgstr "Installed modules"
 
-#: src/features/access/access.js:104
+#: src/features/apps/apps.js:139
 msgid "Filter name / title / author"
 msgstr "Filter name / title / author"
 
-#: src/features/access/access.js:104
+#: src/features/apps/apps.js:139
 msgid "%s modules"
 msgstr "%s modules"
 
-#: src/features/access/access.js:104
+#: src/features/apps/apps.js:139
 msgid "%s/%s modules"
 msgstr "%s/%s modules"
 
-#: src/features/access/access.js:105
+#: src/features/apps/apps.js:140
 msgid "Module · title · version"
 msgstr "Module · title · version"
 
-#: src/features/access/access.js:105
+#: src/features/apps/apps.js:140
 msgid "Author"
 msgstr "Author"
 
@@ -135,12 +244,12 @@ msgid "Server profiler"
 msgstr "Server profiler"
 
 #: src/features/perf/perf.js:43
-msgid "Stop profiling"
-msgstr "Stop profiling"
+msgid "Stop Profiling"
+msgstr "Stop Profiling"
 
 #: src/features/perf/perf.js:43
-msgid "Start profiling"
-msgstr "Start profiling"
+msgid "Start Profiling"
+msgstr "Start Profiling"
 
 #: src/features/perf/perf.js:45
 msgid "RECORDING"
@@ -183,8 +292,8 @@ msgid "Id · date · CPU"
 msgstr "Id · date · CPU"
 
 #: src/features/perf/perf.js:67
-msgid "Flame graph (speedscope)"
-msgstr "Flame graph (speedscope)"
+msgid "Flame Graph (speedscope)"
+msgstr "Flame Graph (speedscope)"
 
 #: src/features/perf/perf.js:75
 msgid "No SQL recorded."
@@ -276,8 +385,8 @@ msgid "Filter model / method"
 msgstr "Filter model / method"
 
 #: src/features/rpc/rpc.js:16
-msgid "Errors only"
-msgstr "Errors only"
+msgid "Errors Only"
+msgstr "Errors Only"
 
 #: src/features/rpc/rpc.js:22
 msgid "Clear"
@@ -294,10 +403,6 @@ msgstr "Method · model · duration"
 #: src/features/rpc/rpc.js:25
 msgid "Time · route"
 msgstr "Time · route"
-
-#: src/features/rpc/rpc.js:36
-msgid "error"
-msgstr "error"
 
 #: src/features/rpc/rpc.js:43
 #: src/features/rpc/rpc.js:47
@@ -480,142 +585,238 @@ msgstr "INFO"
 msgid "✓ No issue found."
 msgstr "✓ No issue found."
 
-#: src/features/security/security.js:47
+#: src/features/security/security.js:70
+msgid "Back to My User"
+msgstr "Back to My User"
+
+#: src/features/security/security.js:71
+msgid "This session is impersonating %s (Impersonate Login)."
+msgstr "This session is impersonating %s (Impersonate Login)."
+
+#: src/features/security/security.js:73
+msgid "Pick another user above to open a session as them."
+msgstr "Pick another user above to open a session as them."
+
+#: src/features/security/security.js:76
+msgid "Incognito window on this page, logged in as %s"
+msgstr "Incognito window on this page, logged in as %s"
+
+#: src/features/security/security.js:78
+msgid "Switch to This User"
+msgstr "Switch to This User"
+
+#: src/features/security/security.js:80
+msgid "Impersonate Login module: no password, but this session (every tab of this Odoo) becomes %s"
+msgstr "Impersonate Login module: no password, but this session (every tab of this Odoo) becomes %s"
+
+#: src/features/security/security.js:81
+msgid "Log this session in as %s? Every tab of this Odoo switches too."
+msgstr "Log this session in as %s? Every tab of this Odoo switches too."
+
+#: src/features/security/security.js:83
+msgid "Impersonate in This Session"
+msgstr "Impersonate in This Session"
+
+#: src/features/security/security.js:84
+msgid "Opens an incognito window on this page, at the login of %s: type their password there. This session stays yours."
+msgstr "Opens an incognito window on this page, at the login of %s: type their password there. This session stays yours."
+
+#: src/features/security/security.js:86
+msgid "Incognito windows share one session: close those already open on this Odoo first, or allow this extension in incognito (chrome://extensions) so each switch starts clean."
+msgstr "Incognito windows share one session: close those already open on this Odoo first, or allow this extension in incognito (chrome://extensions) so each switch starts clean."
+
+#: src/features/security/security.js:96
 msgid "Simulated user"
 msgstr "Simulated user"
 
-#: src/features/security/security.js:48
+#: src/features/security/security.js:97
 msgid "Loading users…"
 msgstr "Loading users…"
 
-#: src/features/security/security.js:49
+#: src/features/security/security.js:98
 msgid "View as user"
 msgstr "View as user"
 
-#: src/features/security/security.js:51
-msgid "My user"
-msgstr "My user"
+#: src/features/security/security.js:100
+msgid "My User"
+msgstr "My User"
 
-#: src/features/security/security.js:52
+#: src/features/security/security.js:101
 msgid "Simulates the selected user's rights without logging in as them (reading other users' groups needs admin rights)."
 msgstr "Simulates the selected user's rights without logging in as them (reading other users' groups needs admin rights)."
 
-#: src/features/security/security.js:54
+#: src/features/security/security.js:104
 msgid "Odoo's built-in /web/become route, base.group_system only"
 msgstr "Odoo's built-in /web/become route, base.group_system only"
 
-#: src/features/security/security.js:55
+#: src/features/security/security.js:105
 msgid "Switch the current session to superuser (bypasses every rule)?"
 msgstr "Switch the current session to superuser (bypasses every rule)?"
 
-#: src/features/security/security.js:56
-msgid "Become superuser"
-msgstr "Become superuser"
+#: src/features/security/security.js:106
+msgid "Become Superuser"
+msgstr "Become Superuser"
 
-#: src/features/security/security.js:60
+#: src/features/security/security.js:110
 msgid "me"
 msgstr "me"
 
-#: src/features/security/security.js:61
+#: src/features/security/security.js:111
 msgid "Cannot read the user list"
 msgstr "Cannot read the user list"
 
-#: src/features/security/security.js:63
+#: src/features/security/security.js:113
 msgid "User risks"
 msgstr "User risks"
 
-#: src/features/security/security.js:67
+#: src/features/security/security.js:117
 msgid "%s · %s · #%s · %s (%s companies) · %s groups"
 msgstr "%s · %s · #%s · %s (%s companies) · %s groups"
 
-#: src/features/security/security.js:74
+#: src/features/security/security.js:124
 msgid "Why allowed / blocked — %s"
 msgstr "Why allowed / blocked — %s"
 
-#: src/features/security/security.js:76
+#: src/features/security/security.js:126
 msgid "Fields hidden from the user (groups=)"
 msgstr "Fields hidden from the user (groups=)"
 
-#: src/features/security/security.js:79
+#: src/features/security/security.js:129
 msgid "No field declares groups=."
 msgstr "No field declares groups=."
 
-#: src/features/security/security.js:83
+#: src/features/security/security.js:133
 msgid "Field · label · for this user"
 msgstr "Field · label · for this user"
 
-#: src/features/security/security.js:85
+#: src/features/security/security.js:135
 msgid "visible"
 msgstr "visible"
 
-#: src/features/security/security.js:85
+#: src/features/security/security.js:135
 #: src/features/view/view.js:64
 msgid "hidden"
 msgstr "hidden"
 
-#: src/features/security/security.js:89
+#: src/features/security/security.js:139
 msgid "Model configuration audit"
 msgstr "Model configuration audit"
 
-#: src/features/security/security.js:95
+#: src/features/security/security.js:145
 msgid "Instance check"
 msgstr "Instance check"
 
-#: src/features/security/security.js:98
+#: src/features/security/security.js:148
 msgid "Check failed"
 msgstr "Check failed"
 
-#: src/features/security/security.js:103
+#: src/features/security/security.js:153
 msgid "Raw data"
 msgstr "Raw data"
 
-#: src/features/security/security.js:104
-msgid "Check again"
-msgstr "Check again"
+#: src/features/security/security.js:154
+msgid "Check Again"
+msgstr "Check Again"
 
-#: src/features/security/security.js:121
+#: src/features/security/security.js:171
 msgid "no result"
 msgstr "no result"
 
-#: src/features/security/security.js:122
+#: src/features/security/security.js:172
 msgid "cannot evaluate: %s"
 msgstr "cannot evaluate: %s"
 
-#: src/features/security/security.js:125
+#: src/features/security/security.js:175
 msgid "You cannot read this record yourself, so its rules cannot be checked."
 msgstr "You cannot read this record yourself, so its rules cannot be checked."
 
-#: src/features/security/security.js:136
+#: src/features/security/security.js:186
 msgid "ALLOWED"
 msgstr "ALLOWED"
 
-#: src/features/security/security.js:136
+#: src/features/security/security.js:186
 msgid "BLOCKED"
 msgstr "BLOCKED"
 
-#: src/features/security/security.js:136
+#: src/features/security/security.js:186
 msgid "UNKNOWN"
 msgstr "UNKNOWN"
 
-#: src/features/security/security.js:144
+#: src/features/security/security.js:194
 msgid "not applicable"
 msgstr "not applicable"
 
-#: src/features/security/security.js:153
+#: src/features/security/security.js:203
 msgid "Rule · operations · result"
 msgstr "Rule · operations · result"
 
-#: src/features/security/security.js:153
+#: src/features/security/security.js:203
 msgid "Groups · domain"
 msgstr "Groups · domain"
 
-#: src/features/security/security.js:154
+#: src/features/security/security.js:204
 msgid "This model has no record rule."
 msgstr "This model has no record rule."
 
-#: src/features/security/security.js:156
+#: src/features/security/security.js:206
 msgid "Assumes the user selected every allowed company. Rules of parent models through _inherits are not counted. This is a simulation; for an exact answer about yourself, see the Access tab (has_access runs on the server)."
 msgstr "Assumes the user selected every allowed company. Rules of parent models through _inherits are not counted. This is a simulation; for an exact answer about yourself, see the Access tab (has_access runs on the server)."
+
+#: src/features/translations/translations.js:8
+msgid "Export translations"
+msgstr "Export translations"
+
+#: src/features/translations/translations.js:19
+msgid "Export & Download"
+msgstr "Export & Download"
+
+#: src/features/translations/translations.js:21
+msgid "Apps To Export"
+msgstr "Apps To Export"
+
+#: src/features/translations/translations.js:23
+msgid "Languages"
+msgstr "Languages"
+
+#: src/features/translations/translations.js:24
+msgid "Active:"
+msgstr "Active:"
+
+#: src/features/translations/translations.js:26
+msgid "Always exported too: New Language (Empty translation template), as <module>.pot."
+msgstr "Always exported too: New Language (Empty translation template), as <module>.pot."
+
+#: src/features/translations/translations.js:48
+msgid "Enter at least one app."
+msgstr "Enter at least one app."
+
+#: src/features/translations/translations.js:50
+msgid "Not an active language: %s. Active: %s"
+msgstr "Not an active language: %s. Active: %s"
+
+#: src/features/translations/translations.js:53
+msgid "Unknown app: %s"
+msgstr "Unknown app: %s"
+
+#: src/features/translations/translations.js:54
+msgid "Not installed: %s"
+msgstr "Not installed: %s"
+
+#: src/features/translations/translations.js:57
+msgid "Exporting…"
+msgstr "Exporting…"
+
+#: src/features/translations/translations.js:60
+msgid "Template (.pot)"
+msgstr "Template (.pot)"
+
+#: src/features/translations/translations.js:69
+msgid "%s files"
+msgstr "%s files"
+
+#: src/features/translations/translations.js:69
+msgid "nothing to export"
+msgstr "nothing to export"
 
 #: src/features/view/page.js:9
 msgid "Webclient internals are not reachable."
@@ -650,8 +851,8 @@ msgid "Action"
 msgstr "Action"
 
 #: src/features/view/view.js:45
-msgid "Open action record ↗"
-msgstr "Open action record ↗"
+msgid "Open Action Record ↗"
+msgstr "Open Action Record ↗"
 
 #: src/features/view/view.js:46
 msgid "Full action (JSON)"
@@ -706,8 +907,8 @@ msgid "Picking… (Esc to cancel)"
 msgstr "Picking… (Esc to cancel)"
 
 #: src/features/view/view.js:80
-msgid "⌖ Pick on page"
-msgstr "⌖ Pick on page"
+msgid "⌖ Pick on Page"
+msgstr "⌖ Pick on Page"
 
 #: src/features/view/view.js:87
 msgid "Field · widget · label · state"
@@ -721,15 +922,15 @@ msgstr "Modifier expressions"
 msgid "The form is read-only: every field is readonly."
 msgstr "The form is read-only: every field is readonly."
 
-#: src/panel/main.js:30
+#: src/panel/main.js:33
 msgid "Cannot read this tab: %s"
 msgstr "Cannot read this tab: %s"
 
-#: src/panel/main.js:30
+#: src/panel/main.js:33
 msgid "The current tab is not an Odoo page."
 msgstr "The current tab is not an Odoo page."
 
-#: src/panel/main.js:55
+#: src/panel/main.js:89
 msgid "Not an Odoo page"
 msgstr "Not an Odoo page"
 
@@ -738,21 +939,21 @@ msgid "Odoo debug mode"
 msgstr "Odoo debug mode"
 
 #: src/panel/panel.html:17
-msgid "Turn debug off"
-msgstr "Turn debug off"
+msgid "Turn Debug Off"
+msgstr "Turn Debug Off"
 
 #: src/panel/panel.html:21
 #: src/panel/panel.html:21
-msgid "Reload data"
-msgstr "Reload data"
+msgid "Reload Data"
+msgstr "Reload Data"
 
 #: src/panel/panel.html:22
-msgid "Full screen (Esc to exit)"
-msgstr "Full screen (Esc to exit)"
+msgid "Full Screen (Esc to exit)"
+msgstr "Full Screen (Esc to exit)"
 
 #: src/panel/panel.html:22
-msgid "Full screen"
-msgstr "Full screen"
+msgid "Full Screen"
+msgstr "Full Screen"
 
 #: src/panel/panel.html:24
 msgid "Connecting…"
@@ -779,6 +980,14 @@ msgid "Security"
 msgstr "Security"
 
 #: src/panel/panel.html:31
+msgid "Translations"
+msgstr "Translations"
+
+#: src/panel/panel.html:32
+msgid "Apps"
+msgstr "Apps"
+
+#: src/panel/panel.html:33
 msgid "Perf"
 msgstr "Perf"
 
@@ -787,8 +996,8 @@ msgid "This page"
 msgstr "This page"
 
 #: src/popup/popup.html:20
-msgid "Show / hide panel"
-msgstr "Show / hide panel"
+msgid "Show / Hide Panel"
+msgstr "Show / Hide Panel"
 
 #: src/popup/popup.html:24
 msgid "Language"
@@ -822,19 +1031,19 @@ msgstr "No tab is open."
 msgid "No response — is this an Odoo page?"
 msgstr "No response — is this an Odoo page?"
 
-#: src/shared/ui.js:86
+#: src/shared/ui.js:94
 msgid "Traceback"
 msgstr "Traceback"
 
-#: src/shared/ui.js:99
+#: src/shared/ui.js:105
 msgid "Open /odoo/%s"
 msgstr "Open /odoo/%s"
 
-#: src/shared/ui.js:109
-#: src/shared/ui.js:155
+#: src/shared/ui.js:134
+#: src/shared/ui.js:193
 msgid "Loading…"
 msgstr "Loading…"
 
-#: src/shared/ui.js:118
+#: src/shared/ui.js:146
 msgid "Click to copy"
 msgstr "Click to copy"

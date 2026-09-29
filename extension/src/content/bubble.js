@@ -1,10 +1,12 @@
-// ISOLATED-world content script: a draggable Odoo Debug button inside the page. Clicking it opens the panel
-// (src/panel/panel.html) in an iframe next to it. Shown on Odoo pages only; the toolbar popup toggles it too.
+// ISOLATED-world content script: a draggable Odoo Debug button, on the bottom edge of the page until dragged elsewhere
+// (dropped back on that edge, it sticks to it again). Clicking it opens the panel (src/panel/panel.html) in an iframe
+// next to it, always on the bottom edge. Shown on Odoo pages only; the toolbar popup toggles it too.
 // Also: ⌥/Alt + click on a field of the page copies its technical name.
 (() => {
   const SIZE = 40; // button, px
   const GAP = 8;
-  const POS_KEY = 'odoo-debug-pos'; // localStorage of the site: one position per Odoo instance
+  const SNAP = 24; // dropped this close to the bottom edge: the button sticks to it again
+  const POS_KEY = 'odoo-debug-pos'; // localStorage of the site, one per Odoo instance: { x, y, bottom } (bottom: on the bottom edge)
   const OPEN_KEY = 'odoo-debug-open'; // sessionStorage: the panel reopens after a reload (debug switch, /web/become)
   const FULL_KEY = 'odoo-debug-full'; // sessionStorage too: full screen survives a reload
   const store = (s, k, v) => { try { v == null ? s.removeItem(k) : s.setItem(k, v); } catch { /* storage blocked */ } };
@@ -38,13 +40,15 @@
     document.documentElement.append(host);
 
     try { pos = JSON.parse(load(localStorage, POS_KEY)); } catch { /* bad value */ }
+    if (pos && typeof pos.bottom !== 'boolean') pos = { x: pos.x, bottom: true }; // saved by a version before the bottom edge
     place();
     addEventListener('resize', place);
     addEventListener('click', altClick, true); // capture: before Odoo opens the record / focuses the input
 
     btn.addEventListener('pointerdown', (e) => {
       if (e.button !== 0 || !pos) return;
-      const start = { x: e.clientX, y: e.clientY, px: pos.x, py: pos.y };
+      const at = btn.getBoundingClientRect();
+      const start = { x: e.clientX, y: e.clientY, px: at.left, py: at.top };
       let moved = false;
       btn.setPointerCapture(e.pointerId);
       const move = (ev) => {
@@ -52,14 +56,18 @@
         const dy = ev.clientY - start.y;
         if (!moved && Math.hypot(dx, dy) < 4) return; // a click wobbles a little
         moved = true;
-        pos = { x: start.px + dx, y: start.py + dy };
+        pos = { x: start.px + dx, y: start.py + dy, bottom: false };
         place();
       };
       const up = (ev) => {
         btn.removeEventListener('pointermove', move);
         btn.removeEventListener('pointerup', up);
         btn.removeEventListener('pointercancel', up);
-        if (moved) store(localStorage, POS_KEY, JSON.stringify(pos));
+        if (moved) {
+          if (pos.y >= innerHeight - SIZE - GAP - SNAP) pos = { x: pos.x, bottom: true }; // back on the bottom edge
+          place();
+          store(localStorage, POS_KEY, JSON.stringify(pos));
+        }
         else if (ev.type === 'pointerup') toggle();
       };
       btn.addEventListener('pointermove', move);
@@ -72,23 +80,21 @@
     if (load(sessionStorage, OPEN_KEY)) toggle(true);
   }
 
-  /** Keeps the button on screen and the panel beside it, on the side with more room. */
+  /** Keeps the button on screen (on the bottom edge unless dragged away) and the panel beside it, bottom-aligned, on the side with more room. */
   function place() {
     if (!innerWidth) return; // no layout yet (e.g. a tab opened in the background): the resize listener comes back
-    pos ||= { x: innerWidth - SIZE - 16, y: innerHeight - SIZE - 80 }; // default: bottom right
+    if (!Number.isFinite(pos?.x)) pos = { x: innerWidth - SIZE - 16, bottom: true }; // default: bottom right
     const clamp = (v, min, max) => Math.min(Math.max(v, min), Math.max(min, max));
     pos.x = clamp(pos.x, GAP, innerWidth - SIZE - GAP);
-    pos.y = clamp(pos.y, GAP, innerHeight - SIZE - GAP);
-    Object.assign(btn.style, { left: `${pos.x}px`, top: `${pos.y}px` });
+    if (pos.bottom) Object.assign(btn.style, { left: `${pos.x}px`, top: '', bottom: `${GAP}px` }); // follows the edge on resize
+    else Object.assign(btn.style, { left: `${pos.x}px`, top: `${clamp(pos.y, GAP, innerHeight - SIZE - GAP)}px`, bottom: '' });
     if (frame.hidden) return;
-    if (full) return Object.assign(frame.style, { left: `${GAP}px`, top: `${GAP}px` });
+    if (full) return Object.assign(frame.style, { left: `${GAP}px`, top: `${GAP}px`, bottom: '' });
     const w = frame.offsetWidth;
-    const h = frame.offsetHeight;
     const left = pos.x + SIZE / 2 > innerWidth / 2 ? pos.x - w - GAP : pos.x + SIZE + GAP;
-    Object.assign(frame.style, {
-      left: `${clamp(left, GAP, innerWidth - w - GAP)}px`,
-      top: `${clamp(pos.y + SIZE / 2 - h / 2, GAP, innerHeight - h - GAP)}px`,
-    });
+    // bottom, not top: pinned to the bottom of the window, like the button, whatever its height (devtools, resize);
+    // the CSS height (at most 100vh - 2 gaps) keeps the header on screen
+    Object.assign(frame.style, { left: `${clamp(left, GAP, innerWidth - w - GAP)}px`, top: 'auto', bottom: `${GAP}px` });
   }
 
   /** Technical name of the field under `t`: form widget (or its label), list cell or list column header. */

@@ -47,6 +47,14 @@ export function cached(key, fn) {
 export const uncache = (key) => cache.delete(key);
 export const clearCache = () => cache.clear();
 
+// ---------- what was typed in a tab's form: kept across re-renders and reloads, forgotten on ⟳ Reload Data ----------
+const FORM = 'odoo-debug-form:'; // localStorage of the panel (every instance): a per-viewer convenience only
+export const formValues = (key) => { try { return JSON.parse(localStorage.getItem(FORM + key)) || {}; } catch { return {}; } };
+export const saveForm = (key, values) => { try { localStorage.setItem(FORM + key, JSON.stringify(values)); } catch { /* storage off */ } };
+export function clearForms() {
+  try { for (const k of Object.keys(localStorage)) if (k.startsWith(FORM)) localStorage.removeItem(k); } catch { /* storage off */ }
+}
+
 const FIELD_ATTRS = ['string', 'type', 'relation', 'store', 'depends', 'related', 'readonly', 'required', 'groups'];
 export const sessionInfo = () => cached('session', () => rpc('/web/session/get_session_info', {}));
 export const fieldsOf = (model) => cached(`fields ${model}`, () => call(model, 'fields_get', [], { attributes: FIELD_ATTRS }));
@@ -81,15 +89,13 @@ export function el(tag, props = {}, ...kids) {
   return n;
 }
 export const pre = (o) => el('pre', {}, typeof o === 'string' ? o : JSON.stringify(o, null, 2));
-// Tracebacks start collapsed (unlike other details): the message says enough at a glance.
-export const errBox = (e) => el('div', { class: 'error' }, e.message,
-  e.traceback ? el('details', {}, el('summary', {}, _t('Traceback')), pre(e.traceback)) : null);
+/** Collapsible section, closed until its summary is clicked (every one in the panel starts closed). */
+export const details = (summary, ...kids) => el('details', {}, el('summary', {}, summary), ...kids);
+export const errBox = (e) => el('div', { class: 'error' }, e.message, e.traceback ? details(_t('Traceback'), pre(e.traceback)) : null);
 export const pill = (text, kind = '') => el('span', { class: `pill ${kind}` }, text);
 /** true / false / anything else (unknown) → green / red / `unknownKind` pill with the matching label. */
 export const triPill = (v, [yes, no, unknown] = ['✓', '✗', '?'], unknownKind = '') =>
   v === true ? pill(yes, 'ok') : v === false ? pill(no, 'err') : pill(unknown, unknownKind);
-export const details = (summary, ...kids) => el('details', { open: true }, el('summary', {}, summary), ...kids); // open by default, still collapsible
-export const collapsed = (summary, ...kids) => el('details', {}, el('summary', {}, summary), ...kids);
 export const empty = (msg) => el('div', { class: 'empty' }, msg);
 export const kv = (obj) => el('dl', { class: 'kv' }, Object.entries(obj).flatMap(([k, v]) =>
   [el('dt', {}, k), el('dd', {}, v !== null && typeof v === 'object' ? JSON.stringify(v) : String(v ?? ''))]));
@@ -99,17 +105,39 @@ export const odooLink = (origin, path, text = '↗') => el('a', {
   class: 'btn', href: `${origin}/odoo/${path}`, target: '_blank', rel: 'noopener', title: _t('Open /odoo/%s', path),
 }, text);
 
+/** A list row in two columns: `info` on the left (wraps as needed), `actions` (↗ buttons…) on the right, lined up on every row. */
+export const splitRow = (info, ...actions) => el('div', { class: 'row split' },
+  el('div', { class: 'row grow' }, info), el('div', { class: 'actions' }, actions));
+
 /** Column names of a .list, shown only when the list is laid out as a table (wide panel, see panel.css). */
 export const listHead = (main, desc) => el('div', { class: 'list-head', 'aria-hidden': 'true' }, el('span', {}, main), el('span', {}, desc));
 
-export const card = (title, ...kids) => el('section', { class: 'card' }, el('h3', {}, title), el('div', { class: 'card-body' }, ...kids));
+// Cards start closed; the ones opened stay open across re-renders and reloads (localStorage of the panel, every instance).
+const OPEN_CARDS = 'odoo-debug-open-cards';
+const openCards = () => { try { return new Set(JSON.parse(localStorage.getItem(OPEN_CARDS)) || []); } catch { return new Set(); } };
+function rememberCard(id, open) {
+  const ids = openCards();
+  if (open) ids.add(id); else ids.delete(id);
+  try { localStorage.setItem(OPEN_CARDS, JSON.stringify([...ids])); } catch { /* storage off: every card starts closed */ }
+}
 
-/** A card whose body loads async; a failing card (e.g. no ACL on ir.rule) doesn't blank the others. */
-export function block(parent, title, fn) {
-  const c = card(title, el('div', { class: 'loading' }, _t('Loading…')));
-  const body = c.lastChild;
+/** A collapsible card of the tab `parent`, remembered as `<tab>:<key>` (key: stable, the title is translated / dynamic).
+ * Its body is built the first time it opens (`fn` may be async); a failing card (e.g. no ACL on ir.rule) doesn't blank the others. */
+export function block(parent, key, title, fn) {
+  const id = `${parent.id}:${key}`;
+  const body = el('div', { class: 'card-body' });
+  const c = el('details', { class: 'card' }, el('summary', {}, el('h3', {}, title)), body);
+  let loaded = false;
+  const load = () => {
+    if (loaded) return;
+    loaded = true;
+    body.replaceChildren(el('div', { class: 'loading' }, _t('Loading…')));
+    Promise.resolve().then(fn).then((n) => body.replaceChildren(...[n].filter(Boolean)), (e) => body.replaceChildren(errBox(e)));
+  };
+  c.addEventListener('toggle', () => { rememberCard(id, c.open); if (c.open) load(); });
+  c.open = openCards().has(id);
+  if (c.open) load();
   parent.append(c);
-  Promise.resolve().then(fn).then((n) => body.replaceChildren(n), (e) => body.replaceChildren(errBox(e)));
 }
 
 /** `text` (a field name, xmlid…) as a button copying it to the clipboard; ✓ for a second after. `label`: shown instead (e.g. masked). */
@@ -131,6 +159,14 @@ export function copyable(text, cls = 'name', label = text) {
   return b;
 }
 
+/** Filterable list with a count. items: <li> with data-q. total / visible: N_ msgids with %s and %s/%s. head: listHead(). */
+export function filteredList(items, placeholder, total, visible, head) {
+  const count = el('span', { class: 'muted' }, _t(total, items.length));
+  return el('div', {},
+    el('div', { class: 'toolbar' }, filterBox(items, placeholder, (n) => { count.textContent = _t(visible, n, items.length); }), count, head),
+    el('ul', { class: 'list' }, items));
+}
+
 /** Search box hiding the `items` whose data-q doesn't contain its text; onCount(visible) after each change. */
 export function filterBox(items, placeholder, onCount) {
   const input = el('input', { type: 'search', placeholder });
@@ -142,16 +178,18 @@ export function filterBox(items, placeholder, onCount) {
   return input;
 }
 
-/** List item that toggles open on click / Enter / Space and builds its detail pane the first time (`detail` may be async). */
+/** List item that toggles open on click / Enter / Space (open shows everything below its .row, see panel.css)
+ * and builds its detail pane the first time (`detail` may be async, or omitted: the row only unfolds). */
 export function expandable(li, detail) {
   li.tabIndex = 0;
   li.addEventListener('keydown', (ev) => {
     if (ev.target === li && (ev.key === 'Enter' || ev.key === ' ')) { ev.preventDefault(); li.click(); }
   });
   li.addEventListener('click', async (ev) => {
-    if (ev.target.closest('.detail, a, button, input, select')) return;
+    const own = ev.target.closest('.detail, details, a, button, input, select');
+    if (own && li.contains(own)) return; // not an ancestor: a row nested in another row's .detail still toggles
     li.classList.toggle('open');
-    if (li.querySelector('.detail')) return;
+    if (!detail || li.querySelector('.detail')) return;
     const d = el('div', { class: 'detail' }, el('div', { class: 'loading' }, _t('Loading…')));
     li.append(d);
     try { d.replaceChildren(...[await detail()].filter(Boolean)); } catch (e) { d.replaceChildren(errBox(e)); }

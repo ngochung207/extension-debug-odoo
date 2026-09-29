@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Odoo Debug",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "In-page panel for Odoo developers: record, view & action, RPC log, access rights, security, server profiler.",
   "icons": {
     "16": "icons/icon-16.png",
@@ -26,6 +26,7 @@
     "cookies",
     "storage",
     "clipboardWrite",
+    "downloads",
     "declarativeContent"
   ],
   "host_permissions": [

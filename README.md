@@ -35,8 +35,10 @@ shadow DOM so it never touches Odoo's styles.
 | **Record** | Identity & metadata (xmlids, `noupdate`, create / write user), every field with its type, value, module, storage, compute / related source, `groups=` and the fields it triggers a recompute of. |
 | **View** | Inheritance tree of the current view (primary + extensions, priority, source file), combined arch, action details, form field modifiers (`invisible` / `readonly` / `required`) evaluated like the webclient, *Pick on page*. |
 | **RPC** | Live log of JSON-RPC and JSON-2 calls from page load: timing, errors with tracebacks, and a jump to the Security tab for `AccessError`s. |
-| **Access** | Session (db, version, `web.base.url`, `test_mode`), effective rights, ACLs, record rules, groups, system parameters (secrets masked) and installed modules. |
-| **Security** | Simulate another user's rights, explain rule by rule why an operation is allowed or blocked, user risk audit, fields hidden by `groups=`, instance checks (HTTPS, cookie flags, security headers, database manager). |
+| **Access** | Session (db, version, `web.base.url`, `test_mode`), effective rights, ACLs, record rules, groups, system parameters (secrets masked). |
+| **Apps** | For a `;`-separated list of modules: Activate (Update Apps List, then install with dependencies), Upgrade, Open Forms; every installed module below (Settings rights). |
+| **Security** | Simulate another user's rights, explain rule by rule why an operation is allowed or blocked, user risk audit, fields hidden by `groups=`, instance checks (HTTPS, cookie flags, security headers, database manager). **Switch to This User** opens an incognito window at that user's login, leaving your session alone (with OCA `impersonate_login`: impersonate in this session). |
+| **Translations** | Exports the `.pot` template and one `.po` per language for several apps with Odoo's own wizard, saved straight to `Downloads/<module>/i18n/`. |
 | **Perf** | Odoo's built-in server profiler: start / stop, profiled requests, SQL summary with repeated queries (N+1 suspects), slowest queries, speedscope flame graph. |
 
 Plus: click any field name, model or xmlid in the panel to copy it, and <kbd>⌥ Alt</kbd> + click a field on the Odoo
@@ -75,15 +77,19 @@ The extension is not on the Chrome Web Store yet; install it unpacked (Chrome, E
    (or `git clone https://github.com/unclecatvn/extension-debug-odoo.git`).
 2. Open `chrome://extensions` and turn on **Developer mode**.
 3. Click **Load unpacked** and select the unzipped folder (from a clone: the `extension/` folder).
-4. Open any Odoo page: a round button appears in the bottom-right corner.
+4. Open any Odoo page: a round button appears on the bottom edge.
 
 ## Usage
 
-- **Open / close**: click the round button. Drag it anywhere; its position is kept per Odoo instance. Nothing shows on
+- **Open / close**: click the round button; the panel opens on the bottom edge, on the tab you were on, scrolled where
+  you left it. Drag the button anywhere; its position is kept per Odoo instance (dropped back near the bottom edge, it
+  sticks to it again). Nothing shows on
   non-Odoo sites, and the toolbar icon is greyed out there.
 - **Full screen**: <kbd>⤢</kbd> in the panel header, <kbd>Esc</kbd> or <kbd>⤡</kbd> to leave. Open state and full
   screen survive page reloads.
 - **Debug mode**: the `off` / `debug` / `assets` switch in the header reloads Odoo in that mode.
+- **Cards**: each tab is a stack of cards, closed at first; a card loads its data once opened, and open / closed cards
+  stay so across reloads. Click a list row to open its details (label, storage, module, full value…), again to close.
 - **Copy**: click a field name, model, xmlid or parameter in the panel; <kbd>⌥ Alt</kbd> + click a form field, label,
   list cell or column header on the page. Masked secret values still copy the real value.
 - **Reload data**: <kbd>⟳</kbd>. Stable server data (session info, `fields_get`, users) is cached until the page
@@ -114,6 +120,7 @@ analytics and sends nothing anywhere else.
 | `cookies` | Report the session cookie's flags (`Secure`, `HttpOnly`, `SameSite`) in the Security tab. The value is never read. |
 | `storage` | Language and theme settings. |
 | `clipboardWrite` | Copy field names, xmlids and values. |
+| `downloads` | Save exported `.pot` / `.po` files to `Downloads/<module>/i18n/` (Translations tab). |
 | `declarativeContent` | Enable the toolbar icon on Odoo pages only. |
 
 Odoo data only reaches the DOM through `textContent`, and the panel page can't be framed by other sites.
@@ -148,7 +155,7 @@ extension/                 the extension itself: exactly what the release zip co
                            bubble.js (draggable button + the panel's iframe in a shadow root, ⌥/Alt+click copy)
     panel/                 panel.html / panel.css / main.js: header, tabs, binding to the tab it is embedded in
     shared/                ui.js (DOM, RPC, cached reads), page.js (core page functions), i18n.js, odoo.js, settings.js
-    features/<tab>/        one folder per tab: record, view, rpc, access, security, perf
+    features/<tab>/        one folder per tab: record, view, rpc, access, security, translations, apps, perf
       <tab>.js             the tab UI: render(section, state)
       page.js              functions injected into the Odoo page (self-contained, no imports)
       logic.js             pure logic, no chrome.* / DOM
