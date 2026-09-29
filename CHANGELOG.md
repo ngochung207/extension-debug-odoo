@@ -2,36 +2,25 @@
 
 All notable changes to this project are documented here. Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), versions: [Semantic Versioning](https://semver.org/). Each release on GitHub uses its section below as release notes.
 
-## [Unreleased]
+## [0.1.1] - 2026-09-29
 
 ### Added
 
-- **Translations tab**: exports the translation template (`.pot`) and the `.po` of each language for several apps
-  (`;`-separated), and downloads every file to `Downloads/<module>/i18n/`. Needs the new `downloads` permission.
-- **Switch to This User** (Security › View as user): opens an incognito window on the current page, at Odoo's login
-  of the picked user (their password is typed there); the current session is untouched. With the OCA module
-  `impersonate_login`, "Impersonate in This Session" and "Back to My User" are offered too.
-- **Apps tab**: for a `;`-separated list of modules, Activate (Update Apps List, then install them all with their
-  dependencies), Upgrade, or Open Forms (one new tab per module); each module's state is listed below.
-  The Installed modules card moved there from the Access tab.
+- **Translations tab**: exports the translation template (`.pot`) and the `.po` of each language for several apps (`;`-separated), and downloads every file to `Downloads/<module>/i18n/`. Needs the new `downloads` permission.
+- **Switch to This User** (Security › View as user): opens an incognito window on the current page, at Odoo's login of the picked user (their password is typed there); the current session is untouched. With the OCA module `impersonate_login`, "Impersonate in This Session" and "Back to My User" are offered too.
+- **Apps tab**: for a `;`-separated list of modules, Activate (Update Apps List, then install them all with their dependencies), Upgrade, or Open Forms (one new tab per module); each module's state is listed below. The Installed modules card moved there from the Access tab.
 
 ### Changed
 
-- Lists in every tab show one line per row: the details below it (label, storage, module, domain, query…) open on a
-  click on the row and close on the next one. Clicking a name still copies it. The wide 2-column table (760px+) keeps
-  them in its second column.
+- Lists in every tab show one line per row: the details below it (label, storage, module, domain, query…) open on a click on the row and close on the next one. Clicking a name still copies it. The wide 2-column table (760px+) keeps them in its second column.
 - Every collapsible section (user_context, Companies, combined arch, parameters / result, queries…) starts closed.
-- Every card of every tab starts closed and loads its data only once opened; the cards left open (or closed) stay so
-  after ⟳ Reload Data, a reload of the page or the panel.
+- Every card of every tab starts closed and loads its data only once opened; the cards left open (or closed) stay so after ⟳ Reload Data, a reload of the page or the panel.
 - Rows with an action button (↗) keep it in a right-hand column, lined up on every row.
-- Button labels and tooltips capitalised like Odoo's ("Export & Download", "Reload Data"…). ⟳ Reload Data also
-  empties the Translations form.
+- Button labels and tooltips capitalised like Odoo's ("Export & Download", "Reload Data"…). ⟳ Reload Data also empties the Translations form.
 - Icon without the green dot.
 - The Perf tab is now the last one.
-- The panel is pinned to the bottom of the window (beside the button), so its header never goes off screen. The button
-  sits on the bottom edge too until dragged elsewhere; dropped back near that edge, it sticks to it again.
-- After a reload, the panel comes back on the tab you were on, scrolled where you left it (each tab keeps its own
-  position).
+- The panel is pinned to the bottom of the window (beside the button), so its header never goes off screen. The button sits on the bottom edge too until dragged elsewhere; dropped back near that edge, it sticks to it again.
+- After a reload, the panel comes back on the tab you were on, scrolled where you left it (each tab keeps its own position).
 
 ## [0.1.0] - 2026-09-28
 
@@ -58,4 +47,5 @@ First public release. Chrome extension (Manifest V3) for Odoo 18 / 19 developers
 - The panel page is a `use_dynamic_url` web-accessible resource, so other sites can't frame it.
 - `odoo.conf` is not readable from a browser by design; nothing in the extension tries to.
 
+[0.1.1]: https://github.com/unclecatvn/extension-debug-odoo/releases/tag/v0.1.1
 [0.1.0]: https://github.com/unclecatvn/extension-debug-odoo/releases/tag/v0.1.0
