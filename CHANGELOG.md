@@ -13,6 +13,7 @@ All notable changes to this project are documented here. Format: [Keep a Changel
   `impersonate_login`, "Impersonate in This Session" and "Back to My User" are offered too.
 - **Apps tab**: for a `;`-separated list of modules, Activate (Update Apps List, then install them all with their
   dependencies), Upgrade, or Open Forms (one new tab per module); each module's state is listed below.
+  The Installed modules card moved there from the Access tab.
 
 ### Changed
 

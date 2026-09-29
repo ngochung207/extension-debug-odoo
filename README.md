@@ -35,8 +35,8 @@ shadow DOM so it never touches Odoo's styles.
 | **Record** | Identity & metadata (xmlids, `noupdate`, create / write user), every field with its type, value, module, storage, compute / related source, `groups=` and the fields it triggers a recompute of. |
 | **View** | Inheritance tree of the current view (primary + extensions, priority, source file), combined arch, action details, form field modifiers (`invisible` / `readonly` / `required`) evaluated like the webclient, *Pick on page*. |
 | **RPC** | Live log of JSON-RPC and JSON-2 calls from page load: timing, errors with tracebacks, and a jump to the Security tab for `AccessError`s. |
-| **Access** | Session (db, version, `web.base.url`, `test_mode`), effective rights, ACLs, record rules, groups, system parameters (secrets masked) and installed modules. |
-| **Apps** | For a `;`-separated list of modules: Activate (Update Apps List, then install with dependencies), Upgrade, Open Forms (Settings rights). |
+| **Access** | Session (db, version, `web.base.url`, `test_mode`), effective rights, ACLs, record rules, groups, system parameters (secrets masked). |
+| **Apps** | For a `;`-separated list of modules: Activate (Update Apps List, then install with dependencies), Upgrade, Open Forms; every installed module below (Settings rights). |
 | **Security** | Simulate another user's rights, explain rule by rule why an operation is allowed or blocked, user risk audit, fields hidden by `groups=`, instance checks (HTTPS, cookie flags, security headers, database manager). **Switch to This User** opens an incognito window at that user's login, leaving your session alone (with OCA `impersonate_login`: impersonate in this session). |
 | **Translations** | Exports the `.pot` template and one `.po` per language for several apps with Odoo's own wizard, saved straight to `Downloads/<module>/i18n/`. |
 | **Perf** | Odoo's built-in server profiler: start / stop, profiled requests, SQL summary with repeated queries (N+1 suspects), slowest queries, speedscope flame graph. |

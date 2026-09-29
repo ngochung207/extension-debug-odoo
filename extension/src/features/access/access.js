@@ -1,10 +1,10 @@
 // Access tab: the logged-in session, effective rights on the current model/record, ACLs, record rules, groups,
-// and the instance configuration a browser can reach (system parameters, installed modules). odoo.conf itself is
+// and the instance configuration a browser can reach (system parameters; installed modules are in the Apps tab). odoo.conf itself is
 // never exposed over HTTP by Odoo: it holds admin_passwd and db_password.
 import { MODES, pickGroupField } from '../../shared/odoo.js';
 import {
   call, cached, sessionInfo, fieldsOf, readAcls, readRules,
-  el, pre, pill, triPill, details, empty, kv, block, expandable, filterBox, copyable, odooLink, listHead, splitRow,
+  el, pre, pill, triPill, details, empty, kv, block, expandable, filteredList, copyable, odooLink, listHead, splitRow,
 } from '../../shared/ui.js';
 import { _t, N_ } from '../../shared/i18n.js';
 
@@ -19,14 +19,6 @@ const myGroups = () => cached('my groups', async () => {
 
 // ponytail: key-name heuristic, the value still shows when the row is expanded
 const SECRET = /secret|passw|token|api_?key|private_?key/i;
-
-/** Filterable list with a count. items: <li> with data-q. total / visible: N_ msgids with %s and %s/%s. head: listHead(). */
-function filteredList(items, placeholder, total, visible, head) {
-  const count = el('span', { class: 'muted' }, _t(total, items.length));
-  return el('div', {},
-    el('div', { class: 'toolbar' }, filterBox(items, placeholder, (n) => { count.textContent = _t(visible, n, items.length); }), count, head),
-    el('ul', { class: 'list' }, items));
-}
 
 export function renderAccess(s, state) {
   const { model, resId, origin } = state;
@@ -87,21 +79,5 @@ export function renderAccess(s, state) {
       return expandable(li, () => pre(p.value));
     });
     return items.length ? filteredList(items, _t('Filter key / value'), N_('%s parameters'), N_('%s/%s parameters'), listHead(_t('Key'), _t('Value'))) : empty(_t('No parameter.'));
-  }));
-
-  block(s, 'modules', _t('Installed modules'), () => adminOnly(async () => {
-    // latest_version = the version installed in the DB (installed_version is computed from the manifest on disk: slow)
-    const mods = await cached('modules', () => call('ir.module.module', 'search_read', [[['state', '=', 'installed']]],
-      { fields: ['name', 'shortdesc', 'latest_version', 'author'], order: 'name' }));
-    const items = mods.map((m) => {
-      const li = el('li', {},
-        splitRow([copyable(m.name), el('span', { class: 'grow muted' }, m.shortdesc), m.latest_version && pill(m.latest_version)],
-          odooLink(origin, `ir.module.module/${m.id}`)),
-        m.author ? el('div', { class: 'meta' }, m.author) : null);
-      li.dataset.q = `${m.name} ${m.shortdesc} ${m.author || ''}`.toLowerCase();
-      return expandable(li);
-    });
-    return filteredList(items, _t('Filter name / title / author'), N_('%s modules'), N_('%s/%s modules'),
-      listHead(_t('Module · title · version'), _t('Author')));
   }));
 }

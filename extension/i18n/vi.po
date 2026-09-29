@@ -10,222 +10,222 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/features/access/access.js:35
+#: src/features/access/access.js:27
 msgid "Session"
 msgstr "Phiên đăng nhập"
 
-#: src/features/access/access.js:42
+#: src/features/access/access.js:34
 msgid "Companies"
 msgstr "Công ty"
 
-#: src/features/access/access.js:46
+#: src/features/access/access.js:38
 msgid "Effective access on %s"
 msgstr "Quyền thực tế trên %s"
 
-#: src/features/access/access.js:53
+#: src/features/access/access.js:45
 msgid "ACL (ir.model.access) — green = applies to you"
 msgstr "ACL (ir.model.access) — nền xanh = áp dụng cho bạn"
 
-#: src/features/access/access.js:55
+#: src/features/access/access.js:47
 msgid "No ACL."
 msgstr "Không có ACL."
 
-#: src/features/access/access.js:56
+#: src/features/access/access.js:48
 msgid "ACL / group"
 msgstr "ACL / group"
 
-#: src/features/access/access.js:58
+#: src/features/access/access.js:50
 msgid "(all users)"
 msgstr "(mọi user)"
 
-#: src/features/access/access.js:61
+#: src/features/access/access.js:53
 msgid "Record rules (ir.rule) — green = applies to you"
 msgstr "Record rules (ir.rule) — nền xanh = áp dụng cho bạn"
 
-#: src/features/access/access.js:63
+#: src/features/access/access.js:55
 msgid "No record rule."
 msgstr "Không có record rule."
 
-#: src/features/access/access.js:64
+#: src/features/access/access.js:56
 msgid "Rule / domain"
 msgstr "Rule / domain"
 
-#: src/features/access/access.js:71
+#: src/features/access/access.js:63
 msgid "Your groups"
 msgstr "Group của bạn"
 
-#: src/features/access/access.js:73
+#: src/features/access/access.js:65
 msgid "%s groups"
 msgstr "%s group"
 
-#: src/features/access/access.js:73
+#: src/features/access/access.js:65
 msgid "No group."
 msgstr "Không có group."
 
-#: src/features/access/access.js:77
-#: src/features/apps/apps.js:16
+#: src/features/access/access.js:69
+#: src/features/apps/apps.js:15
 msgid "Needs Settings rights (base.group_system)."
 msgstr "Cần quyền Settings (base.group_system)."
 
-#: src/features/access/access.js:79
+#: src/features/access/access.js:71
 msgid "System parameters (ir.config_parameter)"
 msgstr "Tham số hệ thống (ir.config_parameter)"
 
-#: src/features/access/access.js:89
+#: src/features/access/access.js:81
 msgid "Filter key / value"
 msgstr "Lọc key / giá trị"
 
-#: src/features/access/access.js:89
+#: src/features/access/access.js:81
 msgid "%s parameters"
 msgstr "%s tham số"
 
-#: src/features/access/access.js:89
+#: src/features/access/access.js:81
 msgid "%s/%s parameters"
 msgstr "%s/%s tham số"
 
-#: src/features/access/access.js:89
+#: src/features/access/access.js:81
 msgid "Key"
 msgstr "Key"
 
-#: src/features/access/access.js:89
+#: src/features/access/access.js:81
 msgid "Value"
 msgstr "Giá trị"
 
-#: src/features/access/access.js:89
+#: src/features/access/access.js:81
 msgid "No parameter."
 msgstr "Không có tham số."
 
-#: src/features/access/access.js:92
-msgid "Installed modules"
-msgstr "Module đã cài"
-
-#: src/features/access/access.js:104
-msgid "Filter name / title / author"
-msgstr "Lọc tên / tiêu đề / tác giả"
-
-#: src/features/access/access.js:104
-msgid "%s modules"
-msgstr "%s module"
-
-#: src/features/access/access.js:104
-msgid "%s/%s modules"
-msgstr "%s/%s module"
-
-#: src/features/access/access.js:105
-msgid "Module · title · version"
-msgstr "Module · tiêu đề · phiên bản"
-
-#: src/features/access/access.js:105
-msgid "Author"
-msgstr "Tác giả"
-
-#: src/features/apps/apps.js:15
-#: src/features/apps/apps.js:114
+#: src/features/apps/apps.js:18
+#: src/features/apps/apps.js:117
 msgid "Modules"
 msgstr "Module"
 
-#: src/features/apps/apps.js:29
+#: src/features/apps/apps.js:32
 msgid "not found"
 msgstr "không tìm thấy"
 
-#: src/features/apps/apps.js:41
+#: src/features/apps/apps.js:44
 msgid "Running…"
 msgstr "Đang chạy…"
 
-#: src/features/apps/apps.js:43
+#: src/features/apps/apps.js:46
 #: src/features/rpc/rpc.js:36
 #: src/features/translations/translations.js:71
 msgid "error"
 msgstr "lỗi"
 
-#: src/features/apps/apps.js:45
+#: src/features/apps/apps.js:48
 msgid "Reloading the Odoo page…"
 msgstr "Đang tải lại trang Odoo…"
 
-#: src/features/apps/apps.js:53
+#: src/features/apps/apps.js:56
 msgid "Enter at least one module."
 msgstr "Nhập ít nhất một module."
 
-#: src/features/apps/apps.js:70
+#: src/features/apps/apps.js:73
 msgid "Activate"
 msgstr "Kích hoạt"
 
-#: src/features/apps/apps.js:70
+#: src/features/apps/apps.js:73
 msgid "Update Apps List, then install every module (with its dependencies)"
 msgstr "Cập nhật danh sách ứng dụng, rồi cài mọi module (kèm các module phụ thuộc)"
 
-#: src/features/apps/apps.js:71
+#: src/features/apps/apps.js:74
 msgid "Update Apps List"
 msgstr "Cập nhật danh sách ứng dụng"
 
-#: src/features/apps/apps.js:73
+#: src/features/apps/apps.js:76
 msgid "%s updated · %s added"
 msgstr "%s cập nhật · %s thêm mới"
 
-#: src/features/apps/apps.js:77
+#: src/features/apps/apps.js:80
 msgid "Not found, even after Update Apps List: %s"
 msgstr "Không tìm thấy, kể cả sau khi cập nhật danh sách ứng dụng: %s"
 
-#: src/features/apps/apps.js:78
+#: src/features/apps/apps.js:81
 msgid "Not installable: %s"
 msgstr "Không cài được: %s"
 
-#: src/features/apps/apps.js:79
+#: src/features/apps/apps.js:82
 msgid "Waiting to be uninstalled: %s"
 msgstr "Đang chờ gỡ cài đặt: %s"
 
-#: src/features/apps/apps.js:80
+#: src/features/apps/apps.js:83
 msgid "Already installed: %s"
 msgstr "Đã cài sẵn: %s"
 
-#: src/features/apps/apps.js:82
+#: src/features/apps/apps.js:85
 msgid "Install %s"
 msgstr "Cài %s"
 
-#: src/features/apps/apps.js:88
+#: src/features/apps/apps.js:91
 msgid "Upgrade"
 msgstr "Nâng cấp"
 
-#: src/features/apps/apps.js:88
+#: src/features/apps/apps.js:91
 msgid "Upgrade every module (they must be installed)"
 msgstr "Nâng cấp mọi module (phải đã được cài)"
 
-#: src/features/apps/apps.js:92
+#: src/features/apps/apps.js:95
 msgid "Not found: %s"
 msgstr "Không tìm thấy: %s"
 
-#: src/features/apps/apps.js:93
+#: src/features/apps/apps.js:96
 msgid "Not installed (use Activate): %s"
 msgstr "Chưa cài (hãy dùng Kích hoạt): %s"
 
-#: src/features/apps/apps.js:94
+#: src/features/apps/apps.js:97
 msgid "Upgrade %s"
 msgstr "Nâng cấp %s"
 
-#: src/features/apps/apps.js:100
+#: src/features/apps/apps.js:103
 msgid "Open Forms ↗"
 msgstr "Mở form ↗"
 
-#: src/features/apps/apps.js:100
+#: src/features/apps/apps.js:103
 msgid "Open the form of every module in a new tab"
 msgstr "Mở form của từng module trong tab mới"
 
-#: src/features/apps/apps.js:108
+#: src/features/apps/apps.js:111
 msgid "Opened %s tab(s): %s"
 msgstr "Đã mở %s tab: %s"
 
-#: src/features/apps/apps.js:110
+#: src/features/apps/apps.js:113
 msgid "Not found: %s (Activate runs Update Apps List first)"
 msgstr "Không tìm thấy: %s (Kích hoạt sẽ cập nhật danh sách ứng dụng trước)"
 
-#: src/features/apps/apps.js:115
+#: src/features/apps/apps.js:118
 #: src/features/translations/translations.js:22
 msgid "Technical names, separated by ;"
 msgstr "Tên kỹ thuật, phân cách bằng ;"
 
-#: src/features/apps/apps.js:117
+#: src/features/apps/apps.js:120
 msgid "Activate runs Update Apps List first. Install and upgrade reload the Odoo page when done."
 msgstr "Kích hoạt sẽ cập nhật danh sách ứng dụng trước. Cài và nâng cấp xong sẽ tải lại trang Odoo."
+
+#: src/features/apps/apps.js:126
+msgid "Installed modules"
+msgstr "Module đã cài"
+
+#: src/features/apps/apps.js:139
+msgid "Filter name / title / author"
+msgstr "Lọc tên / tiêu đề / tác giả"
+
+#: src/features/apps/apps.js:139
+msgid "%s modules"
+msgstr "%s module"
+
+#: src/features/apps/apps.js:139
+msgid "%s/%s modules"
+msgstr "%s/%s module"
+
+#: src/features/apps/apps.js:140
+msgid "Module · title · version"
+msgstr "Module · tiêu đề · phiên bản"
+
+#: src/features/apps/apps.js:140
+msgid "Author"
+msgstr "Tác giả"
 
 #: src/features/perf/perf.js:14
 msgid "Cannot call /web/set_profiling"
@@ -1040,7 +1040,7 @@ msgid "Open /odoo/%s"
 msgstr "Mở /odoo/%s"
 
 #: src/shared/ui.js:134
-#: src/shared/ui.js:185
+#: src/shared/ui.js:193
 msgid "Loading…"
 msgstr "Đang tải…"
 

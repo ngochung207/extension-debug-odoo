@@ -159,6 +159,14 @@ export function copyable(text, cls = 'name', label = text) {
   return b;
 }
 
+/** Filterable list with a count. items: <li> with data-q. total / visible: N_ msgids with %s and %s/%s. head: listHead(). */
+export function filteredList(items, placeholder, total, visible, head) {
+  const count = el('span', { class: 'muted' }, _t(total, items.length));
+  return el('div', {},
+    el('div', { class: 'toolbar' }, filterBox(items, placeholder, (n) => { count.textContent = _t(visible, n, items.length); }), count, head),
+    el('ul', { class: 'list' }, items));
+}
+
 /** Search box hiding the `items` whose data-q doesn't contain its text; onCount(visible) after each change. */
 export function filterBox(items, placeholder, onCount) {
   const input = el('input', { type: 'search', placeholder });

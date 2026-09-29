@@ -1,19 +1,22 @@
 // Apps tab: for a typed list of modules, Activate (Update Apps List, then install them all), Upgrade, or open their
 // forms in new tabs. Same server methods as Odoo's Apps menu; install / upgrade then reload the Odoo page.
+// Below: every installed module, filterable.
 import { planInstall, planUpgrade, stateKind } from './logic.js';
 import { splitList } from '../translations/logic.js';
 import {
-  exec, tabId, call, sessionInfo, el, pill, empty, block, errBox, copyable, odooLink, splitRow, formValues, saveForm,
+  exec, tabId, call, cached, sessionInfo, el, pill, empty, block, errBox, copyable, odooLink, splitRow, expandable, filteredList, listHead,
+  formValues, saveForm,
 } from '../../shared/ui.js';
-import { _t } from '../../shared/i18n.js';
+import { _t, N_ } from '../../shared/i18n.js';
 
 const read = (names) => call('ir.module.module', 'search_read', [[['name', 'in', names]]], { fields: ['name', 'shortdesc', 'state', 'latest_version'] });
 const formPath = (id) => `action-base.open_module_tree/${id}`; // the Apps action: its breadcrumb leads back to Apps
 const names = (list) => list.map((m) => m.name).join(', ');
+const needsAdmin = () => empty(_t('Needs Settings rights (base.group_system).'));
 
 export function renderApps(s, state) {
   block(s, 'modules', _t('Modules'), async () => {
-    if (!(await sessionInfo()).is_system) return empty(_t('Needs Settings rights (base.group_system).'));
+    if (!(await sessionInfo()).is_system) return needsAdmin();
     const input = el('input', { type: 'text', placeholder: 'sale; stock; my_module', value: formValues('apps').modules || '', spellcheck: false });
     const status = el('ul', { class: 'list' });
     const log = el('ul', { class: 'steps' });
@@ -118,5 +121,22 @@ export function renderApps(s, state) {
       log);
     await refreshStatus().catch(() => {}); // after a reload: the state each module ended in
     return el('div', {}, el('div', { class: 'pad' }, form), status);
+  });
+
+  block(s, 'installed', _t('Installed modules'), async () => {
+    if (!(await sessionInfo()).is_system) return needsAdmin();
+    // latest_version = the version installed in the DB (installed_version is computed from the manifest on disk: slow)
+    const mods = await cached('modules', () => call('ir.module.module', 'search_read', [[['state', '=', 'installed']]],
+      { fields: ['name', 'shortdesc', 'latest_version', 'author'], order: 'name' }));
+    const items = mods.map((m) => {
+      const li = el('li', {},
+        splitRow([copyable(m.name), el('span', { class: 'grow muted' }, m.shortdesc), m.latest_version && pill(m.latest_version)],
+          odooLink(state.origin, formPath(m.id))),
+        m.author ? el('div', { class: 'meta' }, m.author) : null);
+      li.dataset.q = `${m.name} ${m.shortdesc} ${m.author || ''}`.toLowerCase();
+      return expandable(li);
+    });
+    return filteredList(items, _t('Filter name / title / author'), N_('%s modules'), N_('%s/%s modules'),
+      listHead(_t('Module · title · version'), _t('Author')));
   });
 }
