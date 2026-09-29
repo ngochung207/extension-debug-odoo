@@ -97,6 +97,9 @@ input[type=search]:focus, select:focus { outline: 2px solid var(--accent-soft); 
 .meta { color: var(--muted); font-size: 11px; margin-top: 1px; word-break: break-word; }
 .detail { display: none; margin-top: 6px; cursor: auto; }
 li.open > .detail { display: block; }
+/* Narrow panel: a row shows its main line only; the rest (label, meta, domain…) opens with it (see expandable()).
+   Wide panel: that rest is the second table column, still one line per row, so it stays. */
+@container (max-width: 759.98px) { .list > li:not(.open) > :not(.row) { display: none; } }
 .list-head { display: none; } /* narrow panel: no columns to name (before the @container rules, which override it) */
 /* Wide panel (full screen): each list row becomes a 2-column table row, main line | description, so rows stay short.
    The columns line up because every row uses the same template. The expanded detail spans both columns. */

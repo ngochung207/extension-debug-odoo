@@ -1,7 +1,7 @@
 // RPC tab: live log of the page's JSON-RPC calls, recorded by content/hook.js.
 import { parseRpc } from './logic.js';
 import { pageRpcLog } from './page.js';
-import { $, exec, el, pre, errBox, pill, details, collapsed, empty, expandable, listHead } from '../../shared/ui.js';
+import { $, exec, el, pre, errBox, pill, details, empty, expandable, listHead } from '../../shared/ui.js';
 import { _t } from '../../shared/i18n.js';
 
 const MAX = 300;
@@ -39,8 +39,8 @@ function item(e) {
   li.dataset.q = `${e.model} ${e.method}`.toLowerCase();
   expandable(li, () => {
     const params = pre({ args: e.args, kwargs: e.kwargs });
-    if (e.error) { // errors: params collapsed, the message + traceback toggle come first
-      return el('div', {}, collapsed(_t('Parameters'), params), errBox({ message: e.error, traceback: e.traceback }),
+    if (e.error) { // errors: the message + traceback come first
+      return el('div', {}, details(_t('Parameters'), params), errBox({ message: e.error, traceback: e.traceback }),
         denied && el('button', { class: 'btn mt', onclick: onWhyBlocked }, _t('Why was it blocked? → Security')));
     }
     const res = JSON.stringify(e.result, null, 2) ?? '';

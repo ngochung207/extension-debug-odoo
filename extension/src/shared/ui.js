@@ -81,15 +81,13 @@ export function el(tag, props = {}, ...kids) {
   return n;
 }
 export const pre = (o) => el('pre', {}, typeof o === 'string' ? o : JSON.stringify(o, null, 2));
-// Tracebacks start collapsed (unlike other details): the message says enough at a glance.
-export const errBox = (e) => el('div', { class: 'error' }, e.message,
-  e.traceback ? el('details', {}, el('summary', {}, _t('Traceback')), pre(e.traceback)) : null);
+/** Collapsible section, closed until its summary is clicked (every one in the panel starts closed). */
+export const details = (summary, ...kids) => el('details', {}, el('summary', {}, summary), ...kids);
+export const errBox = (e) => el('div', { class: 'error' }, e.message, e.traceback ? details(_t('Traceback'), pre(e.traceback)) : null);
 export const pill = (text, kind = '') => el('span', { class: `pill ${kind}` }, text);
 /** true / false / anything else (unknown) → green / red / `unknownKind` pill with the matching label. */
 export const triPill = (v, [yes, no, unknown] = ['✓', '✗', '?'], unknownKind = '') =>
   v === true ? pill(yes, 'ok') : v === false ? pill(no, 'err') : pill(unknown, unknownKind);
-export const details = (summary, ...kids) => el('details', { open: true }, el('summary', {}, summary), ...kids); // open by default, still collapsible
-export const collapsed = (summary, ...kids) => el('details', {}, el('summary', {}, summary), ...kids);
 export const empty = (msg) => el('div', { class: 'empty' }, msg);
 export const kv = (obj) => el('dl', { class: 'kv' }, Object.entries(obj).flatMap(([k, v]) =>
   [el('dt', {}, k), el('dd', {}, v !== null && typeof v === 'object' ? JSON.stringify(v) : String(v ?? ''))]));
@@ -142,16 +140,18 @@ export function filterBox(items, placeholder, onCount) {
   return input;
 }
 
-/** List item that toggles open on click / Enter / Space and builds its detail pane the first time (`detail` may be async). */
+/** List item that toggles open on click / Enter / Space (open shows everything below its .row, see panel.css)
+ * and builds its detail pane the first time (`detail` may be async, or omitted: the row only unfolds). */
 export function expandable(li, detail) {
   li.tabIndex = 0;
   li.addEventListener('keydown', (ev) => {
     if (ev.target === li && (ev.key === 'Enter' || ev.key === ' ')) { ev.preventDefault(); li.click(); }
   });
   li.addEventListener('click', async (ev) => {
-    if (ev.target.closest('.detail, a, button, input, select')) return;
+    const own = ev.target.closest('.detail, details, a, button, input, select');
+    if (own && li.contains(own)) return; // not an ancestor: a row nested in another row's .detail still toggles
     li.classList.toggle('open');
-    if (li.querySelector('.detail')) return;
+    if (!detail || li.querySelector('.detail')) return;
     const d = el('div', { class: 'detail' }, el('div', { class: 'loading' }, _t('Loading…')));
     li.append(d);
     try { d.replaceChildren(...[await detail()].filter(Boolean)); } catch (e) { d.replaceChildren(errBox(e)); }

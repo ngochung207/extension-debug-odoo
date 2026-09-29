@@ -1,7 +1,7 @@
 // Perf tab: Odoo's built-in server profiler (/web/set_profiling → ir.profile rows), read back per request.
 import { sqlSummary, appFrame } from './logic.js';
 import { pageFetch } from '../../shared/page.js';
-import { exec, rpc, call, fieldsOf, el, pre, pill, details, collapsed, empty, block, errBox, expandable, listHead } from '../../shared/ui.js';
+import { exec, rpc, call, fieldsOf, el, pre, pill, details, empty, block, errBox, expandable, listHead } from '../../shared/ui.js';
 import { _t } from '../../shared/i18n.js';
 
 const COLLECTORS = 'sql,traces_async';
@@ -74,10 +74,10 @@ function sqlDetail(r, [p]) {
   try { entries = JSON.parse(p?.sql || '[]'); } catch { /* not JSON */ }
   if (!entries.length) return empty(_t('No SQL recorded.'));
   const sum = sqlSummary(entries);
-  const q = (e, extra) => el('li', {},
+  const q = (e, extra) => expandable(el('li', {},
     el('div', { class: 'row' }, extra, el('span', { class: 'grow meta' }, frame(appFrame(e.stack))), el('span', { class: 'ms' }, ms(e.time))),
     el('div', { class: 'mono muted' }, e.query.length > 200 ? `${e.query.slice(0, 200)}…` : e.query),
-    collapsed(_t('Full SQL + stack'), pre(e.full_query || e.query), e.stack?.length ? pre(e.stack.map(frame).join('\n')) : null));
+    details(_t('Full SQL + stack'), pre(e.full_query || e.query), e.stack?.length ? pre(e.stack.map(frame).join('\n')) : null)));
   return el('div', {},
     el('div', { class: 'muted' }, _t('%s queries · SQL %s / total %s · Python ≈ %s', sum.count, ms(sum.time), ms(r.duration), ms(Math.max(0, r.duration - sum.time)))),
     sum.dups.length

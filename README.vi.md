@@ -77,6 +77,7 @@ Extension chưa có trên Chrome Web Store; cài dạng unpacked (Chrome, Edge, 
 - **Mở / đóng**: bấm nút tròn. Kéo nó đi đâu cũng được; vị trí được nhớ riêng cho từng instance Odoo. Trên các trang không phải Odoo thì không có gì hiện ra, và icon trên thanh công cụ bị làm mờ.
 - **Toàn màn hình**: <kbd>⤢</kbd> trên thanh tiêu đề của bảng, <kbd>Esc</kbd> hoặc <kbd>⤡</kbd> để thoát. Trạng thái mở và toàn màn hình được giữ khi tải lại trang.
 - **Chế độ debug**: công tắc `off` / `debug` / `assets` trên thanh tiêu đề tải lại Odoo ở chế độ tương ứng.
+- **Chi tiết**: bấm vào một dòng trong list để xem chi tiết (nhãn, cách lưu, module, giá trị đầy đủ…), bấm lần nữa để đóng.
 - **Copy**: bấm vào tên field, model, xmlid hay tham số trong bảng; <kbd>⌥ Alt</kbd> + click vào field, nhãn, ô trong list hoặc tiêu đề cột trên trang. Giá trị bí mật bị che vẫn copy ra giá trị thật.
 - **Tải lại dữ liệu**: <kbd>⟳</kbd>. Dữ liệu ổn định của server (session info, `fields_get`, danh sách user) được cache tới khi tải lại trang; ACL, rule, view và giá trị record luôn được đọc lại.
 - **Cài đặt**: bấm icon trên thanh công cụ (hoặc chuột phải → *Options*): ngôn ngữ (English, Tiếng Việt), giao diện (theo hệ thống / sáng / tối), hiện / ẩn bảng.

@@ -2,6 +2,16 @@
 
 All notable changes to this project are documented here. Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), versions: [Semantic Versioning](https://semver.org/). Each release on GitHub uses its section below as release notes.
 
+## [Unreleased]
+
+### Changed
+
+- Lists in every tab show one line per row: the details below it (label, storage, module, domain, query…) open on a
+  click on the row and close on the next one. Clicking a name still copies it. The wide 2-column table (760px+) keeps
+  them in its second column.
+- Every collapsible section (user_context, Companies, combined arch, parameters / result, queries…) starts closed.
+- Icon without the green dot.
+
 ## [0.1.0] - 2026-09-28
 
 First public release. Chrome extension (Manifest V3) for Odoo 18 / 19 developers, no build step.

@@ -5,7 +5,7 @@ import { MODES, pickGroupField } from '../../shared/odoo.js';
 import { pageGo } from '../../shared/page.js';
 import {
   exec, call, cached, uncache, sessionInfo, fieldsOf, readAcls, readRules, cookieFlags,
-  el, pre, pill, triPill, details, empty, block, card, copyable, listHead,
+  el, pre, pill, triPill, details, empty, block, card, expandable, copyable, listHead,
 } from '../../shared/ui.js';
 import { _t, N_ } from '../../shared/i18n.js';
 
@@ -80,10 +80,10 @@ export function renderSecurity(s, state) {
       const specs = [...new Set(restricted.map(([, f]) => f.groups))];
       const ok = new Map(await Promise.all(specs.map(async (sp) => [sp, await call('res.users', 'has_groups', [[uid], sp]).catch(() => null)])));
       restricted.sort(([, a], [, b]) => Number(ok.get(a.groups)) - Number(ok.get(b.groups)));
-      return el('div', {}, listHead(_t('Field · label · for this user'), 'groups='), el('ul', { class: 'list' }, restricted.map(([name, f]) => el('li', {},
+      return el('div', {}, listHead(_t('Field · label · for this user'), 'groups='), el('ul', { class: 'list' }, restricted.map(([name, f]) => expandable(el('li', {},
         el('div', { class: 'row' }, copyable(name), el('span', { class: 'grow muted' }, f.string),
           triPill(ok.get(f.groups), [_t('visible'), _t('hidden'), '?'])),
-        el('div', { class: 'meta' }, f.groups)))));
+        el('div', { class: 'meta' }, f.groups))))));
     });
 
     block(s, _t('Model configuration audit'), async () => {
@@ -139,14 +139,14 @@ async function whyBlock(model, resId, t, modelSec) {
 
   const ruleItems = rules.map((r) => {
     const modes = modesOf(r).map((m) => LETTER[m]).join('');
-    return el('li', { class: modes ? '' : 'inactive' },
+    return expandable(el('li', { class: modes ? '' : 'inactive' },
       el('div', { class: 'row' }, el('span', { class: 'grow' }, el('b', {}, r.name)),
         modes ? pill(modes, 'accent') : pill(_t('not applicable')),
         modes && resId ? triPill(note.has(r.id) ? null : passed.get(r.id), undefined, 'med') : null),
       el('div', { class: 'meta' }, r.global ? 'global' : r.groups.map((g) => gname.get(g) || g).join(', ')),
       el('div', { class: 'meta mono' }, r.domain_force || '[]'),
       evaluated.has(r.id) ? el('div', { class: 'mono' }, `→ ${JSON.stringify(evaluated.get(r.id))}`) : null,
-      note.has(r.id) ? el('div', { class: 'error' }, note.get(r.id)) : null);
+      note.has(r.id) ? el('div', { class: 'error' }, note.get(r.id)) : null));
   });
 
   return el('div', {}, verdict,

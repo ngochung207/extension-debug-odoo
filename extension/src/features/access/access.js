@@ -99,7 +99,7 @@ export function renderAccess(s, state) {
           odooLink(origin, `ir.module.module/${m.id}`)),
         m.author ? el('div', { class: 'meta' }, m.author) : null);
       li.dataset.q = `${m.name} ${m.shortdesc} ${m.author || ''}`.toLowerCase();
-      return li;
+      return expandable(li);
     });
     return filteredList(items, _t('Filter name / title / author'), N_('%s modules'), N_('%s/%s modules'),
       listHead(_t('Module · title · version'), _t('Author')));

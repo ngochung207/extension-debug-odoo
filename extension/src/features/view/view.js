@@ -1,7 +1,7 @@
 // View tab: inheritance tree of the current view, the action, form field modifiers (+ page picker), context & domain.
 import { buildViewTree } from './logic.js';
 import { pageFormFields, pagePick } from './page.js';
-import { exec, execOrThrow, call, el, pre, pill, details, collapsed, card, kv, block, expandable, filterBox, copyable, odooLink, listHead } from '../../shared/ui.js';
+import { exec, execOrThrow, call, el, pre, pill, details, card, kv, block, expandable, filterBox, copyable, odooLink, listHead } from '../../shared/ui.js';
 import { _t, N_ } from '../../shared/i18n.js';
 
 let picked = null; // field name clicked with the page picker, shown once on the next render
@@ -19,14 +19,14 @@ export function renderView(s, state) {
           { fields: ['name', 'xml_id', 'inherit_id', 'mode', 'priority', 'active', 'arch_fs'], context: { active_test: false } }),
       ]);
       const v = gv.views[viewType];
-      const items = buildViewTree(all, v.id).map(({ view: x, depth }) => el('li', {
+      const items = buildViewTree(all, v.id).map(({ view: x, depth }) => expandable(el('li', {
         class: [x.id === v.id && 'current', !x.active && 'inactive'].filter(Boolean).join(' '),
         style: `padding-left:${10 + depth * 14}px`,
       },
         el('div', { class: 'row' }, el('span', { class: 'name' }, depth ? '└ ' : '', x.xml_id ? copyable(x.xml_id, '') : `#${x.id}`),
           pill(x.mode, x.mode === 'primary' ? 'accent' : ''), el('span', { class: 'grow' }), el('span', { class: 'ms' }, `prio ${x.priority}`),
           openLink(`ir.ui.view/${x.id}`)),
-        el('div', { class: 'meta' }, [x.name, `#${x.id}`, x.arch_fs, !x.active && _t('inactive')].filter(Boolean).join(' · '))));
+        el('div', { class: 'meta' }, [x.name, `#${x.id}`, x.arch_fs, !x.active && _t('inactive')].filter(Boolean).join(' · ')))));
       return el('div', {}, listHead(_t('View · mode · priority'), _t('Name · id · file')), el('ul', { class: 'list' }, items),
         el('div', { class: 'pad-bottom' }, details(_t('Combined arch (view #%s)', v.id), pre(v.arch))));
     });
@@ -70,7 +70,7 @@ async function formFields() {
       hiddenByParent ? el('div', { class: 'note' }, _t('The field is not invisible itself but is not on screen: it is on another notebook page, or a parent node (group/page/div) is invisible.')) : null,
       MODIFIERS.filter((k) => f[k].error).map((k) => el('div', { class: 'error' }, `${k}: ${f[k].error}`)),
       Object.keys(f.vars).length ? details(_t('Values used in the expressions'), pre(f.vars)) : null,
-      collapsed(_t('Full node'), pre({ ...f, vars: undefined }))));
+      details(_t('Full node'), pre({ ...f, vars: undefined }))));
   });
 
   const filter = filterBox(items, _t('Filter name / label / widget'));
