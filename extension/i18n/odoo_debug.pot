@@ -513,7 +513,7 @@ msgstr ""
 msgid "Profiling could not be enabled."
 msgstr ""
 
-#: src/features/perf/perf.js:35
+#: src/features/perf/perf.js:34
 msgid "Server profiler"
 msgstr ""
 
@@ -534,75 +534,87 @@ msgid "off"
 msgstr ""
 
 #: src/features/perf/perf.js:46
-msgid "Every request of this session will record its SQL + Python stacks."
+msgid "since %s"
 msgstr ""
 
-#: src/features/perf/perf.js:47
-msgid "Uses Odoo's built-in profiler, needs base.group_system. While recording, each request writes one ir.profile row to the DB; Odoo stops it when it expires. Press ⟳ to reload the list."
+#: src/features/perf/perf.js:49
+msgid "Each request of this session writes one ir.profile row; ⟳ reloads the list."
 msgstr ""
 
 #: src/features/perf/perf.js:50
-msgid "Profiled requests"
+msgid "Records the SQL + Python stacks of every request of this session (Odoo's built-in profiler, base.group_system)."
 msgstr ""
 
-#: src/features/perf/perf.js:55
+#: src/features/perf/perf.js:64
 msgid "No request yet: use the Odoo page, then press ⟳."
 msgstr ""
 
-#: src/features/perf/perf.js:55
+#: src/features/perf/perf.js:64
 msgid "No profile data yet."
 msgstr ""
 
-#: src/features/perf/perf.js:57
+#: src/features/perf/perf.js:66
 msgid "Latest session: %s"
 msgstr ""
 
-#: src/features/perf/perf.js:58
-msgid "Request · SQL · duration"
-msgstr ""
-
-#: src/features/perf/perf.js:58
-msgid "Id · date · CPU"
+#: src/features/perf/perf.js:67
+msgid "Filter request"
 msgstr ""
 
 #: src/features/perf/perf.js:67
-msgid "Flame Graph (speedscope)"
+msgid "%s requests"
 msgstr ""
 
-#: src/features/perf/perf.js:75
-msgid "No SQL recorded."
+#: src/features/perf/perf.js:67
+msgid "%s/%s requests"
 msgstr ""
 
-#: src/features/perf/perf.js:80
-msgid "Full SQL + stack"
+#: src/features/perf/perf.js:68
+msgid "Request · SQL · duration"
+msgstr ""
+
+#: src/features/perf/perf.js:68
+msgid "Id · time · CPU"
 msgstr ""
 
 #: src/features/perf/perf.js:82
+msgid "Flame Graph (speedscope)"
+msgstr ""
+
+#: src/features/perf/perf.js:91
+msgid "No SQL recorded."
+msgstr ""
+
+#: src/features/perf/perf.js:96
+msgid "Full SQL + stack"
+msgstr ""
+
+#: src/features/perf/perf.js:98
 msgid "%s queries · SQL %s / total %s · Python ≈ %s"
 msgstr ""
 
-#: src/features/perf/perf.js:84
+#: src/features/perf/perf.js:100
 msgid "Repeated queries — N+1 suspects (%s)"
 msgstr ""
 
-#: src/features/perf/perf.js:84
+#: src/features/perf/perf.js:100
 msgid "Count · caller · time"
 msgstr ""
 
-#: src/features/perf/perf.js:84
-#: src/features/perf/perf.js:87
+#: src/features/perf/perf.js:100
+#: src/features/perf/perf.js:103
 msgid "Query"
 msgstr ""
 
-#: src/features/perf/perf.js:86
+#: src/features/perf/perf.js:102
 msgid "✓ No repeated query."
 msgstr ""
 
-#: src/features/perf/perf.js:87
+#: src/features/perf/perf.js:103
 msgid "Slowest queries (%s)"
 msgstr ""
 
-#: src/features/perf/perf.js:87
+#: src/features/perf/perf.js:103
 msgid "Caller · time"
 msgstr ""
 

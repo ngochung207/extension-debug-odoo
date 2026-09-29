@@ -109,7 +109,7 @@ await sleep(1500); // the chatter's requests
 await click('#refresh');
 await show('perf');
 const row = await panel.waitForFunction(() => [...document.querySelectorAll('#perf .list > li')]
-  .find((li) => li.querySelector('.name')?.textContent.endsWith('sale.order/web_read')), { timeout: 15_000 });
+  .find((li) => li.dataset.q.includes('sale.order/web_read')), { timeout: 15_000 });
 await row.evaluate((li) => li.click());
 await panel.waitForFunction(() => document.querySelector('#perf li.open .detail details'), { timeout: 15_000 });
 await panel.$$eval('#perf li.open .detail > div > details', (ds) => ds.forEach((d) => { d.open = true; }));

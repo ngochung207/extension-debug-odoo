@@ -513,7 +513,7 @@ msgstr "Profiling chưa được bật cho database này.\nBật trong 5 phút? 
 msgid "Profiling could not be enabled."
 msgstr "Vẫn chưa bật được profiling."
 
-#: src/features/perf/perf.js:35
+#: src/features/perf/perf.js:34
 msgid "Server profiler"
 msgstr "Profiler server"
 
@@ -534,75 +534,87 @@ msgid "off"
 msgstr "tắt"
 
 #: src/features/perf/perf.js:46
-msgid "Every request of this session will record its SQL + Python stacks."
-msgstr "Mỗi request của phiên này sẽ được ghi SQL + stack Python."
+msgid "since %s"
+msgstr "từ %s"
 
-#: src/features/perf/perf.js:47
-msgid "Uses Odoo's built-in profiler, needs base.group_system. While recording, each request writes one ir.profile row to the DB; Odoo stops it when it expires. Press ⟳ to reload the list."
-msgstr "Dùng profiler có sẵn của Odoo, cần base.group_system. Mỗi request khi đang đo ghi 1 dòng ir.profile vào DB, Odoo tự tắt khi hết hạn. Bấm ⟳ để tải danh sách mới."
+#: src/features/perf/perf.js:49
+msgid "Each request of this session writes one ir.profile row; ⟳ reloads the list."
+msgstr "Mỗi request của phiên này ghi một dòng ir.profile; ⟳ để tải lại danh sách."
 
 #: src/features/perf/perf.js:50
-msgid "Profiled requests"
-msgstr "Request đã đo"
+msgid "Records the SQL + Python stacks of every request of this session (Odoo's built-in profiler, base.group_system)."
+msgstr "Ghi lại SQL + stack Python của mọi request trong phiên này (profiler có sẵn của Odoo, base.group_system)."
 
-#: src/features/perf/perf.js:55
+#: src/features/perf/perf.js:64
 msgid "No request yet: use the Odoo page, then press ⟳."
 msgstr "Chưa có request nào, thao tác trên trang Odoo rồi bấm ⟳."
 
-#: src/features/perf/perf.js:55
+#: src/features/perf/perf.js:64
 msgid "No profile data yet."
 msgstr "Chưa có dữ liệu profile."
 
-#: src/features/perf/perf.js:57
+#: src/features/perf/perf.js:66
 msgid "Latest session: %s"
 msgstr "Phiên gần nhất: %s"
 
-#: src/features/perf/perf.js:58
+#: src/features/perf/perf.js:67
+msgid "Filter request"
+msgstr "Lọc request"
+
+#: src/features/perf/perf.js:67
+msgid "%s requests"
+msgstr "%s request"
+
+#: src/features/perf/perf.js:67
+msgid "%s/%s requests"
+msgstr "%s/%s request"
+
+#: src/features/perf/perf.js:68
 msgid "Request · SQL · duration"
 msgstr "Request · SQL · thời gian"
 
-#: src/features/perf/perf.js:58
-msgid "Id · date · CPU"
-msgstr "Id · ngày · CPU"
+#: src/features/perf/perf.js:68
+msgid "Id · time · CPU"
+msgstr "Id · giờ · CPU"
 
-#: src/features/perf/perf.js:67
+#: src/features/perf/perf.js:82
 msgid "Flame Graph (speedscope)"
 msgstr "Flame graph (speedscope)"
 
-#: src/features/perf/perf.js:75
+#: src/features/perf/perf.js:91
 msgid "No SQL recorded."
 msgstr "Không có SQL nào được ghi."
 
-#: src/features/perf/perf.js:80
+#: src/features/perf/perf.js:96
 msgid "Full SQL + stack"
 msgstr "SQL đầy đủ + stack"
 
-#: src/features/perf/perf.js:82
+#: src/features/perf/perf.js:98
 msgid "%s queries · SQL %s / total %s · Python ≈ %s"
 msgstr "%s query · SQL %s / tổng %s · Python ≈ %s"
 
-#: src/features/perf/perf.js:84
+#: src/features/perf/perf.js:100
 msgid "Repeated queries — N+1 suspects (%s)"
 msgstr "Query lặp lại — nghi N+1 (%s)"
 
-#: src/features/perf/perf.js:84
+#: src/features/perf/perf.js:100
 msgid "Count · caller · time"
 msgstr "Số lần · nơi gọi · thời gian"
 
-#: src/features/perf/perf.js:84
-#: src/features/perf/perf.js:87
+#: src/features/perf/perf.js:100
+#: src/features/perf/perf.js:103
 msgid "Query"
 msgstr "Câu truy vấn"
 
-#: src/features/perf/perf.js:86
+#: src/features/perf/perf.js:102
 msgid "✓ No repeated query."
 msgstr "✓ Không có query lặp lại."
 
-#: src/features/perf/perf.js:87
+#: src/features/perf/perf.js:103
 msgid "Slowest queries (%s)"
 msgstr "Query chậm nhất (%s)"
 
-#: src/features/perf/perf.js:87
+#: src/features/perf/perf.js:103
 msgid "Caller · time"
 msgstr "Nơi gọi · thời gian"
 

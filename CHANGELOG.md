@@ -11,6 +11,7 @@ All notable changes to this project are documented here. Format: [Keep a Changel
 
 ### Changed
 
+- **Perf tab** in one card: status and Start / Stop on one line, a one-line note, then the requests with a filter and a count. Rows read like the RPC tab (method + model), with id · time · CPU below; the panel's own requests (ir.profile reads, session info) are left out.
 - **Translations tab**: one input for the apps to export: the word being typed searches the installed modules (name or title) listed below it, ticking one puts its name in the input, Enter picks the match; typing the names still works.
 
 ## [0.1.1] - 2026-09-29
