@@ -32,6 +32,7 @@ Chế độ developer có sẵn của Odoo cho bạn biết trên màn hình *c�
 | **Record** | Định danh & metadata (xmlid, `noupdate`, người tạo / sửa), mọi field kèm kiểu, giá trị, module, cách lưu, nguồn compute / related, `groups=` và các field mà nó kích hoạt tính lại. |
 | **View** | Cây kế thừa của view hiện tại (primary + extension, priority, file nguồn), arch đã gộp, thông tin action, modifier của field trên form (`invisible` / `readonly` / `required`) tính đúng như webclient, *Chọn trên trang*. |
 | **RPC** | Nhật ký trực tiếp các lời gọi JSON-RPC và JSON-2 từ lúc tải trang: thời gian, lỗi kèm traceback, và nút nhảy sang tab Security khi gặp `AccessError`. |
+| **Code** | ORM Console: JavaScript với `env` kiểu ORM (`env['sale.order'].search(…)`, `read`, `mapped`, `write`, mọi method public…) chạy **dưới quyền user đang đăng nhập**, nên server áp ACL, record rule và công ty đang chọn của user đó. Mặc định chỉ đọc; tick **Allow writes** để cho phép ghi. Kết quả dạng bảng, print, lỗi kèm traceback server, danh sách mọi lời gọi. |
 | **Access** | Phiên làm việc (db, version, `web.base.url`, `test_mode`), quyền thực tế, ACL, record rule, nhóm, tham số hệ thống (giá trị bí mật được che). |
 | **Apps** | Với danh sách module cách nhau bởi `;`: Activate (Update Apps List rồi cài kèm dependency), Upgrade, Open Forms; bên dưới là mọi module đã cài (cần quyền Settings). |
 | **Security** | Giả lập quyền của user khác, giải thích từng rule vì sao một thao tác được phép hay bị chặn, đánh giá rủi ro của user, field bị ẩn bởi `groups=`, kiểm tra instance (HTTPS, cờ cookie, security header, database manager). **Switch to This User** mở cửa sổ ẩn danh tại trang đăng nhập của user đó, không đụng tới phiên của bạn (có OCA `impersonate_login`: impersonate ngay trong phiên này). |
@@ -138,7 +139,7 @@ extension/                 chính extension: đúng những gì có trong file z
                            bubble.js (nút kéo thả + iframe của bảng trong shadow root, copy bằng ⌥/Alt+click)
     panel/                 panel.html / panel.css / main.js: thanh tiêu đề, các tab, gắn với tab đang nhúng
     shared/                ui.js (DOM, RPC, đọc có cache), page.js (hàm lõi chạy trong trang), i18n.js, odoo.js, settings.js
-    features/<tab>/        mỗi tab một thư mục: record, view, rpc, access, security, translations, apps, perf
+    features/<tab>/        mỗi tab một thư mục: record, view, rpc, code, access, security, translations, apps, perf
       <tab>.js             giao diện tab: render(section, state)
       page.js              hàm được inject vào trang Odoo (tự chứa, không import)
       logic.js             logic thuần, không chrome.* / DOM

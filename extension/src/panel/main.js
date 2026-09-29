@@ -12,6 +12,7 @@ import { renderSecurity } from '../features/security/security.js';
 import { renderPerf } from '../features/perf/perf.js';
 import { renderTranslations } from '../features/translations/translations.js';
 import { renderApps } from '../features/apps/apps.js';
+import { renderCode } from '../features/code/code.js';
 import { loadSettings } from '../shared/settings.js';
 
 const settings = await loadSettings();
@@ -22,7 +23,7 @@ translateDom();
 let state = {};
 const TAB_KEY = 'odoo-debug-tab'; // sessionStorage (one per browser tab): the panel comes back on this tab after a reload
 let active = 'record';
-const RENDER = { record: renderRecord, view: renderView, access: renderAccess, security: renderSecurity, perf: renderPerf, translations: renderTranslations, apps: renderApps };
+const RENDER = { record: renderRecord, view: renderView, access: renderAccess, security: renderSecurity, perf: renderPerf, translations: renderTranslations, apps: renderApps, code: renderCode };
 const rendered = new Set(); // tabs are rendered lazily, once per refresh
 
 function renderActive() {

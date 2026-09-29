@@ -204,3 +204,23 @@ body.popup { width: 320px; height: auto; display: block; padding-bottom: 12px; b
 .popup .seg { display: flex; }
 .popup .seg button { flex: 1; padding: 5px 8px; font-size: 12px; }
 .popup #host { color: var(--fg); }
+
+/* Code tab */
+.card-body:has(> .console) { padding: 8px 10px; } /* its result table must not drop the card's padding (rule above) */
+.mt0 { margin-top: 0; margin-bottom: 6px; }
+textarea.code { display: block; width: 100%; min-height: 120px; resize: vertical; font-family: var(--mono); font-size: 11px; line-height: 1.5;
+  tab-size: 2; background: var(--bg); color: var(--fg); border: 1px solid var(--line); border-radius: 6px; padding: 6px 8px; }
+textarea.code:focus { outline: 2px solid var(--accent-soft); border-color: var(--accent); }
+.writes-on textarea.code { border-color: var(--warn); }
+.check { display: inline-flex; align-items: center; gap: 4px; cursor: pointer; }
+.writes-on .check { color: var(--warn); font-weight: 600; }
+.output pre.prints { margin-top: 6px; }
+.table-wrap { overflow: auto; max-height: 50vh; border: 1px solid var(--line); border-radius: 6px; margin-top: 4px; }
+.table-wrap th { position: sticky; top: 0; background: var(--surface); font-family: var(--mono); }
+.code-help { margin-top: 12px; padding-top: 8px; border-top: 1px solid var(--line); }
+.help-title { font-weight: 600; margin: 6px 0 2px; }
+.help-list { margin: 0 0 4px; padding-left: 14px; list-style: '- '; }
+.help-list li { margin: 2px 0; color: var(--muted); }
+.help-list code { color: var(--fg); font-weight: 600; overflow-wrap: anywhere; }
+.code-help pre { margin-top: 4px; }
+.table-wrap td { font-family: var(--mono); font-size: 11px; white-space: pre-wrap; }

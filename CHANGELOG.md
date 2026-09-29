@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented here. Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), versions: [Semantic Versioning](https://semver.org/). Each release on GitHub uses its section below as release notes.
 
+## [1.0.0] - 2026-09-29
+
+### Added
+
+- **Code tab › ORM Console**: JavaScript with an ORM-like `env` (`env['sale.order'].search(…)`, `.read()`, `.mapped()`, `.write()`, any public method…) run in the Odoo page with the logged-in session, so the server applies that user's access rights, record rules and active companies. Read-only by default (writes are blocked before they are sent); **Allow writes** lets them through, each committed at once. Results as a table, prints, errors with line and server traceback, and the list of calls made.
+
 ## [0.1.1] - 2026-09-29
 
 ### Added
@@ -47,5 +53,6 @@ First public release. Chrome extension (Manifest V3) for Odoo 18 / 19 developers
 - The panel page is a `use_dynamic_url` web-accessible resource, so other sites can't frame it.
 - `odoo.conf` is not readable from a browser by design; nothing in the extension tries to.
 
+[1.0.0]: https://github.com/unclecatvn/extension-debug-odoo/releases/tag/v1.0.0
 [0.1.1]: https://github.com/unclecatvn/extension-debug-odoo/releases/tag/v0.1.1
 [0.1.0]: https://github.com/unclecatvn/extension-debug-odoo/releases/tag/v0.1.0

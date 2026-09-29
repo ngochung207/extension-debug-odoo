@@ -105,10 +105,13 @@ msgid "not found"
 msgstr ""
 
 #: src/features/apps/apps.js:44
+#: src/features/code/code.js:32
 msgid "Running…"
 msgstr ""
 
 #: src/features/apps/apps.js:46
+#: src/features/code/code.js:109
+#: src/features/code/code.js:148
 #: src/features/rpc/rpc.js:36
 #: src/features/translations/translations.js:71
 msgid "error"
@@ -225,6 +228,202 @@ msgstr ""
 
 #: src/features/apps/apps.js:140
 msgid "Author"
+msgstr ""
+
+#: src/features/code/code.js:16
+msgid "ORM Console"
+msgstr ""
+
+#: src/features/code/code.js:20
+#: src/panel/panel.html:29
+msgid "Code"
+msgstr ""
+
+#: src/features/code/code.js:25
+msgid "Run (⌘/Ctrl+Enter)"
+msgstr ""
+
+#: src/features/code/code.js:25
+msgid "Run"
+msgstr ""
+
+#: src/features/code/code.js:52
+msgid "Runs as %s (uid %s): their access rights, record rules and companies apply."
+msgstr ""
+
+#: src/features/code/code.js:56
+msgid "Lets the code call write, create, unlink and any other method that is not a read"
+msgstr ""
+
+#: src/features/code/code.js:57
+msgid "Allow writes"
+msgstr ""
+
+#: src/features/code/code.js:59
+msgid "⌘/Ctrl+Enter"
+msgstr ""
+
+#: src/features/code/code.js:60
+msgid "Read-only by default. With writes allowed, each call is committed at once: there is no rollback."
+msgstr ""
+
+#: src/features/code/code.js:79
+msgid "Available variables:"
+msgstr ""
+
+#: src/features/code/code.js:81
+msgid "environment of the logged-in user, with their access rights and record rules; env['res.partner'] is a void recordset"
+msgstr ""
+
+#: src/features/code/code.js:82
+msgid "current user, current company, active companies"
+msgstr ""
+
+#: src/features/code/code.js:83
+msgid "user id, context sent with every call, language"
+msgstr ""
+
+#: src/features/code/code.js:84
+msgid "record of an external id, if you can read it"
+msgstr ""
+
+#: src/features/code/code.js:85
+msgid "shows values above the result"
+msgstr ""
+
+#: src/features/code/code.js:86
+msgid "x2many commands namespace: Command.create(vals), link(id), set(ids)…"
+msgstr ""
+
+#: src/features/code/code.js:88
+msgid "Recordsets:"
+msgstr ""
+
+#: src/features/code/code.js:90
+msgid "read from the server"
+msgstr ""
+
+#: src/features/code/code.js:91
+msgid "work like in Python"
+msgstr ""
+
+#: src/features/code/code.js:92
+msgid "record ids, first id, count"
+msgstr ""
+
+#: src/features/code/code.js:93
+msgid "write to the server: need \"Allow writes\""
+msgstr ""
+
+#: src/features/code/code.js:94
+msgid "any other public method, called on these records (also needs \"Allow writes\")"
+msgstr ""
+
+#: src/features/code/code.js:95
+msgid "a method called on the model, without records"
+msgstr ""
+
+#: src/features/code/code.js:97
+msgid "To show a result, return it: lists of records show as a table."
+msgstr ""
+
+#: src/features/code/code.js:99
+msgid "JavaScript, not Python: await every server call, lists and objects in JS syntax (true / false / null)."
+msgstr ""
+
+#: src/features/code/code.js:100
+msgid "Every call goes through /web/dataset/call_kw as the logged-in user: no sudo(), no SQL, no private _methods. Methods that switch to sudo() inside still do so, as when clicked in Odoo."
+msgstr ""
+
+#: src/features/code/code.js:101
+msgid "The code runs in the Odoo page with its own JavaScript rights: only run code you understand. An endless loop freezes the page (reload it)."
+msgstr ""
+
+#: src/features/code/code.js:106
+#: src/shared/ui.js:30
+msgid "No response — is this an Odoo page?"
+msgstr ""
+
+#: src/features/code/code.js:109
+msgid "ok"
+msgstr ""
+
+#: src/features/code/code.js:110
+msgid "read-only"
+msgstr ""
+
+#: src/features/code/code.js:110
+msgid "writes allowed"
+msgstr ""
+
+#: src/features/code/code.js:111
+#: src/features/code/code.js:149
+msgid "%s ms"
+msgstr ""
+
+#: src/features/code/code.js:112
+msgid "%s calls"
+msgstr ""
+
+#: src/features/code/code.js:113
+msgid "%s write calls"
+msgstr ""
+
+#: src/features/code/code.js:117
+msgid "No return value: end with return … to see one."
+msgstr ""
+
+#: src/features/code/code.js:123
+msgid "(line %s)"
+msgstr ""
+
+#: src/features/code/code.js:128
+msgid "This page's Content-Security-Policy forbids running code (a proxy in front of Odoo adds script-src)."
+msgstr ""
+
+#: src/features/code/code.js:129
+#: src/shared/ui.js:94
+msgid "Traceback"
+msgstr ""
+
+#: src/features/code/code.js:136
+msgid "%s rows (first %s shown)"
+msgstr ""
+
+#: src/features/code/code.js:136
+msgid "%s rows"
+msgstr ""
+
+#: src/features/code/code.js:140
+msgid "JSON"
+msgstr ""
+
+#: src/features/code/code.js:144
+msgid "Calls (%s)"
+msgstr ""
+
+#: src/features/code/code.js:147
+msgid "write"
+msgstr ""
+
+#: src/features/code/page.js:46
+msgid "%s writes: blocked in read-only mode (tick \"Allow writes\" to run it)"
+msgstr ""
+
+#: src/features/code/page.js:48
+msgid "Stopped after %s calls"
+msgstr ""
+
+#: src/features/code/page.js:78
+msgid "%s has no field %s"
+msgstr ""
+
+#: src/features/code/page.js:102
+msgid "Expected singleton: %s"
+msgstr ""
+
+#: src/features/code/page.js:144
+msgid "%s.%s is not relational"
 msgstr ""
 
 #: src/features/perf/perf.js:14
@@ -922,15 +1121,15 @@ msgstr ""
 msgid "The form is read-only: every field is readonly."
 msgstr ""
 
-#: src/panel/main.js:33
+#: src/panel/main.js:34
 msgid "Cannot read this tab: %s"
 msgstr ""
 
-#: src/panel/main.js:33
+#: src/panel/main.js:34
 msgid "The current tab is not an Odoo page."
 msgstr ""
 
-#: src/panel/main.js:89
+#: src/panel/main.js:90
 msgid "Not an Odoo page"
 msgstr ""
 
@@ -971,23 +1170,23 @@ msgstr ""
 msgid "RPC"
 msgstr ""
 
-#: src/panel/panel.html:29
+#: src/panel/panel.html:30
 msgid "Access"
 msgstr ""
 
-#: src/panel/panel.html:30
+#: src/panel/panel.html:31
 msgid "Security"
 msgstr ""
 
-#: src/panel/panel.html:31
+#: src/panel/panel.html:32
 msgid "Translations"
 msgstr ""
 
-#: src/panel/panel.html:32
+#: src/panel/panel.html:33
 msgid "Apps"
 msgstr ""
 
-#: src/panel/panel.html:33
+#: src/panel/panel.html:34
 msgid "Perf"
 msgstr ""
 
@@ -1025,14 +1224,6 @@ msgstr ""
 
 #: src/shared/ui.js:12
 msgid "No tab is open."
-msgstr ""
-
-#: src/shared/ui.js:30
-msgid "No response — is this an Odoo page?"
-msgstr ""
-
-#: src/shared/ui.js:94
-msgid "Traceback"
 msgstr ""
 
 #: src/shared/ui.js:105

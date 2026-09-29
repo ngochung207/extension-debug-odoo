@@ -35,6 +35,7 @@ shadow DOM so it never touches Odoo's styles.
 | **Record** | Identity & metadata (xmlids, `noupdate`, create / write user), every field with its type, value, module, storage, compute / related source, `groups=` and the fields it triggers a recompute of. |
 | **View** | Inheritance tree of the current view (primary + extensions, priority, source file), combined arch, action details, form field modifiers (`invisible` / `readonly` / `required`) evaluated like the webclient, *Pick on page*. |
 | **RPC** | Live log of JSON-RPC and JSON-2 calls from page load: timing, errors with tracebacks, and a jump to the Security tab for `AccessError`s. |
+| **Code** | ORM Console: JavaScript with an ORM-like `env` (`env['sale.order'].search(…)`, `read`, `mapped`, `write`, any public method…) run **as the logged-in user**, so the server applies their ACLs, record rules and active companies. Read-only by default; **Allow writes** lets writes through. Results as a table, prints, errors with server traceback, every call made. |
 | **Access** | Session (db, version, `web.base.url`, `test_mode`), effective rights, ACLs, record rules, groups, system parameters (secrets masked). |
 | **Apps** | For a `;`-separated list of modules: Activate (Update Apps List, then install with dependencies), Upgrade, Open Forms; every installed module below (Settings rights). |
 | **Security** | Simulate another user's rights, explain rule by rule why an operation is allowed or blocked, user risk audit, fields hidden by `groups=`, instance checks (HTTPS, cookie flags, security headers, database manager). **Switch to This User** opens an incognito window at that user's login, leaving your session alone (with OCA `impersonate_login`: impersonate in this session). |
@@ -155,7 +156,7 @@ extension/                 the extension itself: exactly what the release zip co
                            bubble.js (draggable button + the panel's iframe in a shadow root, ⌥/Alt+click copy)
     panel/                 panel.html / panel.css / main.js: header, tabs, binding to the tab it is embedded in
     shared/                ui.js (DOM, RPC, cached reads), page.js (core page functions), i18n.js, odoo.js, settings.js
-    features/<tab>/        one folder per tab: record, view, rpc, access, security, translations, apps, perf
+    features/<tab>/        one folder per tab: record, view, rpc, code, access, security, translations, apps, perf
       <tab>.js             the tab UI: render(section, state)
       page.js              functions injected into the Odoo page (self-contained, no imports)
       logic.js             pure logic, no chrome.* / DOM
@@ -184,6 +185,7 @@ There is no per-version code. To support another version, check these spots and 
 | Webclient internals: `__WOWL_DEBUG__` action service, `currentState`, `odoo.loader` + `py_js`, form `archInfo` | `shared/page.js`, `features/view/page.js`, `features/security/page.js` |
 | `/odoo/…` URLs (older versions: `/web#…`) | `shared/page.js` fallback |
 | Server methods: `has_access`, `res.users.has_groups`, `get_metadata`, `get_views`, `/web/become` | `features/access`, `features/security`, `features/record`, `features/view` |
+| User context with active companies (`@web/core/user` via `odoo.loader`; else `user_context` of the session, without `allowed_company_ids`) | `features/code/page.js` |
 
 Keep pure fallbacks in `shared/odoo.js` (tested in `tests/odoo.test.mjs` at the repo root). Page functions can't import, so their
 fallbacks stay inline. If one spot grows past a couple of branches, that is the time to add an adapter, not before.
