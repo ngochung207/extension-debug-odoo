@@ -45,9 +45,10 @@ code, pre, .mono { font-family: var(--mono); font-size: 11px; }
 
 /* ---------- content ---------- */
 main { flex: 1; min-height: 0; overflow: auto; container-type: inline-size; } /* container: lists turn into tables when wide */
-.tab { display: none; padding: 10px; } /* padding here, not on <main>: sticky would stop that far from the top */
+.tab { display: none; padding: 10px 0; } /* no side padding: cards go edge to edge. On .tab, not <main>: sticky would stop that far from the top */
 .tab.active { display: block; }
-.card { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; margin-bottom: 10px; overflow: clip; } /* clip, not hidden: hidden would trap sticky toolbars */
+.tab > .toolbar { padding-inline: 10px; } /* a tab without cards (RPC): its filter lines up with the rows */
+.card { background: var(--surface); border-block: 1px solid var(--line); margin-bottom: 10px; overflow: clip; } /* edge to edge: no side border, no rounded corner */ /* clip, not hidden: hidden would trap sticky toolbars */
 /* cards are <details> (see block()): the title row opens / closes them */
 details.card { margin-top: 0; }
 .card > summary { display: flex; align-items: center; gap: 6px; padding: 8px 10px; list-style: none; color: var(--fg); }
