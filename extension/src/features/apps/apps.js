@@ -1,13 +1,14 @@
-// Apps tab: for a typed list of modules, Activate (Update Apps List, then install them all), Upgrade, or open their
-// forms in new tabs. Same server methods as Odoo's Apps menu; install / upgrade then reload the Odoo page.
-// Below: every installed module, filterable.
-import { planInstall, planUpgrade, stateKind } from './logic.js';
-import { splitList } from '../translations/logic.js';
-import {
-  exec, tabId, call, cached, sessionInfo, el, pill, empty, block, errBox, copyable, odooLink, splitRow, expandable, filteredList, listHead,
-  formValues, saveForm,
-} from '../../shared/ui.js';
-import { _t, N_ } from '../../shared/i18n.js';
+// Apps tab, one card: a list of modules (typed, or ticked below the input, which also searches them) to Activate
+// (Update Apps List, then install them all), Upgrade, or open their forms in new tabs. Same server methods as Odoo's
+// Apps menu; install / upgrade then reload the Odoo page. The list shows the installed modules, and every module
+// matching the word being typed, installed or not.
+import { planInstall, planUpgrade, stateKind, moduleFilter } from './logic.js';
+import { splitList } from '../../shared/list.js';
+import { exec, tabId, call, sessionInfo } from '../../shared/bridge.js';
+import { el, pill, empty, card, errBox, odooLink, formValues, saveForm } from '../../shared/ui.js';
+import { modulePicker } from '../../shared/picker.js';
+import { searchBar } from './searchbar.js';
+import { _t } from '../../shared/i18n.js';
 
 const read = (names) => call('ir.module.module', 'search_read', [[['name', 'in', names]]], { fields: ['name', 'shortdesc', 'state', 'latest_version'] });
 const formPath = (id) => `action-base.open_module_tree/${id}`; // the Apps action: its breadcrumb leads back to Apps
@@ -15,29 +16,30 @@ const names = (list) => list.map((m) => m.name).join(', ');
 const needsAdmin = () => empty(_t('Needs Settings rights (base.group_system).'));
 
 export function renderApps(s, state) {
-  block(s, 'modules', _t('Modules'), async () => {
+  card(s, async () => { // the tab's only card: no title to open it by
     if (!(await sessionInfo()).is_system) return needsAdmin();
-    const input = el('input', { type: 'text', placeholder: 'sale; stock; my_module', value: formValues('apps').modules || '', spellcheck: false });
-    const status = el('ul', { class: 'list' });
+    const last = formValues('apps');
+    const input = el('input', { type: 'text', placeholder: _t('Search or type: sale; stock; my_module'), 'aria-label': _t('Modules'), value: last.modules || '', spellcheck: false });
+    // Odoo's Apps filters, kept across reloads (the list opens on the installed modules, as the Apps menu opens on Apps)
+    const f = last.filters || { installed: true };
+    if (typeof f.category !== 'string') f.category = null; // an id, saved before categories went by name
+    const save = () => saveForm('apps', { modules: input.value, filters: f });
+    const count = el('span', { class: 'muted count-note' });
     const log = el('ul', { class: 'steps' });
-
-    /** One row per typed module: title, version, state, ↗ to its form. */
-    const show = (typed, rows) => {
-      const byName = new Map(rows.map((m) => [m.name, m]));
-      status.replaceChildren(...typed.map((name) => {
-        const m = byName.get(name);
-        return el('li', {}, m
-          ? splitRow([copyable(name), el('span', { class: 'grow muted' }, m.shortdesc), m.latest_version && pill(m.latest_version), pill(m.state, stateKind(m.state))],
-            odooLink(state.origin, formPath(m.id)))
-          : el('div', { class: 'row' }, copyable(name), el('span', { class: 'grow' }), pill(_t('not found'), 'err')));
-      }));
-    };
-    const refreshStatus = async () => {
-      const typed = splitList(input.value);
-      if (!typed.length) return status.replaceChildren();
-      show(typed, await read(typed));
-    };
-    input.addEventListener('change', () => refreshStatus().catch(() => {})); // Enter or leaving the field
+    // every module (Update Apps List adds the new ones: they show after the page reloads)
+    const mods = await call('ir.module.module', 'search_read', [[]], { fields: ['name', 'shortdesc', 'state', 'latest_version', 'author', 'application', 'category_id'], order: 'name' });
+    let keep = moduleFilter(f);
+    const list = modulePicker(input, mods, {
+      countEl: count,
+      count: (n, total) => _t('%s/%s modules', n, total),
+      extra: (m) => [m.latest_version && m.state === 'installed' && pill(m.latest_version),
+        m.state !== 'installed' && pill(m.state, stateKind(m.state)), odooLink(state.origin, formPath(m.id))],
+      shows: (m, q, picked) => picked || keep(m), // a ticked module shows whatever the filters
+    });
+    const refilter = () => { keep = moduleFilter(f); save(); bar.redraw(); input.dispatchEvent(new Event('input')); }; // the list redraws on input
+    // by name: Odoo has several categories of one name under different parents (Point of Sale, Delivery…)
+    const cats = [...new Set(mods.filter((m) => m.category_id).map((m) => m.category_id[1]))].sort((a, b) => a.localeCompare(b));
+    const bar = searchBar(input, count, f, cats, refilter);
 
     /** A log line with its outcome on the right. */
     const step = (text) => {
@@ -54,7 +56,7 @@ export function renderApps(s, state) {
         const typed = splitList(input.value);
         log.replaceChildren();
         if (!typed.length) return log.append(el('li', {}, errBox(new Error(_t('Enter at least one module.')))));
-        saveForm('apps', { modules: input.value });
+        save();
         for (const x of buttons) x.disabled = true;
         let current = null;
         try {
@@ -75,7 +77,6 @@ export function renderApps(s, state) {
       const [updated, added] = await call('ir.module.module', 'update_list');
       st.done(_t('%s updated · %s added', updated, added));
       const rows = await read(typed);
-      show(typed, rows);
       const p = planInstall(typed, rows);
       if (p.missing.length) throw new Error(_t('Not found, even after Update Apps List: %s', p.missing.join(', ')));
       if (p.uninstallable.length) throw new Error(_t('Not installable: %s', names(p.uninstallable)));
@@ -90,7 +91,6 @@ export function renderApps(s, state) {
 
     const upgrade = action(_t('Upgrade'), _t('Upgrade every module (they must be installed)'), async (typed, begin) => {
       const rows = await read(typed);
-      show(typed, rows);
       const p = planUpgrade(typed, rows);
       if (p.missing.length) throw new Error(_t('Not found: %s', p.missing.join(', ')));
       if (p.notInstalled.length) throw new Error(_t('Not installed (use Activate): %s', names(p.notInstalled)));
@@ -102,7 +102,6 @@ export function renderApps(s, state) {
 
     const open = action(_t('Open Forms ↗'), _t('Open the form of every module in a new tab'), async (typed, begin) => {
       const rows = await read(typed);
-      show(typed, rows);
       const found = typed.map((name) => rows.find((m) => m.name === name)).filter(Boolean);
       const here = await chrome.tabs.get(tabId);
       for (const [i, m] of found.entries()) {
@@ -114,29 +113,10 @@ export function renderApps(s, state) {
     });
 
     const form = el('div', { class: 'form' },
-      el('label', {}, _t('Modules'), input),
-      el('div', { class: 'note' }, _t('Technical names, separated by ;')),
-      el('div', { class: 'row mt' }, activate, upgrade, open),
-      el('div', { class: 'note' }, _t('Activate runs Update Apps List first. Install and upgrade reload the Odoo page when done.')),
+      bar.el,
+      list,
+      el('div', { class: 'row mt fill' }, activate, upgrade, open),
       log);
-    await refreshStatus().catch(() => {}); // after a reload: the state each module ended in
-    return el('div', {}, el('div', { class: 'pad' }, form), status);
-  });
-
-  block(s, 'installed', _t('Installed modules'), async () => {
-    if (!(await sessionInfo()).is_system) return needsAdmin();
-    // latest_version = the version installed in the DB (installed_version is computed from the manifest on disk: slow)
-    const mods = await cached('modules', () => call('ir.module.module', 'search_read', [[['state', '=', 'installed']]],
-      { fields: ['name', 'shortdesc', 'latest_version', 'author'], order: 'name' }));
-    const items = mods.map((m) => {
-      const li = el('li', {},
-        splitRow([copyable(m.name), el('span', { class: 'grow muted' }, m.shortdesc), m.latest_version && pill(m.latest_version)],
-          odooLink(state.origin, formPath(m.id))),
-        m.author ? el('div', { class: 'meta' }, m.author) : null);
-      li.dataset.q = `${m.name} ${m.shortdesc} ${m.author || ''}`.toLowerCase();
-      return expandable(li);
-    });
-    return filteredList(items, _t('Filter name / title / author'), N_('%s modules'), N_('%s/%s modules'),
-      listHead(_t('Module · title · version'), _t('Author')));
+    return el('div', { class: 'pad' }, form);
   });
 }

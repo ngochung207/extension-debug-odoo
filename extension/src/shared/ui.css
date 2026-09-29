@@ -8,6 +8,7 @@
   --warn: light-dark(#b06000, #fdd663); --warn-soft: light-dark(#fef3e0, #3a3020);
   --err: light-dark(#c5221f, #f28b82); --err-soft: light-dark(#fce8e6, #3c2020);
   --info: light-dark(#1a5fb4, #8ab4f8); --info-soft: light-dark(#e8f0fe, #1f2a3d);
+  --kw: light-dark(#a626a4, #d6a0e8);
   --mono: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 :root[data-theme=light] { color-scheme: light; }
@@ -16,7 +17,7 @@
 * { box-sizing: border-box; }
 html, body { margin: 0; height: 100%; overflow: hidden; } /* only <main> scrolls: the header never scrolls away */
 /* Header fixed, only <main> scrolls: toolbars can then stick to its top. */
-body { display: flex; flex-direction: column; font: 12px/1.45 system-ui, -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--fg); }
+body { --sans: 12px/1.45 system-ui, -apple-system, 'Segoe UI', sans-serif; display: flex; flex-direction: column; font: var(--sans); background: var(--bg); color: var(--fg); }
 button, input, select { font: inherit; color: inherit; }
 button { cursor: pointer; }
 code, pre, .mono { font-family: var(--mono); font-size: 11px; }
@@ -37,17 +38,20 @@ code, pre, .mono { font-family: var(--mono); font-size: 11px; }
 @keyframes spin { to { transform: rotate(360deg); } }
 .context { padding: 0 12px 6px; display: flex; gap: 6px; align-items: center; flex-wrap: wrap; color: var(--muted); min-height: 22px; }
 .context .model { font-family: var(--mono); font-weight: 600; color: var(--fg); }
-.tabs { display: flex; padding: 0 4px; overflow-x: auto; scrollbar-width: none; }
-.tabs button { flex: 1 0 auto; border: 0; background: none; padding: 7px 10px; color: var(--muted); border-bottom: 2px solid transparent; white-space: nowrap; }
+.tabs { display: flex; padding: 0 4px; }
+.tabs button { flex: 1 0 auto; border: 0; background: none; padding: 7px 8px; color: var(--muted); border-bottom: 2px solid transparent; white-space: nowrap; }
 .tabs button.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+/* every tab in sight, nothing to scroll: a narrow panel (beside the page) lays the 9 tabs out 5 + 4 */
+@media (max-width: 699px) { .tabs { display: grid; grid-template-columns: repeat(5, 1fr); } .tabs button { padding: 7px 2px; } }
 .count { display: inline-block; min-width: 16px; padding: 0 4px; border-radius: 8px; background: var(--accent-soft); color: var(--accent); font-size: 10px; font-weight: 600; }
 .count:empty { display: none; }
 
 /* ---------- content ---------- */
 main { flex: 1; min-height: 0; overflow: auto; container-type: inline-size; } /* container: lists turn into tables when wide */
-.tab { display: none; padding: 10px; } /* padding here, not on <main>: sticky would stop that far from the top */
+.tab { display: none; padding: 10px 0; } /* no side padding: cards go edge to edge. On .tab, not <main>: sticky would stop that far from the top */
 .tab.active { display: block; }
-.card { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; margin-bottom: 10px; overflow: clip; } /* clip, not hidden: hidden would trap sticky toolbars */
+.tab > .toolbar { padding-inline: 10px; } /* a tab without cards (RPC): its filter lines up with the rows */
+.card { background: var(--surface); border-block: 1px solid var(--line); margin-bottom: 10px; overflow: clip; } /* edge to edge: no side border, no rounded corner */ /* clip, not hidden: hidden would trap sticky toolbars */
 /* cards are <details> (see block()): the title row opens / closes them */
 details.card { margin-top: 0; }
 .card > summary { display: flex; align-items: center; gap: 6px; padding: 8px 10px; list-style: none; color: var(--fg); }
@@ -204,3 +208,128 @@ body.popup { width: 320px; height: auto; display: block; padding-bottom: 12px; b
 .popup .seg { display: flex; }
 .popup .seg button { flex: 1; padding: 5px 8px; font-size: 12px; }
 .popup #host { color: var(--fg); }
+
+/* Code tab */
+/* the console fills the tab: a bar, the editor (most of the height), the guide when asked, the result below */
+#code.active { display: flex; flex-direction: column; height: 100%; }
+#code > .card { flex: 1; min-height: 0; display: flex; flex-direction: column; margin-bottom: 0; }
+#code .card-body { flex: 1; min-height: 0; display: flex; flex-direction: column; padding: 8px 10px; }
+.console { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 6px; }
+.console-bar { flex-wrap: nowrap; align-items: center; gap: 10px; }
+.console-bar > * { flex: none; white-space: nowrap; } /* a label never breaks: the user's name gives way first */
+.console-bar .who { flex: 1 1 0; min-width: 0; text-align: right; overflow: hidden; text-overflow: ellipsis; font-family: var(--mono); font-size: 11px; }
+.btn.round { width: 24px; height: 24px; padding: 0; border-radius: 50%; font-weight: 700; }
+.btn.primary { background: var(--accent); color: var(--surface); font-weight: 600; }
+.btn.primary:hover { filter: brightness(1.1); background: var(--accent); }
+.btn.ghost { border-color: var(--line); color: var(--muted); }
+.btn.ghost[aria-pressed=true] { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+.console .editor { flex: 3 1 0; min-height: 140px; }
+.console .code-help { flex: 2 1 0; min-height: 100px; overflow: auto; margin: 0; padding: 6px 10px; border: 1px solid var(--line); border-radius: 6px; }
+.console .code-help[hidden] { display: none; }
+.console .output { flex: 2 1 0; min-height: 100px; overflow: auto; border: 1px solid var(--line); border-radius: 6px; padding: 0 8px 8px; }
+.console .output:empty { display: none; } /* before the first run: the editor takes it all */
+.console .output > .loading, .console .output > .error:first-child { margin-top: 8px; }
+.result-head { position: sticky; top: 0; z-index: 1; margin: 0 -8px 6px; padding: 5px 8px; background: var(--surface); border-bottom: 1px solid var(--line); }
+.mt0 { margin-top: 0; margin-bottom: 6px; }
+/* Editor: a transparent textarea over a <pre> with the same text in colours. Lines wrap: both layers must break them at
+   the same places, so they share font, padding, wrapping and the scrollbar's room. Line numbers: ::before of each line. */
+.editor { display: flex; background: var(--bg); border: 1px solid var(--line); border-radius: 6px; }
+.editor:focus-within { outline: 2px solid var(--accent-soft); border-color: var(--accent); }
+.writes-on .editor { border-color: var(--warn); }
+.editor-body { --gut: calc(var(--digits, 2) * 1ch + 14px); position: relative; flex: 1; min-width: 0; font: 11px/1.5 var(--mono);
+  background: linear-gradient(to right, var(--surface) var(--gut), var(--line) var(--gut) calc(var(--gut) + 1px), transparent 0);
+  border-radius: 5px; }
+.editor-body pre.hl, textarea.code { margin: 0; padding: 6px 8px 6px calc(var(--gut) + 8px); font: inherit; tab-size: 2;
+  white-space: pre-wrap; overflow-wrap: anywhere; word-break: normal; scrollbar-gutter: stable; }
+.editor-body pre.hl { position: absolute; inset: 0; overflow: hidden; border: 0; border-radius: 0; background: none; max-height: none;
+  color: var(--fg); pointer-events: none; counter-reset: ln; }
+.editor-body pre.hl > div { position: relative; min-height: 1.5em; counter-increment: ln; }
+.editor-body pre.hl > div::before { content: counter(ln); position: absolute; right: calc(100% + 14px); color: var(--muted); }
+textarea.code { position: relative; display: block; width: 100%; height: 100%; resize: none; overflow: hidden auto; border: 0; outline: 0;
+  background: none; color: transparent; caret-color: var(--fg); }
+textarea.code::placeholder { color: var(--muted); font-style: italic; }
+textarea.code::selection { background: color-mix(in srgb, var(--accent) 35%, transparent); color: transparent; }
+.tok-comment { color: var(--muted); font-style: italic; }
+.tok-string { color: var(--ok); }
+.tok-number { color: var(--warn); }
+.tok-kw { color: var(--kw); }
+.tok-builtin { color: var(--accent); font-weight: 600; }
+.tok-fn { color: var(--info); }
+.check { display: inline-flex; align-items: center; gap: 4px; cursor: pointer; }
+.check[hidden] { display: none; }
+.writes-on .writes-check { color: var(--warn); font-weight: 600; }
+.output pre.prints { margin-top: 6px; }
+.table-wrap { overflow: auto; max-height: 50vh; border: 1px solid var(--line); border-radius: 6px; margin-top: 4px; }
+.table-wrap th { position: sticky; top: 0; background: var(--surface); font-family: var(--mono); }
+.help-title { font-weight: 600; margin: 6px 0 2px; }
+.help-list { margin: 0 0 4px; padding-left: 14px; list-style: '- '; }
+.help-list li { margin: 2px 0; color: var(--muted); }
+.help-list code { color: var(--fg); font-weight: 600; overflow-wrap: anywhere; }
+.code-help pre { margin-top: 4px; }
+.example { position: relative; }
+.example pre { padding-right: 36px; }
+/* icon-only copy button, tooltip above it (as on a code block) */
+.copy-btn { position: absolute; top: 4px; right: 4px; display: grid; place-items: center; width: 26px; height: 26px; padding: 0;
+  border: 0; border-radius: 6px; background: none; color: var(--muted); cursor: pointer; }
+.copy-btn:hover, .copy-btn:focus-visible { background: var(--line); color: var(--fg); text-decoration: none; }
+.copy-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.copy-btn .copy-icons { display: grid; }
+.copy-btn .i-check, .copy-btn.copied .i-copy { display: none; }
+.copy-btn.copied .i-check { display: block; color: var(--ok); }
+.copy-btn.copied::after { content: none; } /* the check icon replaces the ✓ text of other copy buttons */
+.copy-btn::before { content: attr(data-tip); position: absolute; bottom: calc(100% + 6px); right: 0; /* right-aligned: centred, it would be clipped by the card */
+  padding: 4px 8px; border-radius: 6px; background: light-dark(#1f1d24, #3d3a42); color: #fff; font-size: 11px; line-height: 1.3;
+  white-space: nowrap; pointer-events: none; opacity: 0; transition: opacity .12s; z-index: 2; }
+.copy-btn:hover::before, .copy-btn:focus-visible::before, .copy-btn.copied::before { opacity: 1; }
+.copy-btn.copied::before { content: attr(data-done); }
+.table-wrap td { font-family: var(--mono); font-size: 11px; white-space: pre-wrap; }
+/* Code tab: suggestions under the caret (left / top set by suggest.js) */
+.suggest { font: var(--sans); /* not the editor's monospace, which it sits in */ position: absolute; z-index: 5; min-width: 220px; max-width: 100%; list-style: none; margin: 0; padding: 2px 0; max-height: 180px; overflow: auto;
+  border: 1px solid var(--line); border-radius: 6px; background: var(--surface); box-shadow: 0 4px 12px rgba(0,0,0,.15); }
+.suggest li { display: flex; gap: 8px; align-items: baseline; padding: 2px 8px; cursor: pointer; }
+.suggest li .name { white-space: nowrap; }
+.suggest li .muted { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.suggest li[aria-selected=true] { background: var(--accent-soft); }
+/* Translations tab: installed modules to tick, scrolling inside the form */
+.module-picker { margin-top: 4px; }
+.picker-head { flex-wrap: nowrap; align-items: center; gap: 8px; }
+.row.fill { flex-wrap: nowrap; gap: 8px; }
+.row.fill > .btn { flex: 1; text-align: center; padding: 8px 10px; font-size: 13px; font-weight: 600; } /* the whole width, easy to hit */
+/* Apps, Translations: the module list takes the height the panel has left, the buttons stay at its bottom (short panel: main scrolls) */
+:is(#apps, #translations).active { display: flex; flex-direction: column; height: 100%; }
+:is(#apps, #translations) > .card { flex: 1; min-height: 0; display: flex; flex-direction: column; margin-bottom: 0; }
+:is(#apps, #translations) :is(.card-body, .card-body > .pad, .form) { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+:is(#apps, #translations) .module-picker { flex: 1; min-height: 160px; display: flex; flex-direction: column; }
+:is(#apps, #translations) .module-picker .list { flex: 1; min-height: 0; max-height: none; }
+.chip:disabled { cursor: default; opacity: .85; } /* Translations: the template chip, always on */
+/* Translations: many active languages scroll inside two rows of chips instead of squeezing the module list */
+.langs { max-height: 58px; overflow-y: auto; align-items: center; }
+/* Apps: Odoo's search bar, the filters as facets inside it and ▾ opening them */
+.searchbar { position: relative; display: flex; flex-wrap: wrap; align-items: center; gap: 4px; padding: 2px 2px 2px 6px;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 6px; }
+.searchbar:focus-within { outline: 2px solid var(--accent-soft); border-color: var(--accent); }
+.searchbar .facets { display: contents; }
+.facet { display: inline-flex; align-items: center; gap: 2px; padding: 1px 2px 1px 6px; border-radius: 4px; background: var(--accent-soft); color: var(--accent); font-size: 11px; font-weight: 600; white-space: nowrap; }
+.facet-x { border: 0; background: none; color: inherit; padding: 0 3px; line-height: 1; cursor: pointer; }
+.form .searchbar input[type=text] { flex: 1; min-width: 90px; border: 0; background: none; outline: none; padding: 4px 2px; }
+.search-toggle { align-self: stretch; min-height: 26px; border: 0; border-left: 1px solid var(--line); background: none; color: var(--muted); padding: 0 10px; cursor: pointer; } /* ▾: easy to hit */
+.search-toggle[aria-expanded=true] { color: var(--accent); background: var(--accent-soft); }
+.search-panel { position: absolute; top: calc(100% + 4px); left: 0; right: 0; z-index: 3; display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+  padding: 8px; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; box-shadow: 0 6px 20px rgba(0,0,0,.25); }
+.search-panel[hidden] { display: none; }
+.search-col { display: flex; flex-direction: column; min-width: 0; }
+.search-col.cats { max-height: 260px; overflow-y: auto; border-left: 1px solid var(--line); padding-left: 8px; }
+.search-col hr { width: 100%; border: 0; border-top: 1px solid var(--line); margin: 4px 0; }
+.search-head { font-weight: 600; margin-bottom: 4px; }
+.search-item { flex: none; border: 0; background: none; text-align: left; padding: 3px 6px; border-radius: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.search-item:hover { background: var(--accent-soft); }
+.search-item[aria-pressed=true] { color: var(--accent); font-weight: 600; }
+.search-item[aria-pressed=true]::before { content: '✓ '; }
+.picker-head > input { flex: 1; min-width: 0; }
+.count-note { font-weight: normal; }
+.searchbar .count-note { font-size: 11px; white-space: nowrap; }
+.module-picker .list { max-height: 240px; overflow: auto; border: 1px solid var(--line); border-radius: 6px; }
+.module-picker label.pick { flex-direction: row; flex-wrap: nowrap; align-items: center; gap: 6px; cursor: pointer; font-weight: normal; }
+.module-picker label.pick > .name { flex: none; }
+.module-picker label.pick > .muted { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } /* one line per module */
+.module-picker .list > li:not([hidden]) { display: block; } /* one line even in the wide 2-column layout */

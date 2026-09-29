@@ -1,11 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { splitList, resolveLangs, resolveModules, b64ToBytes, gunzip, untar } from '../extension/src/features/translations/logic.js';
-
-assert.deepEqual(splitList(' vi_VN; fr_BE;fr_CA ;;'), ['vi_VN', 'fr_BE', 'fr_CA']);
-assert.deepEqual(splitList('sale, stock sale'), ['sale', 'stock']);
-assert.deepEqual(splitList(''), []);
-assert.deepEqual(splitList(undefined), []);
+import { resolveLangs, resolveModules, b64ToBytes, gunzip, untar } from '../extension/src/features/translations/logic.js';
 
 assert.deepEqual(resolveLangs(['vi_vn', 'fr_BE', 'VI_VN', 'xx_XX'], ['en_US', 'vi_VN', 'fr_BE']),
   { codes: ['vi_VN', 'fr_BE'], unknown: ['xx_XX'] });

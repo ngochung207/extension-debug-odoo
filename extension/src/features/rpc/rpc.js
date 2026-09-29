@@ -1,7 +1,8 @@
 // RPC tab: live log of the page's JSON-RPC calls, recorded by content/hook.js.
 import { parseRpc } from './logic.js';
 import { pageRpcLog } from './page.js';
-import { $, exec, el, pre, errBox, pill, details, empty, expandable, listHead } from '../../shared/ui.js';
+import { exec } from '../../shared/bridge.js';
+import { $, el, pre, errBox, pill, details, empty, expandable, listHead } from '../../shared/ui.js';
 import { _t } from '../../shared/i18n.js';
 
 const MAX = 300;

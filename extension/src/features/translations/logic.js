@@ -3,9 +3,6 @@
 /** The empty template, always exported: <module>/i18n/<module>.pot (lang key of base.language.export). */
 export const NEW_LANG = '__new__';
 
-/** "sale; stock ,web" → ['sale', 'stock', 'web'] (';' as asked, ',' and spaces tolerated, duplicates dropped). */
-export const splitList = (text) => [...new Set(String(text ?? '').split(/[;,\s]+/).filter(Boolean))];
-
 /** Wanted codes → active res.lang codes, matched case-insensitively (vi_vn → vi_VN); the rest in `unknown`. */
 export function resolveLangs(wanted, active) {
   const byLower = new Map(active.map((code) => [code.toLowerCase(), code]));

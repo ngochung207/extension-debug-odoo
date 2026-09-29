@@ -2,6 +2,29 @@
 
 All notable changes to this project are documented here. Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), versions: [Semantic Versioning](https://semver.org/). Each release on GitHub uses its section below as release notes.
 
+## [1.0.0] - 2026-09-29
+
+### Added
+
+- **Code tab › ORM Console**: JavaScript with an ORM-like `env` (`env['sale.order'].search(…)`, `.read()`, `.mapped()`, `.write()`, any public method…) run in the Odoo page with the logged-in session, so the server applies that user's access rights, record rules and active companies. Fields read like in Python (`return rec.state`, `rec.partner_id.name`, prefetched when iterating a recordset) and written by assignment (`rec.state = 'sent'`, a `write` sent in order with the other calls). Suggestions while typing: the models of the installed modules after `env['`, their fields in strings and after a dot (following relations: `partner_id.country_id.`), the recordset methods. Read-only by default (writes are blocked before they are sent); **Allow Writes** lets them through, each committed at once. Results as a table, prints, errors with line and server traceback, and the list of calls made. The code is kept per Odoo server (origin). With **Auto Refresh** ticked (offered once Allow Writes is), the view on screen reloads its data after writes (Odoo's `soft_reload`, like web_refresher).
+- **Minimize** (− in the panel header): hides the panel back to the round button, which reopens it as it was.
+
+- **Code editor** instead of a plain textarea: syntax colours, line numbers, the suggestions open under the caret, and typing is smarter: `(`, `[`, `{` and quotes come in pairs (typing the closer skips it, Backspace between a pair deletes both, a selection is wrapped), Enter keeps the indent and puts the closer of `{ }` on its own line, Tab indents. Undo (⌘/Ctrl+Z) works through all of it.
+- **Code tab layout**: the editor fills the tab, under one bar (▶ Run, Allow Writes, Auto Refresh, the user it runs as, Guide). The result has its own scrolling area below it, headed by a sticky status line (ok / error, read-only, ms, calls). The guide (available variables, recordset API, examples) is hidden until Guide is pressed. Long lines wrap instead of scrolling sideways, each keeping its line number.
+
+### Changed
+
+- Every tab in sight, nothing to scroll: beside the page the 9 tabs are laid out 5 + 4, in full screen on one row.
+- The debug mode switch (`off` / `debug` / `assets`) moves from the panel header to the toolbar popup, which shows the page's current mode.
+- Tabs have no side padding (cards edge to edge), and a tab with a single card shows it without a title to click.
+- **Perf tab** in one card: status and Start / Stop on one line, a one-line note, then the requests with a filter and a count. Rows read like the RPC tab (method + model), with id · time · CPU below; the panel's own requests (ir.profile reads, session info) are left out.
+- **Apps tab** in one card: the modules to act on are typed or ticked in the list below an Odoo-like search bar. Its filters are Odoo's own (Installed / Not Installed, Apps / Extra, and the category), shown as facets inside the bar (× or Backspace removes one) and picked from ▾; Installed by default, remembered.
+- **Translations tab**: one input for the apps to export: the word being typed searches the installed modules (name or title) listed below it, ticking one puts its name in the input, Enter picks the match; typing the names still works. Languages are toggles (the active ones, the chosen first, two rows that scroll when there are many, the choice remembered), next to a locked Template (.pot) chip; the list takes the panel's height and a full-width button at the bottom says how many files it will download.
+
+### Fixed
+
+- **Code tab suggestions** follow the variable: after `partners = env['res.partner']…` and `orders = env['sale.order']…`, `partners.` offers res.partner fields (it used the last `env[…]` written). Also understood: `const x = rec.partner_id`, `for (const l of order.order_line)`, `env.user.` / `env.company.`, and `orders.mapped('…')` / `partners.filtered_domain([['…` (the fields of that variable). Dragging the scrollbar of a long list no longer closes it. Picking a suggestion with Tab / Enter while a Vietnamese input method (Telex) is composing the word no longer types it twice (`search_readsearch`), and skipping a closing `']` no longer leaves the list of models open for Enter to pick from.
+
 ## [0.1.1] - 2026-09-29
 
 ### Added
@@ -47,5 +70,6 @@ First public release. Chrome extension (Manifest V3) for Odoo 18 / 19 developers
 - The panel page is a `use_dynamic_url` web-accessible resource, so other sites can't frame it.
 - `odoo.conf` is not readable from a browser by design; nothing in the extension tries to.
 
+[1.0.0]: https://github.com/unclecatvn/extension-debug-odoo/releases/tag/v1.0.0
 [0.1.1]: https://github.com/unclecatvn/extension-debug-odoo/releases/tag/v0.1.1
 [0.1.0]: https://github.com/unclecatvn/extension-debug-odoo/releases/tag/v0.1.0

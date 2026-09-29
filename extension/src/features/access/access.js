@@ -2,10 +2,8 @@
 // and the instance configuration a browser can reach (system parameters; installed modules are in the Apps tab). odoo.conf itself is
 // never exposed over HTTP by Odoo: it holds admin_passwd and db_password.
 import { MODES, pickGroupField } from '../../shared/odoo.js';
-import {
-  call, cached, sessionInfo, fieldsOf, readAcls, readRules,
-  el, pre, pill, triPill, details, empty, kv, block, expandable, filteredList, copyable, odooLink, listHead, splitRow,
-} from '../../shared/ui.js';
+import { call, cached, sessionInfo, fieldsOf, readAcls, readRules } from '../../shared/bridge.js';
+import { el, pre, pill, triPill, details, empty, kv, block, expandable, filteredList, copyable, odooLink, listHead, splitRow } from '../../shared/ui.js';
 import { _t, N_ } from '../../shared/i18n.js';
 
 /** The logged-in user's groups (implied included), full_name only. */

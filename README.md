@@ -35,10 +35,11 @@ shadow DOM so it never touches Odoo's styles.
 | **Record** | Identity & metadata (xmlids, `noupdate`, create / write user), every field with its type, value, module, storage, compute / related source, `groups=` and the fields it triggers a recompute of. |
 | **View** | Inheritance tree of the current view (primary + extensions, priority, source file), combined arch, action details, form field modifiers (`invisible` / `readonly` / `required`) evaluated like the webclient, *Pick on page*. |
 | **RPC** | Live log of JSON-RPC and JSON-2 calls from page load: timing, errors with tracebacks, and a jump to the Security tab for `AccessError`s. |
+| **Code** | ORM Console: JavaScript with an ORM-like `env` (`env['sale.order'].search(…)`, `read`, `mapped`, `write`, any public method…) run **as the logged-in user**, so the server applies their ACLs, record rules and active companies. Fields read and written like in Python (`return rec.state`, `rec.state = 'sent'`). Suggests the models of the installed modules, their fields and the recordset methods while you type. Read-only by default; **Allow Writes** lets writes through, and **Auto Refresh** then reloads the view on screen. Results as a table, prints, errors with server traceback, every call made. |
 | **Access** | Session (db, version, `web.base.url`, `test_mode`), effective rights, ACLs, record rules, groups, system parameters (secrets masked). |
-| **Apps** | For a `;`-separated list of modules: Activate (Update Apps List, then install with dependencies), Upgrade, Open Forms; every installed module below (Settings rights). |
+| **Apps** | For a list of modules, typed or ticked in the list below an Odoo-like search bar (filters Installed / Not Installed, Apps / Extra, category, as facets): Activate (Update Apps List, then install with dependencies), Upgrade, Open Forms (Settings rights). |
 | **Security** | Simulate another user's rights, explain rule by rule why an operation is allowed or blocked, user risk audit, fields hidden by `groups=`, instance checks (HTTPS, cookie flags, security headers, database manager). **Switch to This User** opens an incognito window at that user's login, leaving your session alone (with OCA `impersonate_login`: impersonate in this session). |
-| **Translations** | Exports the `.pot` template and one `.po` per language for several apps with Odoo's own wizard, saved straight to `Downloads/<module>/i18n/`. |
+| **Translations** | Exports the `.pot` template and one `.po` per language for several apps (the input searches the installed modules as you type; tick them or type their names) and languages (toggles of the active ones) with Odoo's own wizard, saved straight to `Downloads/<module>/i18n/`. |
 | **Perf** | Odoo's built-in server profiler: start / stop, profiled requests, SQL summary with repeated queries (N+1 suspects), slowest queries, speedscope flame graph. |
 
 Plus: click any field name, model or xmlid in the panel to copy it, and <kbd>⌥ Alt</kbd> + click a field on the Odoo
@@ -52,6 +53,9 @@ page to copy its technical name.
     <td width="50%"><b>RPC</b>: every call with its timing<br><img src="website/screenshots/side-rpc.png" alt="RPC tab"></td>
   </tr>
 </table>
+
+**Code**: the ORM from JavaScript, run as the logged-in user.
+<img src="website/screenshots/side-code.png" alt="Code tab: an ORM search and its result table">
 
 **Record** in full screen: from 760px wide, lists become 2-column tables with sticky headers.
 <img src="website/screenshots/full-record.png" alt="Record tab in full screen">
@@ -85,9 +89,10 @@ The extension is not on the Chrome Web Store yet; install it unpacked (Chrome, E
   you left it. Drag the button anywhere; its position is kept per Odoo instance (dropped back near the bottom edge, it
   sticks to it again). Nothing shows on
   non-Odoo sites, and the toolbar icon is greyed out there.
+- **Minimize**: <kbd>−</kbd> in the panel header hides the panel back to the round button, which reopens it as it was.
 - **Full screen**: <kbd>⤢</kbd> in the panel header, <kbd>Esc</kbd> or <kbd>⤡</kbd> to leave. Open state and full
   screen survive page reloads.
-- **Debug mode**: the `off` / `debug` / `assets` switch in the header reloads Odoo in that mode.
+- **Debug mode**: click the toolbar icon; its `off` / `debug` / `assets` switch shows the page's mode and reloads Odoo in the one picked.
 - **Cards**: each tab is a stack of cards, closed at first; a card loads its data once opened, and open / closed cards
   stay so across reloads. Click a list row to open its details (label, storage, module, full value…), again to close.
 - **Copy**: click a field name, model, xmlid or parameter in the panel; <kbd>⌥ Alt</kbd> + click a form field, label,
@@ -128,7 +133,7 @@ Odoo data only reaches the DOM through `textContent`, and the panel page can't b
 
 ## Development
 
-No build step, no dependencies: edit, then reload the extension in `chrome://extensions`.
+No build step, no runtime dependencies: edit, then reload the extension in `chrome://extensions`.
 
 ```bash
 npm test
@@ -140,6 +145,33 @@ npm run i18n
 
 `npm test` runs every `tests/*.test.mjs` with Node's built-in runner; `npm run i18n` extracts strings to
 `extension/i18n/odoo_debug.pot` and merges them into every `.po`.
+
+End-to-end tests load the extension in headless Chrome (Puppeteer, the only dev dependency) against a real Odoo started
+with Docker; CI runs them on every pull request against Odoo 18 and 19:
+
+```bash
+npm ci
+```
+
+```bash
+ODOO_VERSION=19 docker compose -f e2e/compose.yml up -d --wait
+```
+
+```bash
+npm run e2e
+```
+
+`docker compose -f e2e/compose.yml down -v` drops the database; do it before switching `ODOO_VERSION`.
+
+The screenshots in `website/screenshots/` (this README and the website) come from the same setup, with Sales and CRM demo data; retake them after a UI change:
+
+```bash
+ODOO_VERSION=18 ODOO_MODULES=sale_management,crm ODOO_ARGS= docker compose -f e2e/compose.yml up -d --wait
+```
+
+```bash
+npm run screenshots
+```
 
 ### Project structure
 
@@ -153,15 +185,18 @@ extension/                 the extension itself: exactly what the release zip co
     popup/                 toolbar popup = options page: language, theme, show/hide the panel
     content/               hook.js (MAIN world, records JSON-RPC), relay.js (forwards to the panel),
                            bubble.js (draggable button + the panel's iframe in a shadow root, ⌥/Alt+click copy)
-    panel/                 panel.html / panel.css / main.js: header, tabs, binding to the tab it is embedded in
-    shared/                ui.js (DOM, RPC, cached reads), page.js (core page functions), i18n.js, odoo.js, settings.js
-    features/<tab>/        one folder per tab: record, view, rpc, access, security, translations, apps, perf
-      <tab>.js             the tab UI: render(section, state)
+    panel/                 panel.html / main.js: header, tabs, binding to the tab it is embedded in
+    shared/                bridge.js (page functions, RPC, cached reads), ui.js + ui.css (DOM, widgets, styles of the panel and popup),
+                           page.js (core page functions), list.js, picker.js, i18n.js, odoo.js, settings.js
+    features/<tab>/        one folder per tab: record, view, rpc, code, access, security, translations, apps, perf
+      <tab>.js             the tab UI: render(section, state); big ones split into a file per part (code: suggest.js, help.js)
       page.js              functions injected into the Odoo page (self-contained, no imports)
       logic.js             pure logic, no chrome.* / DOM
 website/                   project website; screenshots/ is shared with this README
 tests/                     *.test.mjs, one per logic module
+e2e/                       panel.e2e.mjs (Puppeteer) + compose.yml (Odoo 18 / 19 + PostgreSQL) + odoo.mjs (login, open the panel)
 tools/i18n.mjs             npm run i18n: extract strings → .pot, merge into every .po
+tools/screenshots.mjs      npm run screenshots: retake website/screenshots/*.png from a real Odoo
 ```
 
 Paths below are relative to `extension/`.
@@ -170,7 +205,7 @@ Paths below are relative to `extension/`.
 
 - Every user-visible string goes through `_t('English text %s', value)` (or `N_('…')` where `_t` can't run, e.g. page
   functions); static HTML uses `data-i18n`. Run `npm run i18n` and translate the new entries in `i18n/vi.po`.
-- Stable server data goes through `cached()` in `shared/ui.js`; anything that can change while you debug is always re-read.
+- Stable server data goes through `cached()` in `shared/bridge.js`; anything that can change while you debug is always re-read.
 
 ### Odoo versions
 
@@ -184,6 +219,7 @@ There is no per-version code. To support another version, check these spots and 
 | Webclient internals: `__WOWL_DEBUG__` action service, `currentState`, `odoo.loader` + `py_js`, form `archInfo` | `shared/page.js`, `features/view/page.js`, `features/security/page.js` |
 | `/odoo/…` URLs (older versions: `/web#…`) | `shared/page.js` fallback |
 | Server methods: `has_access`, `res.users.has_groups`, `get_metadata`, `get_views`, `/web/become` | `features/access`, `features/security`, `features/record`, `features/view` |
+| User context with active companies (`@web/core/user` via `odoo.loader`; else `user_context` of the session, without `allowed_company_ids`) | `features/code/page.js` |
 
 Keep pure fallbacks in `shared/odoo.js` (tested in `tests/odoo.test.mjs` at the repo root). Page functions can't import, so their
 fallbacks stay inline. If one spot grows past a couple of branches, that is the time to add an adapter, not before.

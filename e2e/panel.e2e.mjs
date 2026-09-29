@@ -1,0 +1,269 @@
+// End-to-end: the unpacked extension in Chrome (Puppeteer) against a real Odoo (e2e/compose.yml).
+//   ODOO_VERSION=19 docker compose -f e2e/compose.yml up -d --wait && npm run e2e
+import assert from 'node:assert/strict';
+import { test, before, after } from 'node:test';
+import puppeteer from 'puppeteer';
+import { EXT, openForm, openPanel } from './odoo.mjs';
+
+const ext = (s) => String(s).includes('chrome-extension://');
+// element.click(), not a mouse click: Puppeteer misplaces those in an iframe inside a closed shadow root
+const click = (sel) => panel.$eval(sel, (n) => n.click());
+
+let browser, page, panel;
+const errors = []; // uncaught errors, console.error and failed loads of the extension (the Odoo page's own ones are not ours)
+
+/** Listens to an extension target (panel iframe, service worker): Puppeteer's page events don't cover them.
+ * Log.enable replays what was logged before, e.g. a module that failed to load. */
+const watched = new Set();
+async function watch(target) {
+  const url = target.url();
+  if (!url.startsWith('chrome-extension://') || watched.has(target)) return;
+  watched.add(target);
+  const s = await target.createCDPSession();
+  s.on('Runtime.exceptionThrown', ({ exceptionDetails: d }) => errors.push(`${url}: ${d.exception?.description || d.text}`));
+  s.on('Runtime.consoleAPICalled', (e) => e.type === 'error' && errors.push(`${url}: ${e.args.map((a) => a.value ?? a.description).join(' ')}`));
+  s.on('Log.entryAdded', ({ entry: e }) => e.level === 'error' && errors.push(`${url}: ${e.text} ${e.url || ''}`));
+  await Promise.all([s.send('Runtime.enable'), s.send('Log.enable')]);
+}
+
+before(async () => {
+  browser = await puppeteer.launch({ enableExtensions: [EXT], pipe: true, args: ['--window-size=1400,900'] });
+  browser.on('targetcreated', watch);
+  browser.on('targetchanged', watch); // an iframe target gets its URL after it is created
+  await Promise.all(browser.targets().map(watch));
+  page = await browser.newPage();
+  await page.setViewport({ width: 1400, height: 900 });
+  page.on('pageerror', (e) => ext(e.stack) && errors.push(`page: ${e.message}`));
+  page.on('console', (m) => m.type() === 'error' && ext(m.location()?.url) && errors.push(`console: ${m.text()}`));
+
+  await openForm(browser, page, 'action-base.action_res_users/2'); // Administrator's user form
+});
+
+after(() => browser?.close());
+
+test('the button appears on the Odoo page and opens the panel', async () => {
+  panel = await openPanel(page);
+  await Promise.all(browser.targets().map(watch));
+  await panel.waitForFunction(() => document.querySelector('#status')?.textContent.includes('res.users'), { timeout: 15_000 });
+});
+
+test('every tab opens its cards without an error', async () => {
+  const tabs = await panel.$$eval('.tabs button', (bs) => bs.map((b) => b.dataset.tab));
+  assert.ok(tabs.length >= 9, `tabs: ${tabs}`);
+  for (const tab of tabs) {
+    await click(`.tabs [data-tab="${tab}"]`);
+    assert.equal(await panel.$eval(`#${tab}`, (s) => s.classList.contains('active')), true, `${tab} tab shown`);
+    await panel.$$eval(`#${tab} details.card`, (cards) => cards.forEach((c) => { c.open = true; }));
+    await panel.waitForFunction((t) => [...document.querySelectorAll(`#${t} .card-body`)] // opened cards fill in async
+      .every((b) => b.childElementCount && !b.querySelector(':scope > .loading')), { timeout: 30_000 }, tab);
+    const failed = await panel.$$eval(`#${tab} .card-body > .error, #${tab} > .empty`, (ns) => ns.filter((n) => !n.hidden).map((n) => n.textContent));
+    assert.deepEqual(failed, [], `${tab} tab`);
+  }
+});
+
+test('RPC tab: the calls the webclient made to load the form are listed', async () => {
+  await click('.tabs [data-tab="rpc"]');
+  const methods = await panel.$$eval('#rpc .list .name', (ns) => ns.map((n) => n.textContent));
+  assert.ok(methods.includes('web_read'), `methods: ${methods}`);
+});
+
+test('Code tab: a search runs as the logged-in user, writes are blocked by default', async () => {
+  const run = async (code) => {
+    await click('.tabs [data-tab="code"]');
+    await panel.waitForSelector('#code textarea.code');
+    await panel.$eval('#code textarea.code', (t, v) => { t.value = v; t.dispatchEvent(new Event('input')); }, code);
+    await click('#code .console .btn');
+    await panel.waitForFunction(() => {
+      const o = document.querySelector('#code .output');
+      return o.childElementCount && !o.querySelector('.loading');
+    }, { timeout: 15_000 });
+    return panel.$eval('#code .output', (o) => ({
+      status: o.querySelector('.pill')?.textContent, // ok / error
+      value: o.querySelector(':scope > pre.mt')?.textContent, // a single value
+      cells: [...o.querySelectorAll(':scope > div.mt td')].map((td) => td.textContent), // a list of records: a table
+      error: o.querySelector(':scope > .error')?.textContent,
+    }));
+  };
+
+  const read = await run("const u = await env['res.users'].search([['id', '=', env.uid]]);\nreturn u.read(['login']);");
+  assert.equal(read.status, 'ok', read.error);
+  assert.ok(read.cells.includes('admin'), `cells: ${read.cells}`);
+
+  const field = await run("const u = await env['res.users'].search([['id', '=', env.uid]]);\nreturn u.login;"); // read like in Python
+  assert.equal(field.status, 'ok', field.error);
+  assert.match(field.value, /^"?admin"?$/);
+
+  const write = await run("return env['res.partner'].create({ name: 'e2e' });");
+  assert.equal(write.status, 'error');
+  const count = await run("return env['res.partner'].search_count([['name', '=', 'e2e']]);");
+  assert.deepEqual([count.status, count.value], ['ok', '0'], 'the blocked create never reached the server');
+});
+
+test('Code tab: the editor colours the code and types smartly (pairs, indent, one undo step)', async () => {
+  await click('.tabs [data-tab="code"]');
+  await panel.$eval('#code textarea.code', (t) => { t.value = ''; t.dispatchEvent(new Event('input')); t.focus(); });
+  await page.keyboard.type("x = env['res.users'].search([['login', '=', 'admin']])");
+  await page.keyboard.press('Enter');
+  await page.keyboard.type('if (x) {');
+  await page.keyboard.press('Enter');
+  await page.keyboard.type('print(x)');
+  const editor = () => panel.$eval('#code', (s) => ({
+    value: s.querySelector('textarea.code').value,
+    strings: [...s.querySelectorAll('.tok-string')].map((n) => n.textContent),
+    builtins: [...s.querySelectorAll('.tok-builtin')].map((n) => n.textContent),
+    lines: s.querySelectorAll('pre.hl > div').length, // one numbered block per line
+  }));
+  const e = await editor();
+  assert.equal(e.value, "x = env['res.users'].search([['login', '=', 'admin']])\nif (x) {\n  print(x)\n}", 'pairs closed once, the } on its own line, indented');
+  assert.deepEqual(e.strings, ["'res.users'", "'login'", "'='", "'admin'"]);
+  assert.deepEqual(e.builtins, ['env', 'print']);
+  assert.equal(e.lines, 4);
+});
+
+test('Code tab: suggestions offer the installed models, their fields and the recordset methods', async () => {
+  const hints = async (code) => {
+    await panel.$eval('#code textarea.code', (t, v) => {
+      document.querySelector('#code .suggest').hidden = true; // not the list of the previous call
+      t.focus();
+      t.value = v;
+      t.setSelectionRange(v.length, v.length);
+      t.dispatchEvent(new Event('input'));
+    }, code);
+    await panel.waitForFunction(() => !document.querySelector('#code .suggest').hidden, { timeout: 10_000 });
+    return panel.$$eval('#code .suggest li .name', (ns) => ns.map((n) => n.textContent));
+  };
+  assert.equal((await hints("env['res.us"))[0], 'res.users');
+  assert.ok((await hints("env['res.users'].search([['log")).includes('login'));
+  const members = await hints("u = env['res.users'];\nu.partner_id.");
+  assert.ok(members.includes('read') && members.includes('email'), `members: ${members}`); // email: a res.partner field
+
+  await hints("env['res.us");
+  await panel.$eval('#code textarea.code', (t) => t.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true })));
+  assert.equal(await panel.$eval('#code textarea.code', (t) => t.value), "env['res.users", 'Enter inserts the first one');
+});
+
+test('Code tab: a pick replaces the word, also after a skipped closer and under an IME (Vietnamese Telex)', async () => {
+  await click('.tabs [data-tab="code"]');
+  const value = () => panel.$eval('#code textarea.code', (t) => t.value);
+  const open = () => panel.waitForFunction(() => !document.querySelector('#code .suggest').hidden, { timeout: 10_000 });
+  const reset = () => panel.$eval('#code textarea.code', (t) => { t.value = ''; t.dispatchEvent(new Event('input')); t.focus(); });
+
+  // typing ' then ] skips the closers the editor put in: the list of models must not stay open for Enter to pick from
+  await reset();
+  await page.keyboard.type("x = env['res.users']");
+  await page.keyboard.press('Enter');
+  assert.equal(await value(), "x = env['res.users']\n");
+
+  // Telex composes "search" (s is a tone key): Tab arrives while it composes, the IME commits the word after it
+  await reset();
+  await page.keyboard.type("env['res.users'].");
+  await panel.$eval('#code textarea.code', (t) => {
+    t.dispatchEvent(new CompositionEvent('compositionstart'));
+    t.setRangeText('search', t.selectionStart, t.selectionEnd, 'end');
+    t.dispatchEvent(new InputEvent('input', { isComposing: true }));
+  });
+  await open();
+  await panel.$eval('#code textarea.code', (t) => {
+    t.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', code: 'Tab', keyCode: 229, isComposing: true, bubbles: true, cancelable: true }));
+    t.dispatchEvent(new CompositionEvent('compositionend', { data: 'search' }));
+  });
+  await panel.waitForFunction(() => document.querySelector('#code textarea.code').value.endsWith('_read'), { timeout: 5_000 }).catch(() => {});
+  assert.equal(await value(), "env['res.users'].search_read");
+});
+
+test('Translations tab: one input searches the installed modules and holds the ticked ones', async () => {
+  await click('.tabs [data-tab="translations"]');
+  await panel.waitForSelector('#translations .module-picker li');
+  const state = () => panel.$eval('#translations', (s) => ({
+    apps: s.querySelector('form input[type=text]').value,
+    shown: [...s.querySelectorAll('.module-picker li:not([hidden])')].map((li) => li.dataset.name),
+    ticked: [...s.querySelectorAll('.module-picker li input:checked')].map((b) => b.closest('li').dataset.name),
+  }));
+  const type = (v) => panel.$eval('#translations form input[type=text]', (i, v) => { i.value = v; i.dispatchEvent(new Event('input')); }, v);
+  const key = (k) => panel.$eval('#translations form input[type=text]', (i, k) => i.dispatchEvent(new KeyboardEvent('keydown', { key: k, bubbles: true, cancelable: true })), k);
+  const tick = (name) => panel.$eval(`#translations .module-picker li[data-name="${name}"] input`, (b) => b.click());
+
+  await type('web; base_imp');
+  const { shown, ticked } = await state();
+  assert.ok(shown.includes('base_import') && shown.every((n) => n.includes('base_imp')), `the word being typed searches: ${shown}`);
+  assert.deepEqual(ticked, ['web']);
+  await tick('base_import');
+  assert.equal((await state()).apps, 'web; base_import; ', 'a tick replaces the word being typed');
+  assert.ok((await state()).shown.length > 2, 'then the whole list again');
+
+  await type('web; base_import; base_setu');
+  await key('Enter');
+  assert.equal((await state()).apps, 'web; base_import; base_setup; ', 'Enter picks the match, no export');
+  assert.equal(await panel.$eval('#translations .steps', (u) => u.childElementCount), 0);
+
+  await tick('web');
+  assert.equal((await state()).apps, 'base_import; base_setup; ', 'unticking removes it');
+
+  // languages are toggles; the button says how many files it will download (template + one .po per language, per app)
+  const button = () => panel.$eval('#translations button[type=submit]', (b) => b.textContent);
+  assert.equal(await button(), 'Export & Download · 2 files');
+  await panel.$eval('#translations .langs .chip:not(:disabled)', (c) => c.click());
+  assert.equal(await panel.$eval('#translations .langs .chip:not(:disabled)', (c) => c.getAttribute('aria-pressed')), 'true');
+  assert.equal(await button(), 'Export & Download · 4 files');
+  await panel.$eval('#translations .langs .chip:not(:disabled)', (c) => c.click()); // back off
+});
+
+test('Apps tab: Odoo\'s filters (Installed by default), the word being typed searches inside them', async () => {
+  await click('.tabs [data-tab="apps"]');
+  await panel.waitForSelector('#apps .module-picker li');
+  const shown = () => panel.$$eval('#apps .module-picker li:not([hidden])', (lis) => lis.map((li) => ({
+    name: li.querySelector('.name').textContent, // a state pill only when not installed (the other pill is the version)
+    state: [...li.querySelectorAll('.pill')].map((p) => p.textContent).find((t) => !/^\d/.test(t)) || 'installed',
+  })));
+  const type = (v) => panel.$eval('#apps input[type=text]', (i, v) => { i.value = v; i.dispatchEvent(new Event('input')); }, v);
+  const facet = (label) => panel.$eval('#apps .searchbar', (bar, label) => { // ▾, then the filter: as in Odoo's search panel
+    if (bar.querySelector('.search-panel').hidden) bar.querySelector('.search-toggle').click();
+    [...bar.querySelectorAll('.search-item')].find((b) => b.textContent.replace('✓ ', '') === label).click();
+  }, label);
+  const facets = () => panel.$$eval('#apps .searchbar .facet', (fs) => fs.map((f) => f.firstChild.textContent));
+
+  await type('');
+  const installed = await shown();
+  assert.ok(installed.some((m) => m.name === 'base'), 'base is installed');
+  assert.ok(installed.every((m) => m.state === 'installed'), 'Installed filter by default');
+  assert.deepEqual(await facets(), ['Installed'], 'shown as a facet inside the search bar');
+  await type('crm_s');
+  assert.deepEqual(await shown(), [], 'the search stays inside the filters, as in Odoo');
+  await facet('Not Installed');
+  assert.deepEqual(await facets(), ['Installed or Not Installed'], 'one facet per group, its options OR\'ed');
+  assert.deepEqual((await shown()).find((m) => m.name === 'crm_sms'), { name: 'crm_sms', state: 'uninstalled' }, 'Installed or Not Installed');
+  await facet('Apps');
+  assert.equal((await shown()).find((m) => m.name === 'crm_sms'), undefined, 'crm_sms is not an application');
+  await panel.$eval('#apps input[type=text]', (i) => { i.value = ''; i.dispatchEvent(new KeyboardEvent('keydown', { key: 'Backspace', bubbles: true, cancelable: true })); });
+  assert.deepEqual(await facets(), ['Installed or Not Installed'], 'Backspace in the empty input removes the last facet (Apps)');
+  await type('crm_s');
+  await panel.$eval('#apps .module-picker li:not([hidden]) input', (b) => b.click());
+  assert.equal(await panel.$eval('#apps input[type=text]', (i) => i.value), 'crm_sms; ');
+  await facet('Not Installed'); // back to the default filters
+  assert.deepEqual(await facets(), ['Installed']);
+  assert.ok((await shown()).some((m) => m.name === 'crm_sms'), 'a ticked module shows whatever the filters');
+});
+
+test('every tab is in sight: the tab strip wraps instead of scrolling', async () => {
+  const hidden = await panel.$$eval('.tabs button', (bs) => {
+    const nav = bs[0].parentElement.getBoundingClientRect();
+    return bs.filter((b) => { const r = b.getBoundingClientRect(); return r.left < nav.left || r.right > nav.right; }).map((b) => b.dataset.tab);
+  });
+  assert.deepEqual(hidden, []);
+});
+
+test('toolbar popup: the debug mode of the page, switched from there', async () => {
+  const [ext] = (await browser.extensions()).values();
+  await ext.triggerAction(page);
+  const popup = await (await browser.waitForTarget((t) => t.url().endsWith('/src/popup/popup.html'))).asPage();
+  await popup.waitForSelector('#debug button.on');
+  assert.equal(await popup.$eval('#debug button.on', (b) => b.textContent), 'off');
+  await Promise.all([page.waitForNavigation(), popup.$$eval('#debug button', (bs) => bs.find((b) => b.textContent === 'debug').click())]);
+  assert.equal(await page.evaluate(() => window.odoo.debug), '1');
+  await page.goto(page.url().replace('debug=1', 'debug=0')); // back to off for what follows
+  await page.waitForSelector('.o_form_view');
+});
+
+test('no error from the extension in the console', () => {
+  assert.deepEqual(errors, []);
+});

@@ -1,9 +1,9 @@
-// Panel shell (in an iframe inside the Odoo page): header (status, debug switch), tab switching, binding to its tab.
-// Settings live in the toolbar popup (src/popup/).
-// Each tab's content lives in src/features/<tab>/.
+// Panel shell (in an iframe inside the Odoo page): header (status), tab switching, binding to its tab.
+// The debug mode switch and the settings live in the toolbar popup (src/popup/); each tab's content in src/features/<tab>/.
 import { lang, loadLang, translateDom, _t } from '../shared/i18n.js';
-import { $, tabId, setTab, exec, el, pill, empty, clearCache, clearForms, copyable } from '../shared/ui.js';
-import { pageState, pageDebug } from '../shared/page.js';
+import { tabId, setTab, exec, clearCache } from '../shared/bridge.js';
+import { $, el, pill, empty, clearForms, copyable } from '../shared/ui.js';
+import { pageState } from '../shared/page.js';
 import { renderRecord } from '../features/record/record.js';
 import { renderView, setPicked } from '../features/view/view.js';
 import { mountRpc, addRpc, reloadRpc } from '../features/rpc/rpc.js';
@@ -12,6 +12,7 @@ import { renderSecurity } from '../features/security/security.js';
 import { renderPerf } from '../features/perf/perf.js';
 import { renderTranslations } from '../features/translations/translations.js';
 import { renderApps } from '../features/apps/apps.js';
+import { renderCode, forgetRun } from '../features/code/code.js';
 import { loadSettings } from '../shared/settings.js';
 
 const settings = await loadSettings();
@@ -22,7 +23,7 @@ translateDom();
 let state = {};
 const TAB_KEY = 'odoo-debug-tab'; // sessionStorage (one per browser tab): the panel comes back on this tab after a reload
 let active = 'record';
-const RENDER = { record: renderRecord, view: renderView, access: renderAccess, security: renderSecurity, perf: renderPerf, translations: renderTranslations, apps: renderApps };
+const RENDER = { record: renderRecord, view: renderView, access: renderAccess, security: renderSecurity, perf: renderPerf, translations: renderTranslations, apps: renderApps, code: renderCode };
 const rendered = new Set(); // tabs are rendered lazily, once per refresh
 
 function renderActive() {
@@ -66,10 +67,6 @@ function showTab(name, render = true) {
     b.classList.toggle('active', b.dataset.tab === name);
     b.setAttribute('aria-selected', b.dataset.tab === name);
   }
-  // narrow panel: scroll the tab strip to it (not scrollIntoView, which may scroll the Odoo page around the iframe too)
-  const nav = $('.tabs'), b = $(`.tabs [data-tab="${name}"]`);
-  const nr = nav.getBoundingClientRect(), br = b.getBoundingClientRect();
-  if (br.left < nr.left || br.right > nr.right) nav.scrollLeft += br.left - nr.left - (nr.width - br.width) / 2;
   for (const s of document.querySelectorAll('.tab')) s.classList.toggle('active', s.id === name);
   restoreScroll(name);
   if (render) renderActive();
@@ -89,9 +86,6 @@ async function refresh() {
     ? [el('span', {}, _t('Not an Odoo page'))]
     : [model ? copyable(model, 'model') : el('span', { class: 'model' }, '—'), resId && pill(`#${resId}`, 'accent'), viewType && pill(viewType),
       state.action?.name && el('span', {}, state.action.name)].filter(Boolean))); // replaceChildren would print null/undefined
-  for (const b of document.querySelectorAll('.seg button')) {
-    b.classList.toggle('on', !!state.odoo && (b.dataset.debug === '0' ? !state.debug : state.debug.split(',').includes(b.dataset.debug)));
-  }
   rendered.clear();
   restoreScroll(active); // the re-render empties the tab first: keep where it was
   renderActive();
@@ -103,8 +97,7 @@ let saved = null;
 try { saved = sessionStorage.getItem(TAB_KEY); } catch { /* storage off */ }
 if ([...document.querySelectorAll('.tabs button')].some((b) => b.dataset.tab === saved)) showTab(saved, false);
 for (const b of document.querySelectorAll('.tabs button')) b.addEventListener('click', () => showTab(b.dataset.tab));
-for (const b of document.querySelectorAll('[data-debug]')) b.addEventListener('click', () => exec(pageDebug, b.dataset.debug));
-$('#refresh').addEventListener('click', () => { clearCache(); clearForms(); refresh(); }); // every tab re-renders, forms empty
+$('#refresh').addEventListener('click', () => { clearCache(); clearForms(); forgetRun(); refresh(); }); // every tab re-renders, forms (and the Code tab's last run) empty
 
 // ---------- bound to the tab it is embedded in (iframe from src/content/bubble.js; a page reload recreates it) ----------
 let timer = null;
@@ -123,6 +116,9 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
     showTab('view');
   }
 });
+
+// ---------- minimize: back to the Odoo Debug button (content/bubble.js hides the frame; the panel keeps its state) ----------
+$('#minimize').addEventListener('click', () => chrome.tabs.sendMessage(tabId, { type: 'odoo-toggle', open: false }).catch(() => {}));
 
 // ---------- full screen: the frame belongs to content/bubble.js, which answers with the resulting state ----------
 const fullBtn = $('#full');

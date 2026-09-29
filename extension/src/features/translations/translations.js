@@ -1,45 +1,64 @@
 // Translations tab: exports the .pot template + the .po of each language for several apps, with Odoo's own export
 // wizard, and downloads every file straight to Downloads/<module>/i18n/ (<module>.pot, <lang>.po): nothing to unpack.
-import { NEW_LANG, splitList, resolveLangs, resolveModules, b64ToBytes, gunzip, untar } from './logic.js';
-import { call, cached, el, pill, block, errBox, formValues, saveForm } from '../../shared/ui.js';
+import { NEW_LANG, resolveLangs, resolveModules, b64ToBytes, gunzip, untar } from './logic.js';
+import { call, cached, installedModules } from '../../shared/bridge.js';
+import { el, pill, card, errBox, formValues, saveForm } from '../../shared/ui.js';
+import { splitList } from '../../shared/list.js';
+import { modulePicker } from '../../shared/picker.js';
 import { _t } from '../../shared/i18n.js';
 
 export function renderTranslations(s) {
-  block(s, 'export', _t('Export translations'), async () => {
+  card(s, async () => { // the tab's only card: no title to open it by
     const langs = await cached('active langs', () => call('res.lang', 'search_read', [[['active', '=', true]]], { fields: ['code', 'name'], order: 'code' }));
     const last = formValues('translations');
-    const apps = el('input', { type: 'text', placeholder: 'sale; stock; my_module', value: last.apps || '', spellcheck: false });
-    const langIn = el('input', { type: 'text', placeholder: 'vi_VN; fr_BE; fr_CA', value: last.langs || '', spellcheck: false });
-    const add = (code) => {
-      if (splitList(langIn.value).includes(code)) return;
-      langIn.value = [...splitList(langIn.value), code].join('; ');
-      langIn.focus();
+    const apps = el('input', { type: 'text', placeholder: _t('Search or type: sale; stock; my_module'), 'aria-label': _t('Apps To Export'), value: last.apps || '', spellcheck: false });
+    // Languages: the active ones as toggles (the wizard exports nothing else), the last choice kept
+    const picked = new Set(resolveLangs(splitList(last.langs), langs.map((l) => l.code)).codes);
+    const save = () => saveForm('translations', { apps: apps.value, langs: [...picked].join('; ') });
+    const count = el('span', { class: 'muted count-note' }); // how many installed modules match what is typed
+    const btn = el('button', { class: 'btn', type: 'submit' });
+    const summary = () => { // what the button will download: every app gets the template + one .po per language
+      const files = splitList(apps.value).length * (picked.size + 1);
+      btn.textContent = !files ? _t('Export & Download') : files === 1 ? _t('Export & Download · 1 file') : _t('Export & Download · %s files', files);
+    };
+    const chip = (l) => {
+      const b = el('button', { type: 'button', class: 'chip', title: l.name, 'aria-pressed': String(picked.has(l.code)) }, l.code);
+      b.addEventListener('click', () => {
+        if (picked.has(l.code)) picked.delete(l.code); else picked.add(l.code);
+        b.setAttribute('aria-pressed', String(picked.has(l.code)));
+        save();
+        summary();
+      });
+      return b;
     };
     const log = el('ul', { class: 'steps' });
-    const btn = el('button', { class: 'btn', type: 'submit' }, _t('Export & Download'));
     const form = el('form', { class: 'form' },
-      el('label', {}, _t('Apps To Export'), apps),
-      el('div', { class: 'note' }, _t('Technical names, separated by ;')),
-      el('label', { class: 'mt' }, _t('Languages'), langIn),
-      el('div', { class: 'row mt' }, el('span', { class: 'muted' }, _t('Active:')),
-        langs.map((l) => el('button', { type: 'button', class: 'chip', title: l.name, onclick: () => add(l.code) }, l.code))),
-      el('div', { class: 'note' }, _t('Always exported too: New Language (Empty translation template), as <module>.pot.')),
-      el('div', { class: 'mt' }, btn),
+      el('div', { class: 'row picker-head' }, apps, count), // no label: the placeholder and aria-label say what it is
+      // no read access to ir.module.module: typing the names still works
+      await installedModules().then(
+        (mods) => modulePicker(apps, mods, { countEl: count, count: (n, total) => _t('%s/%s installed modules', n, total) }),
+        () => el('div', { class: 'note' }, _t('Technical names, separated by ;'))),
+      el('div', { class: 'row mt langs' }, el('span', { class: 'muted' }, _t('Languages:')),
+        el('button', { type: 'button', class: 'chip', 'aria-pressed': 'true', disabled: true, title: _t('Always exported: the empty template, as <module>.pot') }, _t('Template (.pot)')),
+        [...langs].sort((a, b) => picked.has(b.code) - picked.has(a.code)).map(chip)), // the chosen ones first, in sight
+      el('div', { class: 'row mt fill' }, btn),
       log);
+    apps.addEventListener('input', summary);
+    summary();
     form.addEventListener('submit', async (ev) => {
       ev.preventDefault();
-      saveForm('translations', { apps: apps.value, langs: langIn.value });
+      save();
       btn.disabled = true;
       log.replaceChildren();
       try {
-        await exportAll(splitList(apps.value), splitList(langIn.value), langs.map((l) => l.code), log);
+        await exportAll(splitList(apps.value), [...picked], langs.map((l) => l.code), log);
       } catch (e) {
         log.append(el('li', {}, errBox(e)));
       } finally {
         btn.disabled = false;
       }
     });
-    return form;
+    return el('div', { class: 'pad' }, form);
   });
 }
 
