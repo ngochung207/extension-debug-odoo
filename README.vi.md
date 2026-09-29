@@ -33,9 +33,8 @@ Chế độ developer có sẵn của Odoo cho bạn biết trên màn hình *c�
 | **View** | Cây kế thừa của view hiện tại (primary + extension, priority, file nguồn), arch đã gộp, thông tin action, modifier của field trên form (`invisible` / `readonly` / `required`) tính đúng như webclient, *Chọn trên trang*. |
 | **RPC** | Nhật ký trực tiếp các lời gọi JSON-RPC và JSON-2 từ lúc tải trang: thời gian, lỗi kèm traceback, và nút nhảy sang tab Security khi gặp `AccessError`. |
 | **Code** | ORM Console: JavaScript với `env` kiểu ORM (`env['sale.order'].search(…)`, `read`, `mapped`, `write`, mọi method public…) chạy **dưới quyền user đang đăng nhập**, nên server áp ACL, record rule và công ty đang chọn của user đó. Đọc và ghi field như trong Python (`return rec.state`, `rec.state = 'sent'`). Gợi ý model của các module đang cài, field của chúng và method của recordset ngay khi gõ. Mặc định chỉ đọc; tick **Allow Writes** để cho phép ghi, kèm **Auto Refresh** để view trên màn hình tự nạp lại dữ liệu. Kết quả dạng bảng, print, lỗi kèm traceback server, danh sách mọi lời gọi. |
-| **Access** | Phiên làm việc (db, version, `web.base.url`, `test_mode`), quyền thực tế, ACL, record rule, nhóm, tham số hệ thống (giá trị bí mật được che). |
 | **Apps** | Với danh sách module gõ tay hoặc tick bên dưới thanh tìm kiếm kiểu Odoo (bộ lọc Đã cài / Chưa cài, Apps / Bổ sung, danh mục, hiện thành facet): Activate (Update Apps List rồi cài kèm dependency), Upgrade, Open Forms (cần quyền Settings). |
-| **Security** | Giả lập quyền của user khác, giải thích từng rule vì sao một thao tác được phép hay bị chặn, đánh giá rủi ro của user, field bị ẩn bởi `groups=`, kiểm tra instance (HTTPS, cờ cookie, security header, database manager). **Switch to This User** mở cửa sổ ẩn danh tại trang đăng nhập của user đó, không đụng tới phiên của bạn (có OCA `impersonate_login`: impersonate ngay trong phiên này). |
+| **Security** | Ba phần. **User**: tìm user bất kỳ theo tên hoặc login (mặc định là bạn), mọi thẻ đi theo user đó: group (thêm / gỡ, cần quyền Access Rights), đánh giá rủi ro. **Model**: giải thích từng rule vì sao mỗi thao tác được phép hay bị chặn với user đó (với chính bạn, kèm kết quả chính xác `has_access` từ server), ACL, field bị ẩn bởi `groups=`, đánh giá cấu hình. **Instance**: phiên làm việc (db, version, `web.base.url`, `test_mode`; nút **Become Superuser** cho user có quyền Settings), tham số hệ thống (giá trị bí mật được che), kiểm tra (HTTPS, cờ cookie, security header, database manager). |
 | **Translations** | Xuất file mẫu `.pot` và một `.po` cho mỗi ngôn ngữ của nhiều app (gõ vào ô là tìm luôn trong các module đã cài; tick chọn hoặc gõ tên) và ngôn ngữ (bấm chọn trong các ngôn ngữ đang bật) bằng wizard có sẵn của Odoo, lưu thẳng vào `Downloads/<module>/i18n/`. |
 | **Perf** | Profiler có sẵn của Odoo: bật / tắt, danh sách request đã đo, tổng hợp SQL với các câu lặp lại (nghi N+1), câu chậm nhất, flame graph speedscope. |
 
@@ -56,7 +55,7 @@ Ngoài ra: bấm vào tên field, model hay xmlid trong bảng để copy, và <
 **Record** ở chế độ toàn màn hình: từ 760px trở lên, danh sách thành bảng 2 cột với tiêu đề cố định.
 <img src="website/screenshots/full-record.png" alt="Tab Record toàn màn hình">
 
-**Security**: vì sao một thao tác được phép hay bị chặn, từng rule một, kèm rủi ro của user.
+**Security**: group của user đã chọn (thêm / gỡ), và vì sao một thao tác được phép hay bị chặn, từng rule một.
 <img src="website/screenshots/full-security.png" alt="Tab Security">
 
 **Perf**: các request đã đo, với câu SQL nghi N+1 và các câu chậm nhất của từng request.
@@ -64,7 +63,6 @@ Ngoài ra: bấm vào tên field, model hay xmlid trong bảng để copy, và <
 
 <table>
   <tr>
-    <td width="50%"><b>Access</b>: phiên, quyền, ACL<br><img src="website/screenshots/full-access.png" alt="Tab Access"></td>
     <td width="50%"><b>Giao diện tối</b><br><img src="website/screenshots/side-security-dark.png" alt="Giao diện tối"></td>
   </tr>
 </table>
@@ -170,7 +168,7 @@ extension/                 chính extension: đúng những gì có trong file z
     panel/                 panel.html / main.js: thanh tiêu đề, các tab, gắn với tab đang nhúng
     shared/                bridge.js (hàm chạy trong trang, RPC, đọc có cache), ui.js + ui.css (DOM, widget, style của bảng và popup),
                            page.js (hàm lõi chạy trong trang), list.js, picker.js, i18n.js, odoo.js, settings.js
-    features/<tab>/        mỗi tab một thư mục: record, view, rpc, code, access, security, translations, apps, perf
+    features/<tab>/        mỗi tab một thư mục: record, view, rpc, code, security, translations, apps, perf
       <tab>.js             giao diện tab: render(section, state); tab lớn tách mỗi phần một file (code: suggest.js, help.js)
       page.js              hàm được inject vào trang Odoo (tự chứa, không import)
       logic.js             logic thuần, không chrome.* / DOM
@@ -199,7 +197,7 @@ Không có code riêng cho từng phiên bản. Để hỗ trợ phiên bản kh
 | `ir.profile.cpu_duration` (19), wizard profiling | `features/perf/perf.js` |
 | Bên trong webclient: action service `__WOWL_DEBUG__`, `currentState`, `odoo.loader` + `py_js`, `archInfo` của form | `shared/page.js`, `features/view/page.js`, `features/security/page.js` |
 | URL `/odoo/…` (bản cũ: `/web#…`) | fallback trong `shared/page.js` |
-| Method phía server: `has_access`, `res.users.has_groups`, `get_metadata`, `get_views`, `/web/become` | `features/access`, `features/security`, `features/record`, `features/view` |
+| Method phía server: `has_access`, `res.users.has_groups`, `get_metadata`, `get_views`, `/web/become` | `features/security`, `features/record`, `features/view` |
 
 Fallback thuần đặt trong `shared/odoo.js` (test ở `tests/odoo.test.mjs` tại thư mục gốc repo). Hàm chạy trong trang không import được nên fallback của chúng viết inline. Khi một chỗ vượt quá vài nhánh, đó mới là lúc thêm adapter, không sớm hơn.
 

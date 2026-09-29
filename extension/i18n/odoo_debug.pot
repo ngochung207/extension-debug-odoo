@@ -10,89 +10,9 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/features/access/access.js:25
-msgid "Session"
-msgstr ""
-
-#: src/features/access/access.js:32
-msgid "Companies"
-msgstr ""
-
-#: src/features/access/access.js:36
-msgid "Effective access on %s"
-msgstr ""
-
-#: src/features/access/access.js:43
-msgid "ACL (ir.model.access) — green = applies to you"
-msgstr ""
-
-#: src/features/access/access.js:45
-msgid "No ACL."
-msgstr ""
-
-#: src/features/access/access.js:46
-msgid "ACL / group"
-msgstr ""
-
-#: src/features/access/access.js:48
-msgid "(all users)"
-msgstr ""
-
-#: src/features/access/access.js:51
-msgid "Record rules (ir.rule) — green = applies to you"
-msgstr ""
-
-#: src/features/access/access.js:53
-msgid "No record rule."
-msgstr ""
-
-#: src/features/access/access.js:54
-msgid "Rule / domain"
-msgstr ""
-
-#: src/features/access/access.js:61
-msgid "Your groups"
-msgstr ""
-
-#: src/features/access/access.js:63
-msgid "%s groups"
-msgstr ""
-
-#: src/features/access/access.js:63
-msgid "No group."
-msgstr ""
-
-#: src/features/access/access.js:67
 #: src/features/apps/apps.js:16
+#: src/features/security/security.js:154
 msgid "Needs Settings rights (base.group_system)."
-msgstr ""
-
-#: src/features/access/access.js:69
-msgid "System parameters (ir.config_parameter)"
-msgstr ""
-
-#: src/features/access/access.js:79
-msgid "Filter key / value"
-msgstr ""
-
-#: src/features/access/access.js:79
-msgid "%s parameters"
-msgstr ""
-
-#: src/features/access/access.js:79
-msgid "%s/%s parameters"
-msgstr ""
-
-#: src/features/access/access.js:79
-msgid "Key"
-msgstr ""
-
-#: src/features/access/access.js:79
-msgid "Value"
-msgstr ""
-
-#: src/features/access/access.js:79
-msgid "No parameter."
 msgstr ""
 
 #: src/features/apps/apps.js:22
@@ -210,7 +130,7 @@ msgid "Not Installed"
 msgstr ""
 
 #: src/features/apps/searchbar.js:11
-#: src/panel/panel.html:29
+#: src/panel/panel.html:28
 msgid "Apps"
 msgstr ""
 
@@ -239,6 +159,7 @@ msgstr ""
 
 #: src/features/apps/searchbar.js:34
 #: src/features/apps/searchbar.js:34
+#: src/features/security/security.js:198
 msgid "Remove"
 msgstr ""
 
@@ -864,201 +785,264 @@ msgstr ""
 msgid "py_js is not loaded"
 msgstr ""
 
-#: src/features/security/security.js:11
+#: src/features/security/security.js:14
 msgid "HIGH"
 msgstr ""
 
-#: src/features/security/security.js:11
+#: src/features/security/security.js:14
 msgid "MEDIUM"
 msgstr ""
 
-#: src/features/security/security.js:11
+#: src/features/security/security.js:14
 msgid "LOW"
 msgstr ""
 
-#: src/features/security/security.js:11
+#: src/features/security/security.js:14
 msgid "INFO"
 msgstr ""
 
-#: src/features/security/security.js:17
+#: src/features/security/security.js:22
 msgid "✓ No issue found."
 msgstr ""
 
-#: src/features/security/security.js:68
-msgid "Back to My User"
+#: src/features/security/security.js:55
+#: src/features/security/security.js:55
+msgid "Search a user by name or login…"
 msgstr ""
 
-#: src/features/security/security.js:69
-msgid "This session is impersonating %s (Impersonate Login)."
+#: src/features/security/security.js:86
+msgid "User"
 msgstr ""
 
-#: src/features/security/security.js:71
-msgid "Pick another user above to open a session as them."
-msgstr ""
-
-#: src/features/security/security.js:74
-msgid "Incognito window on this page, logged in as %s"
-msgstr ""
-
-#: src/features/security/security.js:76
-msgid "Switch to This User"
-msgstr ""
-
-#: src/features/security/security.js:78
-msgid "Impersonate Login module: no password, but this session (every tab of this Odoo) becomes %s"
-msgstr ""
-
-#: src/features/security/security.js:79
-msgid "Log this session in as %s? Every tab of this Odoo switches too."
-msgstr ""
-
-#: src/features/security/security.js:81
-msgid "Impersonate in This Session"
-msgstr ""
-
-#: src/features/security/security.js:82
-msgid "Opens an incognito window on this page, at the login of %s: type their password there. This session stays yours."
-msgstr ""
-
-#: src/features/security/security.js:84
-msgid "Incognito windows share one session: close those already open on this Odoo first, or allow this extension in incognito (chrome://extensions) so each switch starts clean."
-msgstr ""
-
-#: src/features/security/security.js:94
-msgid "Simulated user"
-msgstr ""
-
-#: src/features/security/security.js:95
-msgid "Loading users…"
-msgstr ""
-
-#: src/features/security/security.js:96
-msgid "View as user"
-msgstr ""
-
-#: src/features/security/security.js:98
+#: src/features/security/security.js:91
 msgid "My User"
 msgstr ""
 
-#: src/features/security/security.js:99
-msgid "Simulates the selected user's rights without logging in as them (reading other users' groups needs admin rights)."
-msgstr ""
-
-#: src/features/security/security.js:102
-msgid "Odoo's built-in /web/become route, base.group_system only"
-msgstr ""
-
-#: src/features/security/security.js:103
-msgid "Switch the current session to superuser (bypasses every rule)?"
-msgstr ""
-
-#: src/features/security/security.js:104
-msgid "Become Superuser"
-msgstr ""
-
-#: src/features/security/security.js:108
+#: src/features/security/security.js:92
 msgid "me"
 msgstr ""
 
-#: src/features/security/security.js:109
-msgid "Cannot read the user list"
+#: src/features/security/security.js:93
+msgid "%s · #%s · %s (%s companies) · %s groups"
 msgstr ""
 
-#: src/features/security/security.js:111
+#: src/features/security/security.js:94
+msgid "Simulates the selected user's rights without logging in as them (reading other users' groups needs admin rights)."
+msgstr ""
+
+#: src/features/security/security.js:96
+msgid "Groups"
+msgstr ""
+
+#: src/features/security/security.js:97
 msgid "User risks"
 msgstr ""
 
-#: src/features/security/security.js:115
-msgid "%s · %s · #%s · %s (%s companies) · %s groups"
+#: src/features/security/security.js:106
+msgid "Why allowed / blocked"
 msgstr ""
 
-#: src/features/security/security.js:122
-msgid "Why allowed / blocked — %s"
+#: src/features/security/security.js:108
+msgid "ACL (ir.model.access) — green = applies to the user"
 msgstr ""
 
-#: src/features/security/security.js:124
+#: src/features/security/security.js:110
+msgid "No ACL."
+msgstr ""
+
+#: src/features/security/security.js:111
+msgid "ACL / group"
+msgstr ""
+
+#: src/features/security/security.js:113
+msgid "(all users)"
+msgstr ""
+
+#: src/features/security/security.js:117
 msgid "Fields hidden from the user (groups=)"
 msgstr ""
 
-#: src/features/security/security.js:127
+#: src/features/security/security.js:120
 msgid "No field declares groups=."
 msgstr ""
 
-#: src/features/security/security.js:131
+#: src/features/security/security.js:124
 msgid "Field · label · for this user"
 msgstr ""
 
-#: src/features/security/security.js:133
+#: src/features/security/security.js:126
 msgid "visible"
 msgstr ""
 
-#: src/features/security/security.js:133
+#: src/features/security/security.js:126
 #: src/features/view/view.js:65
 msgid "hidden"
 msgstr ""
 
-#: src/features/security/security.js:137
+#: src/features/security/security.js:130
 msgid "Model configuration audit"
 msgstr ""
 
-#: src/features/security/security.js:143
+#: src/features/security/security.js:137
+msgid "Instance"
+msgstr ""
+
+#: src/features/security/security.js:138
+msgid "Session"
+msgstr ""
+
+#: src/features/security/security.js:145
+msgid "Companies"
+msgstr ""
+
+#: src/features/security/security.js:147
+msgid "Odoo's built-in /web/become route, base.group_system only"
+msgstr ""
+
+#: src/features/security/security.js:148
+msgid "Switch the current session to superuser (bypasses every rule)?"
+msgstr ""
+
+#: src/features/security/security.js:149
+msgid "Become Superuser"
+msgstr ""
+
+#: src/features/security/security.js:153
+msgid "System parameters (ir.config_parameter)"
+msgstr ""
+
+#: src/features/security/security.js:164
+msgid "Filter key / value"
+msgstr ""
+
+#: src/features/security/security.js:164
+msgid "%s parameters"
+msgstr ""
+
+#: src/features/security/security.js:164
+msgid "%s/%s parameters"
+msgstr ""
+
+#: src/features/security/security.js:164
+msgid "Key"
+msgstr ""
+
+#: src/features/security/security.js:164
+msgid "Value"
+msgstr ""
+
+#: src/features/security/security.js:164
+msgid "No parameter."
+msgstr ""
+
+#: src/features/security/security.js:167
 msgid "Instance check"
 msgstr ""
 
-#: src/features/security/security.js:146
+#: src/features/security/security.js:170
 msgid "Check failed"
 msgstr ""
 
-#: src/features/security/security.js:151
+#: src/features/security/security.js:175
 msgid "Raw data"
 msgstr ""
 
-#: src/features/security/security.js:152
+#: src/features/security/security.js:176
 msgid "Check Again"
 msgstr ""
 
-#: src/features/security/security.js:169
+#: src/features/security/security.js:197
+msgid "Add %s to %s?"
+msgstr ""
+
+#: src/features/security/security.js:197
+msgid "+ Add"
+msgstr ""
+
+#: src/features/security/security.js:198
+msgid "implied"
+msgstr ""
+
+#: src/features/security/security.js:198
+msgid "Remove %s from %s?"
+msgstr ""
+
+#: src/features/security/security.js:199
+msgid "Implied by %s"
+msgstr ""
+
+#: src/features/security/security.js:206
+#: src/features/security/security.js:212
+msgid "%s groups"
+msgstr ""
+
+#: src/features/security/security.js:208
+#: src/features/security/security.js:208
+msgid "Filter or add a group…"
+msgstr ""
+
+#: src/features/security/security.js:212
+msgid "%s/%s groups"
+msgstr ""
+
+#: src/features/security/security.js:235
 msgid "no result"
 msgstr ""
 
-#: src/features/security/security.js:170
+#: src/features/security/security.js:236
 msgid "cannot evaluate: %s"
 msgstr ""
 
-#: src/features/security/security.js:173
+#: src/features/security/security.js:239
 msgid "You cannot read this record yourself, so its rules cannot be checked."
 msgstr ""
 
-#: src/features/security/security.js:184
+#: src/features/security/security.js:249
+msgid "server ✓"
+msgstr ""
+
+#: src/features/security/security.js:249
+msgid "server ✗"
+msgstr ""
+
+#: src/features/security/security.js:249
+msgid "server ?"
+msgstr ""
+
+#: src/features/security/security.js:250
+msgid "has_access, run by the server as you"
+msgstr ""
+
+#: src/features/security/security.js:253
 msgid "ALLOWED"
 msgstr ""
 
-#: src/features/security/security.js:184
+#: src/features/security/security.js:253
 msgid "BLOCKED"
 msgstr ""
 
-#: src/features/security/security.js:184
+#: src/features/security/security.js:253
 msgid "UNKNOWN"
 msgstr ""
 
-#: src/features/security/security.js:192
+#: src/features/security/security.js:261
 msgid "not applicable"
 msgstr ""
 
-#: src/features/security/security.js:201
+#: src/features/security/security.js:270
 msgid "Rule · operations · result"
 msgstr ""
 
-#: src/features/security/security.js:201
+#: src/features/security/security.js:270
 msgid "Groups · domain"
 msgstr ""
 
-#: src/features/security/security.js:202
+#: src/features/security/security.js:271
 msgid "This model has no record rule."
 msgstr ""
 
-#: src/features/security/security.js:204
-msgid "Assumes the user selected every allowed company. Rules of parent models through _inherits are not counted. This is a simulation; for an exact answer about yourself, see the Access tab (has_access runs on the server)."
+#: src/features/security/security.js:273
+msgid "Assumes the user selected every allowed company. Rules of parent models through _inherits are not counted. This is a simulation; for your own user, “server” is the exact answer (has_access)."
 msgstr ""
 
 #: src/features/translations/translations.js:14
@@ -1230,15 +1214,15 @@ msgstr ""
 msgid "The form is read-only: every field is readonly."
 msgstr ""
 
-#: src/panel/main.js:34
+#: src/panel/main.js:33
 msgid "Cannot read this tab: %s"
 msgstr ""
 
-#: src/panel/main.js:34
+#: src/panel/main.js:33
 msgid "The current tab is not an Odoo page."
 msgstr ""
 
-#: src/panel/main.js:86
+#: src/panel/main.js:85
 msgid "Not an Odoo page"
 msgstr ""
 
@@ -1280,18 +1264,14 @@ msgid "RPC"
 msgstr ""
 
 #: src/panel/panel.html:26
-msgid "Access"
-msgstr ""
-
-#: src/panel/panel.html:27
 msgid "Security"
 msgstr ""
 
-#: src/panel/panel.html:28
+#: src/panel/panel.html:27
 msgid "Translations"
 msgstr ""
 
-#: src/panel/panel.html:30
+#: src/panel/panel.html:29
 msgid "Perf"
 msgstr ""
 

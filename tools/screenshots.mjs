@@ -84,7 +84,7 @@ await panel.waitForFunction(() => document.querySelector('#code .output table'),
 await shot('side-code');
 
 await settings({ theme: 'dark' });
-await show('security', ['View as user', 'User risks', 'Why allowed']);
+await show('security', ['User risks', 'Why allowed']);
 await shot('side-security-dark');
 await settings({ theme: 'light' });
 
@@ -92,9 +92,8 @@ await settings({ theme: 'light' });
 await full(true);
 await show('record', ['Identity', 'Fields']);
 await shot('full-record');
-await show('access', ['Session', 'Effective', 'ACL'], ['user_context', 'Companies']);
-await shot('full-access');
-await show('security', ['View as user', 'User risks', 'Why allowed']);
+await show('security', ['Groups', 'Why allowed']);
+await panel.$eval('#security .toolbar:has(+ .groups) input', (i) => { i.value = 'sales'; i.dispatchEvent(new Event('input')); }); // a few groups, with some to add
 await shot('full-security');
 
 // Perf: start the profiler, reload the page (the panel comes back, full screen, on this tab) so its requests are

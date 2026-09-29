@@ -36,9 +36,8 @@ shadow DOM so it never touches Odoo's styles.
 | **View** | Inheritance tree of the current view (primary + extensions, priority, source file), combined arch, action details, form field modifiers (`invisible` / `readonly` / `required`) evaluated like the webclient, *Pick on page*. |
 | **RPC** | Live log of JSON-RPC and JSON-2 calls from page load: timing, errors with tracebacks, and a jump to the Security tab for `AccessError`s. |
 | **Code** | ORM Console: JavaScript with an ORM-like `env` (`env['sale.order'].search(…)`, `read`, `mapped`, `write`, any public method…) run **as the logged-in user**, so the server applies their ACLs, record rules and active companies. Fields read and written like in Python (`return rec.state`, `rec.state = 'sent'`). Suggests the models of the installed modules, their fields and the recordset methods while you type. Read-only by default; **Allow Writes** lets writes through, and **Auto Refresh** then reloads the view on screen. Results as a table, prints, errors with server traceback, every call made. |
-| **Access** | Session (db, version, `web.base.url`, `test_mode`), effective rights, ACLs, record rules, groups, system parameters (secrets masked). |
 | **Apps** | For a list of modules, typed or ticked in the list below an Odoo-like search bar (filters Installed / Not Installed, Apps / Extra, category, as facets): Activate (Update Apps List, then install with dependencies), Upgrade, Open Forms (Settings rights). |
-| **Security** | Simulate another user's rights, explain rule by rule why an operation is allowed or blocked, user risk audit, fields hidden by `groups=`, instance checks (HTTPS, cookie flags, security headers, database manager). **Switch to This User** opens an incognito window at that user's login, leaving your session alone (with OCA `impersonate_login`: impersonate in this session). |
+| **Security** | Three parts. **User**: search any user by name or login (yourself by default) and every card follows: their groups (add / remove, needs Access Rights), risk audit. **Model**: rule by rule why each operation is allowed or blocked for that user (for yourself, with the server's exact `has_access` answer next to it), ACLs, fields hidden by `groups=`, configuration audit. **Instance**: session (db, version, `web.base.url`, `test_mode`; **Become Superuser** for Settings users), system parameters (secrets masked), checks (HTTPS, cookie flags, security headers, database manager). |
 | **Translations** | Exports the `.pot` template and one `.po` per language for several apps (the input searches the installed modules as you type; tick them or type their names) and languages (toggles of the active ones) with Odoo's own wizard, saved straight to `Downloads/<module>/i18n/`. |
 | **Perf** | Odoo's built-in server profiler: start / stop, profiled requests, SQL summary with repeated queries (N+1 suspects), slowest queries, speedscope flame graph. |
 
@@ -60,7 +59,7 @@ page to copy its technical name.
 **Record** in full screen: from 760px wide, lists become 2-column tables with sticky headers.
 <img src="website/screenshots/full-record.png" alt="Record tab in full screen">
 
-**Security**: why an operation is allowed or blocked, rule by rule, plus user risks.
+**Security**: the picked user's groups (add / remove), and why an operation is allowed or blocked, rule by rule.
 <img src="website/screenshots/full-security.png" alt="Security tab">
 
 **Perf**: profiled requests, with N+1 suspects and the slowest queries of each one.
@@ -68,7 +67,6 @@ page to copy its technical name.
 
 <table>
   <tr>
-    <td width="50%"><b>Access</b>: session, rights, ACLs<br><img src="website/screenshots/full-access.png" alt="Access tab"></td>
     <td width="50%"><b>Dark theme</b><br><img src="website/screenshots/side-security-dark.png" alt="Dark theme"></td>
   </tr>
 </table>
@@ -188,7 +186,7 @@ extension/                 the extension itself: exactly what the release zip co
     panel/                 panel.html / main.js: header, tabs, binding to the tab it is embedded in
     shared/                bridge.js (page functions, RPC, cached reads), ui.js + ui.css (DOM, widgets, styles of the panel and popup),
                            page.js (core page functions), list.js, picker.js, i18n.js, odoo.js, settings.js
-    features/<tab>/        one folder per tab: record, view, rpc, code, access, security, translations, apps, perf
+    features/<tab>/        one folder per tab: record, view, rpc, code, security, translations, apps, perf
       <tab>.js             the tab UI: render(section, state); big ones split into a file per part (code: suggest.js, help.js)
       page.js              functions injected into the Odoo page (self-contained, no imports)
       logic.js             pure logic, no chrome.* / DOM
@@ -218,7 +216,7 @@ There is no per-version code. To support another version, check these spots and 
 | `ir.profile.cpu_duration` (19), profiling wizard | `features/perf/perf.js` |
 | Webclient internals: `__WOWL_DEBUG__` action service, `currentState`, `odoo.loader` + `py_js`, form `archInfo` | `shared/page.js`, `features/view/page.js`, `features/security/page.js` |
 | `/odoo/…` URLs (older versions: `/web#…`) | `shared/page.js` fallback |
-| Server methods: `has_access`, `res.users.has_groups`, `get_metadata`, `get_views`, `/web/become` | `features/access`, `features/security`, `features/record`, `features/view` |
+| Server methods: `has_access`, `res.users.has_groups`, `get_metadata`, `get_views`, `/web/become` | `features/security`, `features/record`, `features/view` |
 | User context with active companies (`@web/core/user` via `odoo.loader`; else `user_context` of the session, without `allowed_company_ids`) | `features/code/page.js` |
 
 Keep pure fallbacks in `shared/odoo.js` (tested in `tests/odoo.test.mjs` at the repo root). Page functions can't import, so their

@@ -100,6 +100,11 @@ input[type=search]:focus, select:focus { outline: 2px solid var(--accent-soft); 
 .list > li:hover { background: var(--accent-soft); }
 .list > li:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
 .list > li[hidden] { display: none; }
+.groups > li { cursor: default; } /* Security › Groups: the buttons act, not the row */
+.list.groups > li:not([hidden]) { display: block; } /* one line per group, button at the right edge, also in full screen (no 2-column table) */
+.groups > li.addable > .row > .grow { color: var(--muted); } /* a group the user doesn't have */
+.groups > li > .row { align-items: center; }
+.groups .chip { padding: 0 8px; font-size: 11px; line-height: 16px; } /* as tall as the implied pill: even rows */
 /* Rows wrap instead of overflowing: long names, labels and pills move to the next line, nothing is cut. */
 .row { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 6px; min-width: 0; }
 .name { font-family: var(--mono); font-size: 11px; font-weight: 600; overflow-wrap: anywhere; }
@@ -167,10 +172,10 @@ tr.mine td { background: var(--ok-soft); }
 .okline { color: var(--ok); padding: 8px 10px; }
 
 /* verdict */
-.verdict { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; padding: 8px 10px; }
+.verdict { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 6px; padding: 8px 10px; }
 .verdict > div { border: 1px solid var(--line); border-radius: 6px; padding: 6px 8px; }
 .verdict b { display: block; font-family: var(--mono); font-size: 11px; }
-.verdict .why { color: var(--muted); font-size: 11px; }
+.verdict .why { color: var(--muted); font-size: 11px; overflow-wrap: anywhere; } /* long model / xmlid names */
 .verdict .allow { border-color: var(--ok); }
 .verdict .deny { border-color: var(--err); }
 .verdict + .list { border-top: 1px solid var(--line); }
@@ -186,13 +191,22 @@ summary:hover { color: var(--fg); }
 .form input[type=text]:focus { outline: 2px solid var(--accent-soft); border-color: var(--accent); }
 .form .note { margin-top: 3px; }
 .btn:disabled { opacity: .5; cursor: progress; }
-.switch .error { margin-top: 6px; }
 .pad + .list { border-top: 1px solid var(--line); }
 .steps { list-style: none; margin: 10px 0 0; padding: 0; }
 .steps li { padding: 4px 0; border-top: 1px solid var(--line); }
 .steps .meta { white-space: pre-line; }
 .picker { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
-.picker select { flex: 1; min-width: 160px; }
+/* Security tab: its three parts (user, model, instance), the user search (its list drops over the cards below) */
+.tab > .section { margin: 14px 10px 6px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+.tab > .section:first-child { margin-top: 4px; }
+.card:has(.user-search) { overflow: visible; }
+.user-search { position: relative; flex: 1; min-width: 160px; display: flex; }
+.user-search > input { flex: 1; min-width: 0; }
+.user-search > .suggest { left: 0; right: 0; top: calc(100% + 2px); max-height: 260px; }
+.user-search li { padding: 4px 10px; }
+.user-search li .name { font-family: inherit; font-weight: 600; } /* a person, not code */
+.user-search li:hover { background: var(--accent-soft); }
+.user-line { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 8px; }
 
 /* copy a name with one click (the row's own click still expands it) */
 .copy { border: 0; background: none; padding: 0; color: inherit; cursor: copy; text-align: left; overflow-wrap: anywhere; }
