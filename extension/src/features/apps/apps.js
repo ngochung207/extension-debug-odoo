@@ -4,7 +4,7 @@
 // matching the word being typed, installed or not.
 import { planInstall, planUpgrade, stateKind } from './logic.js';
 import { splitList } from '../translations/logic.js';
-import { exec, tabId, call, sessionInfo, el, pill, empty, block, errBox, odooLink, formValues, saveForm } from '../../shared/ui.js';
+import { exec, tabId, call, sessionInfo, el, pill, empty, card, errBox, odooLink, formValues, saveForm } from '../../shared/ui.js';
 import { modulePicker } from '../../shared/picker.js';
 import { _t } from '../../shared/i18n.js';
 
@@ -14,7 +14,7 @@ const names = (list) => list.map((m) => m.name).join(', ');
 const needsAdmin = () => empty(_t('Needs Settings rights (base.group_system).'));
 
 export function renderApps(s, state) {
-  block(s, 'modules', _t('Modules'), async () => {
+  card(s, async () => { // the tab's only card: no title to open it by
     if (!(await sessionInfo()).is_system) return needsAdmin();
     const input = el('input', { type: 'text', placeholder: _t('Search or type: sale; stock; my_module'), 'aria-label': _t('Modules'), value: formValues('apps').modules || '', spellcheck: false });
     const count = el('span', { class: 'muted count-note' });
@@ -101,10 +101,9 @@ export function renderApps(s, state) {
     });
 
     const form = el('div', { class: 'form' },
-      el('div', { class: 'row picker-head' }, input, count), // no label: the card is titled Modules already
+      el('div', { class: 'row picker-head' }, input, count), // no label: the placeholder and aria-label say what it is
       list,
-      el('div', { class: 'row mt' }, activate, upgrade, open),
-      el('div', { class: 'note' }, _t('Activate runs Update Apps List first. Install and upgrade reload the Odoo page when done.')),
+      el('div', { class: 'row mt fill' }, activate, upgrade, open),
       log);
     return el('div', { class: 'pad' }, form);
   });

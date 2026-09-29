@@ -134,13 +134,25 @@ export function block(parent, key, title, fn) {
   const load = () => {
     if (loaded) return;
     loaded = true;
-    body.replaceChildren(el('div', { class: 'loading' }, _t('Loading…')));
-    Promise.resolve().then(fn).then((n) => body.replaceChildren(...[n].filter(Boolean)), (e) => body.replaceChildren(errBox(e)));
+    fill(body, fn);
   };
   c.addEventListener('toggle', () => { rememberCard(id, c.open); if (c.open) load(); });
   c.open = openCards().has(id);
   if (c.open) load();
   parent.append(c);
+}
+
+/** A tab's only card: no title to open it by, its body built right away (`fn` may be async). */
+export function card(parent, fn) {
+  const body = el('div', { class: 'card-body' });
+  parent.append(el('div', { class: 'card' }, body));
+  fill(body, fn);
+}
+
+/** `body` shows Loading…, then what `fn` builds, or its error (a failing card doesn't blank the others). */
+function fill(body, fn) {
+  body.replaceChildren(el('div', { class: 'loading' }, _t('Loading…')));
+  Promise.resolve().then(fn).then((n) => body.replaceChildren(...[n].filter(Boolean)), (e) => body.replaceChildren(errBox(e)));
 }
 
 /** `text` (a field name, xmlid…) as a button copying it to the clipboard; ✓ for a second after. `label`: shown instead (e.g. masked). */

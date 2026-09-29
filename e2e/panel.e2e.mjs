@@ -154,7 +154,6 @@ test('Translations tab: one input searches the installed modules and holds the t
 
 test('Apps tab: installed modules listed, the others found by the word being typed', async () => {
   await click('.tabs [data-tab="apps"]');
-  await panel.$eval('#apps details.card', (c) => { c.open = true; });
   await panel.waitForSelector('#apps .module-picker li');
   const shown = () => panel.$$eval('#apps .module-picker li:not([hidden])', (lis) => lis.map((li) => ({
     name: li.querySelector('.name').textContent, // a state pill only when not installed (the other pill is the version)

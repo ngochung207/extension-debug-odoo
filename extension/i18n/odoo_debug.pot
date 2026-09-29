@@ -95,14 +95,13 @@ msgstr ""
 msgid "No parameter."
 msgstr ""
 
-#: src/features/apps/apps.js:17
-#: src/features/apps/apps.js:19
-msgid "Modules"
-msgstr ""
-
 #: src/features/apps/apps.js:19
 #: src/features/translations/translations.js:12
 msgid "Search or type: sale; stock; my_module"
+msgstr ""
+
+#: src/features/apps/apps.js:19
+msgid "Modules"
 msgstr ""
 
 #: src/features/apps/apps.js:26
@@ -200,10 +199,6 @@ msgstr ""
 
 #: src/features/apps/apps.js:100
 msgid "Not found: %s (Activate runs Update Apps List first)"
-msgstr ""
-
-#: src/features/apps/apps.js:107
-msgid "Activate runs Update Apps List first. Install and upgrade reload the Odoo page when done."
 msgstr ""
 
 #: src/features/code/code.js:40
@@ -1309,11 +1304,11 @@ msgstr ""
 msgid "Open /odoo/%s"
 msgstr ""
 
-#: src/shared/ui.js:137
-#: src/shared/ui.js:196
+#: src/shared/ui.js:154
+#: src/shared/ui.js:208
 msgid "Loading…"
 msgstr ""
 
-#: src/shared/ui.js:149
+#: src/shared/ui.js:161
 msgid "Click to copy"
 msgstr ""

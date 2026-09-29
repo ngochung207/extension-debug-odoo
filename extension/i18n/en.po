@@ -95,15 +95,14 @@ msgstr "Value"
 msgid "No parameter."
 msgstr "No parameter."
 
-#: src/features/apps/apps.js:17
-#: src/features/apps/apps.js:19
-msgid "Modules"
-msgstr "Modules"
-
 #: src/features/apps/apps.js:19
 #: src/features/translations/translations.js:12
 msgid "Search or type: sale; stock; my_module"
 msgstr "Search or type: sale; stock; my_module"
+
+#: src/features/apps/apps.js:19
+msgid "Modules"
+msgstr "Modules"
 
 #: src/features/apps/apps.js:26
 msgid "%s/%s modules"
@@ -201,10 +200,6 @@ msgstr "Opened %s tab(s): %s"
 #: src/features/apps/apps.js:100
 msgid "Not found: %s (Activate runs Update Apps List first)"
 msgstr "Not found: %s (Activate runs Update Apps List first)"
-
-#: src/features/apps/apps.js:107
-msgid "Activate runs Update Apps List first. Install and upgrade reload the Odoo page when done."
-msgstr "Activate runs Update Apps List first. Install and upgrade reload the Odoo page when done."
 
 #: src/features/code/code.js:40
 msgid "ORM Console"
@@ -1309,11 +1304,11 @@ msgstr "No tab is open."
 msgid "Open /odoo/%s"
 msgstr "Open /odoo/%s"
 
-#: src/shared/ui.js:137
-#: src/shared/ui.js:196
+#: src/shared/ui.js:154
+#: src/shared/ui.js:208
 msgid "Loading…"
 msgstr "Loading…"
 
-#: src/shared/ui.js:149
+#: src/shared/ui.js:161
 msgid "Click to copy"
 msgstr "Click to copy"
