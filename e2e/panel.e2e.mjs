@@ -3,7 +3,7 @@
 import assert from 'node:assert/strict';
 import { test, before, after } from 'node:test';
 import puppeteer from 'puppeteer';
-import { EXT, openForm, openPanel } from './odoo.mjs';
+import { EXT, rpc, openForm, openPanel } from './odoo.mjs';
 
 const ext = (s) => String(s).includes('chrome-extension://');
 // element.click(), not a mouse click: Puppeteer misplaces those in an iframe inside a closed shadow root
@@ -59,6 +59,20 @@ test('every tab opens its cards without an error', async () => {
     const failed = await panel.$$eval(`#${tab} .card-body > .error, #${tab} > .empty`, (ns) => ns.filter((n) => !n.hidden).map((n) => n.textContent));
     assert.deepEqual(failed, [], `${tab} tab`);
   }
+});
+
+test('Security tab: another user is found by login and picked, then back to mine', async () => {
+  await rpc(page, '/web/dataset/call_kw', { model: 'res.users', method: 'create', args: [{ name: 'E2E Demo', login: 'e2e_demo' }], kwargs: {} });
+  await click('#refresh'); // the user list is cached
+  await click('.tabs [data-tab="security"]');
+  const search = '#security .user-search input';
+  await panel.waitForSelector(search);
+  await panel.$eval(search, (i) => { i.focus(); i.value = 'e2e_d'; i.dispatchEvent(new Event('input')); });
+  assert.deepEqual(await panel.$$eval('#security .user-search li .muted', (ns) => ns.map((n) => n.textContent)), ['e2e_demo']);
+  await panel.$eval(search, (i) => i.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' })));
+  await panel.waitForFunction(() => document.querySelector('#security .user-line b')?.textContent === 'E2E Demo', { timeout: 15_000 });
+  await panel.$eval('#security .picker .chip', (b) => b.click()); // My User
+  await panel.waitForFunction(() => document.querySelector('#security .user-line b')?.textContent !== 'E2E Demo' && !document.querySelector('#security .picker .chip'), { timeout: 15_000 });
 });
 
 test('Security tab: a group is added to the user, then removed', async () => {

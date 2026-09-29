@@ -11,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: src/features/apps/apps.js:16
-#: src/features/security/security.js:178
+#: src/features/security/security.js:149
 msgid "Needs Settings rights (base.group_system)."
 msgstr "Cần quyền Settings (base.group_system)."
 
@@ -159,7 +159,7 @@ msgstr "Mọi danh mục"
 
 #: src/features/apps/searchbar.js:34
 #: src/features/apps/searchbar.js:34
-#: src/features/security/security.js:222
+#: src/features/security/security.js:193
 msgid "Remove"
 msgstr "Bỏ"
 
@@ -805,280 +805,233 @@ msgstr "INFO"
 msgid "✓ No issue found."
 msgstr "✓ Không phát hiện vấn đề."
 
-#: src/features/security/security.js:73
-msgid "Back to My User"
-msgstr "Quay về user của tôi"
+#: src/features/security/security.js:54
+#: src/features/security/security.js:54
+msgid "Search a user by name or login…"
+msgstr "Tìm user theo tên hoặc login…"
 
-#: src/features/security/security.js:74
-msgid "This session is impersonating %s (Impersonate Login)."
-msgstr "Session này đang đăng nhập thay %s (Impersonate Login)."
+#: src/features/security/security.js:85
+msgid "User"
+msgstr "User"
 
-#: src/features/security/security.js:76
-msgid "Pick another user above to open a session as them."
-msgstr "Chọn một user khác ở trên để mở session bằng user đó."
-
-#: src/features/security/security.js:79
-msgid "Incognito window on this page, logged in as %s"
-msgstr "Cửa sổ ẩn danh ở trang này, đăng nhập bằng %s"
-
-#: src/features/security/security.js:81
-msgid "Switch to This User"
-msgstr "Chuyển sang user này"
-
-#: src/features/security/security.js:83
-msgid "Impersonate Login module: no password, but this session (every tab of this Odoo) becomes %s"
-msgstr "Module Impersonate Login: không cần mật khẩu, nhưng session này (mọi tab của Odoo này) sẽ thành %s"
-
-#: src/features/security/security.js:84
-msgid "Log this session in as %s? Every tab of this Odoo switches too."
-msgstr "Chuyển session này sang %s? Mọi tab của Odoo này cũng chuyển theo."
-
-#: src/features/security/security.js:86
-msgid "Impersonate in This Session"
-msgstr "Impersonate trong session này"
-
-#: src/features/security/security.js:87
-msgid "Opens an incognito window on this page, at the login of %s: type their password there. This session stays yours."
-msgstr "Mở cửa sổ ẩn danh ở trang này, tại màn hình đăng nhập của %s: nhập mật khẩu của user đó ở đó. Session hiện tại vẫn là của bạn."
-
-#: src/features/security/security.js:89
-msgid "Incognito windows share one session: close those already open on this Odoo first, or allow this extension in incognito (chrome://extensions) so each switch starts clean."
-msgstr "Các cửa sổ ẩn danh dùng chung một session: hãy đóng các cửa sổ ẩn danh đang mở Odoo này trước, hoặc cho phép extension chạy ở chế độ ẩn danh (chrome://extensions) để mỗi lần chuyển đều bắt đầu sạch."
-
-#: src/features/security/security.js:99
-msgid "Simulated user"
-msgstr "Người dùng mô phỏng"
-
-#: src/features/security/security.js:100
-msgid "Loading users…"
-msgstr "Đang tải danh sách user…"
-
-#: src/features/security/security.js:101
-msgid "View as user"
-msgstr "Xem như user"
-
-#: src/features/security/security.js:103
+#: src/features/security/security.js:90
 msgid "My User"
 msgstr "User của tôi"
 
-#: src/features/security/security.js:104
-msgid "Simulates the selected user's rights without logging in as them (reading other users' groups needs admin rights)."
-msgstr "Mô phỏng quyền của user được chọn mà không cần đăng nhập tài khoản đó (cần quyền admin để đọc group của người khác)."
-
-#: src/features/security/security.js:107
-msgid "Odoo's built-in /web/become route, base.group_system only"
-msgstr "Route /web/become sẵn có của Odoo, chỉ base.group_system dùng được"
-
-#: src/features/security/security.js:108
-msgid "Switch the current session to superuser (bypasses every rule)?"
-msgstr "Chuyển phiên hiện tại sang superuser (bỏ qua mọi rule)?"
-
-#: src/features/security/security.js:109
-msgid "Become Superuser"
-msgstr "Chuyển sang superuser"
-
-#: src/features/security/security.js:113
+#: src/features/security/security.js:91
 msgid "me"
 msgstr "tôi"
 
-#: src/features/security/security.js:114
-msgid "Cannot read the user list"
-msgstr "Không đọc được danh sách user"
+#: src/features/security/security.js:92
+msgid "%s · #%s · %s (%s companies) · %s groups"
+msgstr "%s · #%s · %s (%s công ty) · %s group"
 
-#: src/features/security/security.js:116
-msgid "Session"
-msgstr "Phiên đăng nhập"
+#: src/features/security/security.js:93
+msgid "Simulates the selected user's rights without logging in as them (reading other users' groups needs admin rights)."
+msgstr "Mô phỏng quyền của user được chọn mà không cần đăng nhập tài khoản đó (cần quyền admin để đọc group của người khác)."
 
-#: src/features/security/security.js:123
-msgid "Companies"
-msgstr "Công ty"
-
-#: src/features/security/security.js:126
-msgid "User risks"
-msgstr "Rủi ro của user"
-
-#: src/features/security/security.js:130
-msgid "%s · %s · #%s · %s (%s companies) · %s groups"
-msgstr "%s · %s · #%s · %s (%s công ty) · %s group"
-
-#: src/features/security/security.js:134
+#: src/features/security/security.js:95
 msgid "Groups"
 msgstr "Group"
 
-#: src/features/security/security.js:137
-msgid "Effective access on %s"
-msgstr "Quyền thực tế trên %s"
+#: src/features/security/security.js:96
+msgid "User risks"
+msgstr "Rủi ro của user"
 
-#: src/features/security/security.js:139
-msgid "has_access runs as the logged-in user only: see Why allowed / blocked for the selected user."
-msgstr "has_access chỉ chạy được cho user đang đăng nhập: xem thẻ Vì sao được / bị chặn cho user đã chọn."
+#: src/features/security/security.js:105
+msgid "Why allowed / blocked"
+msgstr "Vì sao được / bị chặn"
 
-#: src/features/security/security.js:146
-msgid "Why allowed / blocked — %s"
-msgstr "Vì sao được / bị chặn — %s"
-
-#: src/features/security/security.js:148
+#: src/features/security/security.js:107
 msgid "ACL (ir.model.access) — green = applies to the user"
 msgstr "ACL (ir.model.access) — nền xanh = áp dụng cho user này"
 
-#: src/features/security/security.js:150
+#: src/features/security/security.js:109
 msgid "No ACL."
 msgstr "Không có ACL."
 
-#: src/features/security/security.js:151
+#: src/features/security/security.js:110
 msgid "ACL / group"
 msgstr "ACL / group"
 
-#: src/features/security/security.js:153
+#: src/features/security/security.js:112
 msgid "(all users)"
 msgstr "(mọi user)"
 
-#: src/features/security/security.js:157
+#: src/features/security/security.js:116
 msgid "Fields hidden from the user (groups=)"
 msgstr "Field bị ẩn với user (groups=)"
 
-#: src/features/security/security.js:160
+#: src/features/security/security.js:119
 msgid "No field declares groups=."
 msgstr "Không field nào khai báo groups=."
 
-#: src/features/security/security.js:164
+#: src/features/security/security.js:123
 msgid "Field · label · for this user"
 msgstr "Field · nhãn · với user này"
 
-#: src/features/security/security.js:166
+#: src/features/security/security.js:125
 msgid "visible"
 msgstr "thấy"
 
-#: src/features/security/security.js:166
+#: src/features/security/security.js:125
 #: src/features/view/view.js:65
 msgid "hidden"
 msgstr "ẩn"
 
-#: src/features/security/security.js:170
+#: src/features/security/security.js:129
 msgid "Model configuration audit"
 msgstr "Audit cấu hình model"
 
-#: src/features/security/security.js:177
+#: src/features/security/security.js:136
+msgid "Instance"
+msgstr "Instance"
+
+#: src/features/security/security.js:137
+msgid "Session"
+msgstr "Phiên đăng nhập"
+
+#: src/features/security/security.js:144
+msgid "Companies"
+msgstr "Công ty"
+
+#: src/features/security/security.js:148
 msgid "System parameters (ir.config_parameter)"
 msgstr "Tham số hệ thống (ir.config_parameter)"
 
-#: src/features/security/security.js:188
+#: src/features/security/security.js:159
 msgid "Filter key / value"
 msgstr "Lọc key / giá trị"
 
-#: src/features/security/security.js:188
+#: src/features/security/security.js:159
 msgid "%s parameters"
 msgstr "%s tham số"
 
-#: src/features/security/security.js:188
+#: src/features/security/security.js:159
 msgid "%s/%s parameters"
 msgstr "%s/%s tham số"
 
-#: src/features/security/security.js:188
+#: src/features/security/security.js:159
 msgid "Key"
 msgstr "Key"
 
-#: src/features/security/security.js:188
+#: src/features/security/security.js:159
 msgid "Value"
 msgstr "Giá trị"
 
-#: src/features/security/security.js:188
+#: src/features/security/security.js:159
 msgid "No parameter."
 msgstr "Không có tham số."
 
-#: src/features/security/security.js:191
+#: src/features/security/security.js:162
 msgid "Instance check"
 msgstr "Kiểm tra instance"
 
-#: src/features/security/security.js:194
+#: src/features/security/security.js:165
 msgid "Check failed"
 msgstr "Không kiểm tra được"
 
-#: src/features/security/security.js:199
+#: src/features/security/security.js:170
 msgid "Raw data"
 msgstr "Dữ liệu thô"
 
-#: src/features/security/security.js:200
+#: src/features/security/security.js:171
 msgid "Check Again"
 msgstr "Kiểm tra lại"
 
-#: src/features/security/security.js:221
+#: src/features/security/security.js:192
 msgid "Add %s to %s?"
 msgstr "Thêm %s cho %s?"
 
-#: src/features/security/security.js:221
+#: src/features/security/security.js:192
 msgid "+ Add"
 msgstr "+ Thêm"
 
-#: src/features/security/security.js:222
+#: src/features/security/security.js:193
 msgid "implied"
 msgstr "kế thừa"
 
-#: src/features/security/security.js:222
+#: src/features/security/security.js:193
 msgid "Remove %s from %s?"
 msgstr "Gỡ %s khỏi %s?"
 
-#: src/features/security/security.js:223
+#: src/features/security/security.js:194
 msgid "Implied by %s"
 msgstr "Kế thừa từ %s"
 
-#: src/features/security/security.js:230
-#: src/features/security/security.js:236
+#: src/features/security/security.js:201
+#: src/features/security/security.js:207
 msgid "%s groups"
 msgstr "%s group"
 
-#: src/features/security/security.js:232
-#: src/features/security/security.js:232
+#: src/features/security/security.js:203
+#: src/features/security/security.js:203
 msgid "Filter or add a group…"
 msgstr "Lọc hoặc thêm group…"
 
-#: src/features/security/security.js:236
+#: src/features/security/security.js:207
 msgid "%s/%s groups"
 msgstr "%s/%s group"
 
-#: src/features/security/security.js:257
+#: src/features/security/security.js:230
 msgid "no result"
 msgstr "không có kết quả"
 
-#: src/features/security/security.js:258
+#: src/features/security/security.js:231
 msgid "cannot evaluate: %s"
 msgstr "không eval được: %s"
 
-#: src/features/security/security.js:261
+#: src/features/security/security.js:234
 msgid "You cannot read this record yourself, so its rules cannot be checked."
 msgstr "Chính bạn không đọc được record này nên không kiểm được rule."
 
-#: src/features/security/security.js:272
+#: src/features/security/security.js:244
+msgid "server ✓"
+msgstr "server ✓"
+
+#: src/features/security/security.js:244
+msgid "server ✗"
+msgstr "server ✗"
+
+#: src/features/security/security.js:244
+msgid "server ?"
+msgstr "server ?"
+
+#: src/features/security/security.js:245
+msgid "has_access, run by the server as you"
+msgstr "has_access, server chạy với quyền của bạn"
+
+#: src/features/security/security.js:248
 msgid "ALLOWED"
 msgstr "CHO PHÉP"
 
-#: src/features/security/security.js:272
+#: src/features/security/security.js:248
 msgid "BLOCKED"
 msgstr "CHẶN"
 
-#: src/features/security/security.js:272
+#: src/features/security/security.js:248
 msgid "UNKNOWN"
 msgstr "KHÔNG RÕ"
 
-#: src/features/security/security.js:280
+#: src/features/security/security.js:256
 msgid "not applicable"
 msgstr "không áp dụng"
 
-#: src/features/security/security.js:289
+#: src/features/security/security.js:265
 msgid "Rule · operations · result"
 msgstr "Rule · thao tác · kết quả"
 
-#: src/features/security/security.js:289
+#: src/features/security/security.js:265
 msgid "Groups · domain"
 msgstr "Group · domain"
 
-#: src/features/security/security.js:290
+#: src/features/security/security.js:266
 msgid "This model has no record rule."
 msgstr "Model này không có record rule."
 
-#: src/features/security/security.js:292
-msgid "Assumes the user selected every allowed company. Rules of parent models through _inherits are not counted. This is a simulation; for an exact answer about yourself, see Effective access (has_access runs on the server)."
-msgstr "Giả định user chọn tất cả công ty được phép. Rule của model cha qua _inherits không được tính. Đây là mô phỏng; muốn kết quả chính xác cho chính bạn, xem thẻ Quyền thực tế (has_access chạy thật trên server)."
+#: src/features/security/security.js:268
+msgid "Assumes the user selected every allowed company. Rules of parent models through _inherits are not counted. This is a simulation; for your own user, “server” is the exact answer (has_access)."
+msgstr "Giả định user chọn tất cả công ty được phép. Rule của model cha qua _inherits không được tính. Đây là mô phỏng; với chính user của bạn, “server” là kết quả chính xác (has_access)."
 
 #: src/features/translations/translations.js:14
 msgid "Apps To Export"

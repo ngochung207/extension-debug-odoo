@@ -1,12 +1,12 @@
-// Security tab: pick a user (yourself by default) and every card follows: groups (add / remove), ACLs, why an operation is
-// allowed/blocked, hidden fields. Plus the logged-in session, system parameters and the model / instance audits.
+// Security tab, in three parts: the user (searched and picked at the top, yourself by default: groups to add / remove, risks),
+// the current model for that user (why allowed / blocked, ACLs, hidden fields, audit), and this Odoo (session, system
+// parameters, instance check).
 // odoo.conf itself is never exposed over HTTP by Odoo: it holds admin_passwd and db_password.
 import { rulesFor, modeVerdict, ruleEvalContext, auditModel, checkInstance, userRisks } from './logic.js';
 import { pageEvalDomains, pageProbe } from './page.js';
 import { MODES, pickGroupField } from '../../shared/odoo.js';
-import { pageGo } from '../../shared/page.js';
 import { exec, call, cached, uncache, sessionInfo, fieldsOf, readAcls, readRules, cookieFlags } from '../../shared/bridge.js';
-import { el, pre, pill, triPill, details, empty, errBox, kv, block, expandable, filteredList, copyable, odooLink, listHead, splitRow } from '../../shared/ui.js';
+import { el, pre, pill, triPill, details, empty, errBox, kv, block, card, expandable, filteredList, copyable, odooLink, listHead, splitRow } from '../../shared/ui.js';
 import { _t, N_ } from '../../shared/i18n.js';
 
 const KEY_GROUPS = ['group_system', 'group_erp_manager', 'group_no_one', 'group_user', 'group_portal', 'group_public'];
@@ -42,108 +42,67 @@ async function loadTarget(origin) {
   return { me: info.uid, uid, u, wf, users, groupIds, groupXml, has };
 }
 
-/** Opens an incognito window on Odoo's login page for `login`, landing back on `url` once logged in: this session is
- * untouched (incognito has its own cookies). */
-async function openIncognito(origin, db, login, url) {
-  const { pathname, search, hash } = new URL(url);
-  const target = `${origin}/web/login?${new URLSearchParams({ db, login, redirect: pathname + search + hash })}`;
-  if (!(await chrome.extension.isAllowedIncognitoAccess())) {
-    await chrome.windows.create({ incognito: true, url: target }); // opens, but resolves to null: not our window to see
-    return;
-  }
-  // Incognito windows share one session: with a user still logged in there, /web/login?redirect= would skip the login.
-  const { tabs: [tab] } = await chrome.windows.create({ incognito: true, url: 'about:blank' });
-  try {
-    const store = (await chrome.cookies.getAllCookieStores()).find((st) => st.tabIds.includes(tab.id));
-    if (store) await chrome.cookies.remove({ url: origin, name: 'session_id', storeId: store.id });
-  } finally {
-    await chrome.tabs.update(tab.id, { url: target }); // the login page opens even if the cookie could not be dropped
-  }
+/** Search box over the users (name / login): typing lists the matches under it, a click or Enter picks one. */
+function userSearch(users, pick) {
+  let shown = [], sel = 0;
+  const list = el('ul', { class: 'suggest', role: 'listbox', hidden: true });
+  const mark = () => [...list.children].forEach((li, i) => {
+    li.setAttribute('aria-selected', i === sel);
+    if (i === sel) li.scrollIntoView({ block: 'nearest' });
+  });
+  const input = el('input', {
+    type: 'search', placeholder: _t('Search a user by name or login…'), 'aria-label': _t('Search a user by name or login…'),
+    oninput: () => {
+      const q = input.value.trim().toLowerCase();
+      shown = users.filter((x) => `${x.name} ${x.login}`.toLowerCase().includes(q)).slice(0, 50); // ponytail: first 50 matches, type more to narrow
+      sel = 0;
+      list.replaceChildren(...shown.map((x) => el('li', { role: 'option', onmousedown: (e) => { e.preventDefault(); pick(x.id); } }, // mousedown: before the blur hides the list
+        el('span', { class: 'name' }, x.name), el('span', { class: 'muted' }, `${x.login}${x.share ? ' · portal' : ''}`))));
+      list.hidden = !shown.length;
+      mark();
+    },
+    onfocus: () => input.dispatchEvent(new Event('input')),
+    onblur: () => { list.hidden = true; },
+    onkeydown: (e) => {
+      if (list.hidden) return;
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); sel = (sel + (e.key === 'ArrowDown' ? 1 : -1) + shown.length) % shown.length; mark(); }
+      else if (e.key === 'Enter' && shown[sel]) pick(shown[sel].id);
+      else if (e.key === 'Escape') { e.stopPropagation(); list.hidden = true; } // not the panel's Esc (leave full screen)
+    },
+  });
+  return el('div', { class: 'user-search' }, input, list);
 }
 
-/** Switch to the picked user in an incognito window (their password is typed on Odoo's login page; this tab stays
- * yours). With OCA impersonate_login, impersonating in this very session is offered too. */
-function switchBox(t, state) {
-  const { origin, url } = state;
-  const box = el('div', { class: 'switch mt' });
-  const fail = (e) => box.append(errBox(e));
-  const reload = () => { targets.delete(origin); exec(pageGo, url); }; // the webclient restarts as the new user
-  Promise.all([t, sessionInfo(), chrome.extension.isAllowedIncognitoAccess()]).then(([{ uid, me, u }, info, clean]) => {
-    if (info.impersonate_from_uid) { // impersonate_login: this session is someone else's for now
-      box.append(el('div', { class: 'row' }, el('button', { class: 'btn', onclick: () => call('res.users', 'back_to_origin_login').then(reload, fail) }, _t('Back to My User'))),
-        el('div', { class: 'note' }, _t('This session is impersonating %s (Impersonate Login).', info.name)));
-    }
-    if (uid === me) return box.append(el('div', { class: 'note' }, _t('Pick another user above to open a session as them.')));
-    box.append(el('div', { class: 'row' },
-      el('button', {
-        class: 'btn', title: _t('Incognito window on this page, logged in as %s', u.login),
-        onclick: () => openIncognito(origin, info.db, u.login, url).catch(fail),
-      }, _t('Switch to This User')),
-      info.is_impersonate_user && !info.impersonate_from_uid ? el('button', {
-        class: 'chip', title: _t('Impersonate Login module: no password, but this session (every tab of this Odoo) becomes %s', u.login),
-        onclick: () => confirm(_t('Log this session in as %s? Every tab of this Odoo switches too.', u.name))
-          && call('res.users', 'impersonate_login', [[uid]]).then(reload, fail),
-      }, _t('Impersonate in This Session')) : null),
-    el('div', { class: 'note' }, _t('Opens an incognito window on this page, at the login of %s: type their password there. This session stays yours.', u.login)));
-    // not in box.append() above: the DOM append prints a null as "null" (only el() skips it)
-    if (!clean) box.append(el('div', { class: 'note' }, _t('Incognito windows share one session: close those already open on this Odoo first, or allow this extension in incognito (chrome://extensions) so each switch starts clean.')));
-  }, () => {});
-  return box;
-}
+const section = (s, title) => s.append(el('h2', { class: 'section' }, title));
 
 export function renderSecurity(s, state) {
   const { model, resId, origin } = state;
   const t = loadTarget(origin);
   const rerender = () => { s.replaceChildren(); renderSecurity(s, state); };
+  const pick = (uid) => { targets.set(origin, uid); rerender(); };
 
-  const picker = el('select', { 'aria-label': _t('Simulated user'), onchange: () => { targets.set(origin, +picker.value); rerender(); } },
-    el('option', {}, _t('Loading users…')));
-  block(s, 'view-as', _t('View as user'), () => el('div', {},
-    el('div', { class: 'picker' }, picker,
-      el('button', { class: 'chip', onclick: () => { targets.delete(origin); rerender(); } }, _t('My User'))),
-    el('div', { class: 'note' }, _t('Simulates the selected user\'s rights without logging in as them (reading other users\' groups needs admin rights).')),
-    switchBox(t, state),
-    el('div', { class: 'mt' }, el('button', {
-      class: 'btn', title: _t('Odoo\'s built-in /web/become route, base.group_system only'),
-      onclick: () => confirm(_t('Switch the current session to superuser (bypasses every rule)?')) && exec(pageGo, '/web/become'),
-    }, _t('Become Superuser')))));
-  t.then(({ uid, me, users }) => {
-    const list = users.some((x) => x.id === uid) ? users : [{ id: uid, name: `#${uid}`, login: '' }, ...users]; // users is cached: don't mutate
-    picker.replaceChildren(...list.map((x) => el('option', { value: x.id, selected: x.id === uid },
-      `${x.name}${x.login ? ` (${x.login})` : ''}${x.share ? ' · portal' : ''}${x.id === me ? ` · ${_t('me')}` : ''}`)));
-  }, () => picker.replaceChildren(el('option', {}, _t('Cannot read the user list'))));
-
-  block(s, 'session', _t('Session'), async () => {
-    const i = await sessionInfo();
+  // ---------- the user every card below is about ----------
+  section(s, _t('User'));
+  card(s, async () => {
+    const { u, uid, me, users, groupIds } = await t;
     return el('div', {},
-      kv({
-        user: `${i.name} (#${i.uid})`, login: i.username, db: i.db, version: i.server_version, admin: i.is_admin, system: i.is_system,
-        'web.base.url': i['web.base.url'] || '—', test_mode: !!i.test_mode, // test_mode = odoo.conf test_enable
-      }),
-      details('user_context', pre(i.user_context)), details(_t('Companies'), pre(i.user_companies)));
+      el('div', { class: 'picker' }, userSearch(users, pick),
+        uid !== me ? el('button', { class: 'chip', onclick: () => { targets.delete(origin); rerender(); } }, _t('My User')) : null),
+      el('div', { class: 'user-line' }, el('b', {}, u.name), uid === me ? pill(_t('me'), 'accent') : null, u.share ? pill('portal') : null,
+        el('span', { class: 'muted' }, _t('%s · #%s · %s (%s companies) · %s groups', u.login, u.id, u.company_id?.[1] || '', u.company_ids.length, groupIds.size))),
+      el('div', { class: 'note' }, _t('Simulates the selected user\'s rights without logging in as them (reading other users\' groups needs admin rights).')));
   });
-
-  block(s, 'user-risks', _t('User risks'), async () => {
-    const { u, has, groupIds } = await t;
-    return el('div', {},
-      el('div', { class: 'muted pad-top' },
-        _t('%s · %s · #%s · %s (%s companies) · %s groups', u.name, u.login, u.id, u.company_id?.[1] || '', u.company_ids.length, groupIds.size)),
-      findings(userRisks(u, has)));
-  });
-
   block(s, 'groups', _t('Groups'), () => groupsBlock(t, rerender));
+  block(s, 'user-risks', _t('User risks'), async () => {
+    const { u, has } = await t;
+    return findings(userRisks(u, has));
+  });
 
   if (model) {
-    block(s, 'effective', _t('Effective access on %s', `${model}${resId ? ` #${resId}` : ''}`), async () => {
-      const { uid, me } = await t;
-      if (uid !== me) return empty(_t('has_access runs as the logged-in user only: see Why allowed / blocked for the selected user.'));
-      const res = await Promise.all(MODES.map((op) => call(model, 'has_access', [resId ? [resId] : [], op]).catch(() => null)));
-      return el('div', { class: 'row' }, MODES.map((op, i) => triPill(res[i], [`✓ ${op}`, `✗ ${op}`, `? ${op}`])));
-    });
-
+    section(s, `${model}${resId ? ` #${resId}` : ''}`);
     const modelSec = Promise.all([readAcls(model), readRules(model), fieldsOf(model)]);
 
-    block(s, 'why', _t('Why allowed / blocked — %s', `${model}${resId ? ` #${resId}` : ''}`), () => whyBlock(model, resId, t, modelSec));
+    block(s, 'why', _t('Why allowed / blocked'), () => whyBlock(model, resId, t, modelSec));
 
     block(s, 'acl', _t('ACL (ir.model.access) — green = applies to the user'), async () => {
       const [{ groupIds }, [rows]] = await Promise.all([t, modelSec]);
@@ -172,6 +131,18 @@ export function renderSecurity(s, state) {
       return findings(auditModel({ fields, acls, rules, groupXml }));
     });
   }
+
+  // ---------- this Odoo: the logged-in session, whoever is picked above ----------
+  section(s, _t('Instance'));
+  block(s, 'session', _t('Session'), async () => {
+    const i = await sessionInfo();
+    return el('div', {},
+      kv({
+        user: `${i.name} (#${i.uid})`, login: i.username, db: i.db, version: i.server_version, admin: i.is_admin, system: i.is_system,
+        'web.base.url': i['web.base.url'] || '—', test_mode: !!i.test_mode, // test_mode = odoo.conf test_enable
+      }),
+      details('user_context', pre(i.user_context)), details(_t('Companies'), pre(i.user_companies)));
+  });
 
   // base.group_system only: say so instead of showing an AccessError.
   block(s, 'params', _t('System parameters (ir.config_parameter)'), async () => {
@@ -242,7 +213,9 @@ async function groupsBlock(t, rerender) {
 }
 
 async function whyBlock(model, resId, t, modelSec) {
-  const [{ u, groupIds }, [acls, rules]] = await Promise.all([t, modelSec]);
+  const [{ u, uid, me, groupIds }, [acls, rules]] = await Promise.all([t, modelSec]);
+  // your own user: the server's exact answer too (has_access runs as the logged-in user only)
+  const server = uid === me ? Promise.all(MODES.map((op) => call(model, 'has_access', [resId ? [resId] : [], op]).catch(() => null))) : null;
   const modesOf = (r) => MODES.filter((m) => rulesFor([r], groupIds, m).length);
   const relevant = rules.filter((r) => modesOf(r).length);
   const evals = await exec(pageEvalDomains, relevant.map((r) => r.domain_force), ruleEvalContext(u));
@@ -265,10 +238,13 @@ async function whyBlock(model, resId, t, modelSec) {
   const gids = [...new Set(rules.flatMap((r) => r.groups))];
   const gname = new Map((gids.length ? await call('res.groups', 'read', [gids, ['full_name']]) : []).map((g) => [g.id, g.full_name]));
 
-  const verdict = el('div', { class: 'verdict' }, MODES.map((mode) => {
+  const exact = await server;
+  const verdict = el('div', { class: 'verdict' }, MODES.map((mode, i) => {
     const { ok, why } = modeVerdict({ u, groupIds, acls, rules, mode, resId, passed });
+    const srv = exact && triPill(exact[i], [_t('server ✓'), _t('server ✗'), _t('server ?')]);
+    if (srv) srv.title = _t('has_access, run by the server as you');
     return el('div', { class: ok === true ? 'allow' : ok === false ? 'deny' : '' },
-      el('div', { class: 'row' }, el('b', {}, mode), el('span', { class: 'grow' }),
+      el('div', { class: 'row' }, el('b', {}, mode), el('span', { class: 'grow' }), srv,
         triPill(ok, [_t('ALLOWED'), _t('BLOCKED'), _t('UNKNOWN')], 'med')),
       el('div', { class: 'why' }, why));
   }));
@@ -289,5 +265,5 @@ async function whyBlock(model, resId, t, modelSec) {
     rules.length ? el('div', {}, listHead(_t('Rule · operations · result'), _t('Groups · domain')), el('ul', { class: 'list' }, ruleItems))
       : empty(_t('This model has no record rule.')),
     el('p', { class: 'note pad-bottom' },
-      _t('Assumes the user selected every allowed company. Rules of parent models through _inherits are not counted. This is a simulation; for an exact answer about yourself, see Effective access (has_access runs on the server).')));
+      _t('Assumes the user selected every allowed company. Rules of parent models through _inherits are not counted. This is a simulation; for your own user, “server” is the exact answer (has_access).')));
 }

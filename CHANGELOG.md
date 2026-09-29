@@ -6,11 +6,17 @@ All notable changes to this project are documented here. Format: [Keep a Changel
 
 ### Added
 
+- **Security › user search**: find any user by name or login in a search box (matches listed under it, ↑ ↓ Enter or a click), instead of a long select. **My User** comes back to yours.
 - **Security › Groups**: the picked user's groups, with one filter box that also lists the groups they don't have while typing, each with **+ Add**. **Remove** shows on the groups nothing else implies; an implied group is marked as such and says which group implies it (Odoo would add it back). Writing needs Access Rights and asks first.
 
 ### Changed
 
-- **Access and Security are one tab (Security)**: the user picked at the top drives every card, so another user's groups, ACLs and record rules can be read, not only yours. Session, Effective access (yourself, checked by the server) and System parameters moved over from Access; its record rules table is gone, the **Why allowed / blocked** card already lists every rule for the picked user.
+- **Access and Security are one tab (Security)**, in three parts: **User** (search, groups, risks), the current **model** for that user (why allowed / blocked, ACLs, fields hidden by `groups=`, configuration audit) and the **Instance** (session, system parameters, checks). Another user's groups, ACLs and record rules can be read, not only yours.
+- **Why allowed / blocked** shows the server's exact `has_access` answer next to each simulated verdict when the picked user is you (the separate Effective access card is gone). The Access tab's record rules table is gone too: this card lists every rule for the picked user.
+
+### Removed
+
+- **Account switching** in the Security tab: Switch to This User (incognito login), Impersonate in This Session (OCA `impersonate_login`) and Become Superuser.
 
 ### Fixed
 
