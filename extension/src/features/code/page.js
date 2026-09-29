@@ -13,7 +13,7 @@ export async function pageRunCode(code, opts = {}) {
   const MAX_CALLS = 1000; // a loop gone wrong stops here instead of hammering the server
   const SOURCE = 'odoo-debug-code.js';
   const HEADER_LINES = 2; // lines V8 puts before the body of `new AsyncFunction(...)`
-  // Methods that only read. Everything else (write, create, unlink, action_*, button_*…) needs "Allow writes".
+  // Methods that only read. Everything else (write, create, unlink, action_*, button_*…) needs "Allow Writes".
   const READ = new Set([
     'search', 'search_read', 'search_count', 'search_fetch', 'read', 'read_group', 'formatted_read_group',
     'web_search_read', 'web_read', 'web_read_group', 'fields_get', 'name_search', 'default_get', 'get_views',
@@ -55,7 +55,7 @@ export async function pageRunCode(code, opts = {}) {
     if (assignError) throw assignError;
     const name = `${model}.${method}`;
     if (readonly && !READ.has(method)) {
-      throw fail(N_('%s writes: blocked in read-only mode (tick "Allow writes" to run it)'), [name], `${name} writes: blocked in read-only mode`);
+      throw fail(N_('%s writes: blocked in read-only mode (tick "Allow Writes" to run it)'), [name], `${name} writes: blocked in read-only mode`);
     }
     if (calls.length >= MAX_CALLS) throw fail(N_('Stopped after %s calls'), [MAX_CALLS], `Stopped after ${MAX_CALLS} calls`);
     const entry = { model, method, args: short(args), kwargs: short(kwargs), write: !READ.has(method), ms: 0 };
@@ -147,7 +147,7 @@ export async function pageRunCode(code, opts = {}) {
    * reported at the line of the assignment (`origin`). */
   function assign(rs, path, name, value, origin) {
     const label = `${rs._name}.${[...path, name].join('.')}`;
-    if (readonly) throw fail(N_('%s writes: blocked in read-only mode (tick "Allow writes" to run it)'), [label], `${label} writes: blocked in read-only mode`);
+    if (readonly) throw fail(N_('%s writes: blocked in read-only mode (tick "Allow Writes" to run it)'), [label], `${label} writes: blocked in read-only mode`);
     values.clear(); // a read issued after this line must not be served what was read before it
     const p = chain.then(async () => {
       const target = path.length ? await resolvePath(rs, path, send) : rs;
@@ -396,5 +396,20 @@ export async function pageRunCode(code, opts = {}) {
         line: at ? +at[1] - HEADER_LINES : null,
       },
     });
+  }
+}
+
+/** Reloads the data of the view on screen, without reloading the page: Odoo's own `soft_reload` client action
+ * (18 and 19), which restores the current controller - what web_refresher's button achieves. A form with unsaved
+ * changes is saved first, as when leaving it. */
+export async function pageSoftReload() {
+  const N_ = (s) => s;
+  const action = window.odoo?.__WOWL_DEBUG__?.root?.env?.services?.action;
+  if (!action?.currentController) return { error: N_('No view to refresh on this page') };
+  try {
+    await action.doAction('soft_reload');
+    return { ok: true };
+  } catch (e) {
+    return { error: String(e?.message || e) };
   }
 }

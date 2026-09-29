@@ -43,9 +43,12 @@ export function toTable(v, max = MAX_ROWS) {
   return { columns: cols, rows: v.slice(0, max).map((r) => cols.map((c) => cellText(r[c]))), total: v.length };
 }
 
-/** Calls summary: how many, how many wrote, how many failed. */
+/** Calls summary: how many, how many wrote, how many failed, how many wrote and succeeded (the page then shows stale data). */
 export function callStats(calls = []) {
-  return { total: calls.length, writes: calls.filter((c) => c.write).length, errors: calls.filter((c) => c.error).length };
+  return {
+    total: calls.length, writes: calls.filter((c) => c.write).length, errors: calls.filter((c) => c.error).length,
+    written: calls.filter((c) => c.write && !c.error).length,
+  };
 }
 
 // ---------- suggestions in the editor ----------

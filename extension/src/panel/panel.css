@@ -213,7 +213,8 @@ textarea.code { display: block; width: 100%; min-height: 120px; resize: vertical
 textarea.code:focus { outline: 2px solid var(--accent-soft); border-color: var(--accent); }
 .writes-on textarea.code { border-color: var(--warn); }
 .check { display: inline-flex; align-items: center; gap: 4px; cursor: pointer; }
-.writes-on .check { color: var(--warn); font-weight: 600; }
+.check[hidden] { display: none; }
+.writes-on .writes-check { color: var(--warn); font-weight: 600; }
 .output pre.prints { margin-top: 6px; }
 .table-wrap { overflow: auto; max-height: 50vh; border: 1px solid var(--line); border-radius: 6px; margin-top: 4px; }
 .table-wrap th { position: sticky; top: 0; background: var(--surface); font-family: var(--mono); }

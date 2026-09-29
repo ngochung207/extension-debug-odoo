@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { codeKey, formatValue, printText, cellText, toTable, callStats, isRecordset, completionAt, rankSuggestions } from '../extension/src/features/code/logic.js';
-import { pageRunCode } from '../extension/src/features/code/page.js';
+import { pageRunCode, pageSoftReload } from '../extension/src/features/code/page.js';
 
 // ---------- logic ----------
 assert.equal(codeKey('http://localhost:8068'), 'odoo-debug-orm-code:http://localhost:8068');
@@ -31,7 +31,8 @@ assert.deepEqual(t.columns, ['id', 'name', 'extra']);
 assert.deepEqual(t.rows, [['1', 'A', '']]);
 assert.equal(t.total, 2);
 
-assert.deepEqual(callStats([{ write: true }, { error: 'x' }, {}]), { total: 3, writes: 1, errors: 1 });
+assert.deepEqual(callStats([{ write: true }, { error: 'x' }, {}]), { total: 3, writes: 1, errors: 1, written: 1 });
+assert.equal(callStats([{ write: true, error: 'refused' }]).written, 0);
 
 // ---------- pageRunCode against a fake call_kw ----------
 const DB = {
@@ -296,4 +297,17 @@ test('assignment errors: read-only, server refusal (at the assignment line), mem
 
   const member = await run(`env['res.partner'].browse(1).ids = [2]`, { readonly: false });
   assert.equal(member.r.error.name, 'TypeError');
+});
+
+test('pageSoftReload runs Odoo\'s soft_reload on the current controller', async () => {
+  const done = [];
+  const action = { currentController: { jsId: 'c1' }, doAction: async (a) => { done.push(a); } };
+  globalThis.window = { odoo: { __WOWL_DEBUG__: { root: { env: { services: { action } } } } } };
+  assert.deepEqual(await pageSoftReload(), { ok: true });
+  assert.deepEqual(done, ['soft_reload']);
+  globalThis.window = { odoo: {} };
+  assert.deepEqual(await pageSoftReload(), { error: 'No view to refresh on this page' });
+  action.doAction = async () => { throw new Error('boom'); };
+  globalThis.window = { odoo: { __WOWL_DEBUG__: { root: { env: { services: { action } } } } } };
+  assert.deepEqual(await pageSoftReload(), { error: 'boom' });
 });

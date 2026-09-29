@@ -1,15 +1,19 @@
 // Code tab: JS with an ORM-like `env` (env['sale.order'].search(...), .read(), .write()…), run in the Odoo page through
 // /web/dataset/call_kw with the logged-in session, so the server applies that user's rights to every call.
-// Read-only unless "Allow writes" is ticked (never remembered): every call is its own transaction, committed at once.
-import { pageRunCode } from './page.js';
+// Read-only unless "Allow Writes" is ticked (never remembered): every call is its own transaction, committed at once.
+import { pageRunCode, pageSoftReload } from './page.js';
 import { codeKey, formatValue, printText, toTable, callStats, MAX_ROWS, completionAt, rankSuggestions, METHODS, ENV_MEMBERS, COMMAND_MEMBERS, GLOBALS } from './logic.js';
 import { exec, sessionInfo, el, pill, pre, details, block, copyable, cached, call, fieldsOf } from '../../shared/ui.js';
 import { _t } from '../../shared/i18n.js';
 
 // The code is kept in the panel's localStorage, one per Odoo origin (codeKey): a snippet written for one server is not
-// what opens on another. ⟳ Reload Data does not clear it: a snippet is work, not a filter. "Allow writes" is never kept.
+// what opens on another. ⟳ Reload Data does not clear it: a snippet is work, not a filter. "Allow Writes" is never kept.
 const loadCode = (key) => { try { return localStorage.getItem(key); } catch { return null; } };
 const saveCode = (key, code) => { try { localStorage.setItem(key, code); } catch { /* storage off */ } };
+// "Auto Refresh" is a preference, kept (every origin): it only acts once Allow Writes is ticked, which is never kept.
+const REFRESH_KEY = 'odoo-debug-auto-refresh';
+const loadRefresh = () => { try { return localStorage.getItem(REFRESH_KEY) === '1'; } catch { return false; } };
+const saveRefresh = (on) => { try { localStorage.setItem(REFRESH_KEY, on ? '1' : '0'); } catch { /* storage off */ } };
 
 export function renderCode(s, state) {
   block(s, 'console', _t('ORM Console'), async () => {
@@ -22,6 +26,10 @@ export function renderCode(s, state) {
     editor.setAttribute('autocapitalize', 'off');
     editor.setAttribute('autocomplete', 'off');
     const writes = el('input', { type: 'checkbox' });
+    const autoRefresh = el('input', { type: 'checkbox', checked: loadRefresh() });
+    autoRefresh.addEventListener('change', () => saveRefresh(autoRefresh.checked));
+    const refreshBox = el('label', { class: 'check', title: _t('After writes, reload the data of the view on screen (Odoo\'s soft_reload), without reloading the page') },
+      autoRefresh, _t('Auto Refresh'));
     const run = el('button', { class: 'btn', type: 'button', title: _t('Run (⌘/Ctrl+Enter)') }, _t('Run'));
     const output = el('div', { class: 'output' });
 
@@ -33,6 +41,8 @@ export function renderCode(s, state) {
       const r = await exec(pageRunCode, editor.value, { readonly: !writes.checked, context: info.user_context || {}, uid: info.uid });
       run.disabled = false;
       output.replaceChildren(...result(r));
+      // what the page shows is stale: reload the view's data, if asked to
+      if (autoRefresh.checked && callStats(r?.calls).written) output.firstChild?.append(await refreshPage());
     };
     run.addEventListener('click', go);
     const hints = suggester(editor);
@@ -56,15 +66,20 @@ export function renderCode(s, state) {
       hints.box,
       el('div', { class: 'row mt' },
         run,
-        el('label', { class: 'check', title: _t('Lets the code call write, create, unlink and any other method that is not a read') },
-          writes, _t('Allow writes')),
+        el('label', { class: 'check writes-check', title: _t('Lets the code call write, create, unlink and any other method that is not a read') },
+          writes, _t('Allow Writes')),
+        refreshBox,
         el('span', { class: 'grow' }),
         el('span', { class: 'muted' }, _t('⌘/Ctrl+Enter'))),
       el('div', { class: 'note' }, _t('Read-only by default. With writes allowed, each call is committed at once: there is no rollback.')),
       output,
       help());
-    const flag = () => root.classList.toggle('writes-on', writes.checked);
+    const flag = () => {
+      root.classList.toggle('writes-on', writes.checked);
+      refreshBox.hidden = !writes.checked; // nothing to refresh after a read-only run
+    };
     writes.addEventListener('change', flag);
+    flag();
     return root;
   });
 }
@@ -209,10 +224,10 @@ function help() {
       ["browse, with_context, ensure_one, exists, mapped('a.b'), filtered_domain", _t('work like in Python')],
       ['rec.state, rec.partner_id.name', _t('field value of a single record, as in Python; await it inside an expression: if (await rec.state === \'sale\')')],
       ['for (const rec of rs)', _t('records one by one; each field is read once for all of them')],
-      ["rec.state = 'sent'", _t('writes the field, like in Python (needs "Allow writes"); later lines see the new value')],
+      ["rec.state = 'sent'", _t('writes the field, like in Python (needs "Allow Writes"); later lines see the new value')],
       ['ids, id, length', _t('record ids, first id, count')],
-      ['create, write, unlink, copy', _t('write to the server: need "Allow writes"')],
-      ['rs.action_confirm()', _t('any other public method, called on these records (also needs "Allow writes")')],
+      ['create, write, unlink, copy', _t('write to the server: need "Allow Writes"')],
+      ['rs.action_confirm()', _t('any other public method, called on these records (also needs "Allow Writes")')],
       ["env['model'].call(method, args, kwargs)", _t('a method called on the model, without records')],
     ]),
     el('div', { class: 'help-title' }, _t('Suggestions:')),
@@ -227,6 +242,14 @@ function help() {
     el('div', { class: 'note' }, _t('JavaScript, not Python: await every server call, lists and objects in JS syntax (true / false / null).')),
     el('div', { class: 'note' }, _t('Every call goes through /web/dataset/call_kw as the logged-in user: no sudo(), no SQL, no private _methods. Methods that switch to sudo() inside still do so, as when clicked in Odoo.')),
     el('div', { class: 'note' }, _t('The code runs in the Odoo page with its own JavaScript rights: only run code you understand. An endless loop freezes the page (reload it).')));
+}
+
+/** After writes: the view on screen reloads its data (Odoo's soft_reload), like web_refresher's button. */
+async function refreshPage() {
+  const r = await exec(pageSoftReload);
+  if (r?.ok) return pill(_t('page refreshed'), 'info');
+  const why = r?.error ? _t(r.error) : _t('No response — is this an Odoo page?');
+  return el('span', { class: 'pill', title: why }, _t('page not refreshed'));
 }
 
 /** The run's outcome: prints, error or return value, then the calls made. */
