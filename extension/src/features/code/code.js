@@ -68,9 +68,9 @@ export function renderCode(s) {
 
 // The guide below the editor, in the manner of Odoo's server action ("Available variables: - env: …").
 const EXAMPLE = [
-  "const orders = await env['sale.order'].search([['state', '=', 'sale']], { limit: 5 });",
-  'print(orders);',
-  "return orders.read(['name', 'partner_id', 'amount_total']);",
+  "orders = await env['sale.order'].search([['state', '=', 'sale']], { limit: 5 })",
+  'for (const order of orders) print(order.name, order.partner_id.name)',
+  "return orders.read(['name', 'partner_id', 'amount_total'])",
 ].join('\n');
 
 function help() {
@@ -89,6 +89,8 @@ function help() {
     list([
       ['search, search_read, search_count, read, read_group, fields_get, name_search', _t('read from the server')],
       ["browse, with_context, ensure_one, exists, mapped('a.b'), filtered_domain", _t('work like in Python')],
+      ['rec.state, rec.partner_id.name', _t('field value of a single record, as in Python; await it inside an expression: if (await rec.state === \'sale\')')],
+      ['for (const rec of rs)', _t('records one by one; each field is read once for all of them')],
       ['ids, id, length', _t('record ids, first id, count')],
       ['create, write, unlink, copy', _t('write to the server: need "Allow writes"')],
       ['rs.action_confirm()', _t('any other public method, called on these records (also needs "Allow writes")')],

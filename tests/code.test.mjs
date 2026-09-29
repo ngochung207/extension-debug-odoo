@@ -56,6 +56,7 @@ function server(log) {
         return [f, load && m.fields[f].type === 'many2one' && v ? [v, `#${v}`] : v];
       })])));
     }
+    if (method === 'write' && model === 'res.country') { for (const id of args[0]) Object.assign(m.rows[id], args[1]); return reply(true); }
     if (method === 'write') return err('You are not allowed to modify this document', 'odoo.exceptions.AccessError');
     if (method === 'check_object_reference') return reply(['res.partner', 1]);
     if (method === 'action_confirm') return reply(true);
@@ -156,4 +157,63 @@ test('ensure_one, filtered_domain, circular values', async () => {
   assert.deepEqual(fd.log[0].kwargs.context.active_test, false);
   const circ = await run(`const o = { a: 1 }; o.self = o; return o;`);
   assert.deepEqual(circ.r.value, { a: 1, self: '[Circular]' });
+});
+
+test('field access like Python: a = browse(…); return a.state', async () => {
+  const { r, log } = await run(`a = env['res.partner'].browse(1)\nreturn a.name`);
+  assert.equal(r.ok, true, r.error?.message);
+  assert.equal(r.value, 'A');
+  assert.equal(globalThis.window.a, undefined); // `a = …` stays in the run's scope
+  assert.deepEqual(log.map((c) => c.method), ['fields_get', 'read']);
+  assert.deepEqual(log[1].args, [[1]]);
+  assert.deepEqual(log[1].kwargs.fields, ['name']);
+});
+
+test('paths, empty and multi recordsets, member ends', async () => {
+  const { r } = await run(`const a = env['res.partner'].browse(1);
+return [a.country_id.code, a.country_id, a.country_id.id, a.category_id.ids, env['res.partner'].browse(3).country_id.code,
+  env['res.partner'].browse([]).name, await a.name];`);
+  assert.equal(r.ok, true, r.error?.message);
+  assert.deepEqual(r.value, ['VN', { $recordset: 'res.country', ids: [10] }, 10, [5, 6], false, false, 'A']);
+  const multi = await run(`return env['res.partner'].browse([1, 2]).name;`);
+  assert.equal(multi.r.error.msgid, 'Expected singleton: %s');
+  const notRel = await run(`return env['res.partner'].browse(1).name.code;`);
+  assert.equal(notRel.r.error.msgid, '%s.%s is not relational');
+  const noField = await run(`return env['res.partner'].browse(1).nope;`);
+  assert.equal(noField.r.error.msgid, '%s has no field %s');
+});
+
+test('iterating prefetches: one read per field for the whole recordset; print settles values', async () => {
+  const { r, log } = await run(`const rs = await env['res.partner'].search([]);
+for (const p of rs) print(p.id, p.name, await p.name);`);
+  assert.equal(r.ok, true, r.error?.message);
+  assert.deepEqual(r.out, [[1, 'A', 'A'], [2, 'B', 'B'], [3, 'C', 'C']]);
+  assert.deepEqual(log.map((c) => c.method), ['search', 'fields_get', 'read']);
+  assert.deepEqual(log[2].args, [[1, 2, 3]]);
+});
+
+test('a write clears the values read before it; methods through a path', async () => {
+  const { r, log } = await run(`const c = env['res.country'].browse(10);
+const before = await c.code;
+await c.write({ code: 'FR' });
+const after = await c.code;
+const viaPath = await env['res.partner'].browse(1).country_id.read(['code']);
+await c.write({ code: 'VN' });
+return [before, after, viaPath[0].code];`, { readonly: false });
+  assert.equal(r.ok, true, r.error?.message);
+  assert.deepEqual(r.value, ['VN', 'FR', 'FR']);
+  assert.equal(log.filter((c) => c.method === 'read').length, 4);
+});
+
+test('using a field without await says so; scope keeps page globals safe', async () => {
+  const { r } = await run(`const a = env['res.partner'].browse(1);\nif (a.name == 'A') return 1;`);
+  assert.equal(r.ok, false);
+  assert.equal(r.error.msgid, '%s is read from the server: await it before using its value');
+  assert.deepEqual(r.error.args, ['res.partner.name']);
+  assert.equal(r.error.line, 2);
+  const g = await run(`name = 'x'\nreturn [name, Math.max(1, 2), typeof fetch]`);
+  assert.deepEqual(g.r.value, ['x', 2, 'function']); // globals are still readable
+  assert.equal(globalThis.name, undefined); // … but `name = …` did not write one
+  const undef = await run(`return missing_var`);
+  assert.equal(undef.r.error.name, 'ReferenceError');
 });

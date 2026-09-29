@@ -110,8 +110,8 @@ msgid "Running…"
 msgstr "Đang chạy…"
 
 #: src/features/apps/apps.js:46
-#: src/features/code/code.js:109
-#: src/features/code/code.js:148
+#: src/features/code/code.js:111
+#: src/features/code/code.js:150
 #: src/features/rpc/rpc.js:36
 #: src/features/translations/translations.js:71
 msgid "error"
@@ -308,101 +308,109 @@ msgid "work like in Python"
 msgstr "dùng như trong Python"
 
 #: src/features/code/code.js:92
+msgid "field value of a single record, as in Python; await it inside an expression: if (await rec.state === 'sale')"
+msgstr "giá trị field của một record, như trong Python; dùng trong biểu thức thì phải await: if (await rec.state === 'sale')"
+
+#: src/features/code/code.js:93
+msgid "records one by one; each field is read once for all of them"
+msgstr "duyệt từng record; mỗi field chỉ đọc một lần cho tất cả"
+
+#: src/features/code/code.js:94
 msgid "record ids, first id, count"
 msgstr "danh sách id, id đầu tiên, số record"
 
-#: src/features/code/code.js:93
+#: src/features/code/code.js:95
 msgid "write to the server: need \"Allow writes\""
 msgstr "ghi xuống server: cần tick \"Cho phép ghi\""
 
-#: src/features/code/code.js:94
+#: src/features/code/code.js:96
 msgid "any other public method, called on these records (also needs \"Allow writes\")"
 msgstr "mọi method public khác, gọi trên các record này (cũng cần \"Cho phép ghi\")"
 
-#: src/features/code/code.js:95
+#: src/features/code/code.js:97
 msgid "a method called on the model, without records"
 msgstr "gọi method trên model, không kèm record"
 
-#: src/features/code/code.js:97
+#: src/features/code/code.js:99
 msgid "To show a result, return it: lists of records show as a table."
 msgstr "Muốn xem kết quả thì return nó: danh sách record hiển thị dạng bảng."
 
-#: src/features/code/code.js:99
+#: src/features/code/code.js:101
 msgid "JavaScript, not Python: await every server call, lists and objects in JS syntax (true / false / null)."
 msgstr "JavaScript, không phải Python: await mọi lời gọi server, list và object viết theo cú pháp JS (true / false / null)."
 
-#: src/features/code/code.js:100
+#: src/features/code/code.js:102
 msgid "Every call goes through /web/dataset/call_kw as the logged-in user: no sudo(), no SQL, no private _methods. Methods that switch to sudo() inside still do so, as when clicked in Odoo."
 msgstr "Mọi lời gọi đi qua /web/dataset/call_kw bằng user đang đăng nhập: không có sudo(), không SQL, không gọi được _method private. Method nào tự sudo() bên trong thì vẫn sudo(), như khi bấm trong Odoo."
 
-#: src/features/code/code.js:101
+#: src/features/code/code.js:103
 msgid "The code runs in the Odoo page with its own JavaScript rights: only run code you understand. An endless loop freezes the page (reload it)."
 msgstr "Code chạy trong trang Odoo với toàn quyền JavaScript của trang: chỉ chạy code bạn hiểu. Vòng lặp vô hạn sẽ treo trang (tải lại trang)."
 
-#: src/features/code/code.js:106
+#: src/features/code/code.js:108
 #: src/shared/ui.js:30
 msgid "No response — is this an Odoo page?"
 msgstr "Không có phản hồi — đây có phải trang Odoo?"
 
-#: src/features/code/code.js:109
+#: src/features/code/code.js:111
 msgid "ok"
 msgstr "ok"
 
-#: src/features/code/code.js:110
+#: src/features/code/code.js:112
 msgid "read-only"
 msgstr "chỉ đọc"
 
-#: src/features/code/code.js:110
+#: src/features/code/code.js:112
 msgid "writes allowed"
 msgstr "cho phép ghi"
 
-#: src/features/code/code.js:111
-#: src/features/code/code.js:149
+#: src/features/code/code.js:113
+#: src/features/code/code.js:151
 msgid "%s ms"
 msgstr "%s ms"
 
-#: src/features/code/code.js:112
+#: src/features/code/code.js:114
 msgid "%s calls"
 msgstr "%s lời gọi"
 
-#: src/features/code/code.js:113
+#: src/features/code/code.js:115
 msgid "%s write calls"
 msgstr "%s lời gọi ghi"
 
-#: src/features/code/code.js:117
+#: src/features/code/code.js:119
 msgid "No return value: end with return … to see one."
 msgstr "Không có giá trị trả về: kết thúc bằng return … để xem kết quả."
 
-#: src/features/code/code.js:123
+#: src/features/code/code.js:125
 msgid "(line %s)"
 msgstr "(dòng %s)"
 
-#: src/features/code/code.js:128
+#: src/features/code/code.js:130
 msgid "This page's Content-Security-Policy forbids running code (a proxy in front of Odoo adds script-src)."
 msgstr "Content-Security-Policy của trang này không cho chạy code (proxy trước Odoo đã thêm script-src)."
 
-#: src/features/code/code.js:129
+#: src/features/code/code.js:131
 #: src/shared/ui.js:94
 msgid "Traceback"
 msgstr "Traceback"
 
-#: src/features/code/code.js:136
+#: src/features/code/code.js:138
 msgid "%s rows (first %s shown)"
 msgstr "%s dòng (hiện %s dòng đầu)"
 
-#: src/features/code/code.js:136
+#: src/features/code/code.js:138
 msgid "%s rows"
 msgstr "%s dòng"
 
-#: src/features/code/code.js:140
+#: src/features/code/code.js:142
 msgid "JSON"
 msgstr "JSON"
 
-#: src/features/code/code.js:144
+#: src/features/code/code.js:146
 msgid "Calls (%s)"
 msgstr "Lời gọi (%s)"
 
-#: src/features/code/code.js:147
+#: src/features/code/code.js:149
 msgid "write"
 msgstr "ghi"
 
@@ -414,17 +422,25 @@ msgstr "%s ghi dữ liệu: bị chặn ở chế độ chỉ đọc (tick \"Cho
 msgid "Stopped after %s calls"
 msgstr "Đã dừng sau %s lời gọi"
 
-#: src/features/code/page.js:78
+#: src/features/code/page.js:83
 msgid "%s has no field %s"
 msgstr "%s không có field %s"
 
-#: src/features/code/page.js:102
+#: src/features/code/page.js:116
+#: src/features/code/page.js:121
+#: src/features/code/page.js:147
+#: src/features/code/page.js:221
+msgid "%s.%s is not relational"
+msgstr "%s.%s không phải field quan hệ"
+
+#: src/features/code/page.js:118
+#: src/features/code/page.js:179
 msgid "Expected singleton: %s"
 msgstr "Cần đúng một record: %s"
 
-#: src/features/code/page.js:144
-msgid "%s.%s is not relational"
-msgstr "%s.%s không phải field quan hệ"
+#: src/features/code/page.js:138
+msgid "%s is read from the server: await it before using its value"
+msgstr "%s được đọc từ server: hãy await trước khi dùng giá trị"
 
 #: src/features/perf/perf.js:14
 msgid "Cannot call /web/set_profiling"

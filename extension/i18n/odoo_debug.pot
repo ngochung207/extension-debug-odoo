@@ -110,8 +110,8 @@ msgid "Running…"
 msgstr ""
 
 #: src/features/apps/apps.js:46
-#: src/features/code/code.js:109
-#: src/features/code/code.js:148
+#: src/features/code/code.js:111
+#: src/features/code/code.js:150
 #: src/features/rpc/rpc.js:36
 #: src/features/translations/translations.js:71
 msgid "error"
@@ -308,101 +308,109 @@ msgid "work like in Python"
 msgstr ""
 
 #: src/features/code/code.js:92
-msgid "record ids, first id, count"
+msgid "field value of a single record, as in Python; await it inside an expression: if (await rec.state === 'sale')"
 msgstr ""
 
 #: src/features/code/code.js:93
-msgid "write to the server: need \"Allow writes\""
+msgid "records one by one; each field is read once for all of them"
 msgstr ""
 
 #: src/features/code/code.js:94
-msgid "any other public method, called on these records (also needs \"Allow writes\")"
+msgid "record ids, first id, count"
 msgstr ""
 
 #: src/features/code/code.js:95
-msgid "a method called on the model, without records"
+msgid "write to the server: need \"Allow writes\""
+msgstr ""
+
+#: src/features/code/code.js:96
+msgid "any other public method, called on these records (also needs \"Allow writes\")"
 msgstr ""
 
 #: src/features/code/code.js:97
-msgid "To show a result, return it: lists of records show as a table."
+msgid "a method called on the model, without records"
 msgstr ""
 
 #: src/features/code/code.js:99
-msgid "JavaScript, not Python: await every server call, lists and objects in JS syntax (true / false / null)."
-msgstr ""
-
-#: src/features/code/code.js:100
-msgid "Every call goes through /web/dataset/call_kw as the logged-in user: no sudo(), no SQL, no private _methods. Methods that switch to sudo() inside still do so, as when clicked in Odoo."
+msgid "To show a result, return it: lists of records show as a table."
 msgstr ""
 
 #: src/features/code/code.js:101
+msgid "JavaScript, not Python: await every server call, lists and objects in JS syntax (true / false / null)."
+msgstr ""
+
+#: src/features/code/code.js:102
+msgid "Every call goes through /web/dataset/call_kw as the logged-in user: no sudo(), no SQL, no private _methods. Methods that switch to sudo() inside still do so, as when clicked in Odoo."
+msgstr ""
+
+#: src/features/code/code.js:103
 msgid "The code runs in the Odoo page with its own JavaScript rights: only run code you understand. An endless loop freezes the page (reload it)."
 msgstr ""
 
-#: src/features/code/code.js:106
+#: src/features/code/code.js:108
 #: src/shared/ui.js:30
 msgid "No response — is this an Odoo page?"
 msgstr ""
 
-#: src/features/code/code.js:109
+#: src/features/code/code.js:111
 msgid "ok"
 msgstr ""
 
-#: src/features/code/code.js:110
+#: src/features/code/code.js:112
 msgid "read-only"
 msgstr ""
 
-#: src/features/code/code.js:110
+#: src/features/code/code.js:112
 msgid "writes allowed"
 msgstr ""
 
-#: src/features/code/code.js:111
-#: src/features/code/code.js:149
+#: src/features/code/code.js:113
+#: src/features/code/code.js:151
 msgid "%s ms"
 msgstr ""
 
-#: src/features/code/code.js:112
+#: src/features/code/code.js:114
 msgid "%s calls"
 msgstr ""
 
-#: src/features/code/code.js:113
+#: src/features/code/code.js:115
 msgid "%s write calls"
 msgstr ""
 
-#: src/features/code/code.js:117
+#: src/features/code/code.js:119
 msgid "No return value: end with return … to see one."
 msgstr ""
 
-#: src/features/code/code.js:123
+#: src/features/code/code.js:125
 msgid "(line %s)"
 msgstr ""
 
-#: src/features/code/code.js:128
+#: src/features/code/code.js:130
 msgid "This page's Content-Security-Policy forbids running code (a proxy in front of Odoo adds script-src)."
 msgstr ""
 
-#: src/features/code/code.js:129
+#: src/features/code/code.js:131
 #: src/shared/ui.js:94
 msgid "Traceback"
 msgstr ""
 
-#: src/features/code/code.js:136
+#: src/features/code/code.js:138
 msgid "%s rows (first %s shown)"
 msgstr ""
 
-#: src/features/code/code.js:136
+#: src/features/code/code.js:138
 msgid "%s rows"
 msgstr ""
 
-#: src/features/code/code.js:140
+#: src/features/code/code.js:142
 msgid "JSON"
 msgstr ""
 
-#: src/features/code/code.js:144
+#: src/features/code/code.js:146
 msgid "Calls (%s)"
 msgstr ""
 
-#: src/features/code/code.js:147
+#: src/features/code/code.js:149
 msgid "write"
 msgstr ""
 
@@ -414,16 +422,24 @@ msgstr ""
 msgid "Stopped after %s calls"
 msgstr ""
 
-#: src/features/code/page.js:78
+#: src/features/code/page.js:83
 msgid "%s has no field %s"
 msgstr ""
 
-#: src/features/code/page.js:102
+#: src/features/code/page.js:116
+#: src/features/code/page.js:121
+#: src/features/code/page.js:147
+#: src/features/code/page.js:221
+msgid "%s.%s is not relational"
+msgstr ""
+
+#: src/features/code/page.js:118
+#: src/features/code/page.js:179
 msgid "Expected singleton: %s"
 msgstr ""
 
-#: src/features/code/page.js:144
-msgid "%s.%s is not relational"
+#: src/features/code/page.js:138
+msgid "%s is read from the server: await it before using its value"
 msgstr ""
 
 #: src/features/perf/perf.js:14

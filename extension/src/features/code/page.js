@@ -48,6 +48,7 @@ export async function pageRunCode(code, opts = {}) {
     if (calls.length >= MAX_CALLS) throw fail(N_('Stopped after %s calls'), [MAX_CALLS], `Stopped after ${MAX_CALLS} calls`);
     const entry = { model, method, args: short(args), kwargs: short(kwargs), write: !READ.has(method), ms: 0 };
     calls.push(entry);
+    if (entry.write) values.clear(); // field values read before a write may be stale after it
     const t = performance.now();
     try {
       const r = await f(`/web/dataset/call_kw/${model}/${method}`, {
@@ -67,9 +68,13 @@ export async function pageRunCode(code, opts = {}) {
       return j.result;
     } finally {
       entry.ms = Math.round(performance.now() - t);
+      if (entry.write) values.clear();
     }
   }
 
+  const RELATIONAL = ['many2one', 'one2many', 'many2many'];
+  const NUMERIC = ['integer', 'float', 'monetary'];
+  const values = new Map(); // "model context" → Map(id → { field: value }): field values read during this run
   const fieldCache = new Map();
   async function fieldInfo(rs, name) {
     const key = `${rs._name} ${name}`;
@@ -79,12 +84,84 @@ export async function pageRunCode(code, opts = {}) {
     return info;
   }
 
+  /** A field of a singleton, like rec.state in Python: read once for every record of its prefetch group (the recordset
+   * it was iterated from), then served from `values` until something writes. */
+  async function fieldValue(rs, name) {
+    const key = `${rs._name} ${JSON.stringify(rs._context)}`;
+    if (!values.has(key)) values.set(key, new Map());
+    const cache = values.get(key);
+    const id = rs._ids[0];
+    const has = (x) => cache.has(x) && name in cache.get(x);
+    if (!has(id)) {
+      const group = [id, ...rs._prefetch.filter((x) => x !== id && !has(x))].slice(0, 1000);
+      const read = (ids) => callKw(rs._name, 'read', [ids], { fields: [name], load: false }, rs._context);
+      let rows;
+      try { rows = await read(group); } catch (e) {
+        if (group.length === 1) throw e;
+        rows = await read([id]); // one record of the group may be unreadable: only this one has to be
+      }
+      for (const row of rows) cache.set(row.id, { ...cache.get(row.id), [name]: row[name] });
+    }
+    return cache.get(id)[name];
+  }
+
+  /** rec.partner_id.country_id.code: each hop on a single record (Expected singleton otherwise, as in Python).
+   * Relational end → recordset, other fields → value; on an empty recordset → false / 0 / an empty recordset. */
+  async function resolvePath(rs, path) {
+    let cur = rs;
+    for (const [i, name] of path.entries()) {
+      const last = i === path.length - 1;
+      if (i && name in cur && typeof cur[name] !== 'function') { // rec.partner_id.ids / .id / .length
+        if (last) return cur[name];
+        throw fail(N_('%s.%s is not relational'), [cur._name, name], `${cur._name}.${name} is not relational`);
+      }
+      if (cur.length > 1) throw fail(N_('Expected singleton: %s'), [String(cur)], `Expected singleton: ${cur}`);
+      const info = await fieldInfo(cur, name);
+      const relational = RELATIONAL.includes(info.type);
+      if (!relational && !last) throw fail(N_('%s.%s is not relational'), [cur._name, name], `${cur._name}.${name} is not relational`);
+      if (!relational) return cur.length ? fieldValue(cur, name) : NUMERIC.includes(info.type) ? 0 : false;
+      const v = cur.length ? await fieldValue(cur, name) : false;
+      cur = wrap(info.relation, info.type === 'many2one' ? (v ? [v] : []) : v || [], cur._context);
+    }
+    return cur;
+  }
+
+  /** What `rec.x` is when x is not a Recordset member: a field when awaited (`await rec.state`, or returned / printed),
+   * a method when called (`await rec.action_confirm()`), and a longer path when followed (`rec.partner_id.name`). */
+  const lazies = new WeakSet();
+  function lazy(rs, path) {
+    const label = `${rs._name}.${path.join('.')}`;
+    const p = new Proxy(function field() {}, {
+      get(_, prop) {
+        if (prop === 'then') return (ok, ko) => resolvePath(rs, path).then(ok, ko);
+        if (prop === Symbol.toPrimitive || prop === 'toString' || prop === 'valueOf') {
+          return () => { throw fail(N_('%s is read from the server: await it before using its value'), [label], `${label} is read from the server: await it before using its value`); };
+        }
+        if (typeof prop === 'symbol' || prop === 'toJSON') return undefined;
+        return lazy(rs, [...path, prop]);
+      },
+      async apply(_, __, args) {
+        const target = path.length > 1 ? await resolvePath(rs, path.slice(0, -1)) : rs;
+        const method = path.at(-1);
+        if (!(target instanceof Recordset)) {
+          throw fail(N_('%s.%s is not relational'), [rs._name, path.slice(0, -1).join('.')], `${label}: not a recordset`);
+        }
+        return typeof target[method] === 'function' && method in target ? target[method](...args) : target.call(method, args);
+      },
+    });
+    lazies.add(p);
+    return p;
+  }
+
   class Recordset {
-    constructor(model, ids, context) {
+    constructor(model, ids, context, prefetch) {
       this._name = model;
       this._ids = ids;
       this._context = context;
+      this._prefetch = prefetch || ids;
     }
+    /** for (const rec of rs): singletons sharing rs as their prefetch group (one read per field for all of them). */
+    *[Symbol.iterator]() { for (const id of this._ids) yield wrap(this._name, [id], this._context, this._ids); }
     get ids() { return [...this._ids]; }
     get id() { return this._ids[0] ?? false; }
     get length() { return this._ids.length; }
@@ -152,13 +229,14 @@ export async function pageRunCode(code, opts = {}) {
     }
   }
 
-  /** Unknown attributes become record methods: `await so.action_confirm()` → call_kw(sale.order, action_confirm, [ids]). */
-  function wrap(model, ids, context = {}) {
-    return new Proxy(new Recordset(model, ids, context), {
+  /** Unknown attributes are fields or methods (see lazy): `await so.state`, `await so.action_confirm()`. */
+  function wrap(model, ids, context = {}, prefetch = null) {
+    const rs = new Recordset(model, ids, context, prefetch);
+    return new Proxy(rs, {
       get(target, prop, receiver) {
         if (typeof prop === 'symbol' || prop in target) return Reflect.get(target, prop, receiver);
         if (prop === 'then' || prop === 'toJSON' || prop.startsWith('_')) return undefined; // `await rs` must not call the server
-        return (...args) => target.call(prop, args);
+        return lazy(receiver, [prop]);
       },
     });
   }
@@ -203,13 +281,58 @@ export async function pageRunCode(code, opts = {}) {
     seen.delete(v);
     return r;
   }
-  const print = (...args) => { out.push(args.map((a) => plain(a))); };
+  /** Awaits every field access / promise inside a value, so `return [rec.name, rec.state]` shows values.
+   * Objects with nothing to await come back as they are (a cycle stays a cycle, for plain() to name). */
+  async function settle(v, path = new Set()) {
+    if (lazies.has(v) || v instanceof Promise) return settle(await v, path);
+    if (v === null || typeof v !== 'object' || v instanceof Recordset || path.has(v)) return v;
+    const isArray = Array.isArray(v);
+    const proto = Object.getPrototypeOf(v);
+    if (!isArray && proto !== Object.prototype && proto !== null) return v;
+    path.add(v);
+    let changed = false;
+    const entries = [];
+    for (const [k, x] of Object.entries(v)) { // in order: the calls log reads top to bottom
+      const y = await settle(x, path);
+      changed ||= y !== x;
+      entries.push([k, y]);
+    }
+    path.delete(v);
+    if (!changed) return v;
+    return isArray ? entries.map(([, y]) => y) : Object.fromEntries(entries);
+  }
+  const pending = []; // print() is sync; the values it was given are settled before the run ends
+  const print = (...args) => {
+    const line = [];
+    out.push(line);
+    const p = settle(args).then((vals) => line.push(...vals.map((a) => plain(a))));
+    p.catch(() => {}); // awaited (and reported) at the end of the run
+    pending.push(p);
+  };
+  // Python habits: `a = 1` without const/let. Such names live in `locals`, never on window (where `name = …` or
+  // `status = …` would overwrite the page's own globals). Names read before being set raise, as in Python.
+  const BUILTINS = new Set(['Math', 'JSON', 'Date', 'Object', 'Array', 'Number', 'String', 'Boolean', 'Promise', 'Set', 'Map',
+    'RegExp', 'Error', 'Symbol', 'BigInt', 'Intl', 'console', 'parseInt', 'parseFloat', 'isNaN', 'isFinite', 'Infinity',
+    'NaN', 'undefined', 'structuredClone', 'encodeURIComponent', 'decodeURIComponent', 'window', 'globalThis']);
+  const locals = { env, print, Command };
+  const scope = new Proxy(locals, {
+    has: (_, key) => typeof key === 'string' && !BUILTINS.has(key),
+    get(target, key) {
+      if (key === Symbol.unscopables) return undefined;
+      if (key in target) return target[key];
+      if (key in globalThis) return globalThis[key]; // odoo, fetch, document…: read only through here
+      throw new ReferenceError(`${String(key)} is not defined`);
+    },
+    set(target, key, v) { target[key] = v; return true; },
+  });
   const done = (extra) => ({ out, calls, ms: Math.round(performance.now() - started), readonly, uid, ...extra });
 
   try {
     const AsyncFunction = Object.getPrototypeOf(async () => {}).constructor;
-    const fn = new AsyncFunction('env', 'print', 'Command', `${code}\n//# sourceURL=${SOURCE}`);
-    const value = await fn(env, print, Command);
+    // `with` keeps line 1 of the code on line 1 of the body (HEADER_LINES); sloppy mode is what allows it
+    const fn = new AsyncFunction('__scope', `with (__scope) { ${code}\n}\n//# sourceURL=${SOURCE}`);
+    const value = await settle(await fn(scope));
+    await Promise.all(pending);
     return done({ ok: true, value: value === undefined ? undefined : plain(value), hasValue: value !== undefined });
   } catch (e) {
     const at = String(e?.stack || '').match(new RegExp(`${SOURCE.replace('.', '\\.')}:(\\d+):(\\d+)`));

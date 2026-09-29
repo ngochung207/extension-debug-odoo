@@ -110,8 +110,8 @@ msgid "Running…"
 msgstr "Running…"
 
 #: src/features/apps/apps.js:46
-#: src/features/code/code.js:109
-#: src/features/code/code.js:148
+#: src/features/code/code.js:111
+#: src/features/code/code.js:150
 #: src/features/rpc/rpc.js:36
 #: src/features/translations/translations.js:71
 msgid "error"
@@ -308,101 +308,109 @@ msgid "work like in Python"
 msgstr "work like in Python"
 
 #: src/features/code/code.js:92
+msgid "field value of a single record, as in Python; await it inside an expression: if (await rec.state === 'sale')"
+msgstr "field value of a single record, as in Python; await it inside an expression: if (await rec.state === 'sale')"
+
+#: src/features/code/code.js:93
+msgid "records one by one; each field is read once for all of them"
+msgstr "records one by one; each field is read once for all of them"
+
+#: src/features/code/code.js:94
 msgid "record ids, first id, count"
 msgstr "record ids, first id, count"
 
-#: src/features/code/code.js:93
+#: src/features/code/code.js:95
 msgid "write to the server: need \"Allow writes\""
 msgstr "write to the server: need \"Allow writes\""
 
-#: src/features/code/code.js:94
+#: src/features/code/code.js:96
 msgid "any other public method, called on these records (also needs \"Allow writes\")"
 msgstr "any other public method, called on these records (also needs \"Allow writes\")"
 
-#: src/features/code/code.js:95
+#: src/features/code/code.js:97
 msgid "a method called on the model, without records"
 msgstr "a method called on the model, without records"
 
-#: src/features/code/code.js:97
+#: src/features/code/code.js:99
 msgid "To show a result, return it: lists of records show as a table."
 msgstr "To show a result, return it: lists of records show as a table."
 
-#: src/features/code/code.js:99
+#: src/features/code/code.js:101
 msgid "JavaScript, not Python: await every server call, lists and objects in JS syntax (true / false / null)."
 msgstr "JavaScript, not Python: await every server call, lists and objects in JS syntax (true / false / null)."
 
-#: src/features/code/code.js:100
+#: src/features/code/code.js:102
 msgid "Every call goes through /web/dataset/call_kw as the logged-in user: no sudo(), no SQL, no private _methods. Methods that switch to sudo() inside still do so, as when clicked in Odoo."
 msgstr "Every call goes through /web/dataset/call_kw as the logged-in user: no sudo(), no SQL, no private _methods. Methods that switch to sudo() inside still do so, as when clicked in Odoo."
 
-#: src/features/code/code.js:101
+#: src/features/code/code.js:103
 msgid "The code runs in the Odoo page with its own JavaScript rights: only run code you understand. An endless loop freezes the page (reload it)."
 msgstr "The code runs in the Odoo page with its own JavaScript rights: only run code you understand. An endless loop freezes the page (reload it)."
 
-#: src/features/code/code.js:106
+#: src/features/code/code.js:108
 #: src/shared/ui.js:30
 msgid "No response — is this an Odoo page?"
 msgstr "No response — is this an Odoo page?"
 
-#: src/features/code/code.js:109
+#: src/features/code/code.js:111
 msgid "ok"
 msgstr "ok"
 
-#: src/features/code/code.js:110
+#: src/features/code/code.js:112
 msgid "read-only"
 msgstr "read-only"
 
-#: src/features/code/code.js:110
+#: src/features/code/code.js:112
 msgid "writes allowed"
 msgstr "writes allowed"
 
-#: src/features/code/code.js:111
-#: src/features/code/code.js:149
+#: src/features/code/code.js:113
+#: src/features/code/code.js:151
 msgid "%s ms"
 msgstr "%s ms"
 
-#: src/features/code/code.js:112
+#: src/features/code/code.js:114
 msgid "%s calls"
 msgstr "%s calls"
 
-#: src/features/code/code.js:113
+#: src/features/code/code.js:115
 msgid "%s write calls"
 msgstr "%s write calls"
 
-#: src/features/code/code.js:117
+#: src/features/code/code.js:119
 msgid "No return value: end with return … to see one."
 msgstr "No return value: end with return … to see one."
 
-#: src/features/code/code.js:123
+#: src/features/code/code.js:125
 msgid "(line %s)"
 msgstr "(line %s)"
 
-#: src/features/code/code.js:128
+#: src/features/code/code.js:130
 msgid "This page's Content-Security-Policy forbids running code (a proxy in front of Odoo adds script-src)."
 msgstr "This page's Content-Security-Policy forbids running code (a proxy in front of Odoo adds script-src)."
 
-#: src/features/code/code.js:129
+#: src/features/code/code.js:131
 #: src/shared/ui.js:94
 msgid "Traceback"
 msgstr "Traceback"
 
-#: src/features/code/code.js:136
+#: src/features/code/code.js:138
 msgid "%s rows (first %s shown)"
 msgstr "%s rows (first %s shown)"
 
-#: src/features/code/code.js:136
+#: src/features/code/code.js:138
 msgid "%s rows"
 msgstr "%s rows"
 
-#: src/features/code/code.js:140
+#: src/features/code/code.js:142
 msgid "JSON"
 msgstr "JSON"
 
-#: src/features/code/code.js:144
+#: src/features/code/code.js:146
 msgid "Calls (%s)"
 msgstr "Calls (%s)"
 
-#: src/features/code/code.js:147
+#: src/features/code/code.js:149
 msgid "write"
 msgstr "write"
 
@@ -414,17 +422,25 @@ msgstr "%s writes: blocked in read-only mode (tick \"Allow writes\" to run it)"
 msgid "Stopped after %s calls"
 msgstr "Stopped after %s calls"
 
-#: src/features/code/page.js:78
+#: src/features/code/page.js:83
 msgid "%s has no field %s"
 msgstr "%s has no field %s"
 
-#: src/features/code/page.js:102
+#: src/features/code/page.js:116
+#: src/features/code/page.js:121
+#: src/features/code/page.js:147
+#: src/features/code/page.js:221
+msgid "%s.%s is not relational"
+msgstr "%s.%s is not relational"
+
+#: src/features/code/page.js:118
+#: src/features/code/page.js:179
 msgid "Expected singleton: %s"
 msgstr "Expected singleton: %s"
 
-#: src/features/code/page.js:144
-msgid "%s.%s is not relational"
-msgstr "%s.%s is not relational"
+#: src/features/code/page.js:138
+msgid "%s is read from the server: await it before using its value"
+msgstr "%s is read from the server: await it before using its value"
 
 #: src/features/perf/perf.js:14
 msgid "Cannot call /web/set_profiling"
