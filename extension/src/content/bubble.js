@@ -158,7 +158,18 @@
     place();
   }
 
-  document.addEventListener('odoo-debug-ready', mount);
+  /** Debug mode kept on for this Odoo (toolbar popup): a page opened without ?debug= reloads with it. An explicit
+   * ?debug= (also empty or 0: turned off on purpose) is left alone. */
+  async function autoDebug(debug) {
+    const u = new URL(location.href);
+    if (debug || u.searchParams.has('debug')) return;
+    const { autoDebug: on = {} } = await chrome.storage.local.get('autoDebug').catch(() => ({}));
+    if (!on[location.origin]) return;
+    u.searchParams.set('debug', on[location.origin]);
+    location.replace(u);
+  }
+
+  document.addEventListener('odoo-debug-ready', (e) => { autoDebug(e.detail); mount(); });
   chrome.runtime.onMessage.addListener((msg, _sender, reply) => {
     if (msg?.type === 'odoo-full') { // from the panel: { on } sets it, no `on` just asks; the answer is the current state
       if (btn && typeof msg.on === 'boolean') setFull(msg.on);

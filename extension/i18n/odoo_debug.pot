@@ -1345,16 +1345,28 @@ msgstr ""
 msgid "Debug Mode"
 msgstr ""
 
-#: src/popup/popup.html:26
+#: src/popup/popup.html:24
+msgid "Keep it on for this Odoo"
+msgstr ""
+
+#: src/popup/popup.html:27
 msgid "Language"
 msgstr ""
 
-#: src/popup/popup.html:30
 #: src/popup/popup.html:31
+#: src/popup/popup.html:32
 msgid "Theme"
 msgstr ""
 
-#: src/popup/popup.html:33
+#: src/popup/popup.html:35
+msgid "Shortcuts"
+msgstr ""
+
+#: src/popup/popup.html:36
+msgid "Change"
+msgstr ""
+
+#: src/popup/popup.html:38
 msgid "Tip: ⌥/Alt + click a field on the Odoo page to copy its technical name."
 msgstr ""
 
@@ -1368,6 +1380,14 @@ msgstr ""
 
 #: src/popup/popup.js:7
 msgid "Dark"
+msgstr ""
+
+#: src/popup/popup.js:31
+msgid "panel"
+msgstr ""
+
+#: src/popup/popup.js:31
+msgid "debug"
 msgstr ""
 
 #: src/shared/bridge.js:12

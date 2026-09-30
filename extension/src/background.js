@@ -11,3 +11,21 @@ chrome.runtime.onInstalled.addListener(() => {
     }]);
   });
 });
+
+// Keyboard shortcuts (manifest "commands", changed in chrome://extensions/shortcuts). Odoo pages only: elsewhere the
+// content script isn't listening and window.odoo is missing, so both do nothing.
+chrome.commands.onCommand.addListener(async (command, tab) => {
+  if (!tab?.id) return;
+  if (command === 'toggle-panel') chrome.tabs.sendMessage(tab.id, { type: 'odoo-toggle' }).catch(() => {});
+  if (command === 'toggle-debug') {
+    chrome.scripting.executeScript({ target: { tabId: tab.id }, world: 'MAIN', func: pageToggleDebug }).catch(() => {});
+  }
+});
+
+/** Debug off → on, on (or assets) → off. Self-contained: runs in the page. */
+function pageToggleDebug() {
+  if (typeof window.odoo?.csrf_token !== 'string') return;
+  const u = new URL(location.href);
+  u.searchParams.set('debug', window.odoo.debug ? '0' : '1');
+  location.href = u.toString();
+}

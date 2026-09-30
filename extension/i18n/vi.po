@@ -1345,16 +1345,28 @@ msgstr "Hiện / ẩn panel"
 msgid "Debug Mode"
 msgstr "Chế độ debug"
 
-#: src/popup/popup.html:26
+#: src/popup/popup.html:24
+msgid "Keep it on for this Odoo"
+msgstr "Luôn bật cho Odoo này"
+
+#: src/popup/popup.html:27
 msgid "Language"
 msgstr "Ngôn ngữ"
 
-#: src/popup/popup.html:30
 #: src/popup/popup.html:31
+#: src/popup/popup.html:32
 msgid "Theme"
 msgstr "Giao diện"
 
-#: src/popup/popup.html:33
+#: src/popup/popup.html:35
+msgid "Shortcuts"
+msgstr "Phím tắt"
+
+#: src/popup/popup.html:36
+msgid "Change"
+msgstr "Đổi"
+
+#: src/popup/popup.html:38
 msgid "Tip: ⌥/Alt + click a field on the Odoo page to copy its technical name."
 msgstr "Mẹo: ⌥/Alt + click vào một field trên trang Odoo để copy tên kỹ thuật."
 
@@ -1369,6 +1381,14 @@ msgstr "Sáng"
 #: src/popup/popup.js:7
 msgid "Dark"
 msgstr "Tối"
+
+#: src/popup/popup.js:31
+msgid "panel"
+msgstr "panel"
+
+#: src/popup/popup.js:31
+msgid "debug"
+msgstr "debug"
 
 #: src/shared/bridge.js:12
 msgid "No tab is open."

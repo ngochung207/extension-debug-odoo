@@ -298,6 +298,29 @@ test('toolbar popup: the debug mode of the page, switched from there', async () 
   await page.waitForSelector('.o_form_view');
 });
 
+test('toolbar popup: debug kept on for this Odoo, a page opened without ?debug= gets it, ?debug=0 is left alone', async () => {
+  const popup = async () => {
+    const [ext] = (await browser.extensions()).values();
+    await ext.triggerAction(page);
+    const p = await (await browser.waitForTarget((t) => t.url().endsWith('/src/popup/popup.html'))).asPage();
+    await p.waitForSelector('#debug button.on');
+    return p;
+  };
+  let p = await popup();
+  assert.match(await p.$eval('#shortcuts', (n) => n.textContent), /panel.*debug/);
+  await Promise.all([page.waitForNavigation(), p.$eval('#keep', (b) => b.click())]); // off → debug, and kept
+  assert.equal(await page.evaluate(() => window.odoo.debug), '1');
+  await page.goto(`${new URL(page.url()).origin}/odoo/action-base.action_res_users/2`); // no ?debug=
+  await page.waitForFunction(() => new URLSearchParams(location.search).get('debug') === '1', { timeout: 15_000 });
+  await page.goto(page.url().replace('debug=1', 'debug=0'));
+  await page.waitForSelector('.o_form_view');
+  assert.equal(await page.evaluate(() => window.odoo.debug), '');
+  p = await popup();
+  await p.$eval('#keep', (b) => b.click()); // not kept any more
+  await p.waitForFunction(async () => !Object.keys((await chrome.storage.local.get('autoDebug')).autoDebug).length);
+  await p.close();
+});
+
 test('Security tab: log in as the picked user in an incognito window, this session stays', async () => {
   panel = await page.waitForFrame((f) => f.url().endsWith('/src/panel/panel.html')); // reopened after the reload above
   await panel.waitForSelector('.tabs [data-tab="security"]');

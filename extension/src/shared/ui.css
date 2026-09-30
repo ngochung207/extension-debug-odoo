@@ -283,6 +283,9 @@ body.popup { width: 320px; height: auto; display: block; padding-bottom: 14px; b
 .popup .row > .btn { color: var(--on-accent); background: var(--accent); border-color: var(--accent); }
 .popup #host { color: var(--fg); }
 .pop-select { width: 100%; padding: 5px 8px; font-size: 12px; }
+.pop-check { display: flex; align-items: center; gap: 6px; margin-top: 8px; font-size: 12px; cursor: pointer; }
+#shortcuts { color: var(--muted); font-size: 12px; }
+#shortcuts kbd { font: 600 11px ui-monospace, Menlo, monospace; color: var(--fg); }
 
 /* Code tab */
 /* the console fills the tab: a bar, the editor (most of the height), the guide when asked, the result below */

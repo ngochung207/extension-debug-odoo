@@ -27,6 +27,13 @@ themeBox.append(...THEMES.map((t) => el('option', { value: t }, THEME_LABELS[t] 
 themeBox.value = THEMES.includes(saved.theme) ? saved.theme : 'auto';
 themeBox.addEventListener('change', () => { applyTheme(themeBox.value); chrome.storage.local.set({ theme: themeBox.value }); }); // every open panel follows (loadSettings)
 
+// Keyboard shortcuts (manifest "commands"): as set in chrome://extensions/shortcuts, where Change leads.
+const COMMANDS = { 'toggle-panel': N_('panel'), 'toggle-debug': N_('debug') };
+const all = await chrome.commands.getAll();
+const keys = Object.keys(COMMANDS).map((name) => all.find((c) => c.name === name)).filter(Boolean); // panel first
+$('#shortcuts').replaceChildren(...keys.flatMap((c, i) => [i ? ' · ' : '', el('kbd', {}, c.shortcut || '—'), ` ${_t(COMMANDS[c.name])}`]));
+$('#edit-shortcuts').addEventListener('click', () => chrome.tabs.create({ url: 'chrome://extensions/shortcuts' }));
+
 // "This page" only makes sense in the toolbar popup, not on the options page.
 if (chrome.extension.getViews({ type: 'popup' }).includes(window)) {
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
@@ -39,9 +46,26 @@ if (chrome.extension.getViews({ type: 'popup' }).includes(window)) {
   const [{ result: debug = '' } = {}] = await chrome.scripting.executeScript({ target: { tabId: tab.id }, world: 'MAIN', func: () => window.odoo?.debug || '' })
     .catch(() => []); // not scriptable (chrome:// …): no current mode shown
   const current = debug.split(',').includes('assets') ? 'assets' : debug ? '1' : '0';
-  segmented($('#debug'), [['0', 'off'], ['1', 'debug'], ['assets', 'assets']], current, async (mode) => {
+  const setMode = async (mode) => {
     await chrome.scripting.executeScript({ target: { tabId: tab.id }, world: 'MAIN', func: pageDebug, args: [mode] }).catch(() => {});
     window.close();
+  };
+  // Keep it on: { origin → '1' | 'assets' } in storage, applied by content/bubble.js to every page opened without ?debug=
+  const origin = tab?.url ? new URL(tab.url).origin : '';
+  const { autoDebug = {} } = await chrome.storage.local.get('autoDebug');
+  const keep = (mode) => {
+    if (mode && mode !== '0') autoDebug[origin] = mode; else delete autoDebug[origin];
+    return chrome.storage.local.set({ autoDebug });
+  };
+  const box = $('#keep');
+  box.checked = !!autoDebug[origin];
+  box.addEventListener('change', async () => {
+    await keep(box.checked && (current === '0' ? '1' : current));
+    if (box.checked && current === '0') setMode('1');
+  });
+  segmented($('#debug'), [['0', 'off'], ['1', 'debug'], ['assets', 'assets']], current, async (mode) => {
+    if (box.checked) await keep(mode); // off: not kept any more
+    setMode(mode);
   });
   $('#page').hidden = false;
 }

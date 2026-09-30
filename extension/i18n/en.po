@@ -1345,16 +1345,28 @@ msgstr "Show / Hide Panel"
 msgid "Debug Mode"
 msgstr "Debug Mode"
 
-#: src/popup/popup.html:26
+#: src/popup/popup.html:24
+msgid "Keep it on for this Odoo"
+msgstr "Keep it on for this Odoo"
+
+#: src/popup/popup.html:27
 msgid "Language"
 msgstr "Language"
 
-#: src/popup/popup.html:30
 #: src/popup/popup.html:31
+#: src/popup/popup.html:32
 msgid "Theme"
 msgstr "Theme"
 
-#: src/popup/popup.html:33
+#: src/popup/popup.html:35
+msgid "Shortcuts"
+msgstr "Shortcuts"
+
+#: src/popup/popup.html:36
+msgid "Change"
+msgstr "Change"
+
+#: src/popup/popup.html:38
 msgid "Tip: ⌥/Alt + click a field on the Odoo page to copy its technical name."
 msgstr "Tip: ⌥/Alt + click a field on the Odoo page to copy its technical name."
 
@@ -1369,6 +1381,14 @@ msgstr "Light"
 #: src/popup/popup.js:7
 msgid "Dark"
 msgstr "Dark"
+
+#: src/popup/popup.js:31
+msgid "panel"
+msgstr "panel"
+
+#: src/popup/popup.js:31
+msgid "debug"
+msgstr "debug"
 
 #: src/shared/bridge.js:12
 msgid "No tab is open."

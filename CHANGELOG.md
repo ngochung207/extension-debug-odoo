@@ -7,6 +7,8 @@ All notable changes to this project are documented here. Format: [Keep a Changel
 ### Added
 
 - **Security: log in as the picked user, in an incognito window.** Clicking their name (next to the search box) opens Odoo's login page in a private window with their login filled in and brings you back to the current page once logged in: you type their password there (2FA included), your own session stays as it is. The extension never sees the password. Incognito windows share their cookies, so one other user at a time per Odoo.
+- **Keyboard shortcuts**: <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>O</kbd> shows / hides the panel, <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>D</kbd> turns debug mode on / off. The toolbar popup lists them, and *Change* opens Chrome's shortcut settings.
+- **Debug mode kept on per Odoo**: *Keep it on for this Odoo* in the toolbar popup reopens every page of that instance in debug (or assets), after a module upgrade or from a bookmark too. A URL with `?debug=0` is left alone, and picking *off* stops keeping it.
 
 ## [1.2.0] - 2026-09-30
 

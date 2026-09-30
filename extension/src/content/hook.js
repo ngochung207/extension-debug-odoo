@@ -24,9 +24,9 @@
     document.dispatchEvent(new CustomEvent('odoo-debug-rpc', { detail: JSON.stringify(e) }));
   };
 
-  // The ISOLATED world can't see `window.odoo`: tell bubble.js this is an Odoo page.
+  // The ISOLATED world can't see `window.odoo`: tell bubble.js this is an Odoo page, and its debug mode.
   document.addEventListener('DOMContentLoaded', () => {
-    if (isOdoo()) document.dispatchEvent(new CustomEvent('odoo-debug-ready'));
+    if (isOdoo()) document.dispatchEvent(new CustomEvent('odoo-debug-ready', { detail: window.odoo.debug || '' }));
   });
 
   const P = XMLHttpRequest.prototype;

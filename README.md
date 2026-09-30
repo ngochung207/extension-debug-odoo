@@ -86,7 +86,8 @@ The extension is not on the Chrome Web Store yet; install it unpacked (Chrome, E
 - **Open / close**: click the round button; the panel opens beside it, on the tab you were on, scrolled where you left it. Drag the button anywhere and the panel follows it; its position is kept per Odoo instance (dropped back near the bottom edge, it sticks to it again). Nothing shows on non-Odoo sites, and the toolbar icon is greyed out there.
 - **Minimize**: <kbd>−</kbd> in the panel header hides the panel back to the round button, which reopens it as it was.
 - **Full screen**: <kbd>⤢</kbd> in the panel header, <kbd>Esc</kbd> or <kbd>⤡</kbd> to leave. The layout is an editor's: tabs in a sidebar, one header line, no card frames, short blocks side by side, the Code editor beside its result, RPC and Perf as a list with the selected row's detail on the right. The round button hides meanwhile (<kbd>−</kbd> brings it back). Open state and full screen survive page reloads.
-- **Debug mode**: click the toolbar icon; its `off` / `debug` / `assets` switch shows the page's mode and reloads Odoo in the one picked.
+- **Debug mode**: click the toolbar icon; its `off` / `debug` / `assets` switch shows the page's mode and reloads Odoo in the one picked. **Keep it on for this Odoo** reopens every page of that instance in debug, unless its URL says otherwise (`?debug=0`).
+- **Shortcuts**: <kbd>⌥ Alt</kbd>+<kbd>⇧ Shift</kbd>+<kbd>O</kbd> shows / hides the panel, <kbd>⌥ Alt</kbd>+<kbd>⇧ Shift</kbd>+<kbd>D</kbd> turns debug on / off. Change them in `chrome://extensions/shortcuts` (*Change* in the toolbar popup).
 - **Cards**: each tab is a stack of cards, closed at first; a card loads its data once opened, and open / closed cards
   stay so across reloads. Click a list row to open its details (label, storage, module, full value…), again to close.
 - **Copy**: click a field name, model, xmlid or parameter in the panel; <kbd>⌥ Alt</kbd> + click a form field, label,
