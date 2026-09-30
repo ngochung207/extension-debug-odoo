@@ -1,4 +1,5 @@
-/* Theme: light-dark() follows color-scheme, i.e. the system unless Settings forces one via [data-theme]. */
+/* Theme: light-dark() follows color-scheme, i.e. the system unless Settings forces one via [data-theme].
+   The editor color themes further down (VS Code style) replace the palette; ids listed in shared/settings.js. */
 :root {
   color-scheme: light dark;
   --bg: light-dark(#f6f5f7, #17161a); --surface: light-dark(#ffffff, #211f25); --fg: light-dark(#1f1d24, #ece9f1);
@@ -8,11 +9,35 @@
   --warn: light-dark(#b06000, #fdd663); --warn-soft: light-dark(#fef3e0, #3a3020);
   --err: light-dark(#c5221f, #f28b82); --err-soft: light-dark(#fce8e6, #3c2020);
   --info: light-dark(#1a5fb4, #8ab4f8); --info-soft: light-dark(#e8f0fe, #1f2a3d);
-  --kw: light-dark(#a626a4, #d6a0e8);
+  --kw: light-dark(#a626a4, #d6a0e8); --on-accent: #fff;
   --mono: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 :root[data-theme=light] { color-scheme: light; }
 :root[data-theme=dark] { color-scheme: dark; }
+/* Editor color themes: base colors only, the soft backgrounds are mixed from them. Code: string = ok, number = warn, keyword = kw, builtin = accent, function = info. */
+:root[data-theme]:not([data-theme=light], [data-theme=dark]) {
+  --accent-soft: color-mix(in srgb, var(--accent) 18%, var(--surface)); --ok-soft: color-mix(in srgb, var(--ok) 15%, var(--surface));
+  --warn-soft: color-mix(in srgb, var(--warn) 15%, var(--surface)); --err-soft: color-mix(in srgb, var(--err) 15%, var(--surface));
+  --info-soft: color-mix(in srgb, var(--info) 15%, var(--surface));
+}
+:root[data-theme=github-light] { color-scheme: light; --bg: #f6f8fa; --surface: #ffffff; --fg: #1f2328; --muted: #59636e; --line: #d1d9e0;
+  --accent: #0969da; --ok: #1a7f37; --warn: #9a6700; --err: #d1242f; --info: #8250df; --kw: #cf222e; }
+:root[data-theme=solarized-light] { color-scheme: light; --bg: #eee8d5; --surface: #fdf6e3; --fg: #073642; --muted: #657b83; --line: #e0d9c3;
+  --accent: #268bd2; --ok: #859900; --warn: #b58900; --err: #dc322f; --info: #2aa198; --kw: #6c71c4; --on-accent: #fdf6e3; }
+:root[data-theme=github-dark] { color-scheme: dark; --bg: #010409; --surface: #0d1117; --fg: #e6edf3; --muted: #8d96a0; --line: #30363d;
+  --accent: #58a6ff; --ok: #3fb950; --warn: #d29922; --err: #f85149; --info: #d2a8ff; --kw: #ff7b72; --on-accent: #0d1117; }
+:root[data-theme=dracula] { color-scheme: dark; --bg: #21222c; --surface: #282a36; --fg: #f8f8f2; --muted: #8b95c2; --line: #44475a;
+  --accent: #bd93f9; --ok: #50fa7b; --warn: #ffb86c; --err: #ff5555; --info: #8be9fd; --kw: #ff79c6; --on-accent: #282a36; }
+:root[data-theme=monokai] { color-scheme: dark; --bg: #1e1f1c; --surface: #272822; --fg: #f8f8f2; --muted: #9d9b8a; --line: #3e3d32;
+  --accent: #ae81ff; --ok: #a6e22e; --warn: #fd971f; --err: #ff4a6b; --info: #66d9ef; --kw: #f92672; --on-accent: #272822; }
+:root[data-theme=one-dark] { color-scheme: dark; --bg: #21252b; --surface: #282c34; --fg: #abb2bf; --muted: #7f848e; --line: #3e4451;
+  --accent: #61afef; --ok: #98c379; --warn: #d19a66; --err: #e06c75; --info: #56b6c2; --kw: #c678dd; --on-accent: #282c34; }
+:root[data-theme=nord] { color-scheme: dark; --bg: #2a303b; --surface: #2e3440; --fg: #eceff4; --muted: #9aa3b5; --line: #434c5e;
+  --accent: #88c0d0; --ok: #a3be8c; --warn: #ebcb8b; --err: #bf616a; --info: #81a1c1; --kw: #b48ead; --on-accent: #2e3440; }
+:root[data-theme=solarized-dark] { color-scheme: dark; --bg: #00212b; --surface: #002b36; --fg: #93a1a1; --muted: #6f8a90; --line: #0d4250;
+  --accent: #268bd2; --ok: #859900; --warn: #b58900; --err: #dc322f; --info: #2aa198; --kw: #6c71c4; --on-accent: #fdf6e3; }
+:root[data-theme=catppuccin] { color-scheme: dark; --bg: #181825; --surface: #1e1e2e; --fg: #cdd6f4; --muted: #9399b2; --line: #313244;
+  --accent: #cba6f7; --ok: #a6e3a1; --warn: #fab387; --err: #f38ba8; --info: #89b4fa; --kw: #f5c2e7; --on-accent: #1e1e2e; }
 
 * { box-sizing: border-box; }
 html, body { margin: 0; height: 100%; overflow: hidden; } /* only <main> scrolls: the header never scrolls away */
@@ -25,18 +50,19 @@ code, pre, .mono { font-family: var(--mono); font-size: 11px; }
 
 /* ---------- header ---------- */
 .top { flex: none; background: var(--surface); border-bottom: 1px solid var(--line); }
-.brand-row { display: flex; align-items: center; gap: 8px; padding: 8px 12px 4px; }
+/* brand, buttons; the status (model, id, view) wraps to its own line below them (full screen: it sits beside the brand) */
+.brand-row { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; padding: 8px 12px 6px; }
 .brand-row strong { font-size: 13px; }
 .spacer { flex: 1; }
 .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
 .seg button { border: 0; background: none; padding: 2px 8px; font-size: 11px; color: var(--muted); }
 .seg button + button { border-left: 1px solid var(--line); }
-.seg button.on { background: var(--accent); color: #fff; }
+.seg button.on { background: var(--accent); color: var(--on-accent); }
 .icon-btn { border: 1px solid var(--line); background: none; border-radius: 6px; width: 26px; height: 24px; font-size: 14px; line-height: 1; }
 .icon-btn:hover, .seg button:hover:not(.on), .chip:hover { background: var(--accent-soft); }
 .icon-btn.spin { animation: spin .8s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
-.context { padding: 0 12px 6px; display: flex; gap: 6px; align-items: center; flex-wrap: wrap; color: var(--muted); min-height: 22px; }
+.context { order: 1; flex: 1 0 100%; display: flex; gap: 6px; align-items: center; flex-wrap: wrap; color: var(--muted); min-height: 22px; }
 .context .model { font-family: var(--mono); font-weight: 600; color: var(--fg); }
 .tabs { display: flex; padding: 0 4px; }
 .tabs button { flex: 1 0 auto; border: 0; background: none; padding: 7px 8px; color: var(--muted); border-bottom: 2px solid transparent; white-space: nowrap; }
@@ -84,7 +110,7 @@ details.card { margin-top: 0; }
 input[type=search], select { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 4px 8px; }
 input[type=search]:focus, select:focus { outline: 2px solid var(--accent-soft); border-color: var(--accent); }
 .chip { border: 1px solid var(--line); background: var(--surface); border-radius: 12px; padding: 2px 10px; white-space: nowrap; }
-.chip[aria-pressed=true] { background: var(--accent); color: #fff; border-color: var(--accent); }
+.chip[aria-pressed=true] { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
 .btn { border: 1px solid var(--accent); background: none; color: var(--accent); border-radius: 6px; padding: 3px 10px; text-decoration: none; }
 .btn:hover { background: var(--accent-soft); }
 
@@ -109,14 +135,14 @@ input[type=search]:focus, select:focus { outline: 2px solid var(--accent-soft); 
 .row { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 6px; min-width: 0; }
 .name { font-family: var(--mono); font-size: 11px; font-weight: 600; overflow-wrap: anywhere; }
 /* splitRow(): info wraps on the left, the action buttons keep the right column (top-aligned) on every row */
-.row.split { flex-wrap: nowrap; align-items: flex-start; gap: 8px; }
+.row.master-detail { flex-wrap: nowrap; align-items: flex-start; gap: 8px; }
 .actions { flex: none; display: flex; gap: 4px; align-items: center; }
 /* tree mark + name side by side: a long name wraps inside, the mark never sits alone on its line */
 .name.tree { display: inline-flex; gap: 4px; min-width: 0; }
 .name.tree > .copy { min-width: 0; }
 .grow { flex: 1 1 auto; min-width: 0; overflow-wrap: anywhere; }
 .val { font-family: var(--mono); font-size: 11px; text-align: right; }
-.row .val { white-space: normal; word-break: break-word; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; } /* full value: click the row */
+.row .val { white-space: normal; word-break: break-word; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; } /* full value: click the row. overflow: line-clamp only adds the …, the rest would spill over the next rows */
 .row .val.long { text-align: left; }
 .meta { color: var(--muted); font-size: 11px; margin-top: 1px; word-break: break-word; }
 .detail { display: none; margin-top: 6px; cursor: auto; }
@@ -222,6 +248,7 @@ body.popup { width: 320px; height: auto; display: block; padding-bottom: 12px; b
 .popup .seg { display: flex; }
 .popup .seg button { flex: 1; padding: 5px 8px; font-size: 12px; }
 .popup #host { color: var(--fg); }
+.pop-select { width: 100%; padding: 5px 8px; font-size: 12px; }
 
 /* Code tab */
 /* the console fills the tab: a bar, the editor (most of the height), the guide when asked, the result below */
@@ -347,3 +374,69 @@ textarea.code::selection { background: color-mix(in srgb, var(--accent) 35%, tra
 .module-picker label.pick > .name { flex: none; }
 .module-picker label.pick > .muted { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } /* one line per module */
 .module-picker .list > li:not([hidden]) { display: block; } /* one line even in the wide 2-column layout */
+
+/* masterDetail() (RPC, Perf): the pane beside the list only exists on a wide panel; narrow, rows unfold in place */
+.master-detail > .pane { display: none; }
+
+/* Wide panel (full screen), like an editor (last in the file: it overrides the rules above): one header line, the tabs in a
+   sidebar on the left, the content on one plane beside it. No card frames there: titles and whitespace separate the
+   blocks, only rows keep a line between them. Short blocks sit side by side (data-key, see block()). */
+@media (min-width: 900px) {
+  body { display: grid; grid-template: "top top" auto "nav main" minmax(0, 1fr) / 176px minmax(0, 1fr); }
+  .top { display: contents; }
+  .brand-row { grid-area: top; flex-wrap: nowrap; padding: 8px 12px; background: var(--surface); border-bottom: 1px solid var(--line); }
+  .context { order: 0; flex: 0 1 auto; min-width: 0; margin-left: 8px; padding-left: 12px; border-left: 1px solid var(--line); }
+  .tabs { grid-area: nav; display: flex; flex-direction: column; gap: 2px; padding: 10px 8px; overflow-y: auto; background: var(--bg); border-right: 1px solid var(--line); }
+  .tabs button { flex: none; display: flex; justify-content: space-between; align-items: center; padding: 7px 10px; border: 0; border-radius: 6px; text-align: left; font-size: 13px; }
+  .tabs button:hover:not(.active) { background: var(--surface); color: var(--fg); }
+  .tabs button.active { background: var(--accent-soft); box-shadow: inset 3px 0 var(--accent); }
+  main { grid-area: main; background: var(--surface); }
+
+  .tab.active { padding: 20px 28px 28px; }
+  .tab.active:not(#code, #apps, #translations) { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 32px; align-items: start; align-content: start; } /* those three fill the height (flex, above) */
+  .tab > * { grid-column: 1 / -1; min-width: 0; }
+  .tab > :is([data-key=action], [data-key=context], [data-key=groups], [data-key=user-risks], [data-key=acl], [data-key=hidden-fields],
+    [data-key=session], [data-key=params]) { grid-column: auto; }
+  .tab > .toolbar { padding-inline: 0; }
+  .tab > .section { margin: 18px 0 2px; padding-bottom: 6px; border-bottom: 2px solid var(--line); font-size: 12px; color: var(--fg); }
+  .tab > .section:first-child { margin-top: 0; }
+
+  .card, .card[open] > summary { background: none; border: 0; }
+  .card { margin-bottom: 26px; overflow: visible; }
+  .card > summary { padding: 4px 10px 8px; }
+  .card > summary:hover { background: none; color: var(--accent); }
+  .card h3 { font-size: 14px; }
+  .card-body { padding: 0 10px; }
+  .card .toolbar:has(input[type=search]) { padding: 0 10px 8px; border-bottom: 0; }
+  .list-head { background: none; color: var(--muted); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .03em; border-bottom: 1px solid var(--line); }
+  .list-head > span + span, .list > li > :not(.row, .detail) { border-left: 0; }
+  .toolbar > .list-head { border-top: 0; }
+  .tab > .toolbar > .list-head { border: 0; border-bottom: 1px solid var(--line); border-radius: 0; }
+  .list > li:first-child { border-top: 0; }
+  pre { border-color: transparent; }
+  .module-picker .list { border-inline: 0; border-radius: 0; } /* Apps, Translations: a top and bottom line mark where it scrolls */
+  /* key / value: three pairs per line */
+  .kv { grid-template-columns: repeat(3, max-content minmax(0, 1fr)); gap: 4px 12px; }
+
+  /* Code: editor on the left, the guide and the result stacked on the right (either one alone takes the whole height) */
+  .console { display: grid; grid-template: auto minmax(0, 1fr) minmax(0, 1fr) / minmax(0, 1fr) minmax(0, 1fr); gap: 8px 16px; }
+  .console > .console-bar { grid-column: 1 / -1; }
+  .console > .editor { grid-area: 2 / 1 / 4; min-height: 0; }
+  .console > .code-help { grid-area: 2 / 2; min-height: 0; }
+  .console > .output { grid-area: 3 / 2; min-height: 0; }
+  .console:has(> .code-help[hidden]) > .output { grid-row: 2 / 4; }
+  .console:has(> .output:empty) > .code-help { grid-row: 2 / 4; }
+  .console:has(> .code-help[hidden]):has(> .output:empty) > .editor { grid-column: 1 / -1; } /* nothing beside it yet */
+
+  /* masterDetail() (RPC, Perf): the list on the left (one row over its meta), the selected row's detail on the right, which
+     stays in sight while the list scrolls (under the sticky filter bar) */
+  .master-detail { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); align-items: start; }
+  .master-detail > .list { border-right: 1px solid var(--line); }
+  .master-detail > .list > li:not([hidden]) { display: block; }
+  .master-detail > .list > li > :not(.row, .detail) { padding-left: 0; }
+  .master-detail > .list > li.open { background: var(--accent-soft); box-shadow: inset 3px 0 var(--accent); }
+  .toolbar:has(~ .master-detail) > .list-head { display: none; } /* its two columns were the row's */
+  .master-detail > .pane { display: block; position: sticky; top: 48px; max-height: calc(100vh - 110px); overflow: auto; padding: 4px 0 12px 16px; }
+  .pane > .detail { display: block; margin: 0; cursor: auto; }
+  .pane > .empty { padding-top: 48px; }
+}

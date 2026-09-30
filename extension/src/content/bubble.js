@@ -1,6 +1,6 @@
 // ISOLATED-world content script: a draggable Odoo Debug button, on the bottom edge of the page until dragged elsewhere
 // (dropped back on that edge, it sticks to it again). Clicking it opens the panel (src/panel/panel.html) in an iframe
-// next to it, always on the bottom edge. Shown on Odoo pages only; the toolbar popup toggles it too.
+// next to it, following it: beside the button, aligned on its top (upper half of the window) or its bottom (lower half). Shown on Odoo pages only; the toolbar popup toggles it too.
 // Also: ⌥/Alt + click on a field of the page copies its technical name.
 (() => {
   const SIZE = 40; // button, px
@@ -24,6 +24,7 @@
       button { position: fixed; z-index: 2147483647; width: ${SIZE}px; height: ${SIZE}px; padding: 0; border: 0; border-radius: 50%;
         background: #714b67; box-shadow: 0 2px 8px rgba(0,0,0,.35); cursor: grab; touch-action: none; display: grid; place-items: center; }
       button:active { cursor: grabbing; }
+      button[hidden] { display: none; }
       button:focus-visible { outline: 3px solid #d5a6c8; outline-offset: 2px; }
       img { width: 24px; height: 24px; pointer-events: none; }
       .frame { position: fixed; z-index: 2147483646; width: 420px; height: min(720px, calc(100vh - ${2 * GAP}px));
@@ -80,7 +81,7 @@
     if (load(sessionStorage, OPEN_KEY)) toggle(true);
   }
 
-  /** Keeps the button on screen (on the bottom edge unless dragged away) and the panel beside it, bottom-aligned, on the side with more room. */
+  /** Keeps the button on screen (on the bottom edge unless dragged away) and the panel beside it, on the side with more room. */
   function place() {
     if (!innerWidth) return; // no layout yet (e.g. a tab opened in the background): the resize listener comes back
     if (!Number.isFinite(pos?.x)) pos = { x: innerWidth - SIZE - 16, bottom: true }; // default: bottom right
@@ -88,13 +89,17 @@
     pos.x = clamp(pos.x, GAP, innerWidth - SIZE - GAP);
     if (pos.bottom) Object.assign(btn.style, { left: `${pos.x}px`, top: '', bottom: `${GAP}px` }); // follows the edge on resize
     else Object.assign(btn.style, { left: `${pos.x}px`, top: `${clamp(pos.y, GAP, innerHeight - SIZE - GAP)}px`, bottom: '' });
+    btn.hidden = false;
     if (frame.hidden) return;
+    btn.hidden = full; // full screen: the button would cover the panel's corner (its − and Esc bring the button back)
     if (full) return Object.assign(frame.style, { left: `${GAP}px`, top: `${GAP}px`, bottom: '' });
     const w = frame.offsetWidth;
+    const h = frame.offsetHeight; // CSS: at most 100vh - 2 gaps, so the clamp below keeps the header on screen
     const left = pos.x + SIZE / 2 > innerWidth / 2 ? pos.x - w - GAP : pos.x + SIZE + GAP;
-    // bottom, not top: pinned to the bottom of the window, like the button, whatever its height (devtools, resize);
-    // the CSS height (at most 100vh - 2 gaps) keeps the header on screen
-    Object.assign(frame.style, { left: `${clamp(left, GAP, innerWidth - w - GAP)}px`, top: 'auto', bottom: `${GAP}px` });
+    const by = btn.getBoundingClientRect().top;
+    // follows the button (also while dragging): its top edge on the button's top in the upper half, its bottom edge on the button's bottom below
+    const top = by + SIZE / 2 < innerHeight / 2 ? by : by + SIZE - h;
+    Object.assign(frame.style, { left: `${clamp(left, GAP, innerWidth - w - GAP)}px`, top: `${clamp(top, GAP, innerHeight - h - GAP)}px`, bottom: '' });
   }
 
   /** Technical name of the field under `t`: form widget (or its label), list cell or list column header. */
@@ -145,7 +150,7 @@
     place();
   }
 
-  /** Full screen: the panel covers the page (the button stays on top, to close it). */
+  /** Full screen: the panel covers the page, the button hides until it is minimized. */
   function setFull(on) {
     full = on;
     frame.classList.toggle('full', on);

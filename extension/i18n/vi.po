@@ -36,7 +36,7 @@ msgstr "Đang chạy…"
 #: src/features/apps/apps.js:48
 #: src/features/code/code.js:135
 #: src/features/code/code.js:174
-#: src/features/rpc/rpc.js:37
+#: src/features/rpc/rpc.js:38
 #: src/features/translations/translations.js:90
 msgid "error"
 msgstr "lỗi"
@@ -487,68 +487,72 @@ msgstr "Chưa có request nào, thao tác trên trang Odoo rồi bấm ⟳."
 msgid "No profile data yet."
 msgstr "Chưa có dữ liệu profile."
 
-#: src/features/perf/perf.js:67
-msgid "Latest session: %s"
-msgstr "Phiên gần nhất: %s"
-
-#: src/features/perf/perf.js:68
+#: src/features/perf/perf.js:66
 msgid "Filter request"
 msgstr "Lọc request"
 
-#: src/features/perf/perf.js:68
+#: src/features/perf/perf.js:66
 msgid "%s requests"
 msgstr "%s request"
 
-#: src/features/perf/perf.js:68
+#: src/features/perf/perf.js:66
 msgid "%s/%s requests"
 msgstr "%s/%s request"
 
-#: src/features/perf/perf.js:69
+#: src/features/perf/perf.js:67
 msgid "Request · SQL · duration"
 msgstr "Request · SQL · thời gian"
 
-#: src/features/perf/perf.js:69
+#: src/features/perf/perf.js:67
 msgid "Id · time · CPU"
 msgstr "Id · giờ · CPU"
 
-#: src/features/perf/perf.js:83
+#: src/features/perf/perf.js:68
+msgid "Select a request to see its SQL queries."
+msgstr "Chọn một request để xem các câu SQL của nó."
+
+#: src/features/perf/perf.js:70
+msgid "Latest session: %s"
+msgstr "Phiên gần nhất: %s"
+
+#: src/features/perf/perf.js:85
 msgid "Flame Graph (speedscope)"
 msgstr "Flame graph (speedscope)"
 
-#: src/features/perf/perf.js:92
+#: src/features/perf/perf.js:94
 msgid "No SQL recorded."
 msgstr "Không có SQL nào được ghi."
 
-#: src/features/perf/perf.js:97
+#: src/features/perf/perf.js:99
 msgid "Full SQL + stack"
 msgstr "SQL đầy đủ + stack"
 
-#: src/features/perf/perf.js:99
+#: src/features/perf/perf.js:101
 msgid "%s queries · SQL %s / total %s · Python ≈ %s"
 msgstr "%s query · SQL %s / tổng %s · Python ≈ %s"
 
-#: src/features/perf/perf.js:101
+#: src/features/perf/perf.js:103
 msgid "Repeated queries — N+1 suspects (%s)"
 msgstr "Query lặp lại — nghi N+1 (%s)"
 
-#: src/features/perf/perf.js:101
+#: src/features/perf/perf.js:103
 msgid "Count · caller · time"
 msgstr "Số lần · nơi gọi · thời gian"
 
-#: src/features/perf/perf.js:101
-#: src/features/perf/perf.js:104
+#: src/features/perf/perf.js:103
+#: src/features/perf/perf.js:106
 msgid "Query"
 msgstr "Câu truy vấn"
 
-#: src/features/perf/perf.js:103
+#: src/features/perf/perf.js:105
 msgid "✓ No repeated query."
 msgstr "✓ Không có query lặp lại."
 
-#: src/features/perf/perf.js:104
+#: src/features/perf/perf.js:106
 msgid "Slowest queries (%s)"
 msgstr "Query chậm nhất (%s)"
 
-#: src/features/perf/perf.js:104
+#: src/features/perf/perf.js:106
 msgid "Caller · time"
 msgstr "Nơi gọi · thời gian"
 
@@ -624,20 +628,24 @@ msgstr "Method · model · thời gian"
 msgid "Time · route"
 msgstr "Giờ · route"
 
-#: src/features/rpc/rpc.js:44
-#: src/features/rpc/rpc.js:48
+#: src/features/rpc/rpc.js:27
+msgid "Select a call to see its parameters and result."
+msgstr "Chọn một lời gọi để xem tham số và kết quả."
+
+#: src/features/rpc/rpc.js:45
+#: src/features/rpc/rpc.js:49
 msgid "Parameters"
 msgstr "Tham số"
 
-#: src/features/rpc/rpc.js:45
+#: src/features/rpc/rpc.js:46
 msgid "Why was it blocked? → Security"
 msgstr "Vì sao bị chặn? → Security"
 
-#: src/features/rpc/rpc.js:49
+#: src/features/rpc/rpc.js:50
 msgid "Result"
 msgstr "Kết quả"
 
-#: src/features/rpc/rpc.js:49
+#: src/features/rpc/rpc.js:50
 msgid "… (%s characters)"
 msgstr "… (%s ký tự)"
 
@@ -1226,30 +1234,30 @@ msgstr "Tab hiện tại không phải trang Odoo."
 msgid "Not an Odoo page"
 msgstr "Không phải trang Odoo"
 
-#: src/panel/panel.html:16
-#: src/panel/panel.html:16
+#: src/panel/panel.html:15
+msgid "Connecting…"
+msgstr "Đang kết nối…"
+
+#: src/panel/panel.html:17
+#: src/panel/panel.html:17
 msgid "Reload Data"
 msgstr "Tải lại dữ liệu"
 
-#: src/panel/panel.html:17
+#: src/panel/panel.html:18
 msgid "Minimize (the Odoo Debug button reopens it)"
 msgstr "Thu nhỏ (bấm nút Odoo Debug để mở lại)"
 
-#: src/panel/panel.html:17
+#: src/panel/panel.html:18
 msgid "Minimize"
 msgstr "Thu nhỏ"
 
-#: src/panel/panel.html:18
+#: src/panel/panel.html:19
 msgid "Full Screen (Esc to exit)"
 msgstr "Toàn màn hình (Esc để thoát)"
 
-#: src/panel/panel.html:18
+#: src/panel/panel.html:19
 msgid "Full Screen"
 msgstr "Toàn màn hình"
-
-#: src/panel/panel.html:20
-msgid "Connecting…"
-msgstr "Đang kết nối…"
 
 #: src/panel/panel.html:22
 msgid "Record"
@@ -1293,6 +1301,7 @@ msgid "Language"
 msgstr "Ngôn ngữ"
 
 #: src/popup/popup.html:30
+#: src/popup/popup.html:31
 msgid "Theme"
 msgstr "Giao diện"
 
@@ -1321,7 +1330,7 @@ msgid "Open /odoo/%s"
 msgstr "Mở /odoo/%s"
 
 #: src/shared/ui.js:87
-#: src/shared/ui.js:141
+#: src/shared/ui.js:145
 msgid "Loading…"
 msgstr "Đang tải…"
 

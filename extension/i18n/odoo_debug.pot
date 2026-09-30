@@ -36,7 +36,7 @@ msgstr ""
 #: src/features/apps/apps.js:48
 #: src/features/code/code.js:135
 #: src/features/code/code.js:174
-#: src/features/rpc/rpc.js:37
+#: src/features/rpc/rpc.js:38
 #: src/features/translations/translations.js:90
 msgid "error"
 msgstr ""
@@ -487,68 +487,72 @@ msgstr ""
 msgid "No profile data yet."
 msgstr ""
 
-#: src/features/perf/perf.js:67
-msgid "Latest session: %s"
-msgstr ""
-
-#: src/features/perf/perf.js:68
+#: src/features/perf/perf.js:66
 msgid "Filter request"
 msgstr ""
 
-#: src/features/perf/perf.js:68
+#: src/features/perf/perf.js:66
 msgid "%s requests"
 msgstr ""
 
-#: src/features/perf/perf.js:68
+#: src/features/perf/perf.js:66
 msgid "%s/%s requests"
 msgstr ""
 
-#: src/features/perf/perf.js:69
+#: src/features/perf/perf.js:67
 msgid "Request · SQL · duration"
 msgstr ""
 
-#: src/features/perf/perf.js:69
+#: src/features/perf/perf.js:67
 msgid "Id · time · CPU"
 msgstr ""
 
-#: src/features/perf/perf.js:83
+#: src/features/perf/perf.js:68
+msgid "Select a request to see its SQL queries."
+msgstr ""
+
+#: src/features/perf/perf.js:70
+msgid "Latest session: %s"
+msgstr ""
+
+#: src/features/perf/perf.js:85
 msgid "Flame Graph (speedscope)"
 msgstr ""
 
-#: src/features/perf/perf.js:92
+#: src/features/perf/perf.js:94
 msgid "No SQL recorded."
 msgstr ""
 
-#: src/features/perf/perf.js:97
+#: src/features/perf/perf.js:99
 msgid "Full SQL + stack"
 msgstr ""
 
-#: src/features/perf/perf.js:99
+#: src/features/perf/perf.js:101
 msgid "%s queries · SQL %s / total %s · Python ≈ %s"
 msgstr ""
 
-#: src/features/perf/perf.js:101
+#: src/features/perf/perf.js:103
 msgid "Repeated queries — N+1 suspects (%s)"
 msgstr ""
 
-#: src/features/perf/perf.js:101
+#: src/features/perf/perf.js:103
 msgid "Count · caller · time"
 msgstr ""
 
-#: src/features/perf/perf.js:101
-#: src/features/perf/perf.js:104
+#: src/features/perf/perf.js:103
+#: src/features/perf/perf.js:106
 msgid "Query"
 msgstr ""
 
-#: src/features/perf/perf.js:103
+#: src/features/perf/perf.js:105
 msgid "✓ No repeated query."
 msgstr ""
 
-#: src/features/perf/perf.js:104
+#: src/features/perf/perf.js:106
 msgid "Slowest queries (%s)"
 msgstr ""
 
-#: src/features/perf/perf.js:104
+#: src/features/perf/perf.js:106
 msgid "Caller · time"
 msgstr ""
 
@@ -624,20 +628,24 @@ msgstr ""
 msgid "Time · route"
 msgstr ""
 
-#: src/features/rpc/rpc.js:44
-#: src/features/rpc/rpc.js:48
-msgid "Parameters"
+#: src/features/rpc/rpc.js:27
+msgid "Select a call to see its parameters and result."
 msgstr ""
 
 #: src/features/rpc/rpc.js:45
+#: src/features/rpc/rpc.js:49
+msgid "Parameters"
+msgstr ""
+
+#: src/features/rpc/rpc.js:46
 msgid "Why was it blocked? → Security"
 msgstr ""
 
-#: src/features/rpc/rpc.js:49
+#: src/features/rpc/rpc.js:50
 msgid "Result"
 msgstr ""
 
-#: src/features/rpc/rpc.js:49
+#: src/features/rpc/rpc.js:50
 msgid "… (%s characters)"
 msgstr ""
 
@@ -1226,29 +1234,29 @@ msgstr ""
 msgid "Not an Odoo page"
 msgstr ""
 
-#: src/panel/panel.html:16
-#: src/panel/panel.html:16
+#: src/panel/panel.html:15
+msgid "Connecting…"
+msgstr ""
+
+#: src/panel/panel.html:17
+#: src/panel/panel.html:17
 msgid "Reload Data"
 msgstr ""
 
-#: src/panel/panel.html:17
+#: src/panel/panel.html:18
 msgid "Minimize (the Odoo Debug button reopens it)"
 msgstr ""
 
-#: src/panel/panel.html:17
+#: src/panel/panel.html:18
 msgid "Minimize"
 msgstr ""
 
-#: src/panel/panel.html:18
+#: src/panel/panel.html:19
 msgid "Full Screen (Esc to exit)"
 msgstr ""
 
-#: src/panel/panel.html:18
+#: src/panel/panel.html:19
 msgid "Full Screen"
-msgstr ""
-
-#: src/panel/panel.html:20
-msgid "Connecting…"
 msgstr ""
 
 #: src/panel/panel.html:22
@@ -1293,6 +1301,7 @@ msgid "Language"
 msgstr ""
 
 #: src/popup/popup.html:30
+#: src/popup/popup.html:31
 msgid "Theme"
 msgstr ""
 
@@ -1321,7 +1330,7 @@ msgid "Open /odoo/%s"
 msgstr ""
 
 #: src/shared/ui.js:87
-#: src/shared/ui.js:141
+#: src/shared/ui.js:145
 msgid "Loading…"
 msgstr ""
 
