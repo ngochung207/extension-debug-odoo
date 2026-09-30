@@ -28,7 +28,7 @@
       button:focus-visible { outline: 3px solid #d5a6c8; outline-offset: 2px; }
       img { width: 24px; height: 24px; pointer-events: none; }
       .frame { position: fixed; z-index: 2147483646; width: 420px; height: min(720px, calc(100vh - ${2 * GAP}px));
-        max-width: calc(100vw - ${2 * GAP}px); border-radius: 10px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,.35); }
+        max-width: calc(100vw - ${2 * GAP}px); border-radius: 14px; overflow: hidden; box-shadow: 0 0 0 1px rgba(0,0,0,.08), 0 12px 40px rgba(0,0,0,.22); }
       .frame[hidden] { display: none; }
       .frame.full { width: calc(100vw - ${2 * GAP}px); height: calc(100vh - ${2 * GAP}px); max-width: none; }
       iframe { display: block; width: 100%; height: 100%; border: 0; }

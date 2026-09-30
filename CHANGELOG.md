@@ -11,6 +11,7 @@ All notable changes to this project are documented here. Format: [Keep a Changel
 
 ### Changed
 
+- **A modern, minimal look**: neutral greys with Odoo's purple as the only accent, a line icon on every tab, rounded cards with a chevron, segmented controls and softer focus rings. Beside the page, the tabs become one bar of icons (the active one shows its name, the others on hover). In full screen, the sidebar runs from the top and holds the brand, with icon + name tabs, and the content sits on a grey canvas: each block a white panel, lists with a tinted header row and roomier rows, row actions (↗) quiet until hovered.
 - **Full screen layout**: the tabs move to a sidebar on the left, the header fits on one line (brand, model, id, view, buttons), and the content sits on one plane without card frames, only rows keep a line between them. Short blocks sit side by side (View: Action | Context; Security: Groups | User risks, ACL | Fields hidden, Session | System parameters), key / value blocks show three pairs per line, and the Code editor sits beside its result.
 - **The panel follows the round button** while it is dragged: beside it, aligned on its top in the upper half of the window and on its bottom in the lower half (it used to stay on the bottom edge).
 - **The round button hides in full screen**: it covered the panel's bottom right corner (Open Forms, Export & Download). <kbd>−</kbd> brings it back.

@@ -18,6 +18,7 @@ const settings = await loadSettings();
 await loadLang(settings.lang); // before anything renders: every _t() below needs the catalog
 document.documentElement.lang = lang;
 translateDom();
+for (const b of document.querySelectorAll('.tabs button')) b.title = b.firstChild.textContent.trim(); // narrow panel: icons only, the name on hover
 
 let state = {};
 const TAB_KEY = 'odoo-debug-tab'; // sessionStorage (one per browser tab): the panel comes back on this tab after a reload
