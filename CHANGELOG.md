@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented here. Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), versions: [Semantic Versioning](https://semver.org/). Each release on GitHub uses its section below as release notes.
 
+## [Unreleased]
+
+### Added
+
+- **Security: log in as the picked user, in an incognito window.** Clicking their name (next to the search box) opens Odoo's login page in a private window with their login filled in and brings you back to the current page once logged in: you type their password there (2FA included), your own session stays as it is. The extension never sees the password. Incognito windows share their cookies, so one other user at a time per Odoo.
+
 ## [1.2.0] - 2026-09-30
 
 ### Added

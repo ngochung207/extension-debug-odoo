@@ -298,6 +298,26 @@ test('toolbar popup: the debug mode of the page, switched from there', async () 
   await page.waitForSelector('.o_form_view');
 });
 
+test('Security tab: log in as the picked user in an incognito window, this session stays', async () => {
+  panel = await page.waitForFrame((f) => f.url().endsWith('/src/panel/panel.html')); // reopened after the reload above
+  await panel.waitForSelector('.tabs [data-tab="security"]');
+  await click('.tabs [data-tab="security"]');
+  const search = '#security .user-search input';
+  await panel.waitForSelector(search);
+  await panel.$eval(search, (i) => { i.focus(); i.value = 'e2e_d'; i.dispatchEvent(new Event('input')); });
+  await panel.$eval(search, (i) => i.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' })));
+  await panel.waitForSelector('#security .user-line .user-name', { timeout: 15_000 }); // the name: logs in as them
+  const opened = browser.waitForTarget((t) => t.type() === 'page' && t.url().includes('/web/login?'), { timeout: 15_000 });
+  await click('#security .user-line .user-name');
+  const login = await (await opened).asPage();
+  await login.waitForSelector('input[name=login]');
+  assert.equal(await login.$eval('input[name=login]', (i) => i.value), 'e2e_demo');
+  assert.match(await login.evaluate(() => new URLSearchParams(location.search).get('redirect')), /^\/odoo\/.*\/2(\?|$)/); // back to this record
+  await login.close();
+  // the window's link went through /web/session/logout: in this window's cookies, admin would be logged out
+  assert.equal((await rpc(page, '/web/session/get_session_info', {})).username, 'admin');
+});
+
 test('no error from the extension in the console', () => {
   assert.deepEqual(errors, []);
 });
