@@ -76,7 +76,7 @@ test('Security tab: another user is found by login and picked, then back to mine
   await panel.waitForFunction(() => document.querySelector('#security .user-line b')?.textContent !== 'E2E Demo' && !document.querySelector('#security .picker .chip'), { timeout: 15_000 });
 });
 
-test('Security tab: a group is added to the user, then removed', async () => {
+test('Security tab: a group is tried, applied to the user, then removed', async () => {
   await click('.tabs [data-tab="security"]');
   await panel.evaluate(() => { window.confirm = () => true; });
   await panel.$$eval('#security details.card', (cs) => { cs.find((c) => c.querySelector('h3').textContent === 'Groups').open = true; });
@@ -88,8 +88,10 @@ test('Security tab: a group is added to the user, then removed', async () => {
   await panel.waitForSelector('#security .groups');
   const name = await panel.$eval('#security .groups > li.addable .grow', (n) => n.textContent); // a group the user doesn't have
   await panel.$eval('#security .toolbar:has(+ .groups) input', (i, n) => { i.value = n; i.dispatchEvent(new Event('input')); }, name); // groups to add show while filtering
-  await press('.addable', name);
-  await press(':not(.addable)', name); // added: the user's now, and nothing else implies it
+  await press('.addable', name); // Try: simulated, nothing written yet
+  await panel.waitForSelector('#security .trybar');
+  await panel.$eval('#security .trybar .chip', (b) => b.click()); // Apply
+  await press(':not(.addable):not(.trying)', name); // added: the user's now, and nothing else implies it
   await panel.waitForFunction((n) => [...document.querySelectorAll('#security .groups > li.addable .grow')].some((g) => g.textContent === n), { timeout: 15_000 }, name);
 });
 

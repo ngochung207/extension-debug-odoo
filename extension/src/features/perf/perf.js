@@ -2,7 +2,7 @@
 import { sqlSummary, appFrame } from './logic.js';
 import { pageFetch } from '../../shared/page.js';
 import { exec, rpc, call, fieldsOf } from '../../shared/bridge.js';
-import { el, pre, pill, details, empty, card, errBox, expandable, filteredList, listHead, splitRow } from '../../shared/ui.js';
+import { el, pre, pill, details, empty, card, errBox, expandable, filteredList, listHead, splitRow, masterDetail } from '../../shared/ui.js';
 import { _t, N_ } from '../../shared/i18n.js';
 
 const COLLECTORS = 'sql,traces_async';
@@ -63,10 +63,12 @@ async function requests(session, origin) {
     { fields: ['name', 'session', 'duration', 'cpu_duration', 'sql_count', 'create_date'].filter((f) => f in known), limit: 100 })) // cpu_duration: 19+ only
     .filter((r) => !OWN.some((own) => r.name.includes(own)));
   if (!rows.length) return el('div', { class: 'pad-bottom' }, empty(session ? _t('No request yet: use the Odoo page, then press ⟳.') : _t('No profile data yet.')));
+  const list = filteredList(rows.map((r) => profileItem(r, origin)), _t('Filter request'), N_('%s requests'), N_('%s/%s requests'),
+    listHead(_t('Request · SQL · duration'), _t('Id · time · CPU')));
+  list.append(masterDetail(list.lastElementChild, _t('Select a request to see its SQL queries.'))); // the <ul>, moved beside its pane
   return el('div', {},
     session ? null : el('div', { class: 'pad-bottom muted' }, _t('Latest session: %s', rows[0].session)),
-    filteredList(rows.map((r) => profileItem(r, origin)), _t('Filter request'), N_('%s requests'), N_('%s/%s requests'),
-      listHead(_t('Request · SQL · duration'), _t('Id · time · CPU'))));
+    list);
 }
 
 /** "/web/dataset/call_kw/res.users/web_read" → method + model, like the RPC tab; any other route as it is. */

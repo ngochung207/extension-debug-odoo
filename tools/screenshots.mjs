@@ -92,12 +92,12 @@ await settings({ theme: 'light' });
 await full(true);
 await show('record', ['Identity', 'Fields']);
 await shot('full-record');
-await show('security', ['Groups', 'Why allowed']);
+await show('security', ['Groups', 'User risks', 'Why allowed']); // Groups | User risks side by side
 await panel.$eval('#security .toolbar:has(+ .groups) input', (i) => { i.value = 'sales'; i.dispatchEvent(new Event('input')); }); // a few groups, with some to add
 await shot('full-security');
 
 // Perf: start the profiler, reload the page (the panel comes back, full screen, on this tab) so its requests are
-// recorded, then unfold the form's web_read.
+// recorded, then select the form's web_read: its SQL shows in the pane beside the list.
 await show('perf');
 await click('#perf .card .btn');
 await panel.waitForFunction(() => document.querySelector('#perf .pill.ok'), { timeout: 15_000 });
@@ -111,12 +111,9 @@ await show('perf');
 const row = await panel.waitForFunction(() => [...document.querySelectorAll('#perf .list > li')]
   .find((li) => li.dataset.q.includes('sale.order/web_read')), { timeout: 15_000 });
 await row.evaluate((li) => li.click());
-await panel.waitForFunction(() => document.querySelector('#perf li.open .detail details'), { timeout: 15_000 });
-await panel.$$eval('#perf li.open .detail > div > details', (ds) => ds.forEach((d) => { d.open = true; }));
-await panel.$eval('#perf li.open', (li) => { // the unfolded request in the middle of the panel
-  const main = document.querySelector('main');
-  main.scrollTop += li.getBoundingClientRect().top - main.getBoundingClientRect().top - main.clientHeight * 0.45;
-});
+await panel.waitForFunction(() => document.querySelector('#perf .pane .detail details'), { timeout: 15_000 });
+await panel.$$eval('#perf .pane .detail > div > details', (ds) => ds.forEach((d) => { d.open = true; }));
+await panel.$eval('main', (m) => { m.scrollTop = 0; });
 await page.mouse.move(4, H - 4);
 await sleep(400);
 await writeFile(new URL('full-perf.png', OUT), await page.screenshot());

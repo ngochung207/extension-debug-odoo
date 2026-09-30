@@ -62,7 +62,7 @@ function rememberCard(id, open) {
 export function block(parent, key, title, fn) {
   const id = `${parent.id}:${key}`;
   const body = el('div', { class: 'card-body' });
-  const c = el('details', { class: 'card' }, el('summary', {}, el('h3', {}, title)), body);
+  const c = el('details', { class: 'card', 'data-key': key }, el('summary', {}, el('h3', {}, title)), body); // data-key: the full-screen layout places some side by side
   let loaded = false;
   const load = () => {
     if (loaded) return;
@@ -127,20 +127,48 @@ export function filterBox(items, placeholder, onCount) {
 }
 
 /** List item that toggles open on click / Enter / Space (open shows everything below its .row, see ui.css)
- * and builds its detail pane the first time (`detail` may be async, or omitted: the row only unfolds). */
+ * and builds its detail pane the first time (`detail` may be async, or omitted: the row only unfolds).
+ * In a masterDetail() list on a wide panel, the detail shows in the pane beside the list instead, one row at a time. */
 export function expandable(li, detail) {
   li.tabIndex = 0;
   li.addEventListener('keydown', (ev) => {
     if (ev.target === li && (ev.key === 'Enter' || ev.key === ' ')) { ev.preventDefault(); li.click(); }
   });
-  li.addEventListener('click', async (ev) => {
+  li.addEventListener('click', (ev) => {
     const own = ev.target.closest('.detail, details, a, button, input, select');
     if (own && li.contains(own)) return; // not an ancestor: a row nested in another row's .detail still toggles
-    li.classList.toggle('open');
-    if (!detail || li.querySelector('.detail')) return;
-    const d = el('div', { class: 'detail' }, el('div', { class: 'loading' }, _t('Loading…')));
-    li.append(d);
-    try { d.replaceChildren(...[await detail()].filter(Boolean)); } catch (e) { d.replaceChildren(errBox(e)); }
+    const list = li.parentElement;
+    const pane = WIDE.matches && list.pane;
+    if (pane) for (const o of list.children) if (o !== li) o.classList.remove('open');
+    const open = li.classList.toggle('open');
+    if (detail && !li.detail) {
+      const d = li.detail = el('div', { class: 'detail' }, el('div', { class: 'loading' }, _t('Loading…')));
+      Promise.resolve().then(detail).then((x) => d.replaceChildren(...[x].filter(Boolean)), (e) => d.replaceChildren(errBox(e)));
+    }
+    if (pane) pane.replaceChildren(open && li.detail ? li.detail : pane.hint);
+    else if (li.detail && li.detail.parentNode !== li) li.append(li.detail);
   });
   return li;
+}
+
+export const WIDE = matchMedia('(min-width: 900px)'); // the full-screen layout of ui.css
+
+/** `list` (of expandable rows) with a pane beside it: on a wide panel a clicked row's detail shows there, like the
+ * Network tab of the devtools; narrow, the pane hides and rows unfold in place. → the wrapper to put where `list` was. */
+export function masterDetail(list, hint) {
+  const pane = list.pane = el('aside', { class: 'pane' });
+  pane.hint = empty(hint);
+  const sync = () => { // the layout changed (full screen on / off): the open detail moves between its row and the pane
+    if (sync.ran && !wrap.isConnected) return WIDE.removeEventListener('change', sync); // re-rendered away
+    sync.ran = true;
+    const open = [...list.children].filter((li) => li.classList.contains('open'));
+    if (WIDE.matches) {
+      for (const li of open.slice(1)) li.classList.remove('open');
+      pane.replaceChildren(open[0]?.detail || pane.hint);
+    } else for (const li of open) if (li.detail) li.append(li.detail);
+  };
+  const wrap = el('div', { class: 'master-detail' }, list, pane);
+  WIDE.addEventListener('change', sync);
+  sync();
+  return wrap;
 }

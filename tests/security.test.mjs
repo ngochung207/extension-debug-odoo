@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { aclGrants, rulesFor, rulesVerdict, modeVerdict, ruleEvalContext, auditModel, checkInstance, userRisks } from '../extension/src/features/security/logic.js';
+import { aclGrants, rulesFor, rulesVerdict, modeVerdict, unblockers, ruleEvalContext, auditModel, checkInstance, userRisks } from '../extension/src/features/security/logic.js';
 
 const P = (r, w, c, u) => ({ perm_read: r, perm_write: w, perm_create: c, perm_unlink: u });
 const mine = new Set([10, 11]);
@@ -32,6 +32,13 @@ assert.equal(MV('write', false, []), true);                            // ACL, n
 assert.equal(MV('read', 5, [[1, true], [2, false], [3, true]]), true);
 assert.equal(MV('read', 5, [[1, false], [2, true], [3, true]]), false);
 assert.equal(MV('read', 5, [[1, true]]), null);                        // group rules unknown
+
+const closure = (id) => new Set(id === 99 ? [99, 12] : [id]); // Mgr implies group 12
+const UB = (mode, resId, pass) => unblockers({ u: { id: 7 }, groupIds: mine, acls, rules, mode, resId, passed: new Map(pass), closure });
+assert.deepEqual(UB('unlink', false, []), [{ id: 99, adds: [99, 12] }]);  // no ACL: Mgr's ACL, plus what it implies
+assert.deepEqual(UB('unlink', 5, [[1, true], [4, true]]), [{ id: 99, adds: [99, 12] }]);
+assert.deepEqual(UB('unlink', 5, [[1, true], [4, false]]), []);          // Mgr's rule doesn't match the record
+assert.deepEqual(UB('unlink', 5, [[1, false], [4, true]]), []);          // a global rule blocks: no group helps
 
 const ctx = ruleEvalContext({ id: 7, login: 'e', partner_id: [3, 'E'], commercial_partner_id: 30, company_id: [1, 'C'], company_ids: [1, 2] });
 assert.equal(ctx.user.partner_id.commercial_partner_id.id, 30); assert.equal(ctx.user.commercial_partner_id.id, 30);

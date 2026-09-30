@@ -4,7 +4,9 @@ import { THEMES, applyTheme, loadSettings } from '../shared/settings.js';
 import { $, el } from '../shared/ui.js';
 import { pageDebug } from '../shared/page.js';
 
-const THEME_LABELS = { auto: N_('System'), light: N_('Light'), dark: N_('Dark') };
+const THEME_LABELS = { auto: N_('System'), light: N_('Light'), dark: N_('Dark') }; // the editor themes keep their own names
+const EDITOR_THEMES = { 'github-light': 'GitHub Light', 'solarized-light': 'Solarized Light', 'github-dark': 'GitHub Dark', dracula: 'Dracula',
+  monokai: 'Monokai', 'one-dark': 'One Dark Pro', nord: 'Nord', 'solarized-dark': 'Solarized Dark', catppuccin: 'Catppuccin Mocha' };
 
 const saved = await loadSettings();
 await loadLang(saved.lang);
@@ -20,8 +22,10 @@ function segmented(box, options, current, onPick) {
   }, label)));
 }
 segmented($('#lang'), Object.entries(LANGS), lang, (v) => chrome.storage.local.set({ lang: v })); // loadSettings reloads the page
-segmented($('#theme'), THEMES.map((t) => [t, _t(THEME_LABELS[t])]), saved.theme || 'auto',
-  (v) => { applyTheme(v); chrome.storage.local.set({ theme: v }); });
+const themeBox = $('#theme');
+themeBox.append(...THEMES.map((t) => el('option', { value: t }, THEME_LABELS[t] ? `Odoo · ${_t(THEME_LABELS[t])}` : EDITOR_THEMES[t])));
+themeBox.value = THEMES.includes(saved.theme) ? saved.theme : 'auto';
+themeBox.addEventListener('change', () => { applyTheme(themeBox.value); chrome.storage.local.set({ theme: themeBox.value }); }); // every open panel follows (loadSettings)
 
 // "This page" only makes sense in the toolbar popup, not on the options page.
 if (chrome.extension.getViews({ type: 'popup' }).includes(window)) {

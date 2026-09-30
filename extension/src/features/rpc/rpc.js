@@ -2,7 +2,7 @@
 import { parseRpc } from './logic.js';
 import { pageRpcLog } from './page.js';
 import { exec } from '../../shared/bridge.js';
-import { $, el, pre, errBox, pill, details, empty, expandable, listHead } from '../../shared/ui.js';
+import { $, el, pre, errBox, pill, details, empty, expandable, listHead, masterDetail, WIDE } from '../../shared/ui.js';
 import { _t } from '../../shared/i18n.js';
 
 const MAX = 300;
@@ -20,10 +20,11 @@ export function mountRpc(section, whyBlocked) {
     errBtn.setAttribute('aria-pressed', onlyErrors);
     for (const li of rows.children) applyFilter(li);
   });
-  const clear = el('button', { class: 'chip', onclick: () => { rows.replaceChildren(); count(); } }, _t('Clear'));
+  const clear = el('button', { class: 'chip', onclick: () => { rows.replaceChildren(); rows.pane.replaceChildren(rows.pane.hint); count(); } }, _t('Clear'));
   rows = el('ul', { class: 'list' });
   emptyMsg = empty(_t('No RPC yet. Use the Odoo page to record some.'));
-  section.append(el('div', { class: 'toolbar' }, filter, errBtn, clear, listHead(_t('Method · model · duration'), _t('Time · route'))), rows, emptyMsg);
+  section.append(el('div', { class: 'toolbar' }, filter, errBtn, clear, listHead(_t('Method · model · duration'), _t('Time · route'))),
+    masterDetail(rows, _t('Select a call to see its parameters and result.')), emptyMsg);
 }
 
 function applyFilter(li) {
@@ -40,13 +41,14 @@ function item(e) {
   li.dataset.q = `${e.model} ${e.method}`.toLowerCase();
   expandable(li, () => {
     const params = pre({ args: e.args, kwargs: e.kwargs });
+    const shown = (d) => Object.assign(d, { open: WIDE.matches }); // in the pane beside the list there is room: unfolded
     if (e.error) { // errors: the message + traceback come first
       return el('div', {}, details(_t('Parameters'), params), errBox({ message: e.error, traceback: e.traceback }),
         denied && el('button', { class: 'btn mt', onclick: onWhyBlocked }, _t('Why was it blocked? → Security')));
     }
     const res = JSON.stringify(e.result, null, 2) ?? '';
-    return el('div', {}, details(_t('Parameters'), params),
-      details(_t('Result'), pre(res.length > 50000 ? `${res.slice(0, 50000)}\n${_t('… (%s characters)', res.length)}` : res)));
+    return el('div', {}, shown(details(_t('Parameters'), params)),
+      shown(details(_t('Result'), pre(res.length > 50000 ? `${res.slice(0, 50000)}\n${_t('… (%s characters)', res.length)}` : res))));
   });
   applyFilter(li);
   return li;

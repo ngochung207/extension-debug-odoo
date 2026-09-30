@@ -2,7 +2,7 @@
 // the current model for that user (why allowed / blocked, ACLs, hidden fields, audit), and this Odoo (session, system
 // parameters, instance check).
 // odoo.conf itself is never exposed over HTTP by Odoo: it holds admin_passwd and db_password.
-import { rulesFor, modeVerdict, ruleEvalContext, auditModel, checkInstance, userRisks } from './logic.js';
+import { rulesFor, modeVerdict, unblockers, ruleEvalContext, auditModel, checkInstance, userRisks } from './logic.js';
 import { pageEvalDomains, pageProbe } from './page.js';
 import { MODES, pickGroupField } from '../../shared/odoo.js';
 import { pageGo } from '../../shared/page.js';
@@ -16,12 +16,23 @@ const LETTER = { read: 'R', write: 'W', create: 'C', unlink: 'D' };
 // ponytail: key-name heuristic, the value still shows when the row is expanded
 const SECRET = /secret|passw|token|api_?key|private_?key/i;
 const targets = new Map(); // origin → simulated uid (none = the logged-in user); the panel moves between instances
+const trials = new Map(); // origin → Set of group ids being tried on that user: simulated only, written on Apply
 
 const findings = (list) => list.length
   ? el('ul', { class: 'findings' }, list.map((f) => el('li', { class: f.level }, pill(_t(LABEL[f.level]), f.level), el('span', {}, f.msg))))
   : el('div', { class: 'okline' }, _t('✓ No issue found.'));
 
-/** The simulated user: profile, groups (implied included), the writable group field `wf`, base group xmlids. */
+/** Every group, with closure(id) → Set of the group + all it implies. */
+const groupGraph = () => cached('group graph', async () => {
+  const gfields = await fieldsOf('res.groups');
+  const impf = ['all_implied_ids', 'trans_implied_ids'].find((f) => f in gfields); // 19 / 18
+  const all = await call('res.groups', 'search_read', [[]], { fields: ['full_name', impf], order: 'full_name' });
+  const byId = new Map(all.map((g) => [g.id, g]));
+  return { all, impf, byId, closure: (id) => new Set([id, ...(byId.get(id)?.[impf] || [])]) }; // 19 counts the group itself
+});
+
+/** The simulated user: profile, groups (implied included, tried groups too), the ones really held (`realIds`),
+ * the writable group field `wf`, base group xmlids. */
 async function loadTarget(origin) {
   const [info, ufields] = await Promise.all([sessionInfo(), fieldsOf('res.users')]);
   const uid = targets.get(origin) ?? info.uid;
@@ -37,10 +48,16 @@ async function loadTarget(origin) {
   ]);
   const [p] = await call('res.partner', 'read', [[u.partner_id[0]], ['commercial_partner_id']]).catch(() => [{}]);
   u.commercial_partner_id = p.commercial_partner_id?.[0] || u.partner_id[0];
-  const groupIds = new Set(u[gf] || []);
+  const realIds = new Set(u[gf] || []);
+  const tried = trials.get(origin) || new Set();
+  const groupIds = new Set(realIds);
+  if (tried.size) {
+    const { closure } = await groupGraph();
+    for (const g of tried) for (const h of closure(g)) groupIds.add(h);
+  }
   const groupXml = new Map(xml.map((x) => [x.res_id, `base.${x.name}`]));
   const has = (name) => xml.some((x) => x.name === name && groupIds.has(x.res_id));
-  return { me: info.uid, uid, u, wf, users, groupIds, groupXml, has };
+  return { me: info.uid, uid, u, wf, users, realIds, tried, groupIds, groupXml, has };
 }
 
 /** Search box over the users (name / login): typing lists the matches under it, a click or Enter picks one. */
@@ -80,7 +97,13 @@ export function renderSecurity(s, state) {
   const { model, resId, origin } = state;
   const t = loadTarget(origin);
   const rerender = () => { s.replaceChildren(); renderSecurity(s, state); };
-  const pick = (uid) => { targets.set(origin, uid); rerender(); };
+  const pick = (uid) => { targets.set(origin, uid); trials.delete(origin); rerender(); };
+  const tryGroup = (id, on = true) => { // on = false: stop trying it
+    const tried = trials.get(origin) || new Set();
+    if (on) tried.add(id); else tried.delete(id);
+    trials.set(origin, tried);
+    rerender();
+  };
 
   // ---------- the user every card below is about ----------
   section(s, _t('User'));
@@ -88,12 +111,12 @@ export function renderSecurity(s, state) {
     const { u, uid, me, users, groupIds } = await t;
     return el('div', {},
       el('div', { class: 'picker' }, userSearch(users, pick),
-        uid !== me ? el('button', { class: 'chip', onclick: () => { targets.delete(origin); rerender(); } }, _t('My User')) : null),
+        uid !== me ? el('button', { class: 'chip', onclick: () => { targets.delete(origin); trials.delete(origin); rerender(); } }, _t('My User')) : null),
       el('div', { class: 'user-line' }, el('b', {}, u.name), uid === me ? pill(_t('me'), 'accent') : null, u.share ? pill('portal') : null,
         el('span', { class: 'muted' }, _t('%s · #%s · %s (%s companies) · %s groups', u.login, u.id, u.company_id?.[1] || '', u.company_ids.length, groupIds.size))),
       el('div', { class: 'note' }, _t('Simulates the selected user\'s rights without logging in as them (reading other users\' groups needs admin rights).')));
   });
-  block(s, 'groups', _t('Groups'), () => groupsBlock(t, rerender));
+  block(s, 'groups', _t('Groups'), () => groupsBlock(t, origin, tryGroup, rerender));
   block(s, 'user-risks', _t('User risks'), async () => {
     const { u, has } = await t;
     return findings(userRisks(u, has));
@@ -103,7 +126,7 @@ export function renderSecurity(s, state) {
     section(s, `${model}${resId ? ` #${resId}` : ''}`);
     const modelSec = Promise.all([readAcls(model), readRules(model), fieldsOf(model)]);
 
-    block(s, 'why', _t('Why allowed / blocked'), () => whyBlock(model, resId, t, modelSec));
+    block(s, 'why', _t('Why allowed / blocked'), () => whyBlock(model, resId, t, modelSec, tryGroup));
 
     block(s, 'acl', _t('ACL (ir.model.access) — green = applies to the user'), async () => {
       const [{ groupIds }, [rows]] = await Promise.all([t, modelSec]);
@@ -115,13 +138,15 @@ export function renderSecurity(s, state) {
     });
 
     block(s, 'hidden-fields', _t('Fields hidden from the user (groups=)'), async () => {
-      const [{ uid }, [, , fields]] = await Promise.all([t, modelSec]);
+      const [{ uid, tried }, [, , fields]] = await Promise.all([t, modelSec]);
       const restricted = Object.entries(fields).filter(([, f]) => f.groups);
       if (!restricted.length) return empty(_t('No field declares groups=.'));
+      // ponytail: has_groups is the server's answer on the real groups; tried groups are not counted here
       const specs = [...new Set(restricted.map(([, f]) => f.groups))];
       const ok = new Map(await Promise.all(specs.map(async (sp) => [sp, await call('res.users', 'has_groups', [[uid], sp]).catch(() => null)])));
       restricted.sort(([, a], [, b]) => Number(ok.get(a.groups)) - Number(ok.get(b.groups)));
-      return el('div', {}, listHead(_t('Field · label · for this user'), 'groups='), el('ul', { class: 'list' }, restricted.map(([name, f]) => expandable(el('li', {},
+      return el('div', {}, tried.size ? el('p', { class: 'note' }, _t('Real groups only: the tried groups are not counted here.')) : null,
+        listHead(_t('Field · label · for this user'), 'groups='), el('ul', { class: 'list' }, restricted.map(([name, f]) => expandable(el('li', {},
         el('div', { class: 'row' }, copyable(name), el('span', { class: 'grow muted' }, f.string),
           triPill(ok.get(f.groups), [_t('visible'), _t('hidden'), '?'])),
         el('div', { class: 'meta' }, f.groups))))));
@@ -177,52 +202,60 @@ export function renderSecurity(s, state) {
   });
 }
 
-/** The user's groups, implied included, then (while filtering) the groups they don't have: add one, or remove a group
- * nothing else implies (removing an implied one is undone by Odoo). Writing needs Access Rights (base.group_erp_manager). */
-async function groupsBlock(t, rerender) {
-  const { uid, u, wf, groupIds } = await t;
-  const gfields = await fieldsOf('res.groups');
-  const impf = ['all_implied_ids', 'trans_implied_ids'].find((f) => f in gfields); // 19 / 18
-  const all = await cached('all groups', () => call('res.groups', 'search_read', [[]], { fields: ['full_name', impf], order: 'full_name' }));
-  const impliedBy = new Map(); // group id → names of the user's other groups implying it
+/** The user's groups, implied included, the groups being tried, then (while filtering) the groups they don't have:
+ * try one (every card below is then simulated with it, nothing written until Apply), or remove a group nothing else
+ * implies (removing an implied one is undone by Odoo). Writing needs Access Rights (base.group_erp_manager). */
+async function groupsBlock(t, origin, tryGroup, rerender) {
+  const { uid, u, wf, realIds, tried, groupIds } = await t;
+  const { all, impf, byId } = await groupGraph();
+  const impliedBy = new Map(); // group id → names of the user's other real groups implying it
   for (const g of all) {
-    if (!groupIds.has(g.id)) continue;
+    if (!realIds.has(g.id)) continue;
     for (const h of g[impf]) if (h !== g.id) impliedBy.set(h, [...(impliedBy.get(h) || []), g.full_name]); // 19 counts the group itself
   }
   const box = el('div', {});
-  const edit = (msg, cmd) => confirm(msg) && call('res.users', 'write', [[uid], { [wf]: [cmd] }]).then(rerender, (e) => box.append(errBox(e)));
-  const row = (g, held) => {
+  const write = (cmds) => call('res.users', 'write', [[uid], { [wf]: cmds }]).then(() => { trials.delete(origin); rerender(); }, (e) => box.append(errBox(e)));
+  const names = (ids) => [...ids].map((id) => byId.get(id)?.full_name || id).join(', ');
+  const row = (g) => {
+    const held = realIds.has(g.id), trying = !held && groupIds.has(g.id);
     const by = impliedBy.get(g.id);
-    const action = !held
-      ? el('button', { class: 'chip', onclick: () => edit(_t('Add %s to %s?', g.full_name, u.name), [4, g.id]) }, _t('+ Add'))
-      : by ? pill(_t('implied')) : el('button', { class: 'chip', onclick: () => edit(_t('Remove %s from %s?', g.full_name, u.name), [3, g.id]) }, _t('Remove'));
+    const action = held ? (by ? pill(_t('implied')) : el('button', { class: 'chip', onclick: () => confirm(_t('Remove %s from %s?', g.full_name, u.name)) && write([[3, g.id]]) }, _t('Remove')))
+      : !trying ? el('button', { class: 'chip', title: _t('Simulate this group below, nothing is written'), onclick: () => tryGroup(g.id) }, _t('Try'))
+      : tried.has(g.id) ? el('button', { class: 'chip', title: _t('Stop trying it'), onclick: () => tryGroup(g.id, false) }, '×')
+      : pill(_t('implied'));
     if (by) action.title = _t('Implied by %s', by.join(', '));
-    const li = el('li', { class: held ? '' : 'addable' }, splitRow(el('span', {}, g.full_name), action));
+    const li = el('li', { class: held ? '' : trying ? 'trying' : 'addable' }, splitRow(el('span', {}, g.full_name, trying ? pill(_t('trying'), 'accent') : null), action));
     li.dataset.q = g.full_name.toLowerCase();
-    return { li, held };
+    return { li, shown: held || trying };
   };
-  const rows = [...all.filter((g) => groupIds.has(g.id)).map((g) => row(g, true)), ...all.filter((g) => !groupIds.has(g.id)).map((g) => row(g, false))];
-  const held = rows.filter((r) => r.held).length;
-  const count = el('span', { class: 'muted' }, _t('%s groups', held));
+  // held first, then tried, then the rest
+  const rank = (g) => (realIds.has(g.id) ? 0 : groupIds.has(g.id) ? 1 : 2);
+  const rows = [...all].sort((a, b) => rank(a) - rank(b)).map(row);
+  const shown = rows.filter((r) => r.shown).length;
+  const count = el('span', { class: 'muted' }, _t('%s groups', shown));
   const input = el('input', {
-    type: 'search', placeholder: _t('Filter or add a group…'), 'aria-label': _t('Filter or add a group…'),
+    type: 'search', placeholder: _t('Filter or try a group…'), 'aria-label': _t('Filter or try a group…'),
     oninput: () => {
       const q = input.value.trim().toLowerCase();
-      for (const r of rows) r.li.hidden = !r.li.dataset.q.includes(q) || (!r.held && !q); // groups to add: only while searching
-      count.textContent = q ? _t('%s/%s groups', rows.filter((r) => r.held && !r.li.hidden).length, held) : _t('%s groups', held);
+      for (const r of rows) r.li.hidden = !r.li.dataset.q.includes(q) || (!r.shown && !q); // groups to try: only while searching
+      count.textContent = q ? _t('%s/%s groups', rows.filter((r) => r.shown && !r.li.hidden).length, shown) : _t('%s groups', shown);
     },
   });
-  for (const r of rows) r.li.hidden = !r.held;
-  box.append(el('div', { class: 'toolbar' }, input, count), el('ul', { class: 'list groups' }, rows.map((r) => r.li)));
+  for (const r of rows) r.li.hidden = !r.shown;
+  const bar = tried.size ? el('div', { class: 'trybar' },
+    el('span', { class: 'grow' }, _t('Trying %s: every card below is simulated with it.', names(tried))),
+    el('button', { class: 'chip', onclick: () => confirm(_t('Add %s to %s?', names(tried), u.name)) && write([...tried].map((id) => [4, id])) }, _t('Apply')),
+    el('button', { class: 'chip', onclick: () => { trials.delete(origin); rerender(); } }, _t('Discard'))) : null;
+  box.append(bar || '', el('div', { class: 'toolbar' }, input, count), el('ul', { class: 'list groups' }, rows.map((r) => r.li)));
   return box;
 }
 
-async function whyBlock(model, resId, t, modelSec) {
-  const [{ u, uid, me, groupIds }, [acls, rules]] = await Promise.all([t, modelSec]);
-  // your own user: the server's exact answer too (has_access runs as the logged-in user only)
-  const server = uid === me ? Promise.all(MODES.map((op) => call(model, 'has_access', [resId ? [resId] : [], op]).catch(() => null))) : null;
+async function whyBlock(model, resId, t, modelSec, tryGroup) {
+  const [{ u, uid, me, tried, groupIds }, [acls, rules]] = await Promise.all([t, modelSec]);
+  // your own user, real groups: the server's exact answer too (has_access runs as the logged-in user only)
+  const server = uid === me && !tried.size ? Promise.all(MODES.map((op) => call(model, 'has_access', [resId ? [resId] : [], op]).catch(() => null))) : null;
   const modesOf = (r) => MODES.filter((m) => rulesFor([r], groupIds, m).length);
-  const relevant = rules.filter((r) => modesOf(r).length);
+  const relevant = rules; // not only the applicable ones: the groups that would unblock a mode need every rule
   const evals = await exec(pageEvalDomains, relevant.map((r) => r.domain_force), ruleEvalContext(u));
   const evaluated = new Map(); // ruleId → domain, evaluated for the simulated user
   const passed = new Map(); // ruleId → the record matches it
@@ -244,14 +277,24 @@ async function whyBlock(model, resId, t, modelSec) {
   const gname = new Map((gids.length ? await call('res.groups', 'read', [gids, ['full_name']]) : []).map((g) => [g.id, g.full_name]));
 
   const exact = await server;
+  const verdicts = MODES.map((mode) => modeVerdict({ u, groupIds, acls, rules, mode, resId, passed }));
+  const graph = verdicts.some((v) => v.ok === false) ? await groupGraph() : null;
+  // a blocked mode: the groups that would allow it, fewest new groups first, one click to try
+  const fixes = (mode) => {
+    const found = unblockers({ u, groupIds, acls, rules, mode, resId, passed, closure: graph.closure }).slice(0, 3); // ponytail: the 3 cheapest
+    const name = (id) => graph.byId.get(id)?.full_name || `#${id}`;
+    return el('div', { class: 'fix' }, found.length ? [_t('Try:'), ...found.map((f) => el('button', {
+      class: 'chip', title: f.adds.length > 1 ? _t('Also adds %s', f.adds.filter((g) => g !== f.id).map(name).join(', ')) : '', onclick: () => tryGroup(f.id),
+    }, f.adds.length > 1 ? `${name(f.id)} +${f.adds.length - 1}` : name(f.id)))] : _t('No single group allows it.'));
+  };
   const verdict = el('div', { class: 'verdict' }, MODES.map((mode, i) => {
-    const { ok, why } = modeVerdict({ u, groupIds, acls, rules, mode, resId, passed });
+    const { ok, why } = verdicts[i];
     const srv = exact && triPill(exact[i], [_t('server ✓'), _t('server ✗'), _t('server ?')]);
     if (srv) srv.title = _t('has_access, run by the server as you');
     return el('div', { class: ok === true ? 'allow' : ok === false ? 'deny' : '' },
       el('div', { class: 'row' }, el('b', {}, mode), el('span', { class: 'grow' }), srv,
         triPill(ok, [_t('ALLOWED'), _t('BLOCKED'), _t('UNKNOWN')], 'med')),
-      el('div', { class: 'why' }, why));
+      el('div', { class: 'why' }, why), ok === false ? fixes(mode) : null);
   }));
 
   const ruleItems = rules.map((r) => {

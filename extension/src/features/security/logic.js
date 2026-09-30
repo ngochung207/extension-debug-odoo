@@ -48,6 +48,21 @@ export function modeVerdict({ u, groupIds, acls, rules, mode, resId, passed }) {
 }
 
 /**
+ * Groups that would turn `mode` into allowed, fewest new groups first: every group an ACL or rule of the model names is
+ * tried, with what it implies (closure(id) → Set of the group + its implied groups), through modeVerdict.
+ * passed must cover every rule (not only the applicable ones). → [{ id, adds: new group ids }].
+ * ponytail: one group at a time; a mode that needs two unrelated new groups is not found.
+ */
+export function unblockers({ u, groupIds, acls, rules, mode, resId, passed, closure }) {
+  const cands = new Set([...acls.map((a) => a.group_id && a.group_id[0]), ...rules.flatMap((r) => r.groups)]);
+  return [...cands].filter((g) => g && !groupIds.has(g)).map((id) => {
+    const adds = [...closure(id)].filter((g) => !groupIds.has(g));
+    const ok = modeVerdict({ u, groupIds: new Set([...groupIds, ...adds]), acls, rules, mode, resId, passed }).ok;
+    return ok === true && { id, adds };
+  }).filter(Boolean).sort((a, b) => a.adds.length - b.adds.length);
+}
+
+/**
  * Stand-in for ir.rule._eval_context of user `u` (a res.users read + commercial_partner_id).
  * ponytail: `user` only carries the attributes rules commonly use; anything else fails to evaluate
  * and is reported, not guessed. company_ids = all the user's companies (the most permissive switcher state).

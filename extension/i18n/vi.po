@@ -11,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: src/features/apps/apps.js:16
-#: src/features/security/security.js:154
+#: src/features/security/security.js:179
 msgid "Needs Settings rights (base.group_system)."
 msgstr "Cần quyền Settings (base.group_system)."
 
@@ -36,7 +36,7 @@ msgstr "Đang chạy…"
 #: src/features/apps/apps.js:48
 #: src/features/code/code.js:135
 #: src/features/code/code.js:174
-#: src/features/rpc/rpc.js:37
+#: src/features/rpc/rpc.js:38
 #: src/features/translations/translations.js:90
 msgid "error"
 msgstr "lỗi"
@@ -130,7 +130,7 @@ msgid "Not Installed"
 msgstr "Chưa cài"
 
 #: src/features/apps/searchbar.js:11
-#: src/panel/panel.html:28
+#: src/panel/panel.html:27
 msgid "Apps"
 msgstr "Apps"
 
@@ -159,12 +159,12 @@ msgstr "Mọi danh mục"
 
 #: src/features/apps/searchbar.js:34
 #: src/features/apps/searchbar.js:34
-#: src/features/security/security.js:198
+#: src/features/security/security.js:222
 msgid "Remove"
 msgstr "Bỏ"
 
 #: src/features/code/code.js:47
-#: src/panel/panel.html:25
+#: src/panel/panel.html:24
 msgid "Code"
 msgstr "Code"
 
@@ -487,68 +487,72 @@ msgstr "Chưa có request nào, thao tác trên trang Odoo rồi bấm ⟳."
 msgid "No profile data yet."
 msgstr "Chưa có dữ liệu profile."
 
-#: src/features/perf/perf.js:67
-msgid "Latest session: %s"
-msgstr "Phiên gần nhất: %s"
-
-#: src/features/perf/perf.js:68
+#: src/features/perf/perf.js:66
 msgid "Filter request"
 msgstr "Lọc request"
 
-#: src/features/perf/perf.js:68
+#: src/features/perf/perf.js:66
 msgid "%s requests"
 msgstr "%s request"
 
-#: src/features/perf/perf.js:68
+#: src/features/perf/perf.js:66
 msgid "%s/%s requests"
 msgstr "%s/%s request"
 
-#: src/features/perf/perf.js:69
+#: src/features/perf/perf.js:67
 msgid "Request · SQL · duration"
 msgstr "Request · SQL · thời gian"
 
-#: src/features/perf/perf.js:69
+#: src/features/perf/perf.js:67
 msgid "Id · time · CPU"
 msgstr "Id · giờ · CPU"
 
-#: src/features/perf/perf.js:83
+#: src/features/perf/perf.js:68
+msgid "Select a request to see its SQL queries."
+msgstr "Chọn một request để xem các câu SQL của nó."
+
+#: src/features/perf/perf.js:70
+msgid "Latest session: %s"
+msgstr "Phiên gần nhất: %s"
+
+#: src/features/perf/perf.js:85
 msgid "Flame Graph (speedscope)"
 msgstr "Flame graph (speedscope)"
 
-#: src/features/perf/perf.js:92
+#: src/features/perf/perf.js:94
 msgid "No SQL recorded."
 msgstr "Không có SQL nào được ghi."
 
-#: src/features/perf/perf.js:97
+#: src/features/perf/perf.js:99
 msgid "Full SQL + stack"
 msgstr "SQL đầy đủ + stack"
 
-#: src/features/perf/perf.js:99
+#: src/features/perf/perf.js:101
 msgid "%s queries · SQL %s / total %s · Python ≈ %s"
 msgstr "%s query · SQL %s / tổng %s · Python ≈ %s"
 
-#: src/features/perf/perf.js:101
+#: src/features/perf/perf.js:103
 msgid "Repeated queries — N+1 suspects (%s)"
 msgstr "Query lặp lại — nghi N+1 (%s)"
 
-#: src/features/perf/perf.js:101
+#: src/features/perf/perf.js:103
 msgid "Count · caller · time"
 msgstr "Số lần · nơi gọi · thời gian"
 
-#: src/features/perf/perf.js:101
-#: src/features/perf/perf.js:104
+#: src/features/perf/perf.js:103
+#: src/features/perf/perf.js:106
 msgid "Query"
 msgstr "Câu truy vấn"
 
-#: src/features/perf/perf.js:103
+#: src/features/perf/perf.js:105
 msgid "✓ No repeated query."
 msgstr "✓ Không có query lặp lại."
 
-#: src/features/perf/perf.js:104
+#: src/features/perf/perf.js:106
 msgid "Slowest queries (%s)"
 msgstr "Query chậm nhất (%s)"
 
-#: src/features/perf/perf.js:104
+#: src/features/perf/perf.js:106
 msgid "Caller · time"
 msgstr "Nơi gọi · thời gian"
 
@@ -624,20 +628,24 @@ msgstr "Method · model · thời gian"
 msgid "Time · route"
 msgstr "Giờ · route"
 
-#: src/features/rpc/rpc.js:44
-#: src/features/rpc/rpc.js:48
+#: src/features/rpc/rpc.js:27
+msgid "Select a call to see its parameters and result."
+msgstr "Chọn một lời gọi để xem tham số và kết quả."
+
+#: src/features/rpc/rpc.js:46
+#: src/features/rpc/rpc.js:50
 msgid "Parameters"
 msgstr "Tham số"
 
-#: src/features/rpc/rpc.js:45
+#: src/features/rpc/rpc.js:47
 msgid "Why was it blocked? → Security"
 msgstr "Vì sao bị chặn? → Security"
 
-#: src/features/rpc/rpc.js:49
+#: src/features/rpc/rpc.js:51
 msgid "Result"
 msgstr "Kết quả"
 
-#: src/features/rpc/rpc.js:49
+#: src/features/rpc/rpc.js:51
 msgid "… (%s characters)"
 msgstr "… (%s ký tự)"
 
@@ -661,123 +669,123 @@ msgstr "Có rule không eval được, chưa chắc chắn."
 msgid "ACL: %s · %s rules pass."
 msgstr "ACL: %s · %s rule đạt."
 
-#: src/features/security/logic.js:78
+#: src/features/security/logic.js:93
 msgid "No ACL: only the superuser can access this model."
 msgstr "Không có ACL nào: chỉ superuser truy cập được model này."
 
-#: src/features/security/logic.js:81
+#: src/features/security/logic.js:96
 msgid "ACL \"%s\" has no group → applies to EVERY user, portal/public included (%s)."
 msgstr "ACL \"%s\" không có group → áp dụng cho MỌI user, kể cả portal/public (%s)."
 
-#: src/features/security/logic.js:82
+#: src/features/security/logic.js:97
 msgid "ACL \"%s\" grants %s to %s."
 msgstr "ACL \"%s\" cấp %s cho %s."
 
-#: src/features/security/logic.js:86
+#: src/features/security/logic.js:101
 msgid "Has company_id but no global multi-company rule → records may leak across companies."
 msgstr "Có company_id nhưng không có global rule multi-company → record có thể lộ giữa các công ty."
 
-#: src/features/security/logic.js:88
+#: src/features/security/logic.js:103
 msgid "Field \"%s\" looks sensitive but has no groups=."
 msgstr "Field \"%s\" có vẻ nhạy cảm nhưng không có groups=."
 
-#: src/features/security/logic.js:98
+#: src/features/security/logic.js:113
 msgid "Not served over HTTPS."
 msgstr "Không chạy HTTPS."
 
-#: src/features/security/logic.js:99
+#: src/features/security/logic.js:114
 msgid "Cannot read the session_id cookie."
 msgstr "Không đọc được cookie session_id."
 
-#: src/features/security/logic.js:101
+#: src/features/security/logic.js:116
 msgid "session_id cookie is not HttpOnly → readable by JS/XSS."
 msgstr "Cookie session_id không HttpOnly → JS/XSS đọc được."
 
-#: src/features/security/logic.js:102
+#: src/features/security/logic.js:117
 msgid "session_id cookie lacks the Secure flag."
 msgstr "Cookie session_id không có cờ Secure."
 
-#: src/features/security/logic.js:103
+#: src/features/security/logic.js:118
 msgid "session_id cookie is SameSite=None → larger CSRF surface."
 msgstr "Cookie session_id SameSite=None → tăng bề mặt CSRF."
 
-#: src/features/security/logic.js:106
+#: src/features/security/logic.js:121
 msgid "Missing Strict-Transport-Security (HSTS) header."
 msgstr "Thiếu header Strict-Transport-Security (HSTS)."
 
-#: src/features/security/logic.js:107
+#: src/features/security/logic.js:122
 msgid "Missing X-Frame-Options / CSP frame-ancestors → clickjacking."
 msgstr "Thiếu X-Frame-Options / CSP frame-ancestors → clickjacking."
 
-#: src/features/security/logic.js:108
+#: src/features/security/logic.js:123
 msgid "Missing X-Content-Type-Options: nosniff."
 msgstr "Thiếu X-Content-Type-Options: nosniff."
 
-#: src/features/security/logic.js:109
+#: src/features/security/logic.js:124
 msgid "Missing Content-Security-Policy."
 msgstr "Thiếu Content-Security-Policy."
 
-#: src/features/security/logic.js:110
+#: src/features/security/logic.js:125
 msgid "Header %s discloses a version: %s"
 msgstr "Header %s lộ phiên bản: %s"
 
-#: src/features/security/logic.js:112
+#: src/features/security/logic.js:127
 msgid "Database manager has NO master password (default \"admin\")!"
 msgstr "Database manager KHÔNG có master password (mặc định \"admin\")!"
 
-#: src/features/security/logic.js:113
+#: src/features/security/logic.js:128
 msgid "/web/database/manager is reachable → block /web/database/* at the proxy or set list_db = False."
 msgstr "/web/database/manager truy cập được → chặn /web/database/* ở proxy hoặc đặt list_db = False."
 
-#: src/features/security/logic.js:114
+#: src/features/security/logic.js:129
 msgid "list_db is on: database names are exposed (%s)."
 msgstr "list_db đang bật: lộ tên database (%s)."
 
-#: src/features/security/logic.js:115
+#: src/features/security/logic.js:130
 msgid "Server version is public via /web/webclient/version_info: %s"
 msgstr "Phiên bản server công khai qua /web/webclient/version_info: %s"
 
-#: src/features/security/logic.js:123
+#: src/features/security/logic.js:138
 msgid "__system__ (superuser): bypasses every ACL and record rule."
 msgstr "__system__ (superuser): bỏ qua mọi ACL và record rule."
 
-#: src/features/security/logic.js:124
+#: src/features/security/logic.js:139
 msgid "Settings administrator (base.group_system)."
 msgstr "Quản trị Settings (base.group_system)."
 
-#: src/features/security/logic.js:125
+#: src/features/security/logic.js:140
 msgid "Access Rights manager (base.group_erp_manager): can grant itself any group."
 msgstr "Quản lý Access Rights (base.group_erp_manager): tự cấp được mọi group."
 
-#: src/features/security/logic.js:126
+#: src/features/security/logic.js:141
 msgid "Has Technical Features (base.group_no_one)."
 msgstr "Có Technical Features (base.group_no_one)."
 
-#: src/features/security/logic.js:127
+#: src/features/security/logic.js:142
 msgid "Public user."
 msgstr "User public."
 
-#: src/features/security/logic.js:127
+#: src/features/security/logic.js:142
 msgid "Portal user (share)."
 msgstr "User portal (share)."
 
-#: src/features/security/logic.js:128
+#: src/features/security/logic.js:143
 msgid "Login \"admin\" is the default, easy to guess."
 msgstr "Login \"admin\" là mặc định, dễ đoán."
 
-#: src/features/security/logic.js:129
+#: src/features/security/logic.js:144
 msgid "auth_totp is not installed → no 2FA."
 msgstr "Chưa cài auth_totp → không có 2FA."
 
-#: src/features/security/logic.js:130
+#: src/features/security/logic.js:145
 msgid "2FA (TOTP) is not enabled."
 msgstr "Chưa bật 2FA (TOTP)."
 
-#: src/features/security/logic.js:131
+#: src/features/security/logic.js:146
 msgid "%s API key(s): direct RPC calls with this user's rights."
 msgstr "Có %s API key: gọi RPC trực tiếp bằng quyền của user này."
 
-#: src/features/security/logic.js:132
+#: src/features/security/logic.js:147
 msgid "User is archived."
 msgstr "User đang bị lưu trữ (archived)."
 
@@ -801,247 +809,288 @@ msgstr "THẤP"
 msgid "INFO"
 msgstr "INFO"
 
-#: src/features/security/security.js:22
+#: src/features/security/security.js:23
 msgid "✓ No issue found."
 msgstr "✓ Không phát hiện vấn đề."
 
-#: src/features/security/security.js:55
-#: src/features/security/security.js:55
+#: src/features/security/security.js:72
+#: src/features/security/security.js:72
 msgid "Search a user by name or login…"
 msgstr "Tìm user theo tên hoặc login…"
 
-#: src/features/security/security.js:86
+#: src/features/security/security.js:109
 msgid "User"
 msgstr "User"
 
-#: src/features/security/security.js:91
+#: src/features/security/security.js:114
 msgid "My User"
 msgstr "User của tôi"
 
-#: src/features/security/security.js:92
+#: src/features/security/security.js:115
 msgid "me"
 msgstr "tôi"
 
-#: src/features/security/security.js:93
+#: src/features/security/security.js:116
 msgid "%s · #%s · %s (%s companies) · %s groups"
 msgstr "%s · #%s · %s (%s công ty) · %s group"
 
-#: src/features/security/security.js:94
+#: src/features/security/security.js:117
 msgid "Simulates the selected user's rights without logging in as them (reading other users' groups needs admin rights)."
 msgstr "Mô phỏng quyền của user được chọn mà không cần đăng nhập tài khoản đó (cần quyền admin để đọc group của người khác)."
 
-#: src/features/security/security.js:96
+#: src/features/security/security.js:119
 msgid "Groups"
 msgstr "Group"
 
-#: src/features/security/security.js:97
+#: src/features/security/security.js:120
 msgid "User risks"
 msgstr "Rủi ro của user"
 
-#: src/features/security/security.js:106
+#: src/features/security/security.js:129
 msgid "Why allowed / blocked"
 msgstr "Vì sao được / bị chặn"
 
-#: src/features/security/security.js:108
+#: src/features/security/security.js:131
 msgid "ACL (ir.model.access) — green = applies to the user"
 msgstr "ACL (ir.model.access) — nền xanh = áp dụng cho user này"
 
-#: src/features/security/security.js:110
+#: src/features/security/security.js:133
 msgid "No ACL."
 msgstr "Không có ACL."
 
-#: src/features/security/security.js:111
+#: src/features/security/security.js:134
 msgid "ACL / group"
 msgstr "ACL / group"
 
-#: src/features/security/security.js:113
+#: src/features/security/security.js:136
 msgid "(all users)"
 msgstr "(mọi user)"
 
-#: src/features/security/security.js:117
+#: src/features/security/security.js:140
 msgid "Fields hidden from the user (groups=)"
 msgstr "Field bị ẩn với user (groups=)"
 
-#: src/features/security/security.js:120
+#: src/features/security/security.js:143
 msgid "No field declares groups=."
 msgstr "Không field nào khai báo groups=."
 
-#: src/features/security/security.js:124
+#: src/features/security/security.js:148
+msgid "Real groups only: the tried groups are not counted here."
+msgstr "Chỉ tính nhóm thật: các nhóm đang thử không được tính ở đây."
+
+#: src/features/security/security.js:149
 msgid "Field · label · for this user"
 msgstr "Field · nhãn · với user này"
 
-#: src/features/security/security.js:126
+#: src/features/security/security.js:151
 msgid "visible"
 msgstr "thấy"
 
-#: src/features/security/security.js:126
+#: src/features/security/security.js:151
 #: src/features/view/view.js:65
 msgid "hidden"
 msgstr "ẩn"
 
-#: src/features/security/security.js:130
+#: src/features/security/security.js:155
 msgid "Model configuration audit"
 msgstr "Audit cấu hình model"
 
-#: src/features/security/security.js:137
+#: src/features/security/security.js:162
 msgid "Instance"
 msgstr "Instance"
 
-#: src/features/security/security.js:138
+#: src/features/security/security.js:163
 msgid "Session"
 msgstr "Phiên đăng nhập"
 
-#: src/features/security/security.js:145
+#: src/features/security/security.js:170
 msgid "Companies"
 msgstr "Công ty"
 
-#: src/features/security/security.js:147
+#: src/features/security/security.js:172
 msgid "Odoo's built-in /web/become route, base.group_system only"
 msgstr "Route /web/become sẵn có của Odoo, chỉ base.group_system dùng được"
 
-#: src/features/security/security.js:148
+#: src/features/security/security.js:173
 msgid "Switch the current session to superuser (bypasses every rule)?"
 msgstr "Chuyển phiên hiện tại sang superuser (bỏ qua mọi rule)?"
 
-#: src/features/security/security.js:149
+#: src/features/security/security.js:174
 msgid "Become Superuser"
 msgstr "Chuyển sang superuser"
 
-#: src/features/security/security.js:153
+#: src/features/security/security.js:178
 msgid "System parameters (ir.config_parameter)"
 msgstr "Tham số hệ thống (ir.config_parameter)"
 
-#: src/features/security/security.js:164
+#: src/features/security/security.js:189
 msgid "Filter key / value"
 msgstr "Lọc key / giá trị"
 
-#: src/features/security/security.js:164
+#: src/features/security/security.js:189
 msgid "%s parameters"
 msgstr "%s tham số"
 
-#: src/features/security/security.js:164
+#: src/features/security/security.js:189
 msgid "%s/%s parameters"
 msgstr "%s/%s tham số"
 
-#: src/features/security/security.js:164
+#: src/features/security/security.js:189
 msgid "Key"
 msgstr "Key"
 
-#: src/features/security/security.js:164
+#: src/features/security/security.js:189
 msgid "Value"
 msgstr "Giá trị"
 
-#: src/features/security/security.js:164
+#: src/features/security/security.js:189
 msgid "No parameter."
 msgstr "Không có tham số."
 
-#: src/features/security/security.js:167
+#: src/features/security/security.js:192
 msgid "Instance check"
 msgstr "Kiểm tra instance"
 
-#: src/features/security/security.js:170
+#: src/features/security/security.js:195
 msgid "Check failed"
 msgstr "Không kiểm tra được"
 
-#: src/features/security/security.js:175
+#: src/features/security/security.js:200
 msgid "Raw data"
 msgstr "Dữ liệu thô"
 
-#: src/features/security/security.js:176
+#: src/features/security/security.js:201
 msgid "Check Again"
 msgstr "Kiểm tra lại"
 
-#: src/features/security/security.js:197
-msgid "Add %s to %s?"
-msgstr "Thêm %s cho %s?"
-
-#: src/features/security/security.js:197
-msgid "+ Add"
-msgstr "+ Thêm"
-
-#: src/features/security/security.js:198
+#: src/features/security/security.js:222
+#: src/features/security/security.js:225
 msgid "implied"
 msgstr "kế thừa"
 
-#: src/features/security/security.js:198
+#: src/features/security/security.js:222
 msgid "Remove %s from %s?"
 msgstr "Gỡ %s khỏi %s?"
 
-#: src/features/security/security.js:199
+#: src/features/security/security.js:223
+msgid "Simulate this group below, nothing is written"
+msgstr "Giả lập nhóm này ở các thẻ bên dưới, không ghi gì"
+
+#: src/features/security/security.js:223
+msgid "Try"
+msgstr "Thử"
+
+#: src/features/security/security.js:224
+msgid "Stop trying it"
+msgstr "Thôi thử nhóm này"
+
+#: src/features/security/security.js:226
 msgid "Implied by %s"
 msgstr "Kế thừa từ %s"
 
-#: src/features/security/security.js:206
-#: src/features/security/security.js:212
+#: src/features/security/security.js:227
+msgid "trying"
+msgstr "đang thử"
+
+#: src/features/security/security.js:235
+#: src/features/security/security.js:241
 msgid "%s groups"
 msgstr "%s group"
 
-#: src/features/security/security.js:208
-#: src/features/security/security.js:208
-msgid "Filter or add a group…"
-msgstr "Lọc hoặc thêm group…"
+#: src/features/security/security.js:237
+#: src/features/security/security.js:237
+msgid "Filter or try a group…"
+msgstr "Lọc hoặc thử một nhóm…"
 
-#: src/features/security/security.js:212
+#: src/features/security/security.js:241
 msgid "%s/%s groups"
 msgstr "%s/%s group"
 
-#: src/features/security/security.js:235
+#: src/features/security/security.js:246
+msgid "Trying %s: every card below is simulated with it."
+msgstr "Đang thử %s: mọi thẻ bên dưới được giả lập với nhóm này."
+
+#: src/features/security/security.js:247
+msgid "Add %s to %s?"
+msgstr "Thêm %s cho %s?"
+
+#: src/features/security/security.js:247
+msgid "Apply"
+msgstr "Áp dụng"
+
+#: src/features/security/security.js:248
+msgid "Discard"
+msgstr "Bỏ thử"
+
+#: src/features/security/security.js:268
 msgid "no result"
 msgstr "không có kết quả"
 
-#: src/features/security/security.js:236
+#: src/features/security/security.js:269
 msgid "cannot evaluate: %s"
 msgstr "không eval được: %s"
 
-#: src/features/security/security.js:239
+#: src/features/security/security.js:272
 msgid "You cannot read this record yourself, so its rules cannot be checked."
 msgstr "Chính bạn không đọc được record này nên không kiểm được rule."
 
-#: src/features/security/security.js:249
+#: src/features/security/security.js:286
+msgid "Try:"
+msgstr "Thử:"
+
+#: src/features/security/security.js:287
+msgid "Also adds %s"
+msgstr "Kéo theo %s"
+
+#: src/features/security/security.js:288
+msgid "No single group allows it."
+msgstr "Không có nhóm nào tự mở được quyền này."
+
+#: src/features/security/security.js:292
 msgid "server ✓"
 msgstr "server ✓"
 
-#: src/features/security/security.js:249
+#: src/features/security/security.js:292
 msgid "server ✗"
 msgstr "server ✗"
 
-#: src/features/security/security.js:249
+#: src/features/security/security.js:292
 msgid "server ?"
 msgstr "server ?"
 
-#: src/features/security/security.js:250
+#: src/features/security/security.js:293
 msgid "has_access, run by the server as you"
 msgstr "has_access, server chạy với quyền của bạn"
 
-#: src/features/security/security.js:253
+#: src/features/security/security.js:296
 msgid "ALLOWED"
 msgstr "CHO PHÉP"
 
-#: src/features/security/security.js:253
+#: src/features/security/security.js:296
 msgid "BLOCKED"
 msgstr "CHẶN"
 
-#: src/features/security/security.js:253
+#: src/features/security/security.js:296
 msgid "UNKNOWN"
 msgstr "KHÔNG RÕ"
 
-#: src/features/security/security.js:261
+#: src/features/security/security.js:304
 msgid "not applicable"
 msgstr "không áp dụng"
 
-#: src/features/security/security.js:270
+#: src/features/security/security.js:313
 msgid "Rule · operations · result"
 msgstr "Rule · thao tác · kết quả"
 
-#: src/features/security/security.js:270
+#: src/features/security/security.js:313
 msgid "Groups · domain"
 msgstr "Group · domain"
 
-#: src/features/security/security.js:271
+#: src/features/security/security.js:314
 msgid "This model has no record rule."
 msgstr "Model này không có record rule."
 
-#: src/features/security/security.js:273
+#: src/features/security/security.js:316
 msgid "Assumes the user selected every allowed company. Rules of parent models through _inherits are not counted. This is a simulation; for your own user, “server” is the exact answer (has_access)."
 msgstr "Giả định user chọn tất cả công ty được phép. Rule của model cha qua _inherits không được tính. Đây là mô phỏng; với chính user của bạn, “server” là kết quả chính xác (has_access)."
 
@@ -1214,17 +1263,21 @@ msgstr "Biểu thức modifier"
 msgid "The form is read-only: every field is readonly."
 msgstr "Form đang ở chế độ chỉ đọc: mọi field đều readonly."
 
-#: src/panel/main.js:33
+#: src/panel/main.js:34
 msgid "Cannot read this tab: %s"
 msgstr "Không đọc được tab này: %s"
 
-#: src/panel/main.js:33
+#: src/panel/main.js:34
 msgid "The current tab is not an Odoo page."
 msgstr "Tab hiện tại không phải trang Odoo."
 
-#: src/panel/main.js:85
+#: src/panel/main.js:86
 msgid "Not an Odoo page"
 msgstr "Không phải trang Odoo"
+
+#: src/panel/panel.html:14
+msgid "Connecting…"
+msgstr "Đang kết nối…"
 
 #: src/panel/panel.html:16
 #: src/panel/panel.html:16
@@ -1247,31 +1300,27 @@ msgstr "Toàn màn hình (Esc để thoát)"
 msgid "Full Screen"
 msgstr "Toàn màn hình"
 
-#: src/panel/panel.html:20
-msgid "Connecting…"
-msgstr "Đang kết nối…"
-
-#: src/panel/panel.html:22
+#: src/panel/panel.html:21
 msgid "Record"
 msgstr "Record"
 
-#: src/panel/panel.html:23
+#: src/panel/panel.html:22
 msgid "View"
 msgstr "View"
 
-#: src/panel/panel.html:24
+#: src/panel/panel.html:23
 msgid "RPC"
 msgstr "RPC"
 
-#: src/panel/panel.html:26
+#: src/panel/panel.html:25
 msgid "Security"
 msgstr "Security"
 
-#: src/panel/panel.html:27
+#: src/panel/panel.html:26
 msgid "Translations"
 msgstr "Translations"
 
-#: src/panel/panel.html:29
+#: src/panel/panel.html:28
 msgid "Perf"
 msgstr "Perf"
 
@@ -1293,6 +1342,7 @@ msgid "Language"
 msgstr "Ngôn ngữ"
 
 #: src/popup/popup.html:30
+#: src/popup/popup.html:31
 msgid "Theme"
 msgstr "Giao diện"
 
@@ -1321,7 +1371,7 @@ msgid "Open /odoo/%s"
 msgstr "Mở /odoo/%s"
 
 #: src/shared/ui.js:87
-#: src/shared/ui.js:141
+#: src/shared/ui.js:145
 msgid "Loading…"
 msgstr "Đang tải…"
 

@@ -52,13 +52,13 @@ Ngoài ra: bấm vào tên field, model hay xmlid trong bảng để copy, và <
 **Code**: gọi ORM bằng JavaScript, dưới quyền user đang đăng nhập.
 <img src="website/screenshots/side-code.png" alt="Tab Code: một lệnh search ORM và bảng kết quả">
 
-**Record** ở chế độ toàn màn hình: từ 760px trở lên, danh sách thành bảng 2 cột với tiêu đề cố định.
+**Record** ở chế độ toàn màn hình: tab chuyển sang thanh bên trái, các khối bỏ khung, khối ngắn xếp cạnh nhau, và danh sách thành bảng 2 cột với tiêu đề cố định.
 <img src="website/screenshots/full-record.png" alt="Tab Record toàn màn hình">
 
 **Security**: group của user đã chọn (thêm / gỡ), và vì sao một thao tác được phép hay bị chặn, từng rule một.
 <img src="website/screenshots/full-security.png" alt="Tab Security">
 
-**Perf**: các request đã đo, với câu SQL nghi N+1 và các câu chậm nhất của từng request.
+**Perf**: các request đã đo, với câu SQL nghi N+1 và các câu chậm nhất của từng request. Ở toàn màn hình, giống tab RPC, danh sách nằm bên trái và request được chọn mở ra bên phải.
 <img src="website/screenshots/full-perf.png" alt="Tab Perf">
 
 <table>
@@ -78,14 +78,14 @@ Extension chưa có trên Chrome Web Store; cài dạng unpacked (Chrome, Edge, 
 
 ## Sử dụng
 
-- **Mở / đóng**: bấm nút tròn; bảng mở ở mép dưới, đúng tab và vị trí cuộn lần trước. Kéo nút đi đâu cũng được; vị trí được nhớ riêng cho từng instance Odoo (thả lại gần mép dưới thì nút bám lại mép). Trên các trang không phải Odoo thì không có gì hiện ra, và icon trên thanh công cụ bị làm mờ.
+- **Mở / đóng**: bấm nút tròn; bảng mở cạnh nút, đúng tab và vị trí cuộn lần trước. Kéo nút đi đâu cũng được, bảng đi theo nút; vị trí được nhớ riêng cho từng instance Odoo (thả lại gần mép dưới thì nút bám lại mép). Trên các trang không phải Odoo thì không có gì hiện ra, và icon trên thanh công cụ bị làm mờ.
 - **Thu nhỏ**: <kbd>−</kbd> trên thanh tiêu đề ẩn bảng về lại nút tròn; bấm nút là mở lại đúng như trước.
-- **Toàn màn hình**: <kbd>⤢</kbd> trên thanh tiêu đề của bảng, <kbd>Esc</kbd> hoặc <kbd>⤡</kbd> để thoát. Trạng thái mở và toàn màn hình được giữ khi tải lại trang.
+- **Toàn màn hình**: <kbd>⤢</kbd> trên thanh tiêu đề của bảng, <kbd>Esc</kbd> hoặc <kbd>⤡</kbd> để thoát. Bố cục giống một editor: tab ở thanh bên trái, tiêu đề một dòng, không khung thẻ, khối ngắn xếp cạnh nhau, editor của tab Code nằm cạnh kết quả, RPC và Perf là danh sách bên trái với chi tiết dòng được chọn bên phải. Nút tròn ẩn đi trong lúc đó (<kbd>−</kbd> để hiện lại). Trạng thái mở và toàn màn hình được giữ khi tải lại trang.
 - **Chế độ debug**: bấm icon extension trên thanh công cụ; công tắc `off` / `debug` / `assets` ở đó cho biết chế độ hiện tại của trang và tải lại Odoo ở chế độ được chọn.
 - **Thẻ**: mỗi tab là một chồng thẻ, ban đầu đều đóng; thẻ chỉ tải dữ liệu khi được mở, và trạng thái mở / đóng được giữ qua các lần tải lại. Bấm vào một dòng trong list để xem chi tiết (nhãn, cách lưu, module, giá trị đầy đủ…), bấm lần nữa để đóng.
 - **Copy**: bấm vào tên field, model, xmlid hay tham số trong bảng; <kbd>⌥ Alt</kbd> + click vào field, nhãn, ô trong list hoặc tiêu đề cột trên trang. Giá trị bí mật bị che vẫn copy ra giá trị thật.
 - **Tải lại dữ liệu**: <kbd>⟳</kbd>. Dữ liệu ổn định của server (session info, `fields_get`, danh sách user) được cache tới khi tải lại trang; ACL, rule, view và giá trị record luôn được đọc lại.
-- **Cài đặt**: bấm icon trên thanh công cụ (hoặc chuột phải → *Options*): ngôn ngữ (English, Tiếng Việt), giao diện (theo hệ thống / sáng / tối), hiện / ẩn bảng.
+- **Cài đặt**: bấm icon trên thanh công cụ (hoặc chuột phải → *Options*): ngôn ngữ (English, Tiếng Việt), giao diện màu (Odoo theo hệ thống / sáng / tối, hoặc theme kiểu editor: GitHub Light / Dark, Solarized Light / Dark, Dracula, Monokai, One Dark Pro, Nord, Catppuccin Mocha), hiện / ẩn bảng.
 
 ### Tương thích
 

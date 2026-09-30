@@ -2,6 +2,26 @@
 
 All notable changes to this project are documented here. Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), versions: [Semantic Versioning](https://semver.org/). Each release on GitHub uses its section below as release notes.
 
+## [1.2.0] - 2026-09-30
+
+### Added
+
+- **Color themes, like an editor's**: besides Odoo's system / light / dark, the toolbar popup offers GitHub Light, Solarized Light, GitHub Dark, Dracula, Monokai, One Dark Pro, Nord, Solarized Dark and Catppuccin Mocha. The whole panel follows, syntax colours of the Code tab included, in every open panel at once.
+- **RPC and Perf in full screen: list on the left, detail on the right**, like the Network tab of the devtools. The selected row is highlighted and its detail (parameters and result, or the SQL analysis) stays in sight while the list scrolls. Beside the page, rows still unfold in place; switching between the two keeps the open row.
+- **Security: which group would allow it?** A blocked operation in *Why allowed / blocked* lists the groups that would allow it (from the model's ACLs and record rules), the ones adding the fewest groups first, with what else they imply.
+- **Security: try a group before adding it.** *Try* simulates a group on the user without writing anything: every card below (why allowed / blocked, ACLs, risks) is recomputed with it, then *Apply* adds the tried groups in one write or *Discard* drops them. It replaces *+ Add*.
+
+### Changed
+
+- **A modern, minimal look**: neutral greys with Odoo's purple as the only accent, a line icon on every tab, rounded cards with a chevron, segmented controls and softer focus rings. Beside the page, the tabs become one bar of icons (the active one shows its name, the others on hover). In full screen, the sidebar runs from the top and holds the brand, with icon + name tabs, and the content sits on a grey canvas: each block a white panel, lists with a tinted header row and roomier rows, row actions (↗) quiet until hovered.
+- **Full screen layout**: the tabs move to a sidebar on the left, the header fits on one line (brand, model, id, view, buttons), and the content sits on one plane without card frames, only rows keep a line between them. Short blocks sit side by side (View: Action | Context; Security: Groups | User risks, ACL | Fields hidden, Session | System parameters), key / value blocks show three pairs per line, and the Code editor sits beside its result.
+- **The panel follows the round button** while it is dragged: beside it, aligned on its top in the upper half of the window and on its bottom in the lower half (it used to stay on the bottom edge).
+- **The round button hides in full screen**: it covered the panel's bottom right corner (Open Forms, Export & Download). <kbd>−</kbd> brings it back.
+
+### Fixed
+
+- **Record › Fields**: a long value (JSON, HTML…) no longer spills over the rows below it; it stops at three lines with an ellipsis, the full value opens with a click on the row.
+
 ## [1.1.0] - 2026-09-29
 
 ### Added
@@ -90,6 +110,8 @@ First public release. Chrome extension (Manifest V3) for Odoo 18 / 19 developers
 - The panel page is a `use_dynamic_url` web-accessible resource, so other sites can't frame it.
 - `odoo.conf` is not readable from a browser by design; nothing in the extension tries to.
 
+[1.2.0]: https://github.com/unclecatvn/extension-debug-odoo/releases/tag/v1.2.0
+[1.1.0]: https://github.com/unclecatvn/extension-debug-odoo/releases/tag/v1.1.0
 [1.0.0]: https://github.com/unclecatvn/extension-debug-odoo/releases/tag/v1.0.0
 [0.1.1]: https://github.com/unclecatvn/extension-debug-odoo/releases/tag/v0.1.1
 [0.1.0]: https://github.com/unclecatvn/extension-debug-odoo/releases/tag/v0.1.0

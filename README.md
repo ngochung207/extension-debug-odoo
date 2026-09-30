@@ -56,13 +56,13 @@ page to copy its technical name.
 **Code**: the ORM from JavaScript, run as the logged-in user.
 <img src="website/screenshots/side-code.png" alt="Code tab: an ORM search and its result table">
 
-**Record** in full screen: from 760px wide, lists become 2-column tables with sticky headers.
+**Record** in full screen: the tabs move to a sidebar, blocks lose their frames, short ones sit side by side, and lists become 2-column tables with sticky headers.
 <img src="website/screenshots/full-record.png" alt="Record tab in full screen">
 
 **Security**: the picked user's groups (add / remove), and why an operation is allowed or blocked, rule by rule.
 <img src="website/screenshots/full-security.png" alt="Security tab">
 
-**Perf**: profiled requests, with N+1 suspects and the slowest queries of each one.
+**Perf**: profiled requests, with N+1 suspects and the slowest queries of each one. In full screen, as in RPC, the list stays on the left and the selected request opens on the right.
 <img src="website/screenshots/full-perf.png" alt="Perf tab">
 
 <table>
@@ -83,13 +83,9 @@ The extension is not on the Chrome Web Store yet; install it unpacked (Chrome, E
 
 ## Usage
 
-- **Open / close**: click the round button; the panel opens on the bottom edge, on the tab you were on, scrolled where
-  you left it. Drag the button anywhere; its position is kept per Odoo instance (dropped back near the bottom edge, it
-  sticks to it again). Nothing shows on
-  non-Odoo sites, and the toolbar icon is greyed out there.
+- **Open / close**: click the round button; the panel opens beside it, on the tab you were on, scrolled where you left it. Drag the button anywhere and the panel follows it; its position is kept per Odoo instance (dropped back near the bottom edge, it sticks to it again). Nothing shows on non-Odoo sites, and the toolbar icon is greyed out there.
 - **Minimize**: <kbd>−</kbd> in the panel header hides the panel back to the round button, which reopens it as it was.
-- **Full screen**: <kbd>⤢</kbd> in the panel header, <kbd>Esc</kbd> or <kbd>⤡</kbd> to leave. Open state and full
-  screen survive page reloads.
+- **Full screen**: <kbd>⤢</kbd> in the panel header, <kbd>Esc</kbd> or <kbd>⤡</kbd> to leave. The layout is an editor's: tabs in a sidebar, one header line, no card frames, short blocks side by side, the Code editor beside its result, RPC and Perf as a list with the selected row's detail on the right. The round button hides meanwhile (<kbd>−</kbd> brings it back). Open state and full screen survive page reloads.
 - **Debug mode**: click the toolbar icon; its `off` / `debug` / `assets` switch shows the page's mode and reloads Odoo in the one picked.
 - **Cards**: each tab is a stack of cards, closed at first; a card loads its data once opened, and open / closed cards
   stay so across reloads. Click a list row to open its details (label, storage, module, full value…), again to close.
@@ -97,8 +93,7 @@ The extension is not on the Chrome Web Store yet; install it unpacked (Chrome, E
   list cell or column header on the page. Masked secret values still copy the real value.
 - **Reload data**: <kbd>⟳</kbd>. Stable server data (session info, `fields_get`, users) is cached until the page
   reloads; ACLs, rules, views and record values are always re-read.
-- **Settings**: click the toolbar icon (or right-click → *Options*): language (English, Tiếng Việt), theme
-  (system / light / dark), show / hide the panel.
+- **Settings**: click the toolbar icon (or right-click → *Options*): language (English, Tiếng Việt), color theme (Odoo system / light / dark, or an editor theme: GitHub Light / Dark, Solarized Light / Dark, Dracula, Monokai, One Dark Pro, Nord, Catppuccin Mocha), show / hide the panel.
 
 ### Compatibility
 
