@@ -8,6 +8,8 @@ All notable changes to this project are documented here. Format: [Keep a Changel
 
 - **Color themes, like an editor's**: besides Odoo's system / light / dark, the toolbar popup offers GitHub Light, Solarized Light, GitHub Dark, Dracula, Monokai, One Dark Pro, Nord, Solarized Dark and Catppuccin Mocha. The whole panel follows, syntax colours of the Code tab included, in every open panel at once.
 - **RPC and Perf in full screen: list on the left, detail on the right**, like the Network tab of the devtools. The selected row is highlighted and its detail (parameters and result, or the SQL analysis) stays in sight while the list scrolls. Beside the page, rows still unfold in place; switching between the two keeps the open row.
+- **Security: which group would allow it?** A blocked operation in *Why allowed / blocked* lists the groups that would allow it (from the model's ACLs and record rules), the ones adding the fewest groups first, with what else they imply.
+- **Security: try a group before adding it.** *Try* simulates a group on the user without writing anything: every card below (why allowed / blocked, ACLs, risks) is recomputed with it, then *Apply* adds the tried groups in one write or *Discard* drops them. It replaces *+ Add*.
 
 ### Changed
 

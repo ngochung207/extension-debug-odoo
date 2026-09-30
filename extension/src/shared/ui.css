@@ -156,6 +156,10 @@ input[type=search]:focus, select:focus { outline: 0; box-shadow: var(--ring); bo
 .groups > li.addable > .row > .grow { color: var(--muted); } /* a group the user doesn't have */
 .groups > li > .row { align-items: center; }
 .groups .chip { padding: 0 8px; font-size: 11px; line-height: 16px; } /* as tall as the implied pill: even rows */
+.trybar { display: flex; align-items: center; gap: 6px; padding: 6px 10px; border-bottom: 1px solid var(--line); background: var(--accent-soft); font-size: 11px; } /* Security › Groups: tried groups, not written yet */
+.groups > li.trying .pill { margin-left: 6px; }
+.trybar .chip, .fix .chip { padding: 0 8px; font-size: 11px; line-height: 16px; }
+.verdict .fix { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin-top: 4px; font-size: 11px; color: var(--muted); } /* the groups that would allow a blocked mode */
 /* Rows wrap instead of overflowing: long names, labels and pills move to the next line, nothing is cut. */
 .row { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 6px; min-width: 0; }
 .name { font-family: var(--mono); font-size: 11px; font-weight: 600; overflow-wrap: anywhere; }
