@@ -9,7 +9,7 @@ import { filterMatrix, matrix, type MxRow } from '../../ui/matrix.ts';
 import { note } from '../../ui/parts.ts';
 import { tip } from '../../ui/tooltip.ts';
 import { modulesOfModel } from './apps.data.ts';
-import { isInstalled, moduleFilter, moduleGraph, pendingOf, searchText, splitNames, versionDrift, type AppModule } from './apps.logic.ts';
+import { isInstalled, moduleFilter, moduleGraph, pendingOf, searchText, simulateInstall, splitNames, versionDrift, type AppModule } from './apps.logic.ts';
 import { moduleDetail, type ModuleEnv } from './apps.module.ts';
 import { activate, formPath, openModuleForms, run, upgrade } from './apps.ops.ts';
 import { keepForm, loadForm, type AppsCtx } from './apps.state.ts';
@@ -17,8 +17,9 @@ import { box, button, searchBar, statePill, stepLog, text, tpl } from './apps.ui
 
 export function modulesView(body: HTMLElement, c: AppsCtx) {
   fill(body, async () => {
-    const [mods, deps, disk] = await Promise.all([c.modules, c.deps, c.disk]);
+    const [mods, deps, disk, countries] = await Promise.all([c.modules, c.deps, c.disk, c.countries]);
     const graph = moduleGraph(mods, deps);
+    const simulate = (names: readonly string[]) => simulateInstall(names, mods, deps, countries);
     const byId = new Map(mods.map((m) => [m.id, m]));
     const byName = new Map(mods.map((m) => [m.name, m]));
     const form = loadForm();
@@ -37,7 +38,7 @@ export function modulesView(body: HTMLElement, c: AppsCtx) {
     const opened = c.s.module != null && byId.has(c.s.module) ? c.s.module : null;
     const drifted = mods.filter((m) => isInstalled(m) && versionDrift(m.latest_version, disk.get(m.id)) === 'disk-newer');
     const env: ModuleEnv = {
-      c, graph, byName, byId, disk,
+      c, graph, byName, byId, disk, simulate,
       isPicked: (n) => picked.has(n),
       togglePick: (n) => setPicked(n, !picked.has(n)),
       open: (n) => openModule(n),
@@ -121,7 +122,7 @@ export function modulesView(body: HTMLElement, c: AppsCtx) {
       return b;
     };
     p.actions.append(
-      op(_t('Activate'), _t('Update Apps List, then install every module picked (with its dependencies)'), (list, begin) => activate(list, c.a, graph, begin)),
+      op(_t('Activate'), _t('Update Apps List, then install every module picked (with its dependencies)'), (list, begin) => activate(list, c.a, simulate, begin)),
       op(_t('Upgrade'), _t('Upgrade every module picked (they must be installed)'), (list, begin) => upgrade(list, c.a, begin)),
       op(_t('Open Forms ↗'), _t('Open the form of every module picked in a new tab'), (list, begin) => openModuleForms(list, c.page.origin, begin)),
     );

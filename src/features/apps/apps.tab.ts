@@ -10,7 +10,7 @@ import { sessionInfo } from '../../odoo/reads.ts';
 import { fill } from '../../ui/cards.ts';
 import { note, segmented } from '../../ui/parts.ts';
 import type { TabModule } from '../registry.ts';
-import { readDependencies, readDiskVersions, readModules } from './apps.data.ts';
+import { readCompanyCountries, readDependencies, readDiskVersions, readModules } from './apps.data.ts';
 import { isInstalled, pendingOf } from './apps.logic.ts';
 import { modulesView } from './apps.modules.ts';
 import { pendingView } from './apps.pending.ts';
@@ -32,6 +32,7 @@ export const appsTab: TabModule = {
         const c: AppsCtx = {
           page, a: odoo.adapter, s, modules,
           deps: readDependencies(),
+          countries: readCompanyCountries().catch(() => []),
           disk: modules.then((ms) => readDiskVersions(ms.filter(isInstalled).map((m) => m.id))),
           show: (v) => { s.view = v; draw(); },
           rerender: draw,

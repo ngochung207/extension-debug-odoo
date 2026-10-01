@@ -5,7 +5,7 @@ import { _t } from '../../i18n/i18n.ts';
 import type { OdooAdapter } from '../../odoo/adapter.ts';
 import { call } from '../../odoo/rpc.ts';
 import { immediate, openForms, readPending, reloadPage, updateList } from './apps.data.ts';
-import { planInstall, planUpgrade, type ModuleGraph, type ModuleState } from './apps.logic.ts';
+import { planInstall, planUpgrade, type InstallSim, type ModuleState } from './apps.logic.ts';
 import type { StepLog } from './apps.ui.ts';
 
 type Row = { id: number; name: string; state: ModuleState };
@@ -45,8 +45,9 @@ function reload(begin: (label: string) => ReturnType<StepLog['step']>) {
   setTimeout(() => void reloadPage(), 800);
 }
 
-/** Update Apps List, then install every module with its dependencies. */
-export async function activate(list: readonly string[], a: OdooAdapter, g: ModuleGraph, begin: (label: string) => ReturnType<StepLog['step']>) {
+/** Update Apps List, then install every module with its dependencies (and the modules Odoo auto-installs with them,
+ * as `simulate` predicts from the list read when the tab rendered). */
+export async function activate(list: readonly string[], a: OdooAdapter, simulate: (names: readonly string[]) => InstallSim, begin: (label: string) => ReturnType<StepLog['step']>) {
   await guardPending(a);
   let st = begin(_t('Update Apps List'));
   const [updated, added] = await updateList();
@@ -57,12 +58,11 @@ export async function activate(list: readonly string[], a: OdooAdapter, g: Modul
   if (p.busy.length) throw new Error(_t('Waiting to be uninstalled: %s', names(p.busy)));
   if (p.installed.length) begin(_t('Already installed: %s', names(p.installed))).done();
   if (!p.install.length) return;
-  const deps = g.upstream(p.install.map((m) => m.name));
-  if (deps.length) {
-    const rows = await readByNames(deps);
-    const more = rows.filter((m) => m.state === 'uninstalled').map((m) => m.name).sort();
-    if (more.length) begin(_t('With its dependencies: %s', more.join(', '))).done('+', 'med');
-  }
+  const asked = new Set(p.install.map((m) => m.name));
+  const sim = simulate([...asked]);
+  const more = (reason: 'depends' | 'auto') => sim.brought.filter((b) => b.reason === reason && !asked.has(b.name)).map((b) => b.name).sort();
+  if (more('depends').length) begin(_t('With its dependencies: %s', more('depends').join(', '))).done('+', 'med');
+  if (more('auto').length) begin(_t('And auto-installed with them: %s', more('auto').join(', '))).done('+', 'med');
   st = begin(_t('Install %s', names(p.install)));
   await immediate('install', p.install.map((m) => m.id));
   st.done();

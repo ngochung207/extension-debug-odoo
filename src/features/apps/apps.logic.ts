@@ -21,6 +21,8 @@ export interface AppModule {
   auto_install: boolean;
   /** an Enterprise module (not on this server's addons path when it is Community) */
   to_buy: boolean;
+  /** a localization's countries: auto-installed only when a company is in one of them */
+  country_ids: number[];
 }
 
 /** Odoo's "Installed" filter of the Apps menu (base/views/ir_module_views.xml); "Not Installed" is the rest. */
@@ -115,7 +117,12 @@ export function versionDrift(db: string | false | undefined, disk: string | fals
 
 /** ir.module.module.dependency: `module_id` declares `name` in its manifest's depends (module_id's label is the
  * module's title, not its name: the graph goes by its id). */
-export interface DepRow { name: string; module_id: Many2one }
+export interface DepRow {
+  name: string;
+  module_id: Many2one;
+  /** an auto_install module's trigger: the manifest's auto_install list, or every depends when it is True */
+  auto_install_required?: boolean;
+}
 
 export interface ModuleGraph {
   /** what `name` declares in its depends */
@@ -168,6 +175,68 @@ export function moduleGraph(known: readonly { id: number; name: string }[], deps
 export function definingModule(touching: readonly string[], g: ModuleGraph): string | null {
   const hits = touching.filter((m) => touching.every((o) => o === m || g.upstream([o]).includes(m)));
   return hits.length === 1 ? hits[0]! : null;
+}
+
+// ---------- what an install brings ----------
+
+/** A module an install adds, and why: a dependency of `via`, or auto-installed because `via` (its triggers) are all
+ * installed or being installed. */
+export interface Brought { name: string; reason: 'depends' | 'auto'; via: string[] }
+
+export interface InstallSim {
+  /** every module the install sets to install, `names` first, in the order Odoo marks them */
+  brought: Brought[];
+  /** depends naming a module this server doesn't have: Odoo refuses the install */
+  missing: { module: string; dependency: string }[];
+  /** dependencies that cannot be installed (installable: False): the install fails when it loads them */
+  uninstallable: string[];
+}
+
+/**
+ * What Odoo's button_install (base/models/ir_module.py, the same in 18.0 and 19.0) would set to install for `names`:
+ * the modules and their dependencies not installed yet, then, again and again, the auto_install modules whose triggers
+ * are all installed or to install, one at least to install, and whose countries (if any) hold a company.
+ */
+export function simulateInstall(names: readonly string[], mods: readonly Pick<AppModule, 'id' | 'name' | 'state' | 'auto_install' | 'country_ids'>[],
+  deps: readonly DepRow[], companyCountries: readonly number[]): InstallSim {
+  const byName = new Map(mods.map((m) => [m.name, m]));
+  const nameOf = new Map(mods.map((m) => [m.id, m.name]));
+  const depsOf = new Map<string, DepRow[]>();
+  for (const d of deps) {
+    const by = d.module_id ? nameOf.get(d.module_id[0]) : undefined;
+    if (by) { const l = depsOf.get(by); if (l) l.push(d); else depsOf.set(by, [d]); }
+  }
+  const state = new Map(mods.map((m) => [m.name, m.state as string]));
+  const out: InstallSim = { brought: [], missing: [], uninstallable: [] };
+  const INSTALL = new Set(['installed', 'to install', 'to upgrade']);
+
+  /** _state_update('to install', ['uninstalled']): its dependencies first, then itself. */
+  const mark = (name: string, reason: Brought['reason'], via: string[], seen = new Set<string>()) => {
+    if (state.get(name) !== 'uninstalled' || seen.has(name)) return;
+    seen.add(name);
+    for (const d of depsOf.get(name) ?? []) {
+      if (!byName.has(d.name)) { out.missing.push({ module: name, dependency: d.name }); continue; }
+      if (state.get(d.name) === 'uninstallable' && !out.uninstallable.includes(d.name)) out.uninstallable.push(d.name);
+      mark(d.name, 'depends', [name], seen);
+    }
+    state.set(name, 'to install');
+    out.brought.push({ name, reason, via });
+  };
+  for (const n of names) mark(n, 'depends', []);
+
+  const companies = new Set(companyCountries);
+  for (;;) {
+    const auto = mods.filter((m) => {
+      if (state.get(m.name) !== 'uninstalled' || !m.auto_install) return false;
+      const triggers = (depsOf.get(m.name) ?? []).filter((d) => d.auto_install_required);
+      const states = new Set(triggers.map((d) => state.get(d.name) ?? 'unknown'));
+      return [...states].every((x) => INSTALL.has(x)) && states.has('to install')
+        && (!m.country_ids.length || m.country_ids.some((c) => companies.has(c)));
+    });
+    if (!auto.length) break;
+    for (const m of auto) mark(m.name, 'auto', (depsOf.get(m.name) ?? []).filter((d) => d.auto_install_required).map((d) => d.name));
+  }
+  return out;
 }
 
 // ---------- the data a module brings ----------
