@@ -23,7 +23,13 @@ export type RpcEntry = {
   method: string;
   args: unknown;
   kwargs: unknown;
+  /** the recorder cut the request body / the answer (over CUT_AT): not JSON any more, shown as text */
+  bodyCut: boolean;
+  answerCut: boolean;
 } & RpcAnswer;
+
+/** What entrypoints/rpc-recorder keeps of a body or an answer (BODY_MAX there). */
+export const CUT_AT = 200_000;
 
 const isObject = (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null && !Array.isArray(v);
 
@@ -35,7 +41,8 @@ export function parseRpc(raw: RawRpc): RpcEntry | null {
   let body: unknown = null;
   try { body = JSON.parse(raw.body || ''); } catch { /* not JSON, or cut by the recorder (> 200 KB) */ }
   const answer: RpcAnswer = raw.error ? { error: raw.error, errorType: 'network' } : parseRpcResponse(raw.response ?? '', raw.status);
-  const base = { path, route: path + u.search, body: raw.body, ms: raw.ms || 0, status: raw.status || 0, at: raw.at, ...answer };
+  const base = { path, route: path + u.search, body: raw.body, ms: raw.ms || 0, status: raw.status || 0, at: raw.at, ...answer,
+    bodyCut: (raw.body?.length ?? 0) >= CUT_AT && body == null, answerCut: (raw.response?.length ?? 0) >= CUT_AT && typeof answer.result === 'string' };
   // A cut body can't be parsed: show its beginning, take model/method from the URL.
   const head = typeof raw.body === 'string' ? `${raw.body.slice(0, 2000)}…` : null;
 

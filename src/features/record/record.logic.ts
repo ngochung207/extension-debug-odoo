@@ -85,17 +85,10 @@ export function recordJson(values: Record<string, unknown>, fields: FieldsGet): 
   return JSON.stringify(Object.fromEntries(Object.keys(fields).sort().filter((n) => n in values).map((n) => [n, values[n]])), null, 2);
 }
 
-/** A field's `groups=` (comma-separated group xmlids, `!` = must NOT be in it: res.users.has_groups) → its parts. */
-export function parseGroups(spec: string): { xmlid: string; not: boolean }[] {
-  return spec.split(',').map((s) => s.trim()).filter(Boolean).map((s) => (s.startsWith('!') ? { xmlid: s.slice(1), not: true } : { xmlid: s, not: false }));
-}
 
-/** The groups of a restricted field as the row shows them: "🔒 A, B · not C" (any of A, B; none of C), each group by
- * its name when known (`names`: xmlid → res.groups full_name), else by its xmlid. */
-export function groupsLabel(spec: string, names: ReadonlyMap<string, string>): string {
-  const parts = parseGroups(spec);
-  const name = (x: string) => names.get(x) || x;
-  const any = parts.filter((p) => !p.not).map((p) => name(p.xmlid));
-  const none = parts.filter((p) => p.not).map((p) => _t('not %s', name(p.xmlid)));
-  return `🔒 ${[any.join(', '), ...none].filter(Boolean).join(' · ')}`;
+/** How a field's value shows once its row opens: `text` as it is (char, text, selection, dates, a binary's size), `code`
+ * coloured as markup (html), `json` as a foldable JSON tree (relations, json / properties, numbers, booleans…). */
+export function valueDisplay(type: string, v: unknown): 'text' | 'code' | 'json' {
+  if (typeof v !== 'string') return 'json';
+  return type === 'html' ? 'code' : 'text';
 }

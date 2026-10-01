@@ -5,32 +5,46 @@ import { errBox, loading, tpl } from './components.ts';
 /** What a card shows: built when it opens (may be async); a failure shows its error in that card only. */
 export type CardBuilder = () => Node | null | undefined | Promise<Node | null | undefined>;
 
-// Cards start closed; the ones opened stay open across re-renders and reloads (localStorage of the panel, every
-// instance): a per-viewer convenience.
-const OPEN_CARDS = 'odoo-debug-open-cards';
-const openCards = (): Set<string> => { try { return new Set(JSON.parse(localStorage.getItem(OPEN_CARDS) || '[]') as string[]); } catch { return new Set(); } };
-function rememberCard(id: string, open: boolean) {
-  const ids = openCards();
-  if (open) ids.add(id); else ids.delete(id);
-  try { localStorage.setItem(OPEN_CARDS, JSON.stringify([...ids])); } catch { /* storage off: every card starts closed */ }
+// A card starts open or closed (its default); the state the user leaves it in is kept across re-renders and reloads
+// (localStorage of the panel, every instance): a per-viewer convenience. Two lists: the cards opened against a closed
+// default, the cards closed against an open one.
+const OPENED = 'odoo-debug-open-cards';
+const CLOSED = 'odoo-debug-closed-cards';
+const readIds = (key: string): Set<string> => { try { return new Set(JSON.parse(localStorage.getItem(key) || '[]') as string[]); } catch { return new Set(); } };
+const writeIds = (key: string, ids: Set<string>) => { try { localStorage.setItem(key, JSON.stringify([...ids])); } catch { /* storage off: defaults */ } };
+
+/** Whether the card `id` is open (its default unless the user changed it), and how to remember a change. */
+export function rememberedOpen(id: string, openByDefault: boolean): { open: boolean; remember(open: boolean): void } {
+  const key = openByDefault ? CLOSED : OPENED; // the list of the exceptions to the default
+  return {
+    open: readIds(key).has(id) !== openByDefault,
+    remember(open) {
+      const ids = readIds(key);
+      if (open === openByDefault) ids.delete(id); else ids.add(id);
+      writeIds(key, ids);
+    },
+  };
 }
 
-/** `body` shows Loading…, then what `fn` builds, or its error. */
-function fill(body: HTMLElement, fn: CardBuilder) {
+/** `body` shows Loading…, then what `fn` builds, or its error (a failure stays in `body`). */
+export function fill(body: HTMLElement, fn: CardBuilder) {
   body.replaceChildren(loading());
   Promise.resolve().then(fn).then((n) => body.replaceChildren(...(n ? [n] : [])), (e: unknown) => body.replaceChildren(errBox(e)));
 }
 
-/** A collapsible card of the tab `parent`, remembered as `<tab>:<key>` (key: stable; the title is translated). */
-export function block(parent: HTMLElement, key: string, title: string, fn: CardBuilder): HTMLDetailsElement {
+/** A collapsible card of the tab `parent`, remembered as `<tab>:<key>` (key: stable; the title is translated).
+ * `no`: its number in a tab told as numbered parts (View). */
+export function block(parent: HTMLElement, key: string, title: string, fn: CardBuilder, no?: string): HTMLDetailsElement {
   const id = `${parent.id}:${key}`;
-  const { card, title: h, body } = tpl('block', { card: HTMLDetailsElement, title: HTMLHeadingElement, body: HTMLDivElement }).refs;
+  const { card, no: badge, title: h, body } = tpl('block', { card: HTMLDetailsElement, no: HTMLSpanElement, title: HTMLHeadingElement, body: HTMLDivElement }).refs;
   card.dataset.key = key; // the full-screen layout places some side by side (panel.css)
   h.textContent = title;
+  if (no) { badge.textContent = no; badge.hidden = false; }
   let loaded = false;
   const load = () => { if (!loaded) { loaded = true; fill(body, fn); } };
-  card.addEventListener('toggle', () => { rememberCard(id, card.open); if (card.open) load(); });
-  card.open = openCards().has(id);
+  const state = rememberedOpen(id, false);
+  card.addEventListener('toggle', () => { state.remember(card.open); if (card.open) load(); });
+  card.open = state.open;
   if (card.open) load();
   parent.append(card);
   return card;

@@ -49,10 +49,13 @@ msgid "Back into the Odoo Page"
 msgstr "Gắn lại vào trang Odoo"
 
 #: src/entrypoints/panel/index.html:25
+#: src/features/view/view.overview.ts:63
 msgid "Record"
 msgstr "Record"
 
 #: src/entrypoints/panel/index.html:26
+#: src/features/view/view.overview.ts:33
+#: src/features/view/view.overview.ts:36
 msgid "View"
 msgstr "View"
 
@@ -179,67 +182,67 @@ msgstr "Không có tab đang mở."
 msgid "change → recomputes %s"
 msgstr "đổi → tính lại %s"
 
-#: src/features/record/record.logic.ts:99
-msgid "not %s"
-msgstr "trừ %s"
-
-#: src/features/record/record.tab.ts:23
+#: src/features/record/record.tab.ts:26
+#: src/features/view/view.tab.ts:33
 msgid "This screen is not bound to a model."
 msgstr "Màn hình này không gắn với model nào."
 
-#: src/features/record/record.tab.ts:24
+#: src/features/record/record.tab.ts:27
 msgid "Identity & metadata"
 msgstr "Định danh & metadata"
 
-#: src/features/record/record.tab.ts:25
+#: src/features/record/record.tab.ts:28
+#: src/features/view/view.overview.ts:72
 msgid "Fields"
 msgstr "Fields"
 
-#: src/features/record/record.tab.ts:42
+#: src/features/record/record.tab.ts:45
 msgid "(none / several records)"
 msgstr "(chưa có / nhiều record)"
 
-#: src/features/record/record.tab.ts:44
+#: src/features/record/record.tab.ts:47
 msgid "created by"
 msgstr "tạo bởi"
 
-#: src/features/record/record.tab.ts:44
+#: src/features/record/record.tab.ts:47
 msgid "last updated by"
 msgstr "sửa bởi"
 
-#: src/features/record/record.tab.ts:87
+#: src/features/record/record.tab.ts:98
 msgid "Click to copy the value"
 msgstr "Bấm để copy giá trị"
 
-#: src/features/record/record.tab.ts:102
+#: src/features/record/record.tab.ts:113
+#: src/features/view/view.field.ts:201
 msgid "%s fields"
 msgstr "%s field"
 
-#: src/features/record/record.tab.ts:102
+#: src/features/record/record.tab.ts:113
+#: src/features/view/view.field.ts:201
 msgid "%s/%s fields"
 msgstr "%s/%s field"
 
-#: src/features/record/record.tab.ts:103
+#: src/features/record/record.tab.ts:114
 msgid "Filter name / label / value / type / module"
 msgstr "Lọc tên / nhãn / giá trị / type / module"
 
-#: src/features/record/record.tab.ts:114
+#: src/features/record/record.tab.ts:125
 msgid "Field · type · value"
 msgstr "Field · kiểu · giá trị"
 
-#: src/features/record/record.tab.ts:114
+#: src/features/record/record.tab.ts:125
 msgid "Label · storage · compute · module"
 msgstr "Nhãn · lưu trữ · compute · module"
 
-#: src/features/record/record.tab.ts:126
+#: src/features/record/record.tab.ts:137
 msgid "A computed field failed: values of the stored fields only."
 msgstr "Một field compute bị lỗi: chỉ hiện giá trị của các field stored."
 
-#: src/features/record/record.tab.ts:131
+#: src/features/record/record.tab.ts:142
 msgid "Modules and indexes need Access Rights (base.group_erp_manager)."
 msgstr "Cột module và index cần quyền Access Rights (base.group_erp_manager)."
 
-#: src/features/record/record.tab.ts:132
+#: src/features/record/record.tab.ts:143
 msgid "Modules and indexes unavailable: %s"
 msgstr "Không lấy được module và index: %s"
 
@@ -256,6 +259,7 @@ msgid "Relational"
 msgstr "Quan hệ"
 
 #: src/features/record/record.tpl.html:10
+#: src/features/view/view.tpl.html:121
 msgid "Required"
 msgstr "Bắt buộc"
 
@@ -267,57 +271,57 @@ msgstr "Copy dạng JSON"
 msgid "Copy the values of the record as JSON"
 msgstr "Copy giá trị của bản ghi dưới dạng JSON"
 
-#: src/features/rpc/rpc.logic.ts:155
+#: src/features/rpc/rpc.logic.ts:162
 msgid "Signature of %s.%s unknown: ids and argument names are guessed."
 msgstr "Không rõ chữ ký của %s.%s: ids và tên tham số được đoán."
 
-#: src/features/rpc/rpc.logic.ts:156
+#: src/features/rpc/rpc.logic.ts:163
 msgid "JSON-2 takes named arguments only: rename %s."
 msgstr "JSON-2 chỉ nhận tham số có tên: hãy đổi tên %s."
 
-#: src/features/rpc/rpc.tab.ts:42
+#: src/features/rpc/rpc.tab.ts:43
 msgid "Method · model · duration"
 msgstr "Method · model · thời gian"
 
-#: src/features/rpc/rpc.tab.ts:42
+#: src/features/rpc/rpc.tab.ts:43
 msgid "Time · route"
 msgstr "Giờ · route"
 
-#: src/features/rpc/rpc.tab.ts:46
+#: src/features/rpc/rpc.tab.ts:47
 msgid "Select a call to see its parameters and result."
 msgstr "Chọn một lời gọi để xem tham số và kết quả."
 
-#: src/features/rpc/rpc.tab.ts:95
-#: src/features/rpc/rpc.tab.ts:163
+#: src/features/rpc/rpc.tab.ts:96
+#: src/features/rpc/rpc.tab.ts:173
 msgid "error"
 msgstr "lỗi"
 
-#: src/features/rpc/rpc.tab.ts:108
+#: src/features/rpc/rpc.tab.ts:109
 msgid "Parameters"
 msgstr "Tham số"
 
-#: src/features/rpc/rpc.tab.ts:120
+#: src/features/rpc/rpc.tab.ts:121
 msgid "Result"
 msgstr "Kết quả"
 
-#: src/features/rpc/rpc.tab.ts:126
-msgid "… (%s characters)"
-msgstr "… (%s ký tự)"
+#: src/features/rpc/rpc.tab.ts:129
+msgid "Cut at 200 KB by the recorder, so shown as text: Edit & Resend gets it whole."
+msgstr "Recorder đã cắt ở 200 KB nên hiện dạng chữ: dùng Edit & Resend để lấy bản đầy đủ."
 
-#: src/features/rpc/rpc.tab.ts:155
+#: src/features/rpc/rpc.tab.ts:165
 msgid "Invalid JSON: %s"
 msgstr "JSON không hợp lệ: %s"
 
-#: src/features/rpc/rpc.tab.ts:160
+#: src/features/rpc/rpc.tab.ts:170
 #: src/odoo/rpc.ts:25
 msgid "No response — is this an Odoo page?"
 msgstr "Không có phản hồi — đây có phải trang Odoo?"
 
-#: src/features/rpc/rpc.tab.ts:179
+#: src/features/rpc/rpc.tab.ts:189
 msgid "call_kw: the JSON-2 API (/json/2, named arguments), with an API key of this user in $ODOO_API_KEY. Other routes: the session_id cookie in $ODOO_SESSION."
 msgstr "call_kw: API JSON-2 (/json/2, tham số có tên), với API key của người dùng này trong $ODOO_API_KEY. Các route khác: cookie session_id trong $ODOO_SESSION."
 
-#: src/features/rpc/rpc.tab.ts:180
+#: src/features/rpc/rpc.tab.ts:190
 msgid "call_kw: the external API (execute_kw), with an API key of this user in $ODOO_API_KEY. Other routes: the session_id cookie in $ODOO_SESSION."
 msgstr "call_kw: qua API ngoài (execute_kw), với API key của người dùng này trong $ODOO_API_KEY. Các route khác: cookie session_id trong $ODOO_SESSION."
 
@@ -375,13 +379,409 @@ msgstr "Gửi"
 msgid "Ctrl/⌘ + Enter"
 msgstr "Ctrl/⌘ + Enter"
 
-#: src/features/rpc/rpc.tpl.html:86
+#: src/features/rpc/rpc.tpl.html:91
 msgid "Copy as cURL"
 msgstr "Sao chép dạng cURL"
+
+#: src/features/view/view.action.ts:11
+msgid "Action & context"
+msgstr "Action & ngữ cảnh"
+
+#: src/features/view/view.action.ts:17
+msgid "Opened without an action: by the URL of a record. The webclient made one up to show it."
+msgstr "Mở mà không qua action: bằng URL của một bản ghi. Webclient tự tạo một action để hiển thị."
+
+#: src/features/view/view.action.ts:21
+msgid "menu"
+msgstr "menu"
+
+#: src/features/view/view.action.ts:23
+msgid "Open Action Record ↗"
+msgstr "Mở bản ghi action ↗"
+
+#: src/features/view/view.action.ts:24
+msgid "Context"
+msgstr "Context"
+
+#: src/features/view/view.action.ts:25
+msgid "Domain"
+msgstr "Domain"
+
+#: src/features/view/view.action.ts:26
+msgid "Full action (JSON)"
+msgstr "Action đầy đủ (JSON)"
+
+#: src/features/view/view.arch.ts:11
+msgid "Combined arch"
+msgstr "Arch đã ghép"
+
+#: src/features/view/view.arch.ts:15
+#: src/features/view/view.composition.ts:50
+msgid "No %s view."
+msgstr "Không có view %s."
+
+#: src/features/view/view.arch.ts:17
+msgid "View #%s with every extension applied, as the webclient receives it (elements of groups you are not in are already removed)."
+msgstr "View #%s sau khi áp mọi extension, đúng như webclient nhận được (phần tử của các nhóm bạn không thuộc đã bị bỏ)."
+
+#: src/features/view/view.composition.ts:17
+msgid "How the view is built"
+msgstr "View được dựng thế nào"
+
+#: src/features/view/view.composition.ts:51
+msgid "The inheritance tree needs Settings rights (base.group_system)."
+msgstr "Cây kế thừa view cần quyền Settings (base.group_system)."
+
+#: src/features/view/view.composition.ts:54
+msgid "%s views · %s modules"
+msgstr "%s view · %s module"
+
+#: src/features/view/view.composition.ts:67
+msgid "primary"
+msgstr "primary"
+
+#: src/features/view/view.composition.ts:68
+msgid "%s elements restricted to groups"
+msgstr "%s phần tử giới hạn theo nhóm"
+
+#: src/features/view/view.composition.ts:69
+#: src/features/view/view.field.ts:100
+msgid "inactive"
+msgstr "inactive"
+
+#: src/features/view/view.composition.ts:92
+msgid "Select a view to see what it does and its own arch."
+msgstr "Chọn một view để xem nó làm gì và arch riêng của nó."
+
+#: src/features/view/view.composition.ts:117
+#: src/features/view/view.field.ts:161
+msgid "removed"
+msgstr "bị xoá"
+
+#: src/features/view/view.composition.ts:122
+msgid "What it does (%s)"
+msgstr "Nó làm gì (%s)"
+
+#: src/features/view/view.composition.ts:133
+msgid "Restricted to groups (%s)"
+msgstr "Giới hạn theo nhóm (%s)"
+
+#: src/features/view/view.composition.ts:141
+msgid "Own arch (view #%s)"
+msgstr "Arch riêng (view #%s)"
+
+#: src/features/view/view.composition.ts:148
+msgid "base view · %s fields"
+msgstr "view gốc · %s field"
+
+#: src/features/view/view.composition.ts:150
+msgid "+%s fields"
+msgstr "+%s field"
+
+#: src/features/view/view.composition.ts:151
+msgid "%s moved"
+msgstr "%s di chuyển"
+
+#: src/features/view/view.composition.ts:152
+msgid "%s attributes changed"
+msgstr "%s thuộc tính đổi"
+
+#: src/features/view/view.composition.ts:153
+msgid "%s removed"
+msgstr "%s bị xoá"
+
+#: src/features/view/view.composition.ts:154
+msgid "+%s elements"
+msgstr "+%s phần tử"
+
+#: src/features/view/view.composition.ts:156
+msgid "changes nothing visible"
+msgstr "không đổi gì nhìn thấy được"
+
+#: src/features/view/view.field.ts:22
+msgid "One field"
+msgstr "Soi một field"
+
+#: src/features/view/view.field.ts:28
+msgid "Picking… (Esc to cancel)"
+msgstr "Đang chọn… (Esc để huỷ)"
+
+#: src/features/view/view.field.ts:41
+msgid "Type a field, pick it on the page or in the list below: its story through the views shows here."
+msgstr "Gõ tên field, chọn trên trang hoặc trong danh sách bên dưới: câu chuyện của field qua các view sẽ hiện ở đây."
+
+#: src/features/view/view.field.ts:74
+msgid "not a field of this model"
+msgstr "không phải field của model này"
+
+#: src/features/view/view.field.ts:81
+msgid "The field is not invisible itself but is not on screen: it is on another notebook page, or a parent node (group/page/div) is invisible."
+msgstr "Field không tự ẩn nhưng không có trên màn hình: nằm trong tab notebook khác hoặc node cha (group/page/div) bị invisible."
+
+#: src/features/view/view.field.ts:84
+msgid "Not on this form."
+msgstr "Không có trên form này."
+
+#: src/features/view/view.field.ts:91
+msgid "The story through the views needs Settings rights (base.group_system)."
+msgstr "Câu chuyện qua các view cần quyền Settings (base.group_system)."
+
+#: src/features/view/view.field.ts:112
+msgid "No view of this screen places or changes it."
+msgstr "Không view nào của màn hình này đặt hay sửa field này."
+
+#: src/features/view/view.field.ts:117
+msgid "on the field"
+msgstr "trên field"
+
+#: src/features/view/view.field.ts:119
+msgid "Groups set by the views: unknown without Settings rights (base.group_system)."
+msgstr "Nhóm do các view đặt: không biết được nếu thiếu quyền Settings (base.group_system)."
+
+#: src/features/view/view.field.ts:120
+msgid "None: every user who sees the view sees it."
+msgstr "Không: ai xem được view đều thấy field này."
+
+#: src/features/view/view.field.ts:131
+msgid "never"
+msgstr "không bao giờ"
+
+#: src/features/view/view.field.ts:132
+msgid "error: %s"
+msgstr "lỗi: %s"
+
+#: src/features/view/view.field.ts:132
+msgid "yes"
+msgstr "có"
+
+#: src/features/view/view.field.ts:132
+msgid "no"
+msgstr "không"
+
+#: src/features/view/view.field.ts:150
+msgid "placed"
+msgstr "đặt"
+
+#: src/features/view/view.field.ts:150
+msgid "in"
+msgstr "trong"
+
+#: src/features/view/view.field.ts:151
+msgid "added"
+msgstr "thêm"
+
+#: src/features/view/view.field.ts:152
+msgid "moved"
+msgstr "di chuyển"
+
+#: src/features/view/view.field.ts:153
+msgid "attributes changed:"
+msgstr "đổi thuộc tính:"
+
+#: src/features/view/view.field.ts:154
+msgid "restricted to groups"
+msgstr "giới hạn nhóm"
+
+#: src/features/view/view.field.ts:157
+msgid "right after it"
+msgstr "ngay sau nó"
+
+#: src/features/view/view.field.ts:157
+msgid "right before it"
+msgstr "ngay trước nó"
+
+#: src/features/view/view.field.ts:157
+msgid "inside it"
+msgstr "vào trong nó"
+
+#: src/features/view/view.field.ts:158
+msgid "adds"
+msgstr "thêm"
+
+#: src/features/view/view.field.ts:160
+msgid "replaced by"
+msgstr "thay bằng"
+
+#: src/features/view/view.field.ts:164
+msgid "used in"
+msgstr "được dùng trong"
+
+#: src/features/view/view.field.ts:164
+msgid "of"
+msgstr "của"
+
+#: src/features/view/view.field.ts:180
+msgid "No field in this view."
+msgstr "View này không có field nào."
+
+#: src/features/view/view.field.ts:189
+msgid "hidden"
+msgstr "ẩn"
+
+#: src/features/view/view.field.ts:189
+msgid "not shown"
+msgstr "không hiển thị"
+
+#: src/features/view/view.field.ts:202
+msgid "Filter name / label / widget"
+msgstr "Lọc tên / nhãn / widget"
+
+#: src/features/view/view.injected.ts:42
+msgid "Webclient internals are not reachable."
+msgstr "Không truy cập được webclient."
+
+#: src/features/view/view.injected.ts:50
+msgid "No form view is open."
+msgstr "Không có form view đang mở."
+
+#: src/features/view/view.overview.ts:17
+msgid "Overview"
+msgstr "Tổng quan"
+
+#: src/features/view/view.overview.ts:35
+msgid "File"
+msgstr "File"
+
+#: src/features/view/view.overview.ts:36
+msgid "none: a client action (%s)"
+msgstr "không có: client action (%s)"
+
+#: src/features/view/view.overview.ts:43
+msgid "(no module)"
+msgstr "(không module)"
+
+#: src/features/view/view.overview.ts:45
+#: src/features/view/view.overview.ts:50
+msgid "Built from"
+msgstr "Dựng từ"
+
+#: src/features/view/view.overview.ts:46
+msgid "%s base + %s extensions · %s modules"
+msgstr "%s view gốc + %s extension · %s module"
+
+#: src/features/view/view.overview.ts:47
+msgid "%s inactive"
+msgstr "%s đang tắt"
+
+#: src/features/view/view.overview.ts:50
+msgid "unknown: the inheritance needs Settings rights (base.group_system)"
+msgstr "không rõ: xem kế thừa cần quyền Settings (base.group_system)"
+
+#: src/features/view/view.overview.ts:56
+msgid "Menu"
+msgstr "Menu"
+
+#: src/features/view/view.overview.ts:57
+#: src/features/view/view.overview.ts:58
+msgid "Action"
+msgstr "Action"
+
+#: src/features/view/view.overview.ts:58
+msgid "none: opened directly by its URL"
+msgstr "không có: mở thẳng bằng URL"
+
+#: src/features/view/view.overview.ts:63
+msgid "new"
+msgstr "mới"
+
+#: src/features/view/view.overview.ts:63
+msgid "editing"
+msgstr "đang sửa"
+
+#: src/features/view/view.overview.ts:63
+msgid "read-only"
+msgstr "chỉ đọc"
+
+#: src/features/view/view.overview.ts:72
+msgid "%s on the form"
+msgstr "%s trên form"
+
+#: src/features/view/view.overview.ts:73
+msgid "%s hidden"
+msgstr "%s ẩn"
+
+#: src/features/view/view.overview.ts:73
+msgid "%s not shown"
+msgstr "%s không hiện"
+
+#: src/features/view/view.overview.ts:74
+msgid "%s read-only"
+msgstr "%s chỉ đọc"
+
+#: src/features/view/view.overview.ts:74
+msgid "%s required"
+msgstr "%s bắt buộc"
+
+#: src/features/view/view.overview.ts:75
+msgid "%s expression errors"
+msgstr "%s biểu thức lỗi"
+
+#: src/features/view/view.overview.ts:83
+msgid "Views of the action"
+msgstr "Các view của action"
+
+#: src/features/view/view.overview.ts:84
+msgid "search: %s"
+msgstr "search: %s"
+
+#: src/features/view/view.tpl.html:48
+#: src/features/view/view.tpl.html:55
+#: src/features/view/view.tpl.html:111
+msgid "Show this line in the own arch"
+msgstr "Xem dòng này trong arch riêng"
+
+#: src/features/view/view.tpl.html:65
+msgid "Copy"
+msgstr "Copy"
+
+#: src/features/view/view.tpl.html:76
+#: src/features/view/view.tpl.html:76
+msgid "Field to inspect, e.g. partner_id"
+msgstr "Field cần soi, vd. partner_id"
+
+#: src/features/view/view.tpl.html:78
+msgid "⌖ Pick on Page"
+msgstr "⌖ Chọn trên trang"
+
+#: src/features/view/view.tpl.html:78
+msgid "Click a field on the Odoo page (Esc to cancel)"
+msgstr "Click vào một field trên trang Odoo (Esc để huỷ)"
+
+#: src/features/view/view.tpl.html:89
+msgid "Now"
+msgstr "Bây giờ"
+
+#: src/features/view/view.tpl.html:91
+msgid "Its story through the views"
+msgstr "Câu chuyện qua các view"
+
+#: src/features/view/view.tpl.html:93
+msgid "Groups"
+msgstr "Group"
+
+#: src/features/view/view.tpl.html:118
+msgid "Hidden"
+msgstr "Ẩn"
+
+#: src/features/view/view.tpl.html:119
+msgid "Not shown"
+msgstr "Không hiện"
+
+#: src/features/view/view.tpl.html:120
+msgid "Read-only"
+msgstr "Chỉ đọc"
+
+#: src/features/view/view.tpl.html:122
+msgid "Expression error"
+msgstr "Biểu thức lỗi"
 
 #: src/odoo/detect.ts:32
 msgid "Cannot read the Odoo version (%s)."
 msgstr "Không đọc được phiên bản Odoo (%s)."
+
+#: src/odoo/groups.ts:17
+msgid "not %s"
+msgstr "trừ %s"
 
 #: src/ui/components.tpl.html:28
 msgid "Traceback"
@@ -398,6 +798,103 @@ msgstr "Đang tải…"
 #: src/ui/components.ts:102
 msgid "Open /odoo/%s"
 msgstr "Mở /odoo/%s"
+
+#: src/ui/json-view.ts:36
+msgid "Show %s more characters"
+msgstr "Hiện thêm %s ký tự"
+
+#: src/ui/json-view.ts:57
+msgid "%s items"
+msgstr "%s phần tử"
+
+#: src/ui/json-view.ts:57
+msgid "%s keys"
+msgstr "%s khoá"
+
+#: src/ui/json-view.ts:71
+msgid "Show %s more (of %s)"
+msgstr "Hiện thêm %s (trên %s)"
+
+msgid "… (%s characters)"
+msgstr "… (%s ký tự)"
+
+msgid "elements added"
+msgstr "thêm phần tử"
+
+msgid "read by"
+msgstr "được đọc bởi"
+
+msgid "%s base view(s) + %s extension(s), from %s module(s)"
+msgstr "%s view gốc + %s extension, từ %s module"
+
+msgid "Inherited views — %s"
+msgstr "View kế thừa — %s"
+
+msgid "Form fields — invisible / readonly / required"
+msgstr "Field trên form — invisible / readonly / required"
+
+msgid "Context & domain"
+msgstr "Context & domain"
+
+msgid "places it"
+msgstr "đặt field"
+
+msgid "targets it"
+msgstr "nhắm tới (xpath)"
+
+msgid "reads it"
+msgstr "đọc trong biểu thức"
+
+msgid "Combined arch (view #%s)"
+msgstr "Arch đã gộp (view #%s)"
+
+msgid "View · mode · priority"
+msgstr "View · mode · priority"
+
+msgid "Name · id · file"
+msgstr "Tên · id · file"
+
+msgid "%s/%s views touch %s"
+msgstr "%s/%s view đụng tới %s"
+
+msgid "%s views"
+msgstr "%s view"
+
+msgid "%s/%s views"
+msgstr "%s/%s view"
+
+msgid "Select a view to see its own arch, what it restricts to groups and where it touches the traced field."
+msgstr "Chọn một view để xem arch riêng của nó, những gì nó giới hạn theo nhóm và chỗ nó đụng tới field đang dò."
+
+msgid "Where it touches %s"
+msgstr "Chỗ đụng tới %s"
+
+msgid "Cannot read the form."
+msgstr "Không đọc được form."
+
+msgid "Field · widget · label · state"
+msgstr "Field · widget · nhãn · trạng thái"
+
+msgid "Modifier expressions"
+msgstr "Biểu thức modifier"
+
+msgid "The form is read-only: every field is readonly."
+msgstr "Form đang ở chế độ chỉ đọc: mọi field đều readonly."
+
+msgid "Trace %s through the inherited views"
+msgstr "Dò %s qua các view kế thừa"
+
+msgid "Values used in the expressions"
+msgstr "Giá trị dùng trong biểu thức"
+
+msgid "Full node"
+msgstr "Node đầy đủ"
+
+msgid "Field the views touch (e.g. partner_id)"
+msgstr "Field mà các view đụng tới (vd. partner_id)"
+
+msgid "Views Touching It"
+msgstr "Các view đụng tới field này"
 
 msgid "Needs Settings rights (base.group_system)."
 msgstr "Cần quyền Settings (base.group_system)."
@@ -539,9 +1036,6 @@ msgstr "chưa làm mới trang"
 
 msgid "ok"
 msgstr "ok"
-
-msgid "read-only"
-msgstr "chỉ đọc"
 
 msgid "writes allowed"
 msgstr "cho phép ghi"
@@ -924,9 +1418,6 @@ msgstr "Mô phỏng quyền của user được chọn mà không cần đăng n
 msgid "Click their name to log in as them in an incognito window: your session here stays."
 msgstr "Bấm vào tên để đăng nhập thành user này trong cửa sổ ẩn danh: phiên của bạn ở đây giữ nguyên."
 
-msgid "Groups"
-msgstr "Group"
-
 msgid "User risks"
 msgstr "Rủi ro của user"
 
@@ -959,9 +1450,6 @@ msgstr "Field · nhãn · với user này"
 
 msgid "visible"
 msgstr "thấy"
-
-msgid "hidden"
-msgstr "ẩn"
 
 msgid "Model configuration audit"
 msgstr "Audit cấu hình model"
@@ -1163,84 +1651,3 @@ msgstr "%s file"
 
 msgid "nothing to export"
 msgstr "không có gì để xuất"
-
-msgid "Webclient internals are not reachable."
-msgstr "Không truy cập được webclient."
-
-msgid "No form view is open."
-msgstr "Không có form view đang mở."
-
-msgid "Inherited views — %s"
-msgstr "View kế thừa — %s"
-
-msgid "Combined arch (view #%s)"
-msgstr "Arch đã gộp (view #%s)"
-
-msgid "The inheritance tree needs Settings rights (base.group_system)."
-msgstr "Cây kế thừa view cần quyền Settings (base.group_system)."
-
-msgid "inactive"
-msgstr "inactive"
-
-msgid "View · mode · priority"
-msgstr "View · mode · priority"
-
-msgid "Name · id · file"
-msgstr "Tên · id · file"
-
-msgid "Action"
-msgstr "Action"
-
-msgid "Open Action Record ↗"
-msgstr "Mở bản ghi action ↗"
-
-msgid "Full action (JSON)"
-msgstr "Action đầy đủ (JSON)"
-
-msgid "Form fields — invisible / readonly / required"
-msgstr "Field trên form — invisible / readonly / required"
-
-msgid "Context & domain"
-msgstr "Context & domain"
-
-msgid "Context"
-msgstr "Context"
-
-msgid "Domain"
-msgstr "Domain"
-
-msgid "Cannot read the form."
-msgstr "Không đọc được form."
-
-msgid "not shown"
-msgstr "không hiển thị"
-
-msgid "The field is not invisible itself but is not on screen: it is on another notebook page, or a parent node (group/page/div) is invisible."
-msgstr "Field không tự ẩn nhưng không có trên màn hình: nằm trong tab notebook khác hoặc node cha (group/page/div) bị invisible."
-
-msgid "Values used in the expressions"
-msgstr "Giá trị dùng trong biểu thức"
-
-msgid "Full node"
-msgstr "Node đầy đủ"
-
-msgid "Filter name / label / widget"
-msgstr "Lọc tên / nhãn / widget"
-
-msgid "Click a field on the Odoo page (Esc to cancel)"
-msgstr "Click vào một field trên trang Odoo (Esc để huỷ)"
-
-msgid "Picking… (Esc to cancel)"
-msgstr "Đang chọn… (Esc để huỷ)"
-
-msgid "⌖ Pick on Page"
-msgstr "⌖ Chọn trên trang"
-
-msgid "Field · widget · label · state"
-msgstr "Field · widget · nhãn · trạng thái"
-
-msgid "Modifier expressions"
-msgstr "Biểu thức modifier"
-
-msgid "The form is read-only: every field is readonly."
-msgstr "Form đang ở chế độ chỉ đọc: mọi field đều readonly."

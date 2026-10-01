@@ -5,14 +5,17 @@
 import { _t, N_, translateDom } from '../../i18n/i18n.ts';
 import { cached } from '../../extension/page-cache.ts';
 import type { FieldsGet, IrModelField } from '../../odoo/models.ts';
+import { groupsLabel, parseGroups } from '../../odoo/groups.ts';
 import { fieldsOf, groupNames } from '../../odoo/reads.ts';
 import { call, isAccessError } from '../../odoo/rpc.ts';
 import { block, countText, filterBox } from '../../ui/cards.ts';
 import { copyable, copyText, empty, errBox, kv, listHead, odooLink, pill, pre } from '../../ui/components.ts';
+import { xmlCode } from '../../ui/code.ts';
+import { jsonView } from '../../ui/json-view.ts';
 import { expandable } from '../../ui/lists.ts';
 import { templates } from '../../ui/template.ts';
 import type { TabModule } from '../registry.ts';
-import { copyValue, describeField, fmtValue, groupsLabel, linkedRecord, matchesAll, parseGroups, recordJson, reverseDeps, QUICK_FILTERS, type QuickFilter } from './record.logic.ts';
+import { copyValue, describeField, fmtValue, linkedRecord, matchesAll, recordJson, reverseDeps, valueDisplay, QUICK_FILTERS, type QuickFilter } from './record.logic.ts';
 import html from './record.tpl.html';
 
 const tpl = templates(html, translateDom);
@@ -63,6 +66,14 @@ const irFields = (model: string): Promise<{ rows: IrModelField[]; error?: unknow
   call<IrModelField[]>('ir.model.fields', 'search_read', [[['model', '=', model]]], { fields: ['name', 'modules', 'index'] }))
   .then((rows) => ({ rows }), (error: unknown) => ({ rows: [], error }));
 
+/** A field's value once its row opens, as fits its type (record.logic.ts → valueDisplay). */
+function valueView(type: string, v: unknown): Node {
+  const how = valueDisplay(type, v);
+  if (how === 'code') return xmlCode(v as string).root;
+  if (how === 'text') return pre(v as string);
+  return jsonView(v);
+}
+
 function note(text: string) {
   const { root, refs } = tpl('note', { text: HTMLDivElement });
   refs.text.textContent = text;
@@ -93,7 +104,7 @@ async function fieldList(model: string, resId: number | null, origin: string) {
     meta.textContent = describeField(f, irByName.get(name), recompute.get(name));
     li.dataset.q = [name, f.string, f.type, irByName.get(name)?.modules || '', shown].join(' ').toLowerCase();
     li.dataset.name = name;
-    return expandable(li, () => (has ? pre(typeof v === 'string' ? v : JSON.stringify(v, null, 2)) : null));
+    return expandable(li, () => (has ? valueView(f.type, v) : null));
   });
 
   // search box + quick filters (AND), one count

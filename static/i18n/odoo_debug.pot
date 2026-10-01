@@ -49,10 +49,13 @@ msgid "Back into the Odoo Page"
 msgstr ""
 
 #: src/entrypoints/panel/index.html:25
+#: src/features/view/view.overview.ts:63
 msgid "Record"
 msgstr ""
 
 #: src/entrypoints/panel/index.html:26
+#: src/features/view/view.overview.ts:33
+#: src/features/view/view.overview.ts:36
 msgid "View"
 msgstr ""
 
@@ -179,67 +182,67 @@ msgstr ""
 msgid "change → recomputes %s"
 msgstr ""
 
-#: src/features/record/record.logic.ts:99
-msgid "not %s"
-msgstr ""
-
-#: src/features/record/record.tab.ts:23
+#: src/features/record/record.tab.ts:26
+#: src/features/view/view.tab.ts:33
 msgid "This screen is not bound to a model."
 msgstr ""
 
-#: src/features/record/record.tab.ts:24
+#: src/features/record/record.tab.ts:27
 msgid "Identity & metadata"
 msgstr ""
 
-#: src/features/record/record.tab.ts:25
+#: src/features/record/record.tab.ts:28
+#: src/features/view/view.overview.ts:72
 msgid "Fields"
 msgstr ""
 
-#: src/features/record/record.tab.ts:42
+#: src/features/record/record.tab.ts:45
 msgid "(none / several records)"
 msgstr ""
 
-#: src/features/record/record.tab.ts:44
+#: src/features/record/record.tab.ts:47
 msgid "created by"
 msgstr ""
 
-#: src/features/record/record.tab.ts:44
+#: src/features/record/record.tab.ts:47
 msgid "last updated by"
 msgstr ""
 
-#: src/features/record/record.tab.ts:87
+#: src/features/record/record.tab.ts:98
 msgid "Click to copy the value"
 msgstr ""
 
-#: src/features/record/record.tab.ts:102
+#: src/features/record/record.tab.ts:113
+#: src/features/view/view.field.ts:201
 msgid "%s fields"
 msgstr ""
 
-#: src/features/record/record.tab.ts:102
+#: src/features/record/record.tab.ts:113
+#: src/features/view/view.field.ts:201
 msgid "%s/%s fields"
 msgstr ""
 
-#: src/features/record/record.tab.ts:103
+#: src/features/record/record.tab.ts:114
 msgid "Filter name / label / value / type / module"
 msgstr ""
 
-#: src/features/record/record.tab.ts:114
+#: src/features/record/record.tab.ts:125
 msgid "Field · type · value"
 msgstr ""
 
-#: src/features/record/record.tab.ts:114
+#: src/features/record/record.tab.ts:125
 msgid "Label · storage · compute · module"
 msgstr ""
 
-#: src/features/record/record.tab.ts:126
+#: src/features/record/record.tab.ts:137
 msgid "A computed field failed: values of the stored fields only."
 msgstr ""
 
-#: src/features/record/record.tab.ts:131
+#: src/features/record/record.tab.ts:142
 msgid "Modules and indexes need Access Rights (base.group_erp_manager)."
 msgstr ""
 
-#: src/features/record/record.tab.ts:132
+#: src/features/record/record.tab.ts:143
 msgid "Modules and indexes unavailable: %s"
 msgstr ""
 
@@ -256,6 +259,7 @@ msgid "Relational"
 msgstr ""
 
 #: src/features/record/record.tpl.html:10
+#: src/features/view/view.tpl.html:121
 msgid "Required"
 msgstr ""
 
@@ -267,57 +271,57 @@ msgstr ""
 msgid "Copy the values of the record as JSON"
 msgstr ""
 
-#: src/features/rpc/rpc.logic.ts:155
+#: src/features/rpc/rpc.logic.ts:162
 msgid "Signature of %s.%s unknown: ids and argument names are guessed."
 msgstr ""
 
-#: src/features/rpc/rpc.logic.ts:156
+#: src/features/rpc/rpc.logic.ts:163
 msgid "JSON-2 takes named arguments only: rename %s."
 msgstr ""
 
-#: src/features/rpc/rpc.tab.ts:42
+#: src/features/rpc/rpc.tab.ts:43
 msgid "Method · model · duration"
 msgstr ""
 
-#: src/features/rpc/rpc.tab.ts:42
+#: src/features/rpc/rpc.tab.ts:43
 msgid "Time · route"
 msgstr ""
 
-#: src/features/rpc/rpc.tab.ts:46
+#: src/features/rpc/rpc.tab.ts:47
 msgid "Select a call to see its parameters and result."
 msgstr ""
 
-#: src/features/rpc/rpc.tab.ts:95
-#: src/features/rpc/rpc.tab.ts:163
+#: src/features/rpc/rpc.tab.ts:96
+#: src/features/rpc/rpc.tab.ts:173
 msgid "error"
 msgstr ""
 
-#: src/features/rpc/rpc.tab.ts:108
+#: src/features/rpc/rpc.tab.ts:109
 msgid "Parameters"
 msgstr ""
 
-#: src/features/rpc/rpc.tab.ts:120
+#: src/features/rpc/rpc.tab.ts:121
 msgid "Result"
 msgstr ""
 
-#: src/features/rpc/rpc.tab.ts:126
-msgid "… (%s characters)"
+#: src/features/rpc/rpc.tab.ts:129
+msgid "Cut at 200 KB by the recorder, so shown as text: Edit & Resend gets it whole."
 msgstr ""
 
-#: src/features/rpc/rpc.tab.ts:155
+#: src/features/rpc/rpc.tab.ts:165
 msgid "Invalid JSON: %s"
 msgstr ""
 
-#: src/features/rpc/rpc.tab.ts:160
+#: src/features/rpc/rpc.tab.ts:170
 #: src/odoo/rpc.ts:25
 msgid "No response — is this an Odoo page?"
 msgstr ""
 
-#: src/features/rpc/rpc.tab.ts:179
+#: src/features/rpc/rpc.tab.ts:189
 msgid "call_kw: the JSON-2 API (/json/2, named arguments), with an API key of this user in $ODOO_API_KEY. Other routes: the session_id cookie in $ODOO_SESSION."
 msgstr ""
 
-#: src/features/rpc/rpc.tab.ts:180
+#: src/features/rpc/rpc.tab.ts:190
 msgid "call_kw: the external API (execute_kw), with an API key of this user in $ODOO_API_KEY. Other routes: the session_id cookie in $ODOO_SESSION."
 msgstr ""
 
@@ -375,12 +379,408 @@ msgstr ""
 msgid "Ctrl/⌘ + Enter"
 msgstr ""
 
-#: src/features/rpc/rpc.tpl.html:86
+#: src/features/rpc/rpc.tpl.html:91
 msgid "Copy as cURL"
+msgstr ""
+
+#: src/features/view/view.action.ts:11
+msgid "Action & context"
+msgstr ""
+
+#: src/features/view/view.action.ts:17
+msgid "Opened without an action: by the URL of a record. The webclient made one up to show it."
+msgstr ""
+
+#: src/features/view/view.action.ts:21
+msgid "menu"
+msgstr ""
+
+#: src/features/view/view.action.ts:23
+msgid "Open Action Record ↗"
+msgstr ""
+
+#: src/features/view/view.action.ts:24
+msgid "Context"
+msgstr ""
+
+#: src/features/view/view.action.ts:25
+msgid "Domain"
+msgstr ""
+
+#: src/features/view/view.action.ts:26
+msgid "Full action (JSON)"
+msgstr ""
+
+#: src/features/view/view.arch.ts:11
+msgid "Combined arch"
+msgstr ""
+
+#: src/features/view/view.arch.ts:15
+#: src/features/view/view.composition.ts:50
+msgid "No %s view."
+msgstr ""
+
+#: src/features/view/view.arch.ts:17
+msgid "View #%s with every extension applied, as the webclient receives it (elements of groups you are not in are already removed)."
+msgstr ""
+
+#: src/features/view/view.composition.ts:17
+msgid "How the view is built"
+msgstr ""
+
+#: src/features/view/view.composition.ts:51
+msgid "The inheritance tree needs Settings rights (base.group_system)."
+msgstr ""
+
+#: src/features/view/view.composition.ts:54
+msgid "%s views · %s modules"
+msgstr ""
+
+#: src/features/view/view.composition.ts:67
+msgid "primary"
+msgstr ""
+
+#: src/features/view/view.composition.ts:68
+msgid "%s elements restricted to groups"
+msgstr ""
+
+#: src/features/view/view.composition.ts:69
+#: src/features/view/view.field.ts:100
+msgid "inactive"
+msgstr ""
+
+#: src/features/view/view.composition.ts:92
+msgid "Select a view to see what it does and its own arch."
+msgstr ""
+
+#: src/features/view/view.composition.ts:117
+#: src/features/view/view.field.ts:161
+msgid "removed"
+msgstr ""
+
+#: src/features/view/view.composition.ts:122
+msgid "What it does (%s)"
+msgstr ""
+
+#: src/features/view/view.composition.ts:133
+msgid "Restricted to groups (%s)"
+msgstr ""
+
+#: src/features/view/view.composition.ts:141
+msgid "Own arch (view #%s)"
+msgstr ""
+
+#: src/features/view/view.composition.ts:148
+msgid "base view · %s fields"
+msgstr ""
+
+#: src/features/view/view.composition.ts:150
+msgid "+%s fields"
+msgstr ""
+
+#: src/features/view/view.composition.ts:151
+msgid "%s moved"
+msgstr ""
+
+#: src/features/view/view.composition.ts:152
+msgid "%s attributes changed"
+msgstr ""
+
+#: src/features/view/view.composition.ts:153
+msgid "%s removed"
+msgstr ""
+
+#: src/features/view/view.composition.ts:154
+msgid "+%s elements"
+msgstr ""
+
+#: src/features/view/view.composition.ts:156
+msgid "changes nothing visible"
+msgstr ""
+
+#: src/features/view/view.field.ts:22
+msgid "One field"
+msgstr ""
+
+#: src/features/view/view.field.ts:28
+msgid "Picking… (Esc to cancel)"
+msgstr ""
+
+#: src/features/view/view.field.ts:41
+msgid "Type a field, pick it on the page or in the list below: its story through the views shows here."
+msgstr ""
+
+#: src/features/view/view.field.ts:74
+msgid "not a field of this model"
+msgstr ""
+
+#: src/features/view/view.field.ts:81
+msgid "The field is not invisible itself but is not on screen: it is on another notebook page, or a parent node (group/page/div) is invisible."
+msgstr ""
+
+#: src/features/view/view.field.ts:84
+msgid "Not on this form."
+msgstr ""
+
+#: src/features/view/view.field.ts:91
+msgid "The story through the views needs Settings rights (base.group_system)."
+msgstr ""
+
+#: src/features/view/view.field.ts:112
+msgid "No view of this screen places or changes it."
+msgstr ""
+
+#: src/features/view/view.field.ts:117
+msgid "on the field"
+msgstr ""
+
+#: src/features/view/view.field.ts:119
+msgid "Groups set by the views: unknown without Settings rights (base.group_system)."
+msgstr ""
+
+#: src/features/view/view.field.ts:120
+msgid "None: every user who sees the view sees it."
+msgstr ""
+
+#: src/features/view/view.field.ts:131
+msgid "never"
+msgstr ""
+
+#: src/features/view/view.field.ts:132
+msgid "error: %s"
+msgstr ""
+
+#: src/features/view/view.field.ts:132
+msgid "yes"
+msgstr ""
+
+#: src/features/view/view.field.ts:132
+msgid "no"
+msgstr ""
+
+#: src/features/view/view.field.ts:150
+msgid "placed"
+msgstr ""
+
+#: src/features/view/view.field.ts:150
+msgid "in"
+msgstr ""
+
+#: src/features/view/view.field.ts:151
+msgid "added"
+msgstr ""
+
+#: src/features/view/view.field.ts:152
+msgid "moved"
+msgstr ""
+
+#: src/features/view/view.field.ts:153
+msgid "attributes changed:"
+msgstr ""
+
+#: src/features/view/view.field.ts:154
+msgid "restricted to groups"
+msgstr ""
+
+#: src/features/view/view.field.ts:157
+msgid "right after it"
+msgstr ""
+
+#: src/features/view/view.field.ts:157
+msgid "right before it"
+msgstr ""
+
+#: src/features/view/view.field.ts:157
+msgid "inside it"
+msgstr ""
+
+#: src/features/view/view.field.ts:158
+msgid "adds"
+msgstr ""
+
+#: src/features/view/view.field.ts:160
+msgid "replaced by"
+msgstr ""
+
+#: src/features/view/view.field.ts:164
+msgid "used in"
+msgstr ""
+
+#: src/features/view/view.field.ts:164
+msgid "of"
+msgstr ""
+
+#: src/features/view/view.field.ts:180
+msgid "No field in this view."
+msgstr ""
+
+#: src/features/view/view.field.ts:189
+msgid "hidden"
+msgstr ""
+
+#: src/features/view/view.field.ts:189
+msgid "not shown"
+msgstr ""
+
+#: src/features/view/view.field.ts:202
+msgid "Filter name / label / widget"
+msgstr ""
+
+#: src/features/view/view.injected.ts:42
+msgid "Webclient internals are not reachable."
+msgstr ""
+
+#: src/features/view/view.injected.ts:50
+msgid "No form view is open."
+msgstr ""
+
+#: src/features/view/view.overview.ts:17
+msgid "Overview"
+msgstr ""
+
+#: src/features/view/view.overview.ts:35
+msgid "File"
+msgstr ""
+
+#: src/features/view/view.overview.ts:36
+msgid "none: a client action (%s)"
+msgstr ""
+
+#: src/features/view/view.overview.ts:43
+msgid "(no module)"
+msgstr ""
+
+#: src/features/view/view.overview.ts:45
+#: src/features/view/view.overview.ts:50
+msgid "Built from"
+msgstr ""
+
+#: src/features/view/view.overview.ts:46
+msgid "%s base + %s extensions · %s modules"
+msgstr ""
+
+#: src/features/view/view.overview.ts:47
+msgid "%s inactive"
+msgstr ""
+
+#: src/features/view/view.overview.ts:50
+msgid "unknown: the inheritance needs Settings rights (base.group_system)"
+msgstr ""
+
+#: src/features/view/view.overview.ts:56
+msgid "Menu"
+msgstr ""
+
+#: src/features/view/view.overview.ts:57
+#: src/features/view/view.overview.ts:58
+msgid "Action"
+msgstr ""
+
+#: src/features/view/view.overview.ts:58
+msgid "none: opened directly by its URL"
+msgstr ""
+
+#: src/features/view/view.overview.ts:63
+msgid "new"
+msgstr ""
+
+#: src/features/view/view.overview.ts:63
+msgid "editing"
+msgstr ""
+
+#: src/features/view/view.overview.ts:63
+msgid "read-only"
+msgstr ""
+
+#: src/features/view/view.overview.ts:72
+msgid "%s on the form"
+msgstr ""
+
+#: src/features/view/view.overview.ts:73
+msgid "%s hidden"
+msgstr ""
+
+#: src/features/view/view.overview.ts:73
+msgid "%s not shown"
+msgstr ""
+
+#: src/features/view/view.overview.ts:74
+msgid "%s read-only"
+msgstr ""
+
+#: src/features/view/view.overview.ts:74
+msgid "%s required"
+msgstr ""
+
+#: src/features/view/view.overview.ts:75
+msgid "%s expression errors"
+msgstr ""
+
+#: src/features/view/view.overview.ts:83
+msgid "Views of the action"
+msgstr ""
+
+#: src/features/view/view.overview.ts:84
+msgid "search: %s"
+msgstr ""
+
+#: src/features/view/view.tpl.html:48
+#: src/features/view/view.tpl.html:55
+#: src/features/view/view.tpl.html:111
+msgid "Show this line in the own arch"
+msgstr ""
+
+#: src/features/view/view.tpl.html:65
+msgid "Copy"
+msgstr ""
+
+#: src/features/view/view.tpl.html:76
+#: src/features/view/view.tpl.html:76
+msgid "Field to inspect, e.g. partner_id"
+msgstr ""
+
+#: src/features/view/view.tpl.html:78
+msgid "⌖ Pick on Page"
+msgstr ""
+
+#: src/features/view/view.tpl.html:78
+msgid "Click a field on the Odoo page (Esc to cancel)"
+msgstr ""
+
+#: src/features/view/view.tpl.html:89
+msgid "Now"
+msgstr ""
+
+#: src/features/view/view.tpl.html:91
+msgid "Its story through the views"
+msgstr ""
+
+#: src/features/view/view.tpl.html:93
+msgid "Groups"
+msgstr ""
+
+#: src/features/view/view.tpl.html:118
+msgid "Hidden"
+msgstr ""
+
+#: src/features/view/view.tpl.html:119
+msgid "Not shown"
+msgstr ""
+
+#: src/features/view/view.tpl.html:120
+msgid "Read-only"
+msgstr ""
+
+#: src/features/view/view.tpl.html:122
+msgid "Expression error"
 msgstr ""
 
 #: src/odoo/detect.ts:32
 msgid "Cannot read the Odoo version (%s)."
+msgstr ""
+
+#: src/odoo/groups.ts:17
+msgid "not %s"
 msgstr ""
 
 #: src/ui/components.tpl.html:28
@@ -397,4 +797,20 @@ msgstr ""
 
 #: src/ui/components.ts:102
 msgid "Open /odoo/%s"
+msgstr ""
+
+#: src/ui/json-view.ts:36
+msgid "Show %s more characters"
+msgstr ""
+
+#: src/ui/json-view.ts:57
+msgid "%s items"
+msgstr ""
+
+#: src/ui/json-view.ts:57
+msgid "%s keys"
+msgstr ""
+
+#: src/ui/json-view.ts:71
+msgid "Show %s more (of %s)"
 msgstr ""
