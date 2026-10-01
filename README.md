@@ -1,129 +1,107 @@
-# Odoo Debug — TypeScript 7 rewrite
+# Odoo Debug
 
-The [Odoo Debug](../extension-debug-odoo) Chrome extension (an in-page debug panel for Odoo developers), rewritten in
-TypeScript 7 with an esbuild bundle, one tab at a time, with the Odoo version differences in one place.
+**Stop guessing. See why Odoo does what it does.** An in-page debug panel for Odoo 18.0 and 19.0: a Chrome extension
+(Manifest V3) that opens beside the screen you are on and explains it — the record, the view, the calls to the server,
+who may do what, and the translations.
 
-## Status
+[Tiếng Việt](README.vi.md) · [User guide](https://unclecatvn.github.io/extension-debug-odoo/) · [Architecture](docs/ARCHITECTURE.md)
 
-| Part | State |
+## The problem
+
+Odoo's own debug mode shows *that* something happens, rarely *why*:
+
+- **A user can't open or edit a record.** The AccessError names a model and, at best, a rule. Finding which ACL is
+  missing, which record rule refuses the record, what its domain evaluates to for that user, and which group would fix
+  it — without granting more than needed — means reading `ir.model.access`, `ir.rule` and `res.groups` by hand.
+- **A field is hidden, read-only or missing on a form.** Its modifiers come from several views inherited from several
+  modules, in an order only `ir.ui.view._combine` knows.
+- **A screen is slow or a call fails.** The browser's network tab shows JSON-RPC payloads, not the model, method and
+  server error behind them, nor a way to replay the call against the external API.
+- **A text is not translated.** Is it a field value, a view term, or a code string in some module's `.po`? Each is fixed
+  somewhere else.
+
+Odoo Debug answers these on the screen itself, as tables, for the user you are — or any user you pick.
+
+## Who it is for
+
+- **Odoo developers** debugging their modules: fields, computes, view inheritance, RPC calls, record rules.
+- **Functional consultants and system operators** handling "I can't do X" tickets: rights per user, record and model,
+  what a group grants, comparing two users, translations.
+- **Administrators** reviewing a database: who holds sensitive groups, what each group opens, how the instance is
+  exposed on the web.
+
+## What it shows
+
+| Tab | What for |
 |---|---|
-| Toolchain: TS 7 (one project per execution context), esbuild, Node tests, CI checks | ✅ |
-| Odoo version layer (`src/odoo/`): detection, adapters 18.0 / 19.0, self-check | ✅ |
-| Entrypoints: service worker, RPC recorder + relay, launcher button, panel shell, popup | ✅ |
-| Tab RPC: log, filter, Edit & Resend, New Request, Copy as cURL (18: `/jsonrpc` execute_kw · 19: `/json/2`, named arguments) | ✅ unit tests; Chrome against a simulated 18 / 19 |
-| Tab Record: identity, every field (definition, value, recomputes), filter + quick filters, copy a value / the record as JSON, ↗ many2one, selection labels | ✅ unit tests; Chrome against a simulated 18 / 19, admin and user |
-| Tab View, told as a story: ① overview (view, file, modules, menu, action, record, fields) ② how the view is built (views in the order Odoo applies them, what each does, own arch; form / search) ③ one field (now, its story through the views, its groups) ④ action & context ⑤ combined arch | ✅ unit tests; Chrome against a simulated 18 / 19 webclient, admin and user |
-| Tab Security, as permission tables: a bar (the user searched on the server, archived too; their companies; a user to compare; groups being tried) then five views: Record (ACL, global / group / parent rules × read · write · create · delete, the result, the server's answer; the groups that would allow a refusal and what else they open; an AccessError from the RPC tab or pasted) · By model (the user's rights on every model, by module; what tried groups add; differences with the compared user) · This model (ACLs, rules, restricted fields, configuration check) · Groups (a list by application — each user's relation, ACL models, rules, users — and the group opened beside it: inheritance, its ACLs, its rules with their domains evaluated for the user, its users, what adding it would open; try, add, remove; copy the compared user's groups, previewed) · System | ✅ unit tests; Chrome against a simulated 18 / 19, admin and user |
-| Tab Translations, as tables: Find a text (typed or picked on the page → code term and its module .po, field label, selection, menu, action, record value, view term; its English source; where to change it) · Record (translated fields × languages, by term for html; edit) · View (the screen's views' terms × languages; edit) · Modules (.po coverage per language, the missing terms; export .pot / .po to Downloads; import a .po) · Languages (active, yours, users; activate, update, use one) | ✅ unit tests; Chrome against a simulated 18 / 19 |
-| Tabs: Apps · Perf · Code | ⏳ not ported (placeholder) |
-| E2E against Odoo 18.0 / 19.0 (Docker) | ⏳ |
+| **Record** | Every field of the record: definition, value by type, what recomputes it, quick filters, copy as JSON |
+| **View** | The view told as a story: which views from which modules build it, in Odoo's order; one field through them; the combined arch |
+| **RPC** | The page's JSON-RPC calls with timing and errors; edit and resend; Copy as cURL for the external API (18: `/jsonrpc`, 19: `/json/2`) |
+| **Security** | Rights as tables: a record's ACLs and rules × read / write / create / delete, with domains evaluated for the user; rights on every model; groups, what each grants and who has it; try a group before granting it; compare users |
+| **Translations** | Where a text comes from and where to change it; a record's and a view's translations per language; `.po` coverage, export and import; languages |
+| Apps · Perf · Code | Being ported from the JavaScript version |
 
-## Develop
+The version of Odoo is detected on each page, and every difference between 18.0 and 19.0 the panel depends on lives in
+one place (`src/odoo/adapters/`).
+
+## Demo
+
+<!-- Paste the demo video here, e.g. a YouTube link: [![Odoo Debug demo](thumbnail.png)](https://www.youtube.com/watch?v=…)
+     or an .mp4 uploaded to a GitHub issue / release: https://github.com/user-attachments/assets/… -->
+> 🎬 Demo video coming soon. Meanwhile, screenshots of every tab are on the
+> [Odoo Debug page](https://unclecatvn.github.io/extension-debug-odoo/).
+
+## User guide
+
+The guide — features tab by tab, shortcuts, privacy — is at
+**https://unclecatvn.github.io/extension-debug-odoo/**.
+
+Shortcuts: **Alt+Shift+O** shows / hides the panel, **Alt+Shift+D** turns Odoo's debug mode on / off (change them at
+`chrome://extensions/shortcuts`).
+
+## Install and run
+
+Requirements: **Node.js 22.18 or later**, and **Chrome** (or Edge, Brave, any Chromium browser).
+
+1. **Get the code**
+   ```sh
+   git clone https://github.com/ngochung207/extension-debug-odoo-ts.git
+   cd extension-debug-odoo-ts
+   ```
+2. **Install the dependencies**
+   ```sh
+   npm install
+   ```
+3. **Build the extension** into `dist/`
+   ```sh
+   npm run build
+   ```
+4. **Load it in Chrome**
+   1. Open `chrome://extensions`.
+   2. Turn on **Developer mode** (top right).
+   3. Click **Load unpacked** and choose the `dist/` folder.
+   4. If the JavaScript version of Odoo Debug is installed, turn it off: both would add their button to Odoo pages.
+5. **Use it**: open any page of an Odoo 18 or 19 database (logged in), then click the **Odoo Debug** button at the
+   bottom right of the page, or press **Alt+Shift+O**. From its header the panel goes full screen or into its own
+   window (for a second screen).
+6. **Update it** after pulling new code: `npm run build`, then the ⟳ button on the extension's card in
+   `chrome://extensions`, then reload the Odoo page.
+
+### Working on it
 
 ```sh
-npm install
-npm run watch        # dist/ rebuilt on save; chrome://extensions → Load unpacked → dist/ (⟳ after a change)
-npm run check        # typecheck + tests + build + injected / markup / imports checks (what CI runs)
-npm run i18n         # .pot / .po after adding a translatable string
+npm run watch   # rebuilds dist/ on every save (then ⟳ in chrome://extensions)
+npm run check   # what CI runs: type check, unit tests, build, page-function / markup / import checks
+npm run i18n    # refreshes the .pot / .po after adding a translatable string
 ```
 
-Disable the JavaScript version of Odoo Debug while this one is loaded: both would add their button to Odoo pages.
+How the code is organized, the rules it follows and how the Odoo versions are handled:
+[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
-## Layout
+## License
 
-```
-src/
-  entrypoints/                 what the manifest loads, one folder each (index.*); nothing else lives here
-    background/                  service worker: toolbar icon, shortcuts, content scripts injected again after an update
-    rpc-recorder/                MAIN world, document_start: records the page's JSON-RPC calls
-    rpc-relay/                   ISOLATED world: forwards what the MAIN world reports to the panel
-    launcher/                    ISOLATED world: the Odoo Debug button and the panel frame (+ launcher.tpl.html, launcher.css)
-    panel/                       the panel shell: header, tab bar (index.html, index.ts, panel.tpl.html)
-    popup/                       toolbar popup and options page (index.html, index.ts, popup.tpl.html)
-  features/                    the panel's tabs
-    registry.ts                  the tab list and the TabModule contract
-    <tab>/                       <tab>.tab.ts · <tab>.tpl.html · <tab>.logic.ts · <tab>.injected.ts
-  odoo/                        everything about Odoo: version.ts, adapter.ts, adapters/v18.ts · v19.ts, detect.ts,
-                               models.ts (records), rpc.ts (JSON-RPC client), reads.ts (shared server reads)
-  injected/                    functions run IN the Odoo page, shared by several features: page-state, json-rpc,
-                               debug-mode, navigation
-  extension/                   talking to Chrome: run-in-tab, page-cache, settings, cookies
-  ui/                          the panel's UI kit: template.ts, components.ts + components.tpl.html, panel.css,
-                               form-state.ts, dom.ts
-  i18n/                        _t(), .po loading
-  contracts/                   what every context shares: json.ts, messages.ts (pure)
-  types/                       ambient declarations only: odoo-page.d.ts (window.odoo), page-events.d.ts, assets.d.ts
-tests/
-  unit/                        unit tests, the same tree as src/: tests/unit/odoo/version.test.ts ↔ src/odoo/version.ts
-  e2e/                         against a real Odoo 18 / 19 (Docker), with the first ported tab
-static/                        manifest.json, icons, i18n/*.po: copied to dist/ as they are
-assets/                        sources of static files (icon.svg → static/icons/*.png)
-scripts/                       build, check-page-fns, check-markup, check-imports, i18n (run by Node as .ts)
-```
+Odoo Debug is free software: you can redistribute it and/or modify it under the terms of the
+**GNU Lesser General Public License v3.0** ([LICENSE](LICENSE), which builds on the GNU GPL v3.0 in [COPYING](COPYING)),
+the license of Odoo Community. It contains no Odoo source code: it talks to Odoo through its web routes and RPC.
 
-Dependencies point one way: `entrypoints → features → ui · odoo · extension · injected · i18n → contracts`. A tab never
-imports another tab; only `features/registry.ts` imports the tabs (`npm run check:imports`).
-
-## Execution contexts
-
-An MV3 extension runs in several contexts, each with its own APIs. Each is a TypeScript project
-(`tsconfig.<context>.json`, built together by `tsc -b`), so a file is checked against what **its** context provides:
-
-| Context | Files | May use | The compiler rejects |
-|---|---|---|---|
-| `page` | `entrypoints/rpc-recorder`, `injected/`, `*.injected.ts` | DOM, `window.odoo` | `chrome.*` (absent in the MAIN world) |
-| `worker` | `entrypoints/background` | `chrome.*` | the DOM (a worker has none) |
-| `content` | `entrypoints/launcher`, `entrypoints/rpc-relay` | DOM, `chrome.runtime` / `storage` | `window.odoo` (invisible from the ISOLATED world) |
-| `app` | `entrypoints/panel`, `entrypoints/popup`, `features/`, `ui/`, `odoo/`, `extension/`, `i18n/` | DOM, every `chrome.*` | `window.odoo` (only through injected functions) |
-| `contracts` · `dom` | `contracts/` · `ui/template.ts` | nothing · the DOM | anything else |
-| `node` | `scripts/`, `tests/` | Node | — |
-
-## Tests
-
-`src/` holds only code that ships. Tests live in `tests/`: `tests/unit/` mirrors the `src/` tree (the test of
-`src/<path>/<name>.ts` is `tests/unit/<path>/<name>.test.ts`), `tests/e2e/` drives the built extension against a real
-Odoo. Unit tests cover pure code (`*.logic.ts`, `odoo/`, `contracts/`…); what needs Chrome or Odoo is the e2e's job.
-
-## File names
-
-The suffix says what a file is and where it runs:
-
-| Suffix | Is | Context |
-|---|---|---|
-| `index.ts` | an entrypoint (only under `entrypoints/`) | its own |
-| `*.tab.ts` | a tab: renders it, wires its events (`TabModule`) | app |
-| `*.logic.ts` | pure functions of a feature, unit-tested | app |
-| `*.injected.ts` | functions run in the Odoo page | page |
-| `*.tpl.html` | `<template>` markup the code next to it clones | — |
-
-No barrel `index.ts` re-exporting a folder: import the file you need. Named exports only, except the text of
-`*.tpl.html` / imported `.css` files (a default export by the bundler, declared in `types/assets.d.ts`).
-
-## Odoo versions
-
-Supported: **18.0** and **19.0**. `src/odoo/` holds every difference between them:
-
-- `version.ts` reads `server_version_info` and picks the adapter: the version's own, else the closest older one
-  (saas~18.x → 18, a newer major → 19, flagged *untested* in the header), else the oldest (*unsupported*).
-- `adapter.ts` is the contract; `adapters/v18.ts` and `adapters/v19.ts` implement it, each value checked against that
-  version's sources.
-- `detect.ts` → `odoo()` detects once per page load, then **self-checks** the fields the adapter relies on with
-  `fields_get`: a customized database that differs from its major shows in the header instead of failing in a tab.
-
-Features never test a version number or probe a field themselves: they read `odoo().adapter`. A difference with no
-equivalent at all on a version is declared by the tab (`supports()` in `features/registry.ts`) and shown instead of
-the tab. Adding a version = a new `adapters/v<major>.ts` + its number in `SUPPORTED`; the compiler lists what it must
-answer.
-
-## Rules
-
-- **Markup in templates, behaviour in code.** Every piece of UI is a `<template data-tpl="name">` in a `*.tpl.html`
-  next to the code that uses it; the elements the code fills carry `data-ref="key"`. Code clones it with
-  `ui/template.ts` and fills the refs, whose element types it declares (`tpl('pill', { pill: HTMLSpanElement })`) and
-  which are checked on the first clone. Labels are translated with `data-i18n` in the template. `npm run check:markup`
-  fails on `innerHTML` / `createElement` in a `.ts` (except non-UI helpers marked `markup-ok:`).
-- **Injected functions** reach the Odoo page as their own source text only: nothing from outside them but browser
-  globals and types. `npm run check:page` bundles them as the build does and fails otherwise.
-- Odoo data reaches the DOM through `textContent` only.
-- `entrypoints/rpc-recorder` runs on every site: no imports but types (the build fails above 4 KB).
-- Erasable TypeScript only (no `enum`, `namespace`, parameter properties): Node runs tests and scripts as they are.
+Copyright © 2026 Trinh Ngoc Hung.
