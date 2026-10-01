@@ -5,7 +5,7 @@ import type { PageState } from '../../injected/page-state.ts';
 import { block } from '../../ui/cards.ts';
 import { details, kv, odooLink, pre } from '../../ui/components.ts';
 import { actionRef, actionXmlId, menusOf } from './view.data.ts';
-import { frag, note } from './view.ui.ts';
+import { frag, note } from '../../ui/parts.ts';
 
 export function actionPart(parent: HTMLElement, state: PageState) {
   block(parent, 'action', _t('Action & context'), async () => {

@@ -11,7 +11,8 @@ import { expandable, masterDetail } from '../../ui/lists.ts';
 import { fieldSteps, moduleOf, specsOf, type ViewSummary } from './arch.logic.ts';
 import type { ComposedView, Composition } from './view.data.ts';
 import { inspectedField, onInspect, setRevealer } from './view.state.ts';
-import { frag, note, part, segmented, shortName, tpl } from './view.ui.ts';
+import { frag, note, part, segmented } from '../../ui/parts.ts';
+import { shortName, tpl } from './view.ui.ts';
 
 export function compositionPart(parent: HTMLElement, origin: string, comps: { type: string; promise: Promise<Composition | null> }[]) {
   const p = part(parent, 'composition', '2', _t('How the view is built'));

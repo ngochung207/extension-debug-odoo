@@ -13,7 +13,8 @@ TypeScript 7 with an esbuild bundle, one tab at a time, with the Odoo version di
 | Tab RPC: log, filter, Edit & Resend, New Request, Copy as cURL (18: `/jsonrpc` execute_kw · 19: `/json/2`, named arguments) | ✅ unit tests; Chrome against a simulated 18 / 19 |
 | Tab Record: identity, every field (definition, value, recomputes), filter + quick filters, copy a value / the record as JSON, ↗ many2one, selection labels | ✅ unit tests; Chrome against a simulated 18 / 19, admin and user |
 | Tab View, told as a story: ① overview (view, file, modules, menu, action, record, fields) ② how the view is built (views in the order Odoo applies them, what each does, own arch; form / search) ③ one field (now, its story through the views, its groups) ④ action & context ⑤ combined arch | ✅ unit tests; Chrome against a simulated 18 / 19 webclient, admin and user |
-| Tabs: Code · Security · Translations · Apps · Perf | ⏳ not ported (placeholder) |
+| Tab Security, as permission tables: a bar (the user searched on the server, archived too; their companies; a user to compare; groups being tried) then five views: Record (ACL, global / group / parent rules × read · write · create · delete, the result, the server's answer; the groups that would allow a refusal and what else they open; an AccessError from the RPC tab or pasted) · By model (the user's rights on every model, by module; what tried groups add; differences with the compared user) · This model (ACLs, rules, restricted fields, configuration check) · Groups (by application, per user; try, remove, copy) · System | ✅ unit tests; Chrome against a simulated 18 / 19, admin and user |
+| Tabs: Translations · Apps · Perf · Code | ⏳ not ported (placeholder) |
 | E2E against Odoo 18.0 / 19.0 (Docker) | ⏳ |
 
 ## Develop

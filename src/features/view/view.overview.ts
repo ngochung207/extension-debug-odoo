@@ -8,7 +8,8 @@ import { copyable, pill } from '../../ui/components.ts';
 import type { FormFields } from './view.injected.ts';
 import { moduleOf } from './arch.logic.ts';
 import { actionRef, actionXmlId, menusOf, type Composition } from './view.data.ts';
-import { frag, part, tpl } from './view.ui.ts';
+import { frag, part } from '../../ui/parts.ts';
+import { tpl } from './view.ui.ts';
 
 const MODULES_SHOWN = 8;
 

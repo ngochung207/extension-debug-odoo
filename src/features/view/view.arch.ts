@@ -5,7 +5,8 @@ import { block, fill } from '../../ui/cards.ts';
 import { xmlCode } from '../../ui/code.ts';
 import { prettyXml } from '../../ui/xml.ts';
 import type { Composition } from './view.data.ts';
-import { frag, note, segmented, tpl } from './view.ui.ts';
+import { frag, note, segmented } from '../../ui/parts.ts';
+import { tpl } from './view.ui.ts';
 
 export function archPart(parent: HTMLElement, comps: { type: string; promise: Promise<Composition | null> }[]) {
   block(parent, 'arch', _t('Combined arch'), () => {

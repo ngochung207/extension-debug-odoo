@@ -49,13 +49,14 @@ msgid "Back into the Odoo Page"
 msgstr "Back into the Odoo Page"
 
 #: src/entrypoints/panel/index.html:25
-#: src/features/view/view.overview.ts:63
+#: src/features/security/security.tab.ts:61
+#: src/features/view/view.overview.ts:64
 msgid "Record"
 msgstr "Record"
 
 #: src/entrypoints/panel/index.html:26
-#: src/features/view/view.overview.ts:33
-#: src/features/view/view.overview.ts:36
+#: src/features/view/view.overview.ts:34
+#: src/features/view/view.overview.ts:37
 msgid "View"
 msgstr "View"
 
@@ -64,24 +65,24 @@ msgid "RPC"
 msgstr "RPC"
 
 #: src/entrypoints/panel/index.html:28
-msgid "Code"
-msgstr "Code"
-
-#: src/entrypoints/panel/index.html:29
 msgid "Security"
 msgstr "Security"
 
-#: src/entrypoints/panel/index.html:30
+#: src/entrypoints/panel/index.html:29
 msgid "Translations"
 msgstr "Translations"
 
-#: src/entrypoints/panel/index.html:31
+#: src/entrypoints/panel/index.html:30
 msgid "Apps"
 msgstr "Apps"
 
-#: src/entrypoints/panel/index.html:32
+#: src/entrypoints/panel/index.html:31
 msgid "Perf"
 msgstr "Perf"
+
+#: src/entrypoints/panel/index.html:32
+msgid "Code"
+msgstr "Code"
 
 #: src/entrypoints/panel/index.ts:48
 #: src/entrypoints/panel/index.ts:49
@@ -117,6 +118,7 @@ msgid "Not an Odoo page"
 msgstr "Not an Odoo page"
 
 #: src/entrypoints/popup/index.html:17
+#: src/features/security/security.record.ts:47
 msgid "This page"
 msgstr "This page"
 
@@ -155,6 +157,7 @@ msgid "Tip: ⌥/Alt + click a field on the Odoo page to copy its technical name.
 msgstr "Tip: ⌥/Alt + click a field on the Odoo page to copy its technical name."
 
 #: src/entrypoints/popup/index.ts:11
+#: src/features/security/security.tab.ts:65
 msgid "System"
 msgstr "System"
 
@@ -192,7 +195,7 @@ msgid "Identity & metadata"
 msgstr "Identity & metadata"
 
 #: src/features/record/record.tab.ts:28
-#: src/features/view/view.overview.ts:72
+#: src/features/view/view.overview.ts:73
 msgid "Fields"
 msgstr "Fields"
 
@@ -213,12 +216,12 @@ msgid "Click to copy the value"
 msgstr "Click to copy the value"
 
 #: src/features/record/record.tab.ts:113
-#: src/features/view/view.field.ts:201
+#: src/features/view/view.field.ts:202
 msgid "%s fields"
 msgstr "%s fields"
 
 #: src/features/record/record.tab.ts:113
-#: src/features/view/view.field.ts:201
+#: src/features/view/view.field.ts:202
 msgid "%s/%s fields"
 msgstr "%s/%s fields"
 
@@ -259,7 +262,7 @@ msgid "Relational"
 msgstr "Relational"
 
 #: src/features/record/record.tpl.html:10
-#: src/features/view/view.tpl.html:121
+#: src/features/view/view.tpl.html:93
 msgid "Required"
 msgstr "Required"
 
@@ -279,49 +282,52 @@ msgstr "Signature of %s.%s unknown: ids and argument names are guessed."
 msgid "JSON-2 takes named arguments only: rename %s."
 msgstr "JSON-2 takes named arguments only: rename %s."
 
-#: src/features/rpc/rpc.tab.ts:43
+#: src/features/rpc/rpc.tab.ts:44
 msgid "Method · model · duration"
 msgstr "Method · model · duration"
 
-#: src/features/rpc/rpc.tab.ts:43
+#: src/features/rpc/rpc.tab.ts:44
 msgid "Time · route"
 msgstr "Time · route"
 
-#: src/features/rpc/rpc.tab.ts:47
+#: src/features/rpc/rpc.tab.ts:48
 msgid "Select a call to see its parameters and result."
 msgstr "Select a call to see its parameters and result."
 
-#: src/features/rpc/rpc.tab.ts:96
-#: src/features/rpc/rpc.tab.ts:173
+#: src/features/rpc/rpc.tab.ts:97
+#: src/features/rpc/rpc.tab.ts:179
 msgid "error"
 msgstr "error"
 
-#: src/features/rpc/rpc.tab.ts:109
+#: src/features/rpc/rpc.tab.ts:110
 msgid "Parameters"
 msgstr "Parameters"
 
-#: src/features/rpc/rpc.tab.ts:121
+#: src/features/rpc/rpc.tab.ts:127
+#: src/features/security/security.record.ts:132
+#: src/features/security/security.record.ts:133
+#: src/features/security/security.record.ts:136
 msgid "Result"
 msgstr "Result"
 
-#: src/features/rpc/rpc.tab.ts:129
+#: src/features/rpc/rpc.tab.ts:135
 msgid "Cut at 200 KB by the recorder, so shown as text: Edit & Resend gets it whole."
 msgstr "Cut at 200 KB by the recorder, so shown as text: Edit & Resend gets it whole."
 
-#: src/features/rpc/rpc.tab.ts:165
+#: src/features/rpc/rpc.tab.ts:171
 msgid "Invalid JSON: %s"
 msgstr "Invalid JSON: %s"
 
-#: src/features/rpc/rpc.tab.ts:170
+#: src/features/rpc/rpc.tab.ts:176
 #: src/odoo/rpc.ts:25
 msgid "No response — is this an Odoo page?"
 msgstr "No response — is this an Odoo page?"
 
-#: src/features/rpc/rpc.tab.ts:189
+#: src/features/rpc/rpc.tab.ts:195
 msgid "call_kw: the JSON-2 API (/json/2, named arguments), with an API key of this user in $ODOO_API_KEY. Other routes: the session_id cookie in $ODOO_SESSION."
 msgstr "call_kw: the JSON-2 API (/json/2, named arguments), with an API key of this user in $ODOO_API_KEY. Other routes: the session_id cookie in $ODOO_SESSION."
 
-#: src/features/rpc/rpc.tab.ts:190
+#: src/features/rpc/rpc.tab.ts:196
 msgid "call_kw: the external API (execute_kw), with an API key of this user in $ODOO_API_KEY. Other routes: the session_id cookie in $ODOO_SESSION."
 msgstr "call_kw: the external API (execute_kw), with an API key of this user in $ODOO_API_KEY. Other routes: the session_id cookie in $ODOO_SESSION."
 
@@ -383,6 +389,712 @@ msgstr "Ctrl/⌘ + Enter"
 msgid "Copy as cURL"
 msgstr "Copy as cURL"
 
+#: src/features/security/security.bar.ts:25
+msgid "User"
+msgstr "User"
+
+#: src/features/security/security.bar.ts:32
+msgid "Search a user by name or login…"
+msgstr "Search a user by name or login…"
+
+#: src/features/security/security.bar.ts:35
+msgid "My User"
+msgstr "My User"
+
+#: src/features/security/security.bar.ts:37
+#: src/features/security/security.system.ts:47
+msgid "Companies"
+msgstr "Companies"
+
+#: src/features/security/security.bar.ts:41
+msgid "Compare with"
+msgstr "Compare with"
+
+#: src/features/security/security.bar.ts:45
+msgid "Stop comparing"
+msgstr "Stop comparing"
+
+#: src/features/security/security.bar.ts:49
+msgid "Another user, to compare…"
+msgstr "Another user, to compare…"
+
+#: src/features/security/security.bar.ts:69
+msgid "%s · #%s · %s groups"
+msgstr "%s · #%s · %s groups"
+
+#: src/features/security/security.bar.ts:71
+msgid "me"
+msgstr "me"
+
+#: src/features/security/security.bar.ts:72
+msgid "superuser"
+msgstr "superuser"
+
+#: src/features/security/security.bar.ts:73
+#: src/features/security/security.ui.ts:237
+msgid "public"
+msgstr "public"
+
+#: src/features/security/security.bar.ts:73
+#: src/features/security/security.ui.ts:237
+msgid "portal"
+msgstr "portal"
+
+#: src/features/security/security.bar.ts:74
+#: src/features/security/security.ui.ts:237
+msgid "archived"
+msgstr "archived"
+
+#: src/features/security/security.bar.ts:88
+msgid "The current company (the first one on)"
+msgstr "The current company (the first one on)"
+
+#: src/features/security/security.bar.ts:92
+msgid "as in the page's switcher"
+msgstr "as in the page's switcher"
+
+#: src/features/security/security.bar.ts:92
+msgid "their default company: their switcher can't be seen from here"
+msgstr "their default company: their switcher can't be seen from here"
+
+#: src/features/security/security.bar.ts:100
+msgid "Trying %s: every view is simulated with it, nothing is written."
+msgstr "Trying %s: every view is simulated with it, nothing is written."
+
+#: src/features/security/security.bar.ts:102
+msgid "Add %s to %s?"
+msgstr "Add %s to %s?"
+
+#: src/features/security/security.bar.ts:116
+msgid "Applied…"
+msgstr "Applied…"
+
+#: src/features/security/security.bar.ts:121
+msgid "Applied on %s: %s"
+msgstr "Applied on %s: %s"
+
+#: src/features/security/security.bar.ts:122
+msgid "Applied: no operation changed on this record."
+msgstr "Applied: no operation changed on this record."
+
+#: src/features/security/security.data.ts:217
+#: src/features/security/security.data.ts:217
+msgid "no result"
+msgstr "no result"
+
+#: src/features/security/security.data.ts:220
+msgid "You cannot read this record yourself, so its rules cannot be checked."
+msgstr "You cannot read this record yourself, so its rules cannot be checked."
+
+#: src/features/security/security.groups.ts:24
+msgid "Other"
+msgstr "Other"
+
+#: src/features/security/security.groups.ts:34
+#: src/features/security/security.model.ts:28
+msgid "Group"
+msgstr "Group"
+
+#: src/features/security/security.groups.ts:34
+msgid "Models"
+msgstr "Models"
+
+#: src/features/security/security.groups.ts:37
+msgid "Filter or try a group…"
+msgstr "Filter or try a group…"
+
+#: src/features/security/security.groups.ts:41
+msgid "%s groups found"
+msgstr "%s groups found"
+
+#: src/features/security/security.groups.ts:41
+msgid "%s groups"
+msgstr "%s groups"
+
+#: src/features/security/security.groups.ts:46
+msgid "● set on the user · ◐ implied by another group · + being tried · ○ not. Models: how many models the group's own ACLs open. Type to find a group the users don't have."
+msgstr "● set on the user · ◐ implied by another group · + being tried · ○ not. Models: how many models the group's own ACLs open. Type to find a group the users don't have."
+
+#: src/features/security/security.groups.ts:48
+msgid "Risks of %s"
+msgstr "Risks of %s"
+
+#: src/features/security/security.groups.ts:60
+msgid "Being tried"
+msgstr "Being tried"
+
+#: src/features/security/security.groups.ts:61
+msgid "Set on %s"
+msgstr "Set on %s"
+
+#: src/features/security/security.groups.ts:62
+msgid "Implied by %s"
+msgstr "Implied by %s"
+
+#: src/features/security/security.groups.ts:68
+msgid "Stop trying it"
+msgstr "Stop trying it"
+
+#: src/features/security/security.groups.ts:71
+msgid "Remove"
+msgstr "Remove"
+
+#: src/features/security/security.groups.ts:72
+msgid "Remove %s from %s?"
+msgstr "Remove %s from %s?"
+
+#: src/features/security/security.groups.ts:76
+#: src/features/security/security.record.ts:154
+msgid "Try"
+msgstr "Try"
+
+#: src/features/security/security.groups.ts:76
+#: src/features/security/security.record.ts:154
+msgid "Simulate this group in every view, nothing is written"
+msgstr "Simulate this group in every view, nothing is written"
+
+#: src/features/security/security.groups.ts:98
+msgid "Give %s the groups of %s they lack (%s)"
+msgstr "Give %s the groups of %s they lack (%s)"
+
+#: src/features/security/security.groups.ts:99
+msgid "Make the groups of %s the same as %s"
+msgstr "Make the groups of %s the same as %s"
+
+#: src/features/security/security.groups.ts:101
+msgid "Add: %s"
+msgstr "Add: %s"
+
+#: src/features/security/security.groups.ts:102
+msgid "Remove: %s"
+msgstr "Remove: %s"
+
+#: src/features/security/security.groups.ts:103
+msgid "Warning: one is a portal user, the other is not: the user type changes."
+msgstr "Warning: one is a portal user, the other is not: the user type changes."
+
+#: src/features/security/security.groups.ts:105
+msgid "Change the groups of %s?"
+msgstr "Change the groups of %s?"
+
+#: src/features/security/security.groups.ts:111
+msgid "Copy the groups of %s"
+msgstr "Copy the groups of %s"
+
+#: src/features/security/security.injected.ts:14
+msgid "py_js is not loaded"
+msgstr "py_js is not loaded"
+
+#: src/features/security/security.logic.ts:289
+#: src/features/security/security.model.ts:35
+msgid "No ACL: only the superuser can access this model."
+msgstr "No ACL: only the superuser can access this model."
+
+#: src/features/security/security.logic.ts:292
+msgid "ACL \"%s\" has no group → applies to EVERY user, portal/public included (%s)."
+msgstr "ACL \"%s\" has no group → applies to EVERY user, portal/public included (%s)."
+
+#: src/features/security/security.logic.ts:293
+msgid "ACL \"%s\" grants %s to %s."
+msgstr "ACL \"%s\" grants %s to %s."
+
+#: src/features/security/security.logic.ts:297
+msgid "Has company_id but no global multi-company rule → records may leak across companies."
+msgstr "Has company_id but no global multi-company rule → records may leak across companies."
+
+#: src/features/security/security.logic.ts:299
+msgid "Field \"%s\" looks sensitive but has no groups=."
+msgstr "Field \"%s\" looks sensitive but has no groups=."
+
+#: src/features/security/security.logic.ts:332
+msgid "Not served over HTTPS."
+msgstr "Not served over HTTPS."
+
+#: src/features/security/security.logic.ts:333
+msgid "Cannot read the session_id cookie."
+msgstr "Cannot read the session_id cookie."
+
+#: src/features/security/security.logic.ts:335
+msgid "session_id cookie is not HttpOnly → readable by JS/XSS."
+msgstr "session_id cookie is not HttpOnly → readable by JS/XSS."
+
+#: src/features/security/security.logic.ts:336
+msgid "session_id cookie lacks the Secure flag."
+msgstr "session_id cookie lacks the Secure flag."
+
+#: src/features/security/security.logic.ts:337
+msgid "session_id cookie is SameSite=None → larger CSRF surface."
+msgstr "session_id cookie is SameSite=None → larger CSRF surface."
+
+#: src/features/security/security.logic.ts:340
+msgid "Missing Strict-Transport-Security (HSTS) header."
+msgstr "Missing Strict-Transport-Security (HSTS) header."
+
+#: src/features/security/security.logic.ts:341
+msgid "Missing X-Frame-Options / CSP frame-ancestors → clickjacking."
+msgstr "Missing X-Frame-Options / CSP frame-ancestors → clickjacking."
+
+#: src/features/security/security.logic.ts:342
+msgid "Missing X-Content-Type-Options: nosniff."
+msgstr "Missing X-Content-Type-Options: nosniff."
+
+#: src/features/security/security.logic.ts:343
+msgid "Missing Content-Security-Policy."
+msgstr "Missing Content-Security-Policy."
+
+#: src/features/security/security.logic.ts:344
+msgid "Header %s discloses a version: %s"
+msgstr "Header %s discloses a version: %s"
+
+#: src/features/security/security.logic.ts:346
+msgid "Database manager has NO master password (default \"admin\")!"
+msgstr "Database manager has NO master password (default \"admin\")!"
+
+#: src/features/security/security.logic.ts:347
+msgid "/web/database/manager is reachable → block /web/database/* at the proxy or set list_db = False."
+msgstr "/web/database/manager is reachable → block /web/database/* at the proxy or set list_db = False."
+
+#: src/features/security/security.logic.ts:348
+msgid "list_db is on: database names are exposed (%s)."
+msgstr "list_db is on: database names are exposed (%s)."
+
+#: src/features/security/security.logic.ts:349
+msgid "Server version is public via /web/webclient/version_info: %s"
+msgstr "Server version is public via /web/webclient/version_info: %s"
+
+#: src/features/security/security.logic.ts:359
+msgid "__system__ (superuser): bypasses every ACL and record rule."
+msgstr "__system__ (superuser): bypasses every ACL and record rule."
+
+#: src/features/security/security.logic.ts:360
+msgid "Settings administrator (base.group_system)."
+msgstr "Settings administrator (base.group_system)."
+
+#: src/features/security/security.logic.ts:361
+msgid "Access Rights manager (base.group_erp_manager): can grant itself any group."
+msgstr "Access Rights manager (base.group_erp_manager): can grant itself any group."
+
+#: src/features/security/security.logic.ts:362
+msgid "Has Technical Features (base.group_no_one)."
+msgstr "Has Technical Features (base.group_no_one)."
+
+#: src/features/security/security.logic.ts:363
+msgid "Public user."
+msgstr "Public user."
+
+#: src/features/security/security.logic.ts:363
+msgid "Portal user (share)."
+msgstr "Portal user (share)."
+
+#: src/features/security/security.logic.ts:364
+msgid "Login \"admin\" is the default, easy to guess."
+msgstr "Login \"admin\" is the default, easy to guess."
+
+#: src/features/security/security.logic.ts:365
+msgid "auth_totp is not installed → no 2FA."
+msgstr "auth_totp is not installed → no 2FA."
+
+#: src/features/security/security.logic.ts:366
+msgid "2FA (TOTP) is not enabled."
+msgstr "2FA (TOTP) is not enabled."
+
+#: src/features/security/security.logic.ts:367
+msgid "%s API key(s): direct RPC calls with this user's rights."
+msgstr "%s API key(s): direct RPC calls with this user's rights."
+
+#: src/features/security/security.logic.ts:368
+msgid "User is archived."
+msgstr "User is archived."
+
+#: src/features/security/security.model.ts:25
+msgid "Reading the ACLs and record rules needs Access Rights (base.group_erp_manager)."
+msgstr "Reading the ACLs and record rules needs Access Rights (base.group_erp_manager)."
+
+#: src/features/security/security.model.ts:27
+#: src/features/security/security.record.ts:81
+msgid "Access rights (ACL)"
+msgstr "Access rights (ACL)"
+
+#: src/features/security/security.model.ts:30
+#: src/features/security/security.models.ts:80
+#: src/features/security/security.record.ts:83
+#: src/features/security/security.record.ts:98
+msgid "every user"
+msgstr "every user"
+
+#: src/features/security/security.model.ts:37
+msgid "Record rules"
+msgstr "Record rules"
+
+#: src/features/security/security.model.ts:40
+msgid "of %s, through %s"
+msgstr "of %s, through %s"
+
+#: src/features/security/security.model.ts:40
+msgid "global: every user"
+msgstr "global: every user"
+
+#: src/features/security/security.model.ts:45
+msgid "Rule"
+msgstr "Rule"
+
+#: src/features/security/security.model.ts:45
+msgid "This model has no record rule."
+msgstr "This model has no record rule."
+
+#: src/features/security/security.model.ts:46
+msgid "Rules of %s (through %s) count as one more global rule."
+msgstr "Rules of %s (through %s) count as one more global rule."
+
+#: src/features/security/security.model.ts:47
+msgid "Rules of %s are not counted: %s is not stored (Odoo %s)."
+msgstr "Rules of %s are not counted: %s is not stored (Odoo %s)."
+
+#: src/features/security/security.model.ts:48
+msgid "✓ the rule applies to this operation · ● the user has one of its groups · ○ not · — every user. Click a rule for its domain."
+msgstr "✓ the rule applies to this operation · ● the user has one of its groups · ○ not · — every user. Click a rule for its domain."
+
+#: src/features/security/security.model.ts:53
+msgid "Fields restricted to groups"
+msgstr "Fields restricted to groups"
+
+#: src/features/security/security.model.ts:56
+msgid "Configuration check"
+msgstr "Configuration check"
+
+#: src/features/security/security.model.ts:66
+msgid "No field is restricted to groups."
+msgstr "No field is restricted to groups."
+
+#: src/features/security/security.model.ts:71
+msgid "Field"
+msgstr "Field"
+
+#: src/features/security/security.model.ts:75
+msgid "visible"
+msgstr "visible"
+
+#: src/features/security/security.model.ts:75
+#: src/features/view/view.field.ts:190
+msgid "hidden"
+msgstr "hidden"
+
+#: src/features/security/security.models.ts:17
+msgid "The rights across models need Access Rights (base.group_erp_manager)."
+msgstr "The rights across models need Access Rights (base.group_erp_manager)."
+
+#: src/features/security/security.models.ts:49
+msgid "(unknown module)"
+msgstr "(unknown module)"
+
+#: src/features/security/security.models.ts:53
+msgid "%s models"
+msgstr "%s models"
+
+#: src/features/security/security.models.ts:56
+msgid "Model"
+msgstr "Model"
+
+#: src/features/security/security.models.ts:56
+msgid "Rules"
+msgstr "Rules"
+
+#: src/features/security/security.models.ts:62
+msgid "%s of %s models"
+msgstr "%s of %s models"
+
+#: src/features/security/security.models.ts:63
+msgid "Filter models or modules…"
+msgstr "Filter models or modules…"
+
+#: src/features/security/security.models.ts:70
+msgid "Only what the tried groups add"
+msgstr "Only what the tried groups add"
+
+#: src/features/security/security.models.ts:70
+msgid "Only differences"
+msgstr "Only differences"
+
+#: src/features/security/security.models.ts:72
+msgid "Each cell: %s | %s. From the ACLs: the Rules column counts the rules limiting which records. Click a model for the details."
+msgstr "Each cell: %s | %s. From the ACLs: the Rules column counts the rules limiting which records. Click a model for the details."
+
+#: src/features/security/security.models.ts:73
+msgid "From the ACLs: the Rules column counts the rules limiting which records. +✓ added by the tried groups. Click a model for the details."
+msgstr "From the ACLs: the Rules column counts the rules limiting which records. +✓ added by the tried groups. Click a model for the details."
+
+#: src/features/security/security.models.ts:82
+msgid "Granted by"
+msgstr "Granted by"
+
+#: src/features/security/security.models.ts:82
+msgid "nothing for this user"
+msgstr "nothing for this user"
+
+#: src/features/security/security.models.ts:83
+msgid "Rules limiting the records"
+msgstr "Rules limiting the records"
+
+#: src/features/security/security.record.ts:33
+#: src/features/security/security.record.ts:134
+msgid "Server (has_access)"
+msgstr "Server (has_access)"
+
+#: src/features/security/security.record.ts:35
+msgid "Reading the ACLs and record rules needs Access Rights (base.group_erp_manager): this is the server's answer for you, without the why."
+msgstr "Reading the ACLs and record rules needs Access Rights (base.group_erp_manager): this is the server's answer for you, without the why."
+
+#: src/features/security/security.record.ts:36
+msgid "Reading the ACLs and record rules needs Access Rights (base.group_erp_manager): nothing can be said for another user."
+msgstr "Reading the ACLs and record rules needs Access Rights (base.group_erp_manager): nothing can be said for another user."
+
+#: src/features/security/security.record.ts:47
+msgid "From an error"
+msgstr "From an error"
+
+#: src/features/security/security.record.ts:51
+msgid "Back to this page"
+msgstr "Back to this page"
+
+#: src/features/security/security.record.ts:55
+msgid "the first record is checked"
+msgstr "the first record is checked"
+
+#: src/features/security/security.record.ts:56
+msgid "rules blamed: %s"
+msgstr "rules blamed: %s"
+
+#: src/features/security/security.record.ts:57
+msgid "groups allowed: %s"
+msgstr "groups allowed: %s"
+
+#: src/features/security/security.record.ts:58
+msgid "operation not named in the message"
+msgstr "operation not named in the message"
+
+#: src/features/security/security.record.ts:59
+msgid "no record in the message: debug mode adds them"
+msgstr "no record in the message: debug mode adds them"
+
+#: src/features/security/security.record.ts:60
+msgid "No record open: the ACLs only, the rules are checked on a record."
+msgstr "No record open: the ACLs only, the rules are checked on a record."
+
+#: src/features/security/security.record.ts:74
+#: src/features/security/security.record.ts:75
+msgid "%s has this group"
+msgstr "%s has this group"
+
+#: src/features/security/security.record.ts:74
+#: src/features/security/security.record.ts:75
+msgid "%s doesn't have this group"
+msgstr "%s doesn't have this group"
+
+#: src/features/security/security.record.ts:81
+msgid "one is enough"
+msgstr "one is enough"
+
+#: src/features/security/security.record.ts:88
+msgid "No ACL: only the superuser"
+msgstr "No ACL: only the superuser"
+
+#: src/features/security/security.record.ts:89
+#: src/features/security/security.record.ts:111
+#: src/features/security/security.record.ts:125
+msgid "→ for the user"
+msgstr "→ for the user"
+
+#: src/features/security/security.record.ts:105
+msgid "Global rules"
+msgstr "Global rules"
+
+#: src/features/security/security.record.ts:105
+msgid "the record must match every one"
+msgstr "the record must match every one"
+
+#: src/features/security/security.record.ts:109
+msgid "Group rules"
+msgstr "Group rules"
+
+#: src/features/security/security.record.ts:109
+msgid "the record must match one of the user's"
+msgstr "the record must match one of the user's"
+
+#: src/features/security/security.record.ts:113
+msgid "No group rule of the user for this operation: no restriction from them"
+msgstr "No group rule of the user for this operation: no restriction from them"
+
+#: src/features/security/security.record.ts:123
+msgid "Rules of %s, through %s"
+msgstr "Rules of %s, through %s"
+
+#: src/features/security/security.record.ts:123
+msgid "counted as one global rule"
+msgstr "counted as one global rule"
+
+#: src/features/security/security.record.ts:134
+msgid "Odoo's own answer for you, same companies"
+msgstr "Odoo's own answer for you, same companies"
+
+#: src/features/security/security.record.ts:135
+msgid "The server disagrees with the simulation"
+msgstr "The server disagrees with the simulation"
+
+#: src/features/security/security.record.ts:140
+msgid "✓ allowed / matches · ✗ refused / no match · · does not apply · ? unknown · ● the user has the group · ○ not. Click a rule for its domain."
+msgstr "✓ allowed / matches · ✗ refused / no match · · does not apply · ? unknown · ● the user has the group · ○ not. Click a rule for its domain."
+
+#: src/features/security/security.record.ts:141
+msgid "Marks: %s, then %s."
+msgstr "Marks: %s, then %s."
+
+#: src/features/security/security.record.ts:150
+#: src/features/security/security.record.ts:166
+msgid "To allow it"
+msgstr "To allow it"
+
+#: src/features/security/security.record.ts:150
+msgid "No single group allows it."
+msgstr "No single group allows it."
+
+#: src/features/security/security.record.ts:155
+msgid "also adds: %s"
+msgstr "also adds: %s"
+
+#: src/features/security/security.record.ts:159
+msgid "No new right on other models."
+msgstr "No new right on other models."
+
+#: src/features/security/security.record.ts:161
+msgid "… and %s more"
+msgstr "… and %s more"
+
+#: src/features/security/security.record.ts:162
+msgid "Also opens, on %s other models:"
+msgstr "Also opens, on %s other models:"
+
+#: src/features/security/security.record.ts:166
+msgid "Group to add"
+msgstr "Group to add"
+
+#: src/features/security/security.record.ts:167
+msgid "Fewest new groups first; %s more not shown. Click a group for what else it opens."
+msgstr "Fewest new groups first; %s more not shown. Click a group for what else it opens."
+
+#: src/features/security/security.record.ts:168
+msgid "Fewest new groups first. Click a group for what else it opens."
+msgstr "Fewest new groups first. Click a group for what else it opens."
+
+#: src/features/security/security.record.ts:176
+msgid "No model found in this message: is it an access error?"
+msgstr "No model found in this message: is it an access error?"
+
+#: src/features/security/security.system.ts:25
+msgid "Session"
+msgstr "Session"
+
+#: src/features/security/security.system.ts:26
+msgid "System parameters (ir.config_parameter)"
+msgstr "System parameters (ir.config_parameter)"
+
+#: src/features/security/security.system.ts:27
+msgid "Instance check"
+msgstr "Instance check"
+
+#: src/features/security/security.system.ts:48
+msgid "Become Superuser"
+msgstr "Become Superuser"
+
+#: src/features/security/security.system.ts:49
+msgid "Switch the current session to superuser (bypasses every rule)?"
+msgstr "Switch the current session to superuser (bypasses every rule)?"
+
+#: src/features/security/security.system.ts:50
+msgid "Odoo's built-in /web/become route, base.group_system only"
+msgstr "Odoo's built-in /web/become route, base.group_system only"
+
+#: src/features/security/security.system.ts:56
+msgid "Needs Settings rights (base.group_system)."
+msgstr "Needs Settings rights (base.group_system)."
+
+#: src/features/security/security.system.ts:58
+msgid "No parameter."
+msgstr "No parameter."
+
+#: src/features/security/security.system.ts:71
+msgid "Filter key / value"
+msgstr "Filter key / value"
+
+#: src/features/security/security.system.ts:79
+msgid "Raw data"
+msgstr "Raw data"
+
+#: src/features/security/security.system.ts:80
+msgid "Check Again"
+msgstr "Check Again"
+
+#: src/features/security/security.tab.ts:61
+msgid "Record #%s"
+msgstr "Record #%s"
+
+#: src/features/security/security.tab.ts:62
+msgid "By model"
+msgstr "By model"
+
+#: src/features/security/security.tab.ts:64
+#: src/features/view/view.tpl.html:65
+msgid "Groups"
+msgstr "Groups"
+
+#: src/features/security/security.tpl.html:20
+msgid "Archived too"
+msgstr "Archived too"
+
+#: src/features/security/security.tpl.html:32
+msgid "Apply"
+msgstr "Apply"
+
+#: src/features/security/security.tpl.html:33
+msgid "Discard"
+msgstr "Discard"
+
+#: src/features/security/security.tpl.html:75
+msgid "Diagnose an access error message"
+msgstr "Diagnose an access error message"
+
+#: src/features/security/security.tpl.html:77
+msgid "Paste the message of the error dialog (debug mode adds the records and the rules)"
+msgstr "Paste the message of the error dialog (debug mode adds the records and the rules)"
+
+#: src/features/security/security.tpl.html:77
+msgid "Access error message"
+msgstr "Access error message"
+
+#: src/features/security/security.tpl.html:78
+msgid "Diagnose"
+msgstr "Diagnose"
+
+#: src/features/security/security.tpl.html:85
+#: src/features/view/view.action.ts:25
+msgid "Domain"
+msgstr "Domain"
+
+#: src/features/security/security.tpl.html:86
+msgid "For the user"
+msgstr "For the user"
+
+#: src/features/security/security.tpl.html:125
+msgid "✓ No issue found."
+msgstr "✓ No issue found."
+
+#: src/features/security/security.ui.ts:199
+msgid "cannot evaluate: %s"
+msgstr "cannot evaluate: %s"
+
+#: src/features/security/security.ui.ts:266
+msgid "Log in as %s in an incognito window"
+msgstr "Log in as %s in an incognito window"
+
 #: src/features/view/view.action.ts:11
 msgid "Action & context"
 msgstr "Action & context"
@@ -403,226 +1115,218 @@ msgstr "Open Action Record ↗"
 msgid "Context"
 msgstr "Context"
 
-#: src/features/view/view.action.ts:25
-msgid "Domain"
-msgstr "Domain"
-
 #: src/features/view/view.action.ts:26
 msgid "Full action (JSON)"
 msgstr "Full action (JSON)"
 
-#: src/features/view/view.arch.ts:11
+#: src/features/view/view.arch.ts:12
 msgid "Combined arch"
 msgstr "Combined arch"
 
-#: src/features/view/view.arch.ts:15
-#: src/features/view/view.composition.ts:50
+#: src/features/view/view.arch.ts:16
+#: src/features/view/view.composition.ts:51
 msgid "No %s view."
 msgstr "No %s view."
 
-#: src/features/view/view.arch.ts:17
+#: src/features/view/view.arch.ts:18
 msgid "View #%s with every extension applied, as the webclient receives it (elements of groups you are not in are already removed)."
 msgstr "View #%s with every extension applied, as the webclient receives it (elements of groups you are not in are already removed)."
 
-#: src/features/view/view.composition.ts:17
+#: src/features/view/view.composition.ts:18
 msgid "How the view is built"
 msgstr "How the view is built"
 
-#: src/features/view/view.composition.ts:51
+#: src/features/view/view.composition.ts:52
 msgid "The inheritance tree needs Settings rights (base.group_system)."
 msgstr "The inheritance tree needs Settings rights (base.group_system)."
 
-#: src/features/view/view.composition.ts:54
+#: src/features/view/view.composition.ts:55
 msgid "%s views · %s modules"
 msgstr "%s views · %s modules"
 
-#: src/features/view/view.composition.ts:67
+#: src/features/view/view.composition.ts:68
 msgid "primary"
 msgstr "primary"
 
-#: src/features/view/view.composition.ts:68
+#: src/features/view/view.composition.ts:69
 msgid "%s elements restricted to groups"
 msgstr "%s elements restricted to groups"
 
-#: src/features/view/view.composition.ts:69
-#: src/features/view/view.field.ts:100
+#: src/features/view/view.composition.ts:70
+#: src/features/view/view.field.ts:101
 msgid "inactive"
 msgstr "inactive"
 
-#: src/features/view/view.composition.ts:92
+#: src/features/view/view.composition.ts:93
 msgid "Select a view to see what it does and its own arch."
 msgstr "Select a view to see what it does and its own arch."
 
-#: src/features/view/view.composition.ts:117
-#: src/features/view/view.field.ts:161
+#: src/features/view/view.composition.ts:118
+#: src/features/view/view.field.ts:162
 msgid "removed"
 msgstr "removed"
 
-#: src/features/view/view.composition.ts:122
+#: src/features/view/view.composition.ts:123
 msgid "What it does (%s)"
 msgstr "What it does (%s)"
 
-#: src/features/view/view.composition.ts:133
+#: src/features/view/view.composition.ts:134
 msgid "Restricted to groups (%s)"
 msgstr "Restricted to groups (%s)"
 
-#: src/features/view/view.composition.ts:141
+#: src/features/view/view.composition.ts:142
 msgid "Own arch (view #%s)"
 msgstr "Own arch (view #%s)"
 
-#: src/features/view/view.composition.ts:148
+#: src/features/view/view.composition.ts:149
 msgid "base view · %s fields"
 msgstr "base view · %s fields"
 
-#: src/features/view/view.composition.ts:150
+#: src/features/view/view.composition.ts:151
 msgid "+%s fields"
 msgstr "+%s fields"
 
-#: src/features/view/view.composition.ts:151
+#: src/features/view/view.composition.ts:152
 msgid "%s moved"
 msgstr "%s moved"
 
-#: src/features/view/view.composition.ts:152
+#: src/features/view/view.composition.ts:153
 msgid "%s attributes changed"
 msgstr "%s attributes changed"
 
-#: src/features/view/view.composition.ts:153
+#: src/features/view/view.composition.ts:154
 msgid "%s removed"
 msgstr "%s removed"
 
-#: src/features/view/view.composition.ts:154
+#: src/features/view/view.composition.ts:155
 msgid "+%s elements"
 msgstr "+%s elements"
 
-#: src/features/view/view.composition.ts:156
+#: src/features/view/view.composition.ts:157
 msgid "changes nothing visible"
 msgstr "changes nothing visible"
 
-#: src/features/view/view.field.ts:22
+#: src/features/view/view.field.ts:23
 msgid "One field"
 msgstr "One field"
 
-#: src/features/view/view.field.ts:28
+#: src/features/view/view.field.ts:29
 msgid "Picking… (Esc to cancel)"
 msgstr "Picking… (Esc to cancel)"
 
-#: src/features/view/view.field.ts:41
+#: src/features/view/view.field.ts:42
 msgid "Type a field, pick it on the page or in the list below: its story through the views shows here."
 msgstr "Type a field, pick it on the page or in the list below: its story through the views shows here."
 
-#: src/features/view/view.field.ts:74
+#: src/features/view/view.field.ts:75
 msgid "not a field of this model"
 msgstr "not a field of this model"
 
-#: src/features/view/view.field.ts:81
+#: src/features/view/view.field.ts:82
 msgid "The field is not invisible itself but is not on screen: it is on another notebook page, or a parent node (group/page/div) is invisible."
 msgstr "The field is not invisible itself but is not on screen: it is on another notebook page, or a parent node (group/page/div) is invisible."
 
-#: src/features/view/view.field.ts:84
+#: src/features/view/view.field.ts:85
 msgid "Not on this form."
 msgstr "Not on this form."
 
-#: src/features/view/view.field.ts:91
+#: src/features/view/view.field.ts:92
 msgid "The story through the views needs Settings rights (base.group_system)."
 msgstr "The story through the views needs Settings rights (base.group_system)."
 
-#: src/features/view/view.field.ts:112
+#: src/features/view/view.field.ts:113
 msgid "No view of this screen places or changes it."
 msgstr "No view of this screen places or changes it."
 
-#: src/features/view/view.field.ts:117
+#: src/features/view/view.field.ts:118
 msgid "on the field"
 msgstr "on the field"
 
-#: src/features/view/view.field.ts:119
+#: src/features/view/view.field.ts:120
 msgid "Groups set by the views: unknown without Settings rights (base.group_system)."
 msgstr "Groups set by the views: unknown without Settings rights (base.group_system)."
 
-#: src/features/view/view.field.ts:120
+#: src/features/view/view.field.ts:121
 msgid "None: every user who sees the view sees it."
 msgstr "None: every user who sees the view sees it."
 
-#: src/features/view/view.field.ts:131
+#: src/features/view/view.field.ts:132
 msgid "never"
 msgstr "never"
 
-#: src/features/view/view.field.ts:132
+#: src/features/view/view.field.ts:133
 msgid "error: %s"
 msgstr "error: %s"
 
-#: src/features/view/view.field.ts:132
+#: src/features/view/view.field.ts:133
 msgid "yes"
 msgstr "yes"
 
-#: src/features/view/view.field.ts:132
+#: src/features/view/view.field.ts:133
 msgid "no"
 msgstr "no"
 
-#: src/features/view/view.field.ts:150
+#: src/features/view/view.field.ts:151
 msgid "placed"
 msgstr "placed"
 
-#: src/features/view/view.field.ts:150
+#: src/features/view/view.field.ts:151
 msgid "in"
 msgstr "in"
 
-#: src/features/view/view.field.ts:151
+#: src/features/view/view.field.ts:152
 msgid "added"
 msgstr "added"
 
-#: src/features/view/view.field.ts:152
+#: src/features/view/view.field.ts:153
 msgid "moved"
 msgstr "moved"
 
-#: src/features/view/view.field.ts:153
+#: src/features/view/view.field.ts:154
 msgid "attributes changed:"
 msgstr "attributes changed:"
 
-#: src/features/view/view.field.ts:154
+#: src/features/view/view.field.ts:155
 msgid "restricted to groups"
 msgstr "restricted to groups"
 
-#: src/features/view/view.field.ts:157
+#: src/features/view/view.field.ts:158
 msgid "right after it"
 msgstr "right after it"
 
-#: src/features/view/view.field.ts:157
+#: src/features/view/view.field.ts:158
 msgid "right before it"
 msgstr "right before it"
 
-#: src/features/view/view.field.ts:157
+#: src/features/view/view.field.ts:158
 msgid "inside it"
 msgstr "inside it"
 
-#: src/features/view/view.field.ts:158
+#: src/features/view/view.field.ts:159
 msgid "adds"
 msgstr "adds"
 
-#: src/features/view/view.field.ts:160
+#: src/features/view/view.field.ts:161
 msgid "replaced by"
 msgstr "replaced by"
 
-#: src/features/view/view.field.ts:164
+#: src/features/view/view.field.ts:165
 msgid "used in"
 msgstr "used in"
 
-#: src/features/view/view.field.ts:164
+#: src/features/view/view.field.ts:165
 msgid "of"
 msgstr "of"
 
-#: src/features/view/view.field.ts:180
+#: src/features/view/view.field.ts:181
 msgid "No field in this view."
 msgstr "No field in this view."
 
-#: src/features/view/view.field.ts:189
-msgid "hidden"
-msgstr "hidden"
-
-#: src/features/view/view.field.ts:189
+#: src/features/view/view.field.ts:190
 msgid "not shown"
 msgstr "not shown"
 
-#: src/features/view/view.field.ts:202
+#: src/features/view/view.field.ts:203
 msgid "Filter name / label / widget"
 msgstr "Filter name / label / widget"
 
@@ -634,144 +1338,140 @@ msgstr "Webclient internals are not reachable."
 msgid "No form view is open."
 msgstr "No form view is open."
 
-#: src/features/view/view.overview.ts:17
+#: src/features/view/view.overview.ts:18
 msgid "Overview"
 msgstr "Overview"
 
-#: src/features/view/view.overview.ts:35
+#: src/features/view/view.overview.ts:36
 msgid "File"
 msgstr "File"
 
-#: src/features/view/view.overview.ts:36
+#: src/features/view/view.overview.ts:37
 msgid "none: a client action (%s)"
 msgstr "none: a client action (%s)"
 
-#: src/features/view/view.overview.ts:43
+#: src/features/view/view.overview.ts:44
 msgid "(no module)"
 msgstr "(no module)"
 
-#: src/features/view/view.overview.ts:45
-#: src/features/view/view.overview.ts:50
+#: src/features/view/view.overview.ts:46
+#: src/features/view/view.overview.ts:51
 msgid "Built from"
 msgstr "Built from"
 
-#: src/features/view/view.overview.ts:46
+#: src/features/view/view.overview.ts:47
 msgid "%s base + %s extensions · %s modules"
 msgstr "%s base + %s extensions · %s modules"
 
-#: src/features/view/view.overview.ts:47
+#: src/features/view/view.overview.ts:48
 msgid "%s inactive"
 msgstr "%s inactive"
 
-#: src/features/view/view.overview.ts:50
+#: src/features/view/view.overview.ts:51
 msgid "unknown: the inheritance needs Settings rights (base.group_system)"
 msgstr "unknown: the inheritance needs Settings rights (base.group_system)"
 
-#: src/features/view/view.overview.ts:56
+#: src/features/view/view.overview.ts:57
 msgid "Menu"
 msgstr "Menu"
 
-#: src/features/view/view.overview.ts:57
 #: src/features/view/view.overview.ts:58
+#: src/features/view/view.overview.ts:59
 msgid "Action"
 msgstr "Action"
 
-#: src/features/view/view.overview.ts:58
+#: src/features/view/view.overview.ts:59
 msgid "none: opened directly by its URL"
 msgstr "none: opened directly by its URL"
 
-#: src/features/view/view.overview.ts:63
+#: src/features/view/view.overview.ts:64
 msgid "new"
 msgstr "new"
 
-#: src/features/view/view.overview.ts:63
+#: src/features/view/view.overview.ts:64
 msgid "editing"
 msgstr "editing"
 
-#: src/features/view/view.overview.ts:63
+#: src/features/view/view.overview.ts:64
 msgid "read-only"
 msgstr "read-only"
 
-#: src/features/view/view.overview.ts:72
+#: src/features/view/view.overview.ts:73
 msgid "%s on the form"
 msgstr "%s on the form"
 
-#: src/features/view/view.overview.ts:73
+#: src/features/view/view.overview.ts:74
 msgid "%s hidden"
 msgstr "%s hidden"
 
-#: src/features/view/view.overview.ts:73
+#: src/features/view/view.overview.ts:74
 msgid "%s not shown"
 msgstr "%s not shown"
 
-#: src/features/view/view.overview.ts:74
+#: src/features/view/view.overview.ts:75
 msgid "%s read-only"
 msgstr "%s read-only"
 
-#: src/features/view/view.overview.ts:74
+#: src/features/view/view.overview.ts:75
 msgid "%s required"
 msgstr "%s required"
 
-#: src/features/view/view.overview.ts:75
+#: src/features/view/view.overview.ts:76
 msgid "%s expression errors"
 msgstr "%s expression errors"
 
-#: src/features/view/view.overview.ts:83
+#: src/features/view/view.overview.ts:84
 msgid "Views of the action"
 msgstr "Views of the action"
 
-#: src/features/view/view.overview.ts:84
+#: src/features/view/view.overview.ts:85
 msgid "search: %s"
 msgstr "search: %s"
 
-#: src/features/view/view.tpl.html:48
-#: src/features/view/view.tpl.html:55
-#: src/features/view/view.tpl.html:111
+#: src/features/view/view.tpl.html:25
+#: src/features/view/view.tpl.html:32
+#: src/features/view/view.tpl.html:83
 msgid "Show this line in the own arch"
 msgstr "Show this line in the own arch"
 
-#: src/features/view/view.tpl.html:65
+#: src/features/view/view.tpl.html:42
 msgid "Copy"
 msgstr "Copy"
 
-#: src/features/view/view.tpl.html:76
-#: src/features/view/view.tpl.html:76
+#: src/features/view/view.tpl.html:48
+#: src/features/view/view.tpl.html:48
 msgid "Field to inspect, e.g. partner_id"
 msgstr "Field to inspect, e.g. partner_id"
 
-#: src/features/view/view.tpl.html:78
+#: src/features/view/view.tpl.html:50
 msgid "⌖ Pick on Page"
 msgstr "⌖ Pick on Page"
 
-#: src/features/view/view.tpl.html:78
+#: src/features/view/view.tpl.html:50
 msgid "Click a field on the Odoo page (Esc to cancel)"
 msgstr "Click a field on the Odoo page (Esc to cancel)"
 
-#: src/features/view/view.tpl.html:89
+#: src/features/view/view.tpl.html:61
 msgid "Now"
 msgstr "Now"
 
-#: src/features/view/view.tpl.html:91
+#: src/features/view/view.tpl.html:63
 msgid "Its story through the views"
 msgstr "Its story through the views"
 
-#: src/features/view/view.tpl.html:93
-msgid "Groups"
-msgstr "Groups"
-
-#: src/features/view/view.tpl.html:118
+#: src/features/view/view.tpl.html:90
 msgid "Hidden"
 msgstr "Hidden"
 
-#: src/features/view/view.tpl.html:119
+#: src/features/view/view.tpl.html:91
 msgid "Not shown"
 msgstr "Not shown"
 
-#: src/features/view/view.tpl.html:120
+#: src/features/view/view.tpl.html:92
 msgid "Read-only"
 msgstr "Read-only"
 
-#: src/features/view/view.tpl.html:122
+#: src/features/view/view.tpl.html:94
 msgid "Expression error"
 msgstr "Expression error"
 
@@ -814,6 +1514,219 @@ msgstr "%s keys"
 #: src/ui/json-view.ts:71
 msgid "Show %s more (of %s)"
 msgstr "Show %s more (of %s)"
+
+msgid "Access on this record"
+msgstr "Access on this record"
+
+msgid "Access on this model"
+msgstr "Access on this model"
+
+msgid "+%s groups tried"
+msgstr "+%s groups tried"
+
+msgid "Click their name to log in as them in an incognito window: your session here stays."
+msgstr "Click their name to log in as them in an incognito window: your session here stays."
+
+msgid "Superuser: no ACL, no rule."
+msgstr "Superuser: no ACL, no rule."
+
+msgid "No ACL grants it to the user's groups."
+msgstr "No ACL grants it to the user's groups."
+
+msgid "Granted to %s. No record to check the rules against."
+msgstr "Granted to %s. No record to check the rules against."
+
+msgid "Granted to %s · the record passes the rules."
+msgstr "Granted to %s · the record passes the rules."
+
+msgid "Granted to %s · no rule applies."
+msgstr "Granted to %s · no rule applies."
+
+msgid "Refused by %s."
+msgstr "Refused by %s."
+
+msgid "A rule could not be checked: not certain."
+msgstr "A rule could not be checked: not certain."
+
+msgid "Applied: %s"
+msgstr "Applied: %s"
+
+msgid "server ✓"
+msgstr "server ✓"
+
+msgid "server ✗"
+msgstr "server ✗"
+
+msgid "server ?"
+msgstr "server ?"
+
+msgid "has_access, run by the server as you"
+msgstr "has_access, run by the server as you"
+
+msgid "Simulated from the ACLs and rules; \"server\" is Odoo's own answer (has_access) with the same companies."
+msgstr "Simulated from the ACLs and rules; \"server\" is Odoo's own answer (has_access) with the same companies."
+
+msgid "Simulated from the ACLs and rules with the user's groups and the companies above: nothing is written."
+msgstr "Simulated from the ACLs and rules with the user's groups and the companies above: nothing is written."
+
+msgid "Fields hidden from the user"
+msgstr "Fields hidden from the user"
+
+msgid "No field of %s is restricted to groups."
+msgstr "No field of %s is restricted to groups."
+
+msgid "%s of %s restricted fields hidden"
+msgstr "%s of %s restricted fields hidden"
+
+msgid "Filter fields"
+msgstr "Filter fields"
+
+msgid "Groups of the user"
+msgstr "Groups of the user"
+
+msgid "%s · %s groups"
+msgstr "%s · %s groups"
+
+msgid "Risks"
+msgstr "Risks"
+
+msgid "Compare with another user"
+msgstr "Compare with another user"
+
+msgid "Trying %s: every part is simulated with it, nothing is written."
+msgstr "Trying %s: every part is simulated with it, nothing is written."
+
+msgid "implied"
+msgstr "implied"
+
+msgid "trying"
+msgstr "trying"
+
+msgid "Simulate this group in every part, nothing is written"
+msgstr "Simulate this group in every part, nothing is written"
+
+msgid "Compare with…"
+msgstr "Compare with…"
+
+msgid "On %s"
+msgstr "On %s"
+
+msgid "Only %s (%s)"
+msgstr "Only %s (%s)"
+
+msgid "Groups: %s in common"
+msgstr "Groups: %s in common"
+
+msgid "This Odoo"
+msgstr "This Odoo"
+
+msgid "Rights on %s"
+msgstr "Rights on %s"
+
+msgid "%s ACLs · %s rules"
+msgstr "%s ACLs · %s rules"
+
+msgid "(every user)"
+msgstr "(every user)"
+
+msgid "not for the user"
+msgstr "not for the user"
+
+msgid "Companies on:"
+msgstr "Companies on:"
+
+msgid "Read"
+msgstr "Read"
+
+msgid "Write"
+msgstr "Write"
+
+msgid "Create"
+msgstr "Create"
+
+msgid "Delete"
+msgstr "Delete"
+
+msgid "ACL / group"
+msgstr "ACL / group"
+
+msgid "allowed"
+msgstr "allowed"
+
+msgid "refused"
+msgstr "refused"
+
+msgid "unknown"
+msgstr "unknown"
+
+msgid "Why"
+msgstr "Why"
+
+msgid "Reading the ACLs and record rules needs Access Rights (base.group_erp_manager): the rule-by-rule explanation and the groups that would allow an operation are not available."
+msgstr "Reading the ACLs and record rules needs Access Rights (base.group_erp_manager): the rule-by-rule explanation and the groups that would allow an operation are not available."
+
+msgid "%s operations refused"
+msgstr "%s operations refused"
+
+msgid "everything allowed"
+msgstr "everything allowed"
+
+msgid "ACL"
+msgstr "ACL"
+
+msgid "none for the user's groups; granted to: %s"
+msgstr "none for the user's groups; granted to: %s"
+
+msgid "no ACL grants it to anyone: only the superuser"
+msgstr "no ACL grants it to anyone: only the superuser"
+
+msgid "none apply to the user for this operation"
+msgstr "none apply to the user for this operation"
+
+msgid "every global rule (and each parent's) AND any group rule"
+msgstr "every global rule (and each parent's) AND any group rule"
+
+msgid "no record: the rules are checked on a record"
+msgstr "no record: the rules are checked on a record"
+
+msgid "via %s → %s"
+msgstr "via %s → %s"
+
+msgid "global"
+msgstr "global"
+
+msgid "group"
+msgstr "group"
+
+msgid "matches"
+msgstr "matches"
+
+msgid "no match"
+msgstr "no match"
+
+msgid "Groups that would allow it:"
+msgstr "Groups that would allow it:"
+
+msgid "also allows: %s"
+msgstr "also allows: %s"
+
+msgid "implies %s more groups"
+msgstr "implies %s more groups"
+
+msgid "What else does it open?"
+msgstr "What else does it open?"
+
+msgid "new rights on %s other models"
+msgstr "new rights on %s other models"
+
+msgid "no new right on other models"
+msgstr "no new right on other models"
+
+msgid "The ACLs of these groups on every model, beyond what the user has"
+msgstr "The ACLs of these groups on every model, beyond what the user has"
+
+msgid "… and %s more groups"
+msgstr "… and %s more groups"
 
 msgid "… (%s characters)"
 msgstr "… (%s characters)"
@@ -895,9 +1808,6 @@ msgstr "Field the views touch (e.g. partner_id)"
 
 msgid "Views Touching It"
 msgstr "Views Touching It"
-
-msgid "Needs Settings rights (base.group_system)."
-msgstr "Needs Settings rights (base.group_system)."
 
 msgid "Search or type: sale; stock; my_module"
 msgstr "Search or type: sale; stock; my_module"
@@ -991,9 +1901,6 @@ msgstr "Category"
 
 msgid "All Categories"
 msgstr "All Categories"
-
-msgid "Remove"
-msgstr "Remove"
 
 msgid "// JavaScript with env, print, Command. ⌘/Ctrl+Enter runs it."
 msgstr "// JavaScript with env, print, Command. ⌘/Ctrl+Enter runs it."
@@ -1283,99 +2190,6 @@ msgstr "A rule could not be evaluated, not certain."
 msgid "ACL: %s · %s rules pass."
 msgstr "ACL: %s · %s rules pass."
 
-msgid "No ACL: only the superuser can access this model."
-msgstr "No ACL: only the superuser can access this model."
-
-msgid "ACL \"%s\" has no group → applies to EVERY user, portal/public included (%s)."
-msgstr "ACL \"%s\" has no group → applies to EVERY user, portal/public included (%s)."
-
-msgid "ACL \"%s\" grants %s to %s."
-msgstr "ACL \"%s\" grants %s to %s."
-
-msgid "Has company_id but no global multi-company rule → records may leak across companies."
-msgstr "Has company_id but no global multi-company rule → records may leak across companies."
-
-msgid "Field \"%s\" looks sensitive but has no groups=."
-msgstr "Field \"%s\" looks sensitive but has no groups=."
-
-msgid "Not served over HTTPS."
-msgstr "Not served over HTTPS."
-
-msgid "Cannot read the session_id cookie."
-msgstr "Cannot read the session_id cookie."
-
-msgid "session_id cookie is not HttpOnly → readable by JS/XSS."
-msgstr "session_id cookie is not HttpOnly → readable by JS/XSS."
-
-msgid "session_id cookie lacks the Secure flag."
-msgstr "session_id cookie lacks the Secure flag."
-
-msgid "session_id cookie is SameSite=None → larger CSRF surface."
-msgstr "session_id cookie is SameSite=None → larger CSRF surface."
-
-msgid "Missing Strict-Transport-Security (HSTS) header."
-msgstr "Missing Strict-Transport-Security (HSTS) header."
-
-msgid "Missing X-Frame-Options / CSP frame-ancestors → clickjacking."
-msgstr "Missing X-Frame-Options / CSP frame-ancestors → clickjacking."
-
-msgid "Missing X-Content-Type-Options: nosniff."
-msgstr "Missing X-Content-Type-Options: nosniff."
-
-msgid "Missing Content-Security-Policy."
-msgstr "Missing Content-Security-Policy."
-
-msgid "Header %s discloses a version: %s"
-msgstr "Header %s discloses a version: %s"
-
-msgid "Database manager has NO master password (default \"admin\")!"
-msgstr "Database manager has NO master password (default \"admin\")!"
-
-msgid "/web/database/manager is reachable → block /web/database/* at the proxy or set list_db = False."
-msgstr "/web/database/manager is reachable → block /web/database/* at the proxy or set list_db = False."
-
-msgid "list_db is on: database names are exposed (%s)."
-msgstr "list_db is on: database names are exposed (%s)."
-
-msgid "Server version is public via /web/webclient/version_info: %s"
-msgstr "Server version is public via /web/webclient/version_info: %s"
-
-msgid "__system__ (superuser): bypasses every ACL and record rule."
-msgstr "__system__ (superuser): bypasses every ACL and record rule."
-
-msgid "Settings administrator (base.group_system)."
-msgstr "Settings administrator (base.group_system)."
-
-msgid "Access Rights manager (base.group_erp_manager): can grant itself any group."
-msgstr "Access Rights manager (base.group_erp_manager): can grant itself any group."
-
-msgid "Has Technical Features (base.group_no_one)."
-msgstr "Has Technical Features (base.group_no_one)."
-
-msgid "Public user."
-msgstr "Public user."
-
-msgid "Portal user (share)."
-msgstr "Portal user (share)."
-
-msgid "Login \"admin\" is the default, easy to guess."
-msgstr "Login \"admin\" is the default, easy to guess."
-
-msgid "auth_totp is not installed → no 2FA."
-msgstr "auth_totp is not installed → no 2FA."
-
-msgid "2FA (TOTP) is not enabled."
-msgstr "2FA (TOTP) is not enabled."
-
-msgid "%s API key(s): direct RPC calls with this user's rights."
-msgstr "%s API key(s): direct RPC calls with this user's rights."
-
-msgid "User is archived."
-msgstr "User is archived."
-
-msgid "py_js is not loaded"
-msgstr "py_js is not loaded"
-
 msgid "HIGH"
 msgstr "HIGH"
 
@@ -1391,32 +2205,11 @@ msgstr "INFO"
 msgid "Needs Access Rights (base.group_erp_manager)."
 msgstr "Needs Access Rights (base.group_erp_manager)."
 
-msgid "✓ No issue found."
-msgstr "✓ No issue found."
-
-msgid "Search a user by name or login…"
-msgstr "Search a user by name or login…"
-
-msgid "Log in as %s in an incognito window"
-msgstr "Log in as %s in an incognito window"
-
-msgid "User"
-msgstr "User"
-
-msgid "My User"
-msgstr "My User"
-
-msgid "me"
-msgstr "me"
-
 msgid "%s · #%s · %s (%s companies) · %s groups"
 msgstr "%s · #%s · %s (%s companies) · %s groups"
 
 msgid "Simulates the selected user's rights without logging in as them (reading other users' groups needs admin rights)."
 msgstr "Simulates the selected user's rights without logging in as them (reading other users' groups needs admin rights)."
-
-msgid "Click their name to log in as them in an incognito window: your session here stays."
-msgstr "Click their name to log in as them in an incognito window: your session here stays."
 
 msgid "User risks"
 msgstr "User risks"
@@ -1429,9 +2222,6 @@ msgstr "ACL (ir.model.access) — green = applies to the user"
 
 msgid "No ACL."
 msgstr "No ACL."
-
-msgid "ACL / group"
-msgstr "ACL / group"
 
 msgid "(all users)"
 msgstr "(all users)"
@@ -1448,35 +2238,11 @@ msgstr "Real groups only: the tried groups are not counted here."
 msgid "Field · label · for this user"
 msgstr "Field · label · for this user"
 
-msgid "visible"
-msgstr "visible"
-
 msgid "Model configuration audit"
 msgstr "Model configuration audit"
 
 msgid "Instance"
 msgstr "Instance"
-
-msgid "Session"
-msgstr "Session"
-
-msgid "Companies"
-msgstr "Companies"
-
-msgid "Odoo's built-in /web/become route, base.group_system only"
-msgstr "Odoo's built-in /web/become route, base.group_system only"
-
-msgid "Switch the current session to superuser (bypasses every rule)?"
-msgstr "Switch the current session to superuser (bypasses every rule)?"
-
-msgid "Become Superuser"
-msgstr "Become Superuser"
-
-msgid "System parameters (ir.config_parameter)"
-msgstr "System parameters (ir.config_parameter)"
-
-msgid "Filter key / value"
-msgstr "Filter key / value"
 
 msgid "%s parameters"
 msgstr "%s parameters"
@@ -1490,47 +2256,11 @@ msgstr "Key"
 msgid "Value"
 msgstr "Value"
 
-msgid "No parameter."
-msgstr "No parameter."
-
-msgid "Instance check"
-msgstr "Instance check"
-
 msgid "Check failed"
 msgstr "Check failed"
 
-msgid "Raw data"
-msgstr "Raw data"
-
-msgid "Check Again"
-msgstr "Check Again"
-
-msgid "implied"
-msgstr "implied"
-
-msgid "Remove %s from %s?"
-msgstr "Remove %s from %s?"
-
 msgid "Simulate this group below, nothing is written"
 msgstr "Simulate this group below, nothing is written"
-
-msgid "Try"
-msgstr "Try"
-
-msgid "Stop trying it"
-msgstr "Stop trying it"
-
-msgid "Implied by %s"
-msgstr "Implied by %s"
-
-msgid "trying"
-msgstr "trying"
-
-msgid "%s groups"
-msgstr "%s groups"
-
-msgid "Filter or try a group…"
-msgstr "Filter or try a group…"
 
 msgid "%s/%s groups"
 msgstr "%s/%s groups"
@@ -1538,44 +2268,11 @@ msgstr "%s/%s groups"
 msgid "Trying %s: every card below is simulated with it."
 msgstr "Trying %s: every card below is simulated with it."
 
-msgid "Add %s to %s?"
-msgstr "Add %s to %s?"
-
-msgid "Apply"
-msgstr "Apply"
-
-msgid "Discard"
-msgstr "Discard"
-
-msgid "no result"
-msgstr "no result"
-
-msgid "cannot evaluate: %s"
-msgstr "cannot evaluate: %s"
-
-msgid "You cannot read this record yourself, so its rules cannot be checked."
-msgstr "You cannot read this record yourself, so its rules cannot be checked."
-
 msgid "Try:"
 msgstr "Try:"
 
 msgid "Also adds %s"
 msgstr "Also adds %s"
-
-msgid "No single group allows it."
-msgstr "No single group allows it."
-
-msgid "server ✓"
-msgstr "server ✓"
-
-msgid "server ✗"
-msgstr "server ✗"
-
-msgid "server ?"
-msgstr "server ?"
-
-msgid "has_access, run by the server as you"
-msgstr "has_access, run by the server as you"
 
 msgid "ALLOWED"
 msgstr "ALLOWED"
@@ -1595,14 +2292,8 @@ msgstr "Rule · operations · result"
 msgid "Groups · domain"
 msgstr "Groups · domain"
 
-msgid "This model has no record rule."
-msgstr "This model has no record rule."
-
 msgid "Assumes the user selected every allowed company. Rules of parent models through _inherits are not counted. This is a simulation; for your own user, “server” is the exact answer (has_access)."
 msgstr "Assumes the user selected every allowed company. Rules of parent models through _inherits are not counted. This is a simulation; for your own user, “server” is the exact answer (has_access)."
-
-msgid "Reading the ACLs and record rules needs Access Rights (base.group_erp_manager): the rule-by-rule explanation and the groups that would allow an operation are not available."
-msgstr "Reading the ACLs and record rules needs Access Rights (base.group_erp_manager): the rule-by-rule explanation and the groups that would allow an operation are not available."
 
 msgid "Apps To Export"
 msgstr "Apps To Export"

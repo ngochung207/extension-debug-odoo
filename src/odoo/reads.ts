@@ -24,12 +24,7 @@ export const readRules = (model: string) => call<IrRule[]>('ir.rule', 'search_re
  * read. Each xmlid goes through ir.model.data.check_object_reference, which only reads the group itself: no Access
  * Rights needed (ir.model.data is theirs). Unknown or unreadable: left out (callers show the xmlid). Cached per page load. */
 export async function groupNames(xmlids: readonly string[]): Promise<Map<string, string>> {
-  const ids = await Promise.all(xmlids.map((xmlid) => cached(`group id ${xmlid}`, async () => {
-    const [module, ...name] = xmlid.split('.');
-    if (!module || !name.length) return null;
-    const ref = await call<[string, number | false]>('ir.model.data', 'check_object_reference', [module, name.join('.')]).catch(() => null);
-    return ref?.[0] === 'res.groups' && typeof ref[1] === 'number' ? ref[1] : null;
-  })));
+  const ids = await groupIds(xmlids);
   const known = ids.filter((id): id is number => id != null);
   const rows = known.length ? await call<{ id: number; full_name: string }[]>('res.groups', 'read', [known, ['full_name']]).catch(() => []) : [];
   const byId = new Map(rows.map((g) => [g.id, g.full_name]));
@@ -38,3 +33,12 @@ export async function groupNames(xmlids: readonly string[]): Promise<Map<string,
     return name ? [[xmlid, name] as const] : [];
   }));
 }
+
+/** Group xmlids → their ids (null: no such group), through ir.model.data.check_object_reference (no Access Rights
+ * needed). Cached per page load. */
+export const groupIds = (xmlids: readonly string[]): Promise<(number | null)[]> => Promise.all(xmlids.map((xmlid) => cached(`group id ${xmlid}`, async () => {
+  const [module, ...name] = xmlid.split('.');
+  if (!module || !name.length) return null;
+  const ref = await call<[string, number | false]>('ir.model.data', 'check_object_reference', [module, name.join('.')]).catch(() => null);
+  return ref?.[0] === 'res.groups' && typeof ref[1] === 'number' ? ref[1] : null;
+})));
