@@ -1,0 +1,29 @@
+name: CI
+on:
+  push:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Type check (TypeScript 7, one project per execution context)
+        run: npm run typecheck
+      - name: Unit tests
+        run: npm test
+      - name: Build
+        run: npm run build
+      - name: Page functions are self-contained
+        run: npm run check:page
+      - name: No markup in .ts files
+        run: npm run check:markup
+      - name: Imports follow the dependency direction
+        run: npm run check:imports
+      - name: i18n up to date
+        run: npm run i18n && git diff --exit-code static/i18n/

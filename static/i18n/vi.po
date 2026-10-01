@@ -1,0 +1,1136 @@
+# Odoo Debug — Tiếng Việt
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Debug\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: vi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/entrypoints/panel/index.html:14
+msgid "Connecting…"
+msgstr "Đang kết nối…"
+
+#: src/entrypoints/panel/index.html:17
+#: src/entrypoints/panel/index.html:17
+msgid "Reload Data"
+msgstr "Tải lại dữ liệu"
+
+#: src/entrypoints/panel/index.html:18
+msgid "Minimize (the Odoo Debug button reopens it)"
+msgstr "Thu nhỏ (bấm nút Odoo Debug để mở lại)"
+
+#: src/entrypoints/panel/index.html:18
+msgid "Minimize"
+msgstr "Thu nhỏ"
+
+#: src/entrypoints/panel/index.html:19
+msgid "Full Screen (Esc to exit)"
+msgstr "Toàn màn hình (Esc để thoát)"
+
+#: src/entrypoints/panel/index.html:19
+msgid "Full Screen"
+msgstr "Toàn màn hình"
+
+#: src/entrypoints/panel/index.html:22
+msgid "Record"
+msgstr "Record"
+
+#: src/entrypoints/panel/index.html:23
+msgid "View"
+msgstr "View"
+
+#: src/entrypoints/panel/index.html:24
+msgid "RPC"
+msgstr "RPC"
+
+#: src/entrypoints/panel/index.html:25
+msgid "Code"
+msgstr "Code"
+
+#: src/entrypoints/panel/index.html:26
+msgid "Security"
+msgstr "Security"
+
+#: src/entrypoints/panel/index.html:27
+msgid "Translations"
+msgstr "Translations"
+
+#: src/entrypoints/panel/index.html:28
+msgid "Apps"
+msgstr "Apps"
+
+#: src/entrypoints/panel/index.html:29
+msgid "Perf"
+msgstr "Perf"
+
+#: src/entrypoints/panel/index.ts:43
+#: src/entrypoints/panel/index.ts:44
+msgid "Cannot read this tab: %s"
+msgstr "Không đọc được tab này: %s"
+
+#: src/entrypoints/panel/index.ts:43
+msgid "The current tab is not an Odoo page."
+msgstr "Tab hiện tại không phải trang Odoo."
+
+#: src/entrypoints/panel/index.ts:46
+msgid "Not available on Odoo %s: %s"
+msgstr "Không dùng được trên Odoo %s: %s"
+
+#: src/entrypoints/panel/index.ts:93
+msgid "Odoo %s is not tested: the panel uses its Odoo %s support, some cards may fail."
+msgstr "Odoo %s chưa được kiểm thử: panel dùng phần hỗ trợ Odoo %s, một số card có thể lỗi."
+
+#: src/entrypoints/panel/index.ts:94
+msgid "Odoo %s is older than every supported version: some cards may fail."
+msgstr "Odoo %s cũ hơn mọi phiên bản được hỗ trợ: một số card có thể lỗi."
+
+#: src/entrypoints/panel/index.ts:95
+msgid "This database lacks fields the panel expects for Odoo %s: %s"
+msgstr "Database này thiếu các field panel cần cho Odoo %s: %s"
+
+#: src/entrypoints/panel/index.ts:99
+msgid "Odoo %s, supported"
+msgstr "Odoo %s, được hỗ trợ"
+
+#: src/entrypoints/panel/panel.tpl.html:5
+msgid "Not an Odoo page"
+msgstr "Không phải trang Odoo"
+
+#: src/entrypoints/popup/index.html:17
+msgid "This page"
+msgstr "Trang hiện tại"
+
+#: src/entrypoints/popup/index.html:20
+msgid "Show / Hide Panel"
+msgstr "Hiện / ẩn panel"
+
+#: src/entrypoints/popup/index.html:22
+#: src/entrypoints/popup/index.html:23
+msgid "Debug Mode"
+msgstr "Chế độ debug"
+
+#: src/entrypoints/popup/index.html:24
+msgid "Keep it on for this Odoo"
+msgstr "Luôn bật cho Odoo này"
+
+#: src/entrypoints/popup/index.html:27
+msgid "Language"
+msgstr "Ngôn ngữ"
+
+#: src/entrypoints/popup/index.html:31
+#: src/entrypoints/popup/index.html:32
+msgid "Theme"
+msgstr "Giao diện"
+
+#: src/entrypoints/popup/index.html:35
+msgid "Shortcuts"
+msgstr "Phím tắt"
+
+#: src/entrypoints/popup/index.html:36
+msgid "Change"
+msgstr "Đổi"
+
+#: src/entrypoints/popup/index.html:38
+msgid "Tip: ⌥/Alt + click a field on the Odoo page to copy its technical name."
+msgstr "Mẹo: ⌥/Alt + click vào một field trên trang Odoo để copy tên kỹ thuật."
+
+#: src/entrypoints/popup/index.ts:11
+msgid "System"
+msgstr "Hệ thống"
+
+#: src/entrypoints/popup/index.ts:11
+msgid "Light"
+msgstr "Sáng"
+
+#: src/entrypoints/popup/index.ts:11
+msgid "Dark"
+msgstr "Tối"
+
+#: src/entrypoints/popup/index.ts:46
+msgid "panel"
+msgstr "panel"
+
+#: src/entrypoints/popup/index.ts:46
+msgid "debug"
+msgstr "debug"
+
+#: src/extension/run-in-tab.ts:16
+msgid "No tab is open."
+msgstr "Không có tab đang mở."
+
+#: src/odoo/detect.ts:32
+msgid "Cannot read the Odoo version (%s)."
+msgstr "Không đọc được phiên bản Odoo (%s)."
+
+#: src/odoo/rpc.ts:25
+msgid "No response — is this an Odoo page?"
+msgstr "Không có phản hồi — đây có phải trang Odoo?"
+
+#: src/ui/components.tpl.html:28
+msgid "Traceback"
+msgstr "Traceback"
+
+#: src/ui/components.tpl.html:42
+msgid "Click to copy"
+msgstr "Bấm để copy"
+
+msgid "Needs Settings rights (base.group_system)."
+msgstr "Cần quyền Settings (base.group_system)."
+
+msgid "Search or type: sale; stock; my_module"
+msgstr "Tìm hoặc gõ: sale; stock; my_module"
+
+msgid "Modules"
+msgstr "Module"
+
+msgid "%s/%s modules"
+msgstr "%s/%s module"
+
+msgid "Running…"
+msgstr "Đang chạy…"
+
+msgid "error"
+msgstr "lỗi"
+
+msgid "Reloading the Odoo page…"
+msgstr "Đang tải lại trang Odoo…"
+
+msgid "Enter at least one module."
+msgstr "Nhập ít nhất một module."
+
+msgid "Activate"
+msgstr "Kích hoạt"
+
+msgid "Update Apps List, then install every module (with its dependencies)"
+msgstr "Cập nhật danh sách ứng dụng, rồi cài mọi module (kèm các module phụ thuộc)"
+
+msgid "Update Apps List"
+msgstr "Cập nhật danh sách ứng dụng"
+
+msgid "%s updated · %s added"
+msgstr "%s cập nhật · %s thêm mới"
+
+msgid "Not found, even after Update Apps List: %s"
+msgstr "Không tìm thấy, kể cả sau khi cập nhật danh sách ứng dụng: %s"
+
+msgid "Not installable: %s"
+msgstr "Không cài được: %s"
+
+msgid "Waiting to be uninstalled: %s"
+msgstr "Đang chờ gỡ cài đặt: %s"
+
+msgid "Already installed: %s"
+msgstr "Đã cài sẵn: %s"
+
+msgid "Install %s"
+msgstr "Cài %s"
+
+msgid "Upgrade"
+msgstr "Nâng cấp"
+
+msgid "Upgrade every module (they must be installed)"
+msgstr "Nâng cấp mọi module (phải đã được cài)"
+
+msgid "Not found: %s"
+msgstr "Không tìm thấy: %s"
+
+msgid "Not installed (use Activate): %s"
+msgstr "Chưa cài (hãy dùng Kích hoạt): %s"
+
+msgid "Upgrade %s"
+msgstr "Nâng cấp %s"
+
+msgid "Open Forms ↗"
+msgstr "Mở form ↗"
+
+msgid "Open the form of every module in a new tab"
+msgstr "Mở form của từng module trong tab mới"
+
+msgid "Opened %s tab(s): %s"
+msgstr "Đã mở %s tab: %s"
+
+msgid "Not found: %s (Activate runs Update Apps List first)"
+msgstr "Không tìm thấy: %s (Kích hoạt sẽ cập nhật danh sách ứng dụng trước)"
+
+msgid "Installed"
+msgstr "Đã cài"
+
+msgid "Not Installed"
+msgstr "Chưa cài"
+
+msgid "Extra"
+msgstr "Bổ sung"
+
+msgid "Filters"
+msgstr "Bộ lọc"
+
+msgid " or "
+msgstr " hoặc "
+
+msgid "Category"
+msgstr "Danh mục"
+
+msgid "All Categories"
+msgstr "Mọi danh mục"
+
+msgid "Remove"
+msgstr "Bỏ"
+
+msgid "// JavaScript with env, print, Command. ⌘/Ctrl+Enter runs it."
+msgstr "// JavaScript với env, print, Command. ⌘/Ctrl+Enter để chạy."
+
+msgid "After writes, reload the data of the view on screen (Odoo's soft_reload), without reloading the page"
+msgstr "Sau khi ghi, nạp lại dữ liệu của view đang mở (soft_reload của Odoo), không reload cả trang"
+
+msgid "Auto Refresh"
+msgstr "Tự làm mới"
+
+msgid "Run (⌘/Ctrl+Enter)"
+msgstr "Chạy (⌘/Ctrl+Enter)"
+
+msgid "Run"
+msgstr "Chạy"
+
+msgid "Guide"
+msgstr "Hướng dẫn"
+
+msgid "Available variables, recordset API, examples"
+msgstr "Các biến có sẵn, API của recordset, ví dụ"
+
+msgid "Lets the code call write, create, unlink and any other method that is not a read"
+msgstr "Cho phép code gọi write, create, unlink và mọi method không phải đọc"
+
+msgid "Read-only by default. With writes allowed, each call is committed at once: there is no rollback."
+msgstr "Mặc định chỉ đọc. Khi cho phép ghi, mỗi lời gọi được commit ngay: không có rollback."
+
+msgid "Allow Writes"
+msgstr "Cho phép ghi"
+
+msgid "Runs as %s (uid %s): their access rights, record rules and companies apply."
+msgstr "Chạy với user %s (uid %s): áp dụng đúng quyền truy cập, record rule và công ty của user đó."
+
+msgid "page refreshed"
+msgstr "đã làm mới trang"
+
+msgid "page not refreshed"
+msgstr "chưa làm mới trang"
+
+msgid "ok"
+msgstr "ok"
+
+msgid "read-only"
+msgstr "chỉ đọc"
+
+msgid "writes allowed"
+msgstr "cho phép ghi"
+
+msgid "%s ms"
+msgstr "%s ms"
+
+msgid "%s calls"
+msgstr "%s lời gọi"
+
+msgid "%s write calls"
+msgstr "%s lời gọi ghi"
+
+msgid "No return value: end with return … to see one."
+msgstr "Không có giá trị trả về: kết thúc bằng return … để xem kết quả."
+
+msgid "(line %s)"
+msgstr "(dòng %s)"
+
+msgid "This page's Content-Security-Policy forbids running code (a proxy in front of Odoo adds script-src)."
+msgstr "Content-Security-Policy của trang này không cho chạy code (proxy trước Odoo đã thêm script-src)."
+
+msgid "%s rows (first %s shown)"
+msgstr "%s dòng (hiện %s dòng đầu)"
+
+msgid "%s rows"
+msgstr "%s dòng"
+
+msgid "JSON"
+msgstr "JSON"
+
+msgid "Calls (%s)"
+msgstr "Lời gọi (%s)"
+
+msgid "write"
+msgstr "ghi"
+
+msgid "Copy code"
+msgstr "Sao chép code"
+
+msgid "Copied"
+msgstr "Đã sao chép"
+
+msgid "Available variables:"
+msgstr "Các biến có sẵn:"
+
+msgid "environment of the logged-in user, with their access rights and record rules; env['res.partner'] is a void recordset"
+msgstr "environment của user đang đăng nhập, theo đúng quyền truy cập và record rule của họ; env['res.partner'] là recordset rỗng"
+
+msgid "current user, current company, active companies"
+msgstr "user hiện tại, công ty hiện tại, các công ty đang bật"
+
+msgid "user id, context sent with every call, language"
+msgstr "id của user, context gửi kèm mọi lời gọi, ngôn ngữ"
+
+msgid "record of an external id, if you can read it"
+msgstr "record của một external id, nếu bạn có quyền đọc"
+
+msgid "shows values above the result"
+msgstr "hiển thị giá trị phía trên kết quả"
+
+msgid "x2many commands namespace: Command.create(vals), link(id), set(ids)…"
+msgstr "các lệnh cho field x2many: Command.create(vals), link(id), set(ids)…"
+
+msgid "Recordsets:"
+msgstr "Recordset:"
+
+msgid "read from the server"
+msgstr "đọc dữ liệu từ server"
+
+msgid "work like in Python"
+msgstr "dùng như trong Python"
+
+msgid "field value of a single record, as in Python; await it inside an expression: if (await rec.state === 'sale')"
+msgstr "giá trị field của một record, như trong Python; dùng trong biểu thức thì phải await: if (await rec.state === 'sale')"
+
+msgid "records one by one; each field is read once for all of them"
+msgstr "duyệt từng record; mỗi field chỉ đọc một lần cho tất cả"
+
+msgid "writes the field, like in Python (needs \"Allow Writes\"); later lines see the new value"
+msgstr "ghi field, như trong Python (cần \"Cho phép ghi\"); các dòng sau đọc được giá trị mới"
+
+msgid "record ids, first id, count"
+msgstr "danh sách id, id đầu tiên, số record"
+
+msgid "write to the server: need \"Allow Writes\""
+msgstr "ghi xuống server: cần tick \"Cho phép ghi\""
+
+msgid "any other public method, called on these records (also needs \"Allow Writes\")"
+msgstr "mọi method public khác, gọi trên các record này (cũng cần \"Cho phép ghi\")"
+
+msgid "a method called on the model, without records"
+msgstr "gọi method trên model, không kèm record"
+
+msgid "Suggestions:"
+msgstr "Gợi ý:"
+
+msgid "models of the installed modules"
+msgstr "model của các module đang cài"
+
+msgid "fields of the last env[…] model, following relations (partner_id.country_id.)"
+msgstr "field của model env[…] gần nhất, đi theo quan hệ (partner_id.country_id.)"
+
+msgid "recordset methods, env and Command members"
+msgstr "method của recordset, thành phần của env và Command"
+
+msgid "pick, insert, close, ask for suggestions"
+msgstr "chọn, chèn, đóng, gọi gợi ý"
+
+msgid "To show a result, return it: lists of records show as a table."
+msgstr "Muốn xem kết quả thì return nó: danh sách record hiển thị dạng bảng."
+
+msgid "JavaScript, not Python: await every server call, lists and objects in JS syntax (true / false / null)."
+msgstr "JavaScript, không phải Python: await mọi lời gọi server, list và object viết theo cú pháp JS (true / false / null)."
+
+msgid "Every call goes through /web/dataset/call_kw as the logged-in user: no sudo(), no SQL, no private _methods. Methods that switch to sudo() inside still do so, as when clicked in Odoo."
+msgstr "Mọi lời gọi đi qua /web/dataset/call_kw bằng user đang đăng nhập: không có sudo(), không SQL, không gọi được _method private. Method nào tự sudo() bên trong thì vẫn sudo(), như khi bấm trong Odoo."
+
+msgid "The code runs in the Odoo page with its own JavaScript rights: only run code you understand. An endless loop freezes the page (reload it)."
+msgstr "Code chạy trong trang Odoo với toàn quyền JavaScript của trang: chỉ chạy code bạn hiểu. Vòng lặp vô hạn sẽ treo trang (tải lại trang)."
+
+msgid "%s writes: blocked in read-only mode (tick \"Allow Writes\" to run it)"
+msgstr "%s ghi dữ liệu: bị chặn ở chế độ chỉ đọc (tick \"Cho phép ghi\" để chạy)"
+
+msgid "Stopped after %s calls"
+msgstr "Đã dừng sau %s lời gọi"
+
+msgid "%s has no field %s"
+msgstr "%s không có field %s"
+
+msgid "%s.%s is not relational"
+msgstr "%s.%s không phải field quan hệ"
+
+msgid "Expected singleton: %s"
+msgstr "Cần đúng một record: %s"
+
+msgid "%s is read from the server: await it before using its value"
+msgstr "%s được đọc từ server: hãy await trước khi dùng giá trị"
+
+msgid "No view to refresh on this page"
+msgstr "Trang này không có view nào để làm mới"
+
+msgid "Suggestions"
+msgstr "Gợi ý"
+
+msgid "Cannot call /web/set_profiling"
+msgstr "Không gọi được /web/set_profiling"
+
+msgid "Profiling is not enabled on this database.\nEnable it for 5 minutes? (writes ir.config_parameter base.profiling_enabled_until)"
+msgstr "Profiling chưa được bật cho database này.\nBật trong 5 phút? (ghi ir.config_parameter base.profiling_enabled_until)"
+
+msgid "Profiling could not be enabled."
+msgstr "Vẫn chưa bật được profiling."
+
+msgid "Stop Profiling"
+msgstr "Tắt profiling"
+
+msgid "Start Profiling"
+msgstr "Bật profiling"
+
+msgid "RECORDING"
+msgstr "ĐANG ĐO"
+
+msgid "off"
+msgstr "tắt"
+
+msgid "since %s"
+msgstr "từ %s"
+
+msgid "Each request of this session writes one ir.profile row; ⟳ reloads the list."
+msgstr "Mỗi request của phiên này ghi một dòng ir.profile; ⟳ để tải lại danh sách."
+
+msgid "Records the SQL + Python stacks of every request of this session (Odoo's built-in profiler, base.group_system)."
+msgstr "Ghi lại SQL + stack Python của mọi request trong phiên này (profiler có sẵn của Odoo, base.group_system)."
+
+msgid "No request yet: use the Odoo page, then press ⟳."
+msgstr "Chưa có request nào, thao tác trên trang Odoo rồi bấm ⟳."
+
+msgid "No profile data yet."
+msgstr "Chưa có dữ liệu profile."
+
+msgid "Filter request"
+msgstr "Lọc request"
+
+msgid "%s requests"
+msgstr "%s request"
+
+msgid "%s/%s requests"
+msgstr "%s/%s request"
+
+msgid "Request · SQL · duration"
+msgstr "Request · SQL · thời gian"
+
+msgid "Id · time · CPU"
+msgstr "Id · giờ · CPU"
+
+msgid "Select a request to see its SQL queries."
+msgstr "Chọn một request để xem các câu SQL của nó."
+
+msgid "Latest session: %s"
+msgstr "Phiên gần nhất: %s"
+
+msgid "Flame Graph (speedscope)"
+msgstr "Flame graph (speedscope)"
+
+msgid "No SQL recorded."
+msgstr "Không có SQL nào được ghi."
+
+msgid "Full SQL + stack"
+msgstr "SQL đầy đủ + stack"
+
+msgid "%s queries · SQL %s / total %s · Python ≈ %s"
+msgstr "%s query · SQL %s / tổng %s · Python ≈ %s"
+
+msgid "Repeated queries — N+1 suspects (%s)"
+msgstr "Query lặp lại — nghi N+1 (%s)"
+
+msgid "Count · caller · time"
+msgstr "Số lần · nơi gọi · thời gian"
+
+msgid "Query"
+msgstr "Câu truy vấn"
+
+msgid "✓ No repeated query."
+msgstr "✓ Không có query lặp lại."
+
+msgid "Slowest queries (%s)"
+msgstr "Query chậm nhất (%s)"
+
+msgid "Caller · time"
+msgstr "Nơi gọi · thời gian"
+
+msgid "This screen is not bound to a model."
+msgstr "Màn hình này không gắn với model nào."
+
+msgid "Identity & metadata"
+msgstr "Định danh & metadata"
+
+msgid "(none / several records)"
+msgstr "(chưa có / nhiều record)"
+
+msgid "created by"
+msgstr "tạo bởi"
+
+msgid "last updated by"
+msgstr "sửa bởi"
+
+msgid "Fields"
+msgstr "Fields"
+
+msgid "change → recomputes %s"
+msgstr "đổi → tính lại %s"
+
+msgid "%s fields"
+msgstr "%s field"
+
+msgid "Filter name / label / value / type / module"
+msgstr "Lọc tên / nhãn / giá trị / type / module"
+
+msgid "%s/%s fields"
+msgstr "%s/%s field"
+
+msgid "Field · type · value"
+msgstr "Field · kiểu · giá trị"
+
+msgid "Label · storage · compute · module"
+msgstr "Nhãn · lưu trữ · compute · module"
+
+msgid "A computed field failed: values of the stored fields only."
+msgstr "Một field compute bị lỗi: chỉ hiện giá trị của các field stored."
+
+msgid "Filter model / method"
+msgstr "Lọc model / method"
+
+msgid "Errors Only"
+msgstr "Chỉ lỗi"
+
+msgid "Clear"
+msgstr "Xoá"
+
+msgid "New Request"
+msgstr "Request mới"
+
+msgid "Close"
+msgstr "Đóng"
+
+msgid "No RPC yet. Use the Odoo page to record some."
+msgstr "Chưa có RPC nào. Thao tác trên trang Odoo để ghi lại."
+
+msgid "Method · model · duration"
+msgstr "Method · model · thời gian"
+
+msgid "Time · route"
+msgstr "Giờ · route"
+
+msgid "Select a call to see its parameters and result."
+msgstr "Chọn một lời gọi để xem tham số và kết quả."
+
+msgid "Parameters"
+msgstr "Tham số"
+
+msgid "Edit & Resend"
+msgstr "Sửa & Gửi lại"
+
+msgid "Why was it blocked? → Security"
+msgstr "Vì sao bị chặn? → Security"
+
+msgid "Result"
+msgstr "Kết quả"
+
+msgid "… (%s characters)"
+msgstr "… (%s ký tự)"
+
+msgid "Route"
+msgstr "Route"
+
+msgid "Body (JSON)"
+msgstr "Body (JSON)"
+
+msgid "Send"
+msgstr "Gửi"
+
+msgid "Invalid JSON: %s"
+msgstr "JSON không hợp lệ: %s"
+
+msgid "Loading…"
+msgstr "Đang tải…"
+
+msgid "Ctrl/⌘ + Enter"
+msgstr "Ctrl/⌘ + Enter"
+
+msgid "call_kw: the external API (execute_kw), with an API key of this user in $ODOO_API_KEY. Other routes: the session_id cookie in $ODOO_SESSION."
+msgstr "call_kw: qua API ngoài (execute_kw), với API key của người dùng này trong $ODOO_API_KEY. Các route khác: cookie session_id trong $ODOO_SESSION."
+
+msgid "Copy as cURL"
+msgstr "Sao chép dạng cURL"
+
+msgid "No ACL grants this to the user's groups."
+msgstr "Không ACL nào cấp quyền này cho group của user."
+
+msgid "ACL: %s. No record to check the rules against."
+msgstr "ACL: %s. Chưa có record để kiểm rule."
+
+msgid "Blocked by a record rule (see below)."
+msgstr "Bị record rule chặn (xem bên dưới)."
+
+msgid "A rule could not be evaluated, not certain."
+msgstr "Có rule không eval được, chưa chắc chắn."
+
+msgid "ACL: %s · %s rules pass."
+msgstr "ACL: %s · %s rule đạt."
+
+msgid "No ACL: only the superuser can access this model."
+msgstr "Không có ACL nào: chỉ superuser truy cập được model này."
+
+msgid "ACL \"%s\" has no group → applies to EVERY user, portal/public included (%s)."
+msgstr "ACL \"%s\" không có group → áp dụng cho MỌI user, kể cả portal/public (%s)."
+
+msgid "ACL \"%s\" grants %s to %s."
+msgstr "ACL \"%s\" cấp %s cho %s."
+
+msgid "Has company_id but no global multi-company rule → records may leak across companies."
+msgstr "Có company_id nhưng không có global rule multi-company → record có thể lộ giữa các công ty."
+
+msgid "Field \"%s\" looks sensitive but has no groups=."
+msgstr "Field \"%s\" có vẻ nhạy cảm nhưng không có groups=."
+
+msgid "Not served over HTTPS."
+msgstr "Không chạy HTTPS."
+
+msgid "Cannot read the session_id cookie."
+msgstr "Không đọc được cookie session_id."
+
+msgid "session_id cookie is not HttpOnly → readable by JS/XSS."
+msgstr "Cookie session_id không HttpOnly → JS/XSS đọc được."
+
+msgid "session_id cookie lacks the Secure flag."
+msgstr "Cookie session_id không có cờ Secure."
+
+msgid "session_id cookie is SameSite=None → larger CSRF surface."
+msgstr "Cookie session_id SameSite=None → tăng bề mặt CSRF."
+
+msgid "Missing Strict-Transport-Security (HSTS) header."
+msgstr "Thiếu header Strict-Transport-Security (HSTS)."
+
+msgid "Missing X-Frame-Options / CSP frame-ancestors → clickjacking."
+msgstr "Thiếu X-Frame-Options / CSP frame-ancestors → clickjacking."
+
+msgid "Missing X-Content-Type-Options: nosniff."
+msgstr "Thiếu X-Content-Type-Options: nosniff."
+
+msgid "Missing Content-Security-Policy."
+msgstr "Thiếu Content-Security-Policy."
+
+msgid "Header %s discloses a version: %s"
+msgstr "Header %s lộ phiên bản: %s"
+
+msgid "Database manager has NO master password (default \"admin\")!"
+msgstr "Database manager KHÔNG có master password (mặc định \"admin\")!"
+
+msgid "/web/database/manager is reachable → block /web/database/* at the proxy or set list_db = False."
+msgstr "/web/database/manager truy cập được → chặn /web/database/* ở proxy hoặc đặt list_db = False."
+
+msgid "list_db is on: database names are exposed (%s)."
+msgstr "list_db đang bật: lộ tên database (%s)."
+
+msgid "Server version is public via /web/webclient/version_info: %s"
+msgstr "Phiên bản server công khai qua /web/webclient/version_info: %s"
+
+msgid "__system__ (superuser): bypasses every ACL and record rule."
+msgstr "__system__ (superuser): bỏ qua mọi ACL và record rule."
+
+msgid "Settings administrator (base.group_system)."
+msgstr "Quản trị Settings (base.group_system)."
+
+msgid "Access Rights manager (base.group_erp_manager): can grant itself any group."
+msgstr "Quản lý Access Rights (base.group_erp_manager): tự cấp được mọi group."
+
+msgid "Has Technical Features (base.group_no_one)."
+msgstr "Có Technical Features (base.group_no_one)."
+
+msgid "Public user."
+msgstr "User public."
+
+msgid "Portal user (share)."
+msgstr "User portal (share)."
+
+msgid "Login \"admin\" is the default, easy to guess."
+msgstr "Login \"admin\" là mặc định, dễ đoán."
+
+msgid "auth_totp is not installed → no 2FA."
+msgstr "Chưa cài auth_totp → không có 2FA."
+
+msgid "2FA (TOTP) is not enabled."
+msgstr "Chưa bật 2FA (TOTP)."
+
+msgid "%s API key(s): direct RPC calls with this user's rights."
+msgstr "Có %s API key: gọi RPC trực tiếp bằng quyền của user này."
+
+msgid "User is archived."
+msgstr "User đang bị lưu trữ (archived)."
+
+msgid "py_js is not loaded"
+msgstr "py_js chưa được tải"
+
+msgid "HIGH"
+msgstr "CAO"
+
+msgid "MEDIUM"
+msgstr "VỪA"
+
+msgid "LOW"
+msgstr "THẤP"
+
+msgid "INFO"
+msgstr "INFO"
+
+msgid "Needs Access Rights (base.group_erp_manager)."
+msgstr "Cần quyền Access Rights (base.group_erp_manager)."
+
+msgid "✓ No issue found."
+msgstr "✓ Không phát hiện vấn đề."
+
+msgid "Search a user by name or login…"
+msgstr "Tìm user theo tên hoặc login…"
+
+msgid "Log in as %s in an incognito window"
+msgstr "Đăng nhập thành %s trong cửa sổ ẩn danh"
+
+msgid "User"
+msgstr "User"
+
+msgid "My User"
+msgstr "User của tôi"
+
+msgid "me"
+msgstr "tôi"
+
+msgid "%s · #%s · %s (%s companies) · %s groups"
+msgstr "%s · #%s · %s (%s công ty) · %s group"
+
+msgid "Simulates the selected user's rights without logging in as them (reading other users' groups needs admin rights)."
+msgstr "Mô phỏng quyền của user được chọn mà không cần đăng nhập tài khoản đó (cần quyền admin để đọc group của người khác)."
+
+msgid "Click their name to log in as them in an incognito window: your session here stays."
+msgstr "Bấm vào tên để đăng nhập thành user này trong cửa sổ ẩn danh: phiên của bạn ở đây giữ nguyên."
+
+msgid "Groups"
+msgstr "Group"
+
+msgid "User risks"
+msgstr "Rủi ro của user"
+
+msgid "Why allowed / blocked"
+msgstr "Vì sao được / bị chặn"
+
+msgid "ACL (ir.model.access) — green = applies to the user"
+msgstr "ACL (ir.model.access) — nền xanh = áp dụng cho user này"
+
+msgid "No ACL."
+msgstr "Không có ACL."
+
+msgid "ACL / group"
+msgstr "ACL / group"
+
+msgid "(all users)"
+msgstr "(mọi user)"
+
+msgid "Fields hidden from the user (groups=)"
+msgstr "Field bị ẩn với user (groups=)"
+
+msgid "No field declares groups=."
+msgstr "Không field nào khai báo groups=."
+
+msgid "Real groups only: the tried groups are not counted here."
+msgstr "Chỉ tính nhóm thật: các nhóm đang thử không được tính ở đây."
+
+msgid "Field · label · for this user"
+msgstr "Field · nhãn · với user này"
+
+msgid "visible"
+msgstr "thấy"
+
+msgid "hidden"
+msgstr "ẩn"
+
+msgid "Model configuration audit"
+msgstr "Audit cấu hình model"
+
+msgid "Instance"
+msgstr "Instance"
+
+msgid "Session"
+msgstr "Phiên đăng nhập"
+
+msgid "Companies"
+msgstr "Công ty"
+
+msgid "Odoo's built-in /web/become route, base.group_system only"
+msgstr "Route /web/become sẵn có của Odoo, chỉ base.group_system dùng được"
+
+msgid "Switch the current session to superuser (bypasses every rule)?"
+msgstr "Chuyển phiên hiện tại sang superuser (bỏ qua mọi rule)?"
+
+msgid "Become Superuser"
+msgstr "Chuyển sang superuser"
+
+msgid "System parameters (ir.config_parameter)"
+msgstr "Tham số hệ thống (ir.config_parameter)"
+
+msgid "Filter key / value"
+msgstr "Lọc key / giá trị"
+
+msgid "%s parameters"
+msgstr "%s tham số"
+
+msgid "%s/%s parameters"
+msgstr "%s/%s tham số"
+
+msgid "Key"
+msgstr "Key"
+
+msgid "Value"
+msgstr "Giá trị"
+
+msgid "No parameter."
+msgstr "Không có tham số."
+
+msgid "Instance check"
+msgstr "Kiểm tra instance"
+
+msgid "Check failed"
+msgstr "Không kiểm tra được"
+
+msgid "Raw data"
+msgstr "Dữ liệu thô"
+
+msgid "Check Again"
+msgstr "Kiểm tra lại"
+
+msgid "implied"
+msgstr "kế thừa"
+
+msgid "Remove %s from %s?"
+msgstr "Gỡ %s khỏi %s?"
+
+msgid "Simulate this group below, nothing is written"
+msgstr "Giả lập nhóm này ở các thẻ bên dưới, không ghi gì"
+
+msgid "Try"
+msgstr "Thử"
+
+msgid "Stop trying it"
+msgstr "Thôi thử nhóm này"
+
+msgid "Implied by %s"
+msgstr "Kế thừa từ %s"
+
+msgid "trying"
+msgstr "đang thử"
+
+msgid "%s groups"
+msgstr "%s group"
+
+msgid "Filter or try a group…"
+msgstr "Lọc hoặc thử một nhóm…"
+
+msgid "%s/%s groups"
+msgstr "%s/%s group"
+
+msgid "Trying %s: every card below is simulated with it."
+msgstr "Đang thử %s: mọi thẻ bên dưới được giả lập với nhóm này."
+
+msgid "Add %s to %s?"
+msgstr "Thêm %s cho %s?"
+
+msgid "Apply"
+msgstr "Áp dụng"
+
+msgid "Discard"
+msgstr "Bỏ thử"
+
+msgid "no result"
+msgstr "không có kết quả"
+
+msgid "cannot evaluate: %s"
+msgstr "không eval được: %s"
+
+msgid "You cannot read this record yourself, so its rules cannot be checked."
+msgstr "Chính bạn không đọc được record này nên không kiểm được rule."
+
+msgid "Try:"
+msgstr "Thử:"
+
+msgid "Also adds %s"
+msgstr "Kéo theo %s"
+
+msgid "No single group allows it."
+msgstr "Không có nhóm nào tự mở được quyền này."
+
+msgid "server ✓"
+msgstr "server ✓"
+
+msgid "server ✗"
+msgstr "server ✗"
+
+msgid "server ?"
+msgstr "server ?"
+
+msgid "has_access, run by the server as you"
+msgstr "has_access, server chạy với quyền của bạn"
+
+msgid "ALLOWED"
+msgstr "CHO PHÉP"
+
+msgid "BLOCKED"
+msgstr "CHẶN"
+
+msgid "UNKNOWN"
+msgstr "KHÔNG RÕ"
+
+msgid "not applicable"
+msgstr "không áp dụng"
+
+msgid "Rule · operations · result"
+msgstr "Rule · thao tác · kết quả"
+
+msgid "Groups · domain"
+msgstr "Group · domain"
+
+msgid "This model has no record rule."
+msgstr "Model này không có record rule."
+
+msgid "Assumes the user selected every allowed company. Rules of parent models through _inherits are not counted. This is a simulation; for your own user, “server” is the exact answer (has_access)."
+msgstr "Giả định user chọn tất cả công ty được phép. Rule của model cha qua _inherits không được tính. Đây là mô phỏng; với chính user của bạn, “server” là kết quả chính xác (has_access)."
+
+msgid "Reading the ACLs and record rules needs Access Rights (base.group_erp_manager): the rule-by-rule explanation and the groups that would allow an operation are not available."
+msgstr "Đọc ACL và record rule cần quyền Access Rights (base.group_erp_manager): không có phần giải thích từng rule và các group sẽ cho phép thao tác."
+
+msgid "Apps To Export"
+msgstr "Apps cần xuất"
+
+msgid "Export & Download"
+msgstr "Xuất & tải về"
+
+msgid "Export & Download · 1 file"
+msgstr "Xuất & tải về · 1 file"
+
+msgid "Export & Download · %s files"
+msgstr "Xuất & tải về · %s file"
+
+msgid "%s/%s installed modules"
+msgstr "%s/%s module đã cài"
+
+msgid "Technical names, separated by ;"
+msgstr "Tên kỹ thuật, phân cách bằng ;"
+
+msgid "Languages:"
+msgstr "Ngôn ngữ:"
+
+msgid "Always exported: the empty template, as <module>.pot"
+msgstr "Luôn được xuất: file mẫu trống, thành <module>.pot"
+
+msgid "Template (.pot)"
+msgstr "Template (.pot)"
+
+msgid "Enter at least one app."
+msgstr "Nhập ít nhất một app."
+
+msgid "Not an active language: %s. Active: %s"
+msgstr "Ngôn ngữ chưa được bật: %s. Đang bật: %s"
+
+msgid "Unknown app: %s"
+msgstr "Không có app: %s"
+
+msgid "Not installed: %s"
+msgstr "Chưa cài: %s"
+
+msgid "Exporting…"
+msgstr "Đang xuất…"
+
+msgid "%s files"
+msgstr "%s file"
+
+msgid "nothing to export"
+msgstr "không có gì để xuất"
+
+msgid "Webclient internals are not reachable."
+msgstr "Không truy cập được webclient."
+
+msgid "No form view is open."
+msgstr "Không có form view đang mở."
+
+msgid "Inherited views — %s"
+msgstr "View kế thừa — %s"
+
+msgid "Combined arch (view #%s)"
+msgstr "Arch đã gộp (view #%s)"
+
+msgid "The inheritance tree needs Settings rights (base.group_system)."
+msgstr "Cây kế thừa view cần quyền Settings (base.group_system)."
+
+msgid "inactive"
+msgstr "inactive"
+
+msgid "View · mode · priority"
+msgstr "View · mode · priority"
+
+msgid "Name · id · file"
+msgstr "Tên · id · file"
+
+msgid "Action"
+msgstr "Action"
+
+msgid "Open Action Record ↗"
+msgstr "Mở bản ghi action ↗"
+
+msgid "Full action (JSON)"
+msgstr "Action đầy đủ (JSON)"
+
+msgid "Form fields — invisible / readonly / required"
+msgstr "Field trên form — invisible / readonly / required"
+
+msgid "Context & domain"
+msgstr "Context & domain"
+
+msgid "Context"
+msgstr "Context"
+
+msgid "Domain"
+msgstr "Domain"
+
+msgid "Cannot read the form."
+msgstr "Không đọc được form."
+
+msgid "not shown"
+msgstr "không hiển thị"
+
+msgid "The field is not invisible itself but is not on screen: it is on another notebook page, or a parent node (group/page/div) is invisible."
+msgstr "Field không tự ẩn nhưng không có trên màn hình: nằm trong tab notebook khác hoặc node cha (group/page/div) bị invisible."
+
+msgid "Values used in the expressions"
+msgstr "Giá trị dùng trong biểu thức"
+
+msgid "Full node"
+msgstr "Node đầy đủ"
+
+msgid "Filter name / label / widget"
+msgstr "Lọc tên / nhãn / widget"
+
+msgid "Click a field on the Odoo page (Esc to cancel)"
+msgstr "Click vào một field trên trang Odoo (Esc để huỷ)"
+
+msgid "Picking… (Esc to cancel)"
+msgstr "Đang chọn… (Esc để huỷ)"
+
+msgid "⌖ Pick on Page"
+msgstr "⌖ Chọn trên trang"
+
+msgid "Field · widget · label · state"
+msgstr "Field · widget · nhãn · trạng thái"
+
+msgid "Modifier expressions"
+msgstr "Biểu thức modifier"
+
+msgid "The form is read-only: every field is readonly."
+msgstr "Form đang ở chế độ chỉ đọc: mọi field đều readonly."
+
+msgid "Open /odoo/%s"
+msgstr "Mở /odoo/%s"
