@@ -39,7 +39,8 @@ Odoo Debug answers these on the screen itself, as tables, for the user you are �
 | **RPC** | The page's JSON-RPC calls with timing and errors; edit and resend; Copy as cURL for the external API (18: `/jsonrpc`, 19: `/json/2`) |
 | **Security** | Rights as tables: a record's ACLs and rules × read / write / create / delete, with domains evaluated for the user; rights on every model; groups, what each grants and who has it; try a group before granting it; compare users |
 | **Translations** | Where a text comes from and where to change it; a record's and a view's translations per language; `.po` coverage, export and import; languages |
-| Apps · Perf · Code | Being ported from the JavaScript version |
+| **Apps** | Modules as Odoo's Apps menu has them (same filters, as facets): pick several, then Activate (Update Apps List + install with dependencies), Upgrade or open their forms; ⚠ when a manifest on disk is newer than the database. A module opened: its description (`index.html` or README), manifest, dependencies both ways, its data and models, uninstall previewed with Odoo's own wizard; operations left pending, applied or cancelled (Settings rights) |
+| Perf · Code | Being ported from the JavaScript version |
 
 The version of Odoo is detected on each page, and every difference between 18.0 and 19.0 the panel depends on lives in
 one place (`src/odoo/adapters/`).

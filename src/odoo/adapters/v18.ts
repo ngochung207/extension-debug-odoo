@@ -1,4 +1,4 @@
-// Odoo 18.0. Every value checked against the 18.0 sources (odoo/models.py, base/models/res_users.py, ir_rule.py,
+// Odoo 18.0. Every value checked against the 18.0 sources (odoo/models.py, base/models/res_users.py, ir_rule.py, ir_module.py,
 // ir_profile.py); the comment says where when it differs from 19.0.
 import type { OdooAdapter } from '../adapter.ts';
 
@@ -34,6 +34,10 @@ export const v18: OdooAdapter = {
   },
   i18n: { webTranslationsPath: '/web/webclient/translations/{unique}' }, // web/controllers/webclient.py: a mandatory unique segment
   profiler: { listFields: ['name', 'session', 'duration', 'sql_count', 'create_date'] }, // no cpu_duration before 19
+  modules: {
+    uninstallWizard: { moduleField: 'module_id', many: false, impactedField: 'module_ids' }, // base/wizard/base_module_uninstall.py
+    refusesWhilePending: false, // ir_module.py → _button_immediate_function: no check, Registry.new runs every waiting module
+  },
   // /jsonrpc (base/controllers/rpc.py) → service/model.py execute_kw; the API key replaces the password
   // (documentation/18.0 external_api: "simply replace your password by the key"). No /json/2 in 18.
   api: { kind: 'jsonrpc' },
@@ -44,5 +48,6 @@ export const v18: OdooAdapter = {
     { model: 'res.groups', field: 'category_id', usedBy: 'Security: groups by application' },
     { model: 'res.groups', field: 'users', usedBy: 'Security: users of a group' },
     { model: 'ir.profile', field: 'sql_count', usedBy: 'Perf' },
+    { model: 'base.module.uninstall', field: 'module_ids', usedBy: 'Apps: uninstall preview' },
   ],
 };

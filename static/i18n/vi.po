@@ -75,6 +75,7 @@ msgid "Translations"
 msgstr "Translations"
 
 #: src/entrypoints/panel/index.html:30
+#: src/features/apps/apps.ui.ts:101
 msgid "Apps"
 msgstr "Apps"
 
@@ -87,32 +88,32 @@ msgstr "Perf"
 msgid "Code"
 msgstr "Code"
 
-#: src/entrypoints/panel/index.ts:50
-#: src/entrypoints/panel/index.ts:51
+#: src/entrypoints/panel/index.ts:52
+#: src/entrypoints/panel/index.ts:53
 msgid "Cannot read this tab: %s"
 msgstr "Không đọc được tab này: %s"
 
-#: src/entrypoints/panel/index.ts:50
+#: src/entrypoints/panel/index.ts:52
 msgid "The current tab is not an Odoo page."
 msgstr "Tab hiện tại không phải trang Odoo."
 
-#: src/entrypoints/panel/index.ts:53
+#: src/entrypoints/panel/index.ts:55
 msgid "Not available on Odoo %s: %s"
 msgstr "Không dùng được trên Odoo %s: %s"
 
-#: src/entrypoints/panel/index.ts:100
+#: src/entrypoints/panel/index.ts:102
 msgid "Odoo %s is not tested: the panel uses its Odoo %s support, some cards may fail."
 msgstr "Odoo %s chưa được kiểm thử: panel dùng phần hỗ trợ Odoo %s, một số card có thể lỗi."
 
-#: src/entrypoints/panel/index.ts:101
+#: src/entrypoints/panel/index.ts:103
 msgid "Odoo %s is older than every supported version: some cards may fail."
 msgstr "Odoo %s cũ hơn mọi phiên bản được hỗ trợ: một số card có thể lỗi."
 
-#: src/entrypoints/panel/index.ts:102
+#: src/entrypoints/panel/index.ts:104
 msgid "This database lacks fields the panel expects for Odoo %s: %s"
 msgstr "Database này thiếu các field panel cần cho Odoo %s: %s"
 
-#: src/entrypoints/panel/index.ts:106
+#: src/entrypoints/panel/index.ts:108
 msgid "Odoo %s, supported"
 msgstr "Odoo %s, được hỗ trợ"
 
@@ -153,7 +154,7 @@ msgid "Shortcuts"
 msgstr "Phím tắt"
 
 #: src/entrypoints/popup/index.html:36
-#: src/features/security/security.groups.ts:262
+#: src/features/security/security.groups.ts:263
 msgid "Change"
 msgstr "Đổi"
 
@@ -186,6 +187,799 @@ msgstr "debug"
 msgid "No tab is open."
 msgstr "Không có tab đang mở."
 
+#: src/features/apps/apps.module.ts:40
+#: src/features/apps/apps.module.ts:150
+msgid "Models"
+msgstr "Model"
+
+#: src/features/apps/apps.module.ts:40
+#: src/features/record/record.tab.ts:28
+#: src/features/view/view.overview.ts:73
+msgid "Fields"
+msgstr "Fields"
+
+#: src/features/apps/apps.module.ts:40
+msgid "Selection values"
+msgstr "Giá trị selection"
+
+#: src/features/apps/apps.module.ts:41
+msgid "Views"
+msgstr "View"
+
+#: src/features/apps/apps.module.ts:41
+msgid "Menus"
+msgstr "Menu"
+
+#: src/features/apps/apps.module.ts:41
+msgid "Window actions"
+msgstr "Window action"
+
+#: src/features/apps/apps.module.ts:42
+msgid "Server actions"
+msgstr "Server action"
+
+#: src/features/apps/apps.module.ts:42
+msgid "Reports"
+msgstr "Báo cáo"
+
+#: src/features/apps/apps.module.ts:42
+msgid "Client actions"
+msgstr "Client action"
+
+#: src/features/apps/apps.module.ts:43
+msgid "URL actions"
+msgstr "URL action"
+
+#: src/features/apps/apps.module.ts:43
+msgid "Scheduled actions"
+msgstr "Scheduled action (cron)"
+
+#: src/features/apps/apps.module.ts:43
+#: src/features/security/security.tab.ts:64
+#: src/features/view/view.tpl.html:65
+msgid "Groups"
+msgstr "Nhóm"
+
+#: src/features/apps/apps.module.ts:44
+#: src/features/security/security.groups.ts:123
+#: src/features/security/security.model.ts:29
+#: src/features/security/security.record.ts:85
+msgid "Access rights (ACL)"
+msgstr "Quyền truy cập (ACL)"
+
+#: src/features/apps/apps.module.ts:44
+#: src/features/security/security.groups.ts:134
+#: src/features/security/security.model.ts:40
+msgid "Record rules"
+msgstr "Record rule"
+
+#: src/features/apps/apps.module.ts:44
+msgid "Constraints"
+msgstr "Ràng buộc"
+
+#: src/features/apps/apps.module.ts:45
+msgid "Many2many tables"
+msgstr "Bảng many2many"
+
+#: src/features/apps/apps.module.ts:45
+msgid "Categories"
+msgstr "Danh mục"
+
+#: src/features/apps/apps.module.ts:45
+msgid "Assets"
+msgstr "Asset"
+
+#: src/features/apps/apps.module.ts:62
+msgid "App"
+msgstr "App"
+
+#: src/features/apps/apps.module.ts:63
+msgid "auto-install"
+msgstr "tự cài"
+
+#: src/features/apps/apps.module.ts:63
+msgid "Installed by itself once every module it depends on is"
+msgstr "Tự được cài khi mọi module nó phụ thuộc đã được cài"
+
+#: src/features/apps/apps.module.ts:64
+msgid "Enterprise"
+msgstr "Enterprise"
+
+#: src/features/apps/apps.module.ts:72
+msgid "Installed: %s"
+msgstr "Đã cài: %s"
+
+#: src/features/apps/apps.module.ts:72
+msgid "ir.module.module.latest_version: the version in the database, written by the last install or upgrade"
+msgstr "ir.module.module.latest_version: phiên bản trong database, ghi lúc cài hoặc nâng cấp gần nhất"
+
+#: src/features/apps/apps.module.ts:74
+msgid "On disk: %s"
+msgstr "Trên đĩa: %s"
+
+#: src/features/apps/apps.module.ts:74
+msgid "installed_version: the version in the manifest on the server's addons path"
+msgstr "installed_version: phiên bản trong manifest trên addons path của server"
+
+#: src/features/apps/apps.module.ts:75
+msgid "upgrade needed"
+msgstr "cần nâng cấp"
+
+#: src/features/apps/apps.module.ts:75
+msgid "older on disk"
+msgstr "trên đĩa cũ hơn"
+
+#: src/features/apps/apps.module.ts:76
+msgid "The code on disk is newer than the database: Upgrade applies it."
+msgstr "Code trên đĩa mới hơn database: Nâng cấp để áp dụng."
+
+#: src/features/apps/apps.module.ts:77
+msgid "The code on disk is older than the database: another branch, or a version bumped back?"
+msgstr "Code trên đĩa cũ hơn database: đang ở nhánh khác, hay phiên bản bị hạ xuống?"
+
+#: src/features/apps/apps.module.ts:80
+msgid "missing"
+msgstr "thiếu"
+
+#: src/features/apps/apps.module.ts:80
+msgid "Depends on modules this server doesn't have: %s"
+msgstr "Phụ thuộc vào module mà server này không có: %s"
+
+#: src/features/apps/apps.module.ts:90
+#: src/features/apps/apps.module.ts:92
+msgid "Picked ✓"
+msgstr "Đã chọn ✓"
+
+#: src/features/apps/apps.module.ts:90
+#: src/features/apps/apps.module.ts:92
+msgid "Pick"
+msgstr "Chọn"
+
+#: src/features/apps/apps.module.ts:93
+msgid "Add to / remove from the modules picked for an action"
+msgstr "Thêm vào / bỏ khỏi các module được chọn để thao tác"
+
+#: src/features/apps/apps.module.ts:96
+msgid "Install"
+msgstr "Cài"
+
+#: src/features/apps/apps.module.ts:96
+msgid "Update Apps List, then install it with its dependencies"
+msgstr "Cập nhật danh sách ứng dụng, rồi cài nó cùng các phụ thuộc"
+
+#: src/features/apps/apps.module.ts:97
+#: src/features/apps/apps.modules.ts:125
+msgid "Upgrade"
+msgstr "Nâng cấp"
+
+#: src/features/apps/apps.module.ts:97
+msgid "Upgrade it now (and the modules depending on it)"
+msgstr "Nâng cấp ngay (cùng các module phụ thuộc vào nó)"
+
+#: src/features/apps/apps.module.ts:98
+msgid "Uninstall…"
+msgstr "Gỡ cài đặt…"
+
+#: src/features/apps/apps.module.ts:98
+msgid "What it would remove, then confirm"
+msgstr "Xem những gì sẽ bị gỡ, rồi xác nhận"
+
+#: src/features/apps/apps.module.ts:100
+msgid "Form ↗"
+msgstr "Form ↗"
+
+#: src/features/apps/apps.module.ts:106
+msgid "Description"
+msgstr "Mô tả"
+
+#: src/features/apps/apps.module.ts:109
+msgid "From static/description/index.html"
+msgstr "Lấy từ static/description/index.html"
+
+#: src/features/apps/apps.module.ts:109
+msgid "From the manifest's description (RST) or the README"
+msgstr "Lấy từ description (RST) trong manifest hoặc README"
+
+#: src/features/apps/apps.module.ts:110
+msgid "Open the page ↗"
+msgstr "Mở trang ↗"
+
+#: src/features/apps/apps.module.ts:111
+msgid "No description."
+msgstr "Không có mô tả."
+
+#: src/features/apps/apps.module.ts:115
+msgid "Manifest"
+msgstr "Manifest"
+
+#: src/features/apps/apps.module.ts:118
+#: src/features/apps/apps.module.ts:235
+msgid "Depends"
+msgstr "Phụ thuộc"
+
+#: src/features/apps/apps.module.ts:118
+msgid "%s declared"
+msgstr "khai báo %s"
+
+#: src/features/apps/apps.module.ts:122
+msgid "Declared in its manifest"
+msgstr "Khai báo trong manifest"
+
+#: src/features/apps/apps.module.ts:122
+msgid "Nothing: it depends on no module."
+msgstr "Không có: nó không phụ thuộc module nào."
+
+#: src/features/apps/apps.module.ts:123
+msgid "Needs in all (%s)"
+msgstr "Cần tất cả (%s)"
+
+#: src/features/apps/apps.module.ts:123
+msgid "Nothing."
+msgstr "Không có."
+
+#: src/features/apps/apps.module.ts:124
+msgid "Installing it also installs (%s)"
+msgstr "Cài nó sẽ cài thêm (%s)"
+
+#: src/features/apps/apps.module.ts:130
+msgid "Used by"
+msgstr "Được dùng bởi"
+
+#: src/features/apps/apps.module.ts:130
+msgid "%s installed depend on it"
+msgstr "%s module đã cài phụ thuộc vào nó"
+
+#: src/features/apps/apps.module.ts:130
+#: src/features/apps/apps.modules.ts:135
+msgid "%s modules"
+msgstr "%s module"
+
+#: src/features/apps/apps.module.ts:131
+msgid "Declaring it in their depends (%s)"
+msgstr "Khai báo nó trong depends (%s)"
+
+#: src/features/apps/apps.module.ts:131
+msgid "No module depends on it."
+msgstr "Không module nào phụ thuộc vào nó."
+
+#: src/features/apps/apps.module.ts:132
+msgid "Uninstalling it also removes (%s)"
+msgstr "Gỡ nó sẽ gỡ luôn (%s)"
+
+#: src/features/apps/apps.module.ts:132
+#: src/features/apps/apps.module.ts:192
+msgid "No other module."
+msgstr "Không có module nào khác."
+
+#: src/features/apps/apps.module.ts:135
+msgid "Data (xmlids)"
+msgstr "Dữ liệu (xmlid)"
+
+#: src/features/apps/apps.module.ts:137
+msgid "No xmlid: the module brings no data."
+msgstr "Không có xmlid: module không mang theo dữ liệu nào."
+
+#: src/features/apps/apps.module.ts:137
+msgid "Not installed: its data is known once it is."
+msgstr "Chưa cài: dữ liệu của nó chỉ biết được sau khi cài."
+
+#: src/features/apps/apps.module.ts:143
+msgid "noupdate: an upgrade doesn't overwrite them"
+msgstr "noupdate: nâng cấp không ghi đè các bản ghi này"
+
+#: src/features/apps/apps.module.ts:147
+msgid "%s xmlids. Click a kind for its records."
+msgstr "%s xmlid. Bấm vào một loại để xem các bản ghi."
+
+#: src/features/apps/apps.module.ts:147
+msgid "Kind"
+msgstr "Loại"
+
+#: src/features/apps/apps.module.ts:147
+msgid "Records"
+msgstr "Bản ghi"
+
+#: src/features/apps/apps.module.ts:152
+msgid "It creates or extends no model."
+msgstr "Nó không tạo hay mở rộng model nào."
+
+#: src/features/apps/apps.module.ts:152
+msgid "Not installed: its models are known once it is."
+msgstr "Chưa cài: các model của nó chỉ biết được sau khi cài."
+
+#: src/features/apps/apps.module.ts:160
+msgid "Installed modules defining or extending it: %s"
+msgstr "Các module đã cài định nghĩa hoặc mở rộng nó: %s"
+
+#: src/features/apps/apps.module.ts:162
+msgid "%s · created by %s"
+msgstr "%s · tạo bởi %s"
+
+#: src/features/apps/apps.module.ts:162
+msgid "%s · also in %s"
+msgstr "%s · cũng có trong %s"
+
+#: src/features/apps/apps.module.ts:164
+#: src/features/security/security.groups.ts:130
+#: src/features/security/security.models.ts:62
+msgid "Model"
+msgstr "Model"
+
+#: src/features/apps/apps.module.ts:164
+#: src/features/apps/apps.tab.ts:40
+#: src/features/translations/translations.modules.ts:66
+msgid "Modules"
+msgstr "Module"
+
+#: src/features/apps/apps.module.ts:165
+msgid "Creates (%s)"
+msgstr "Tạo mới (%s)"
+
+#: src/features/apps/apps.module.ts:166
+msgid "Extends (%s)"
+msgstr "Mở rộng (%s)"
+
+#: src/features/apps/apps.module.ts:174
+msgid "Uninstall"
+msgstr "Gỡ cài đặt"
+
+#: src/features/apps/apps.module.ts:179
+msgid "Uninstall %s…"
+msgstr "Gỡ %s…"
+
+#: src/features/apps/apps.module.ts:180
+msgid "Uninstall %s?"
+msgstr "Gỡ cài đặt %s?"
+
+#: src/features/apps/apps.module.ts:181
+msgid "Removed with it: %s"
+msgstr "Bị gỡ theo: %s"
+
+#: src/features/apps/apps.module.ts:181
+msgid "No other module is removed."
+msgstr "Không module nào khác bị gỡ."
+
+#: src/features/apps/apps.module.ts:182
+msgid "Models whose data is deleted for good: %s"
+msgstr "Số model bị xoá vĩnh viễn dữ liệu: %s"
+
+#: src/features/apps/apps.module.ts:182
+msgid "This cannot be undone."
+msgstr "Không thể hoàn tác."
+
+#: src/features/apps/apps.module.ts:184
+msgid "Type %s to uninstall it."
+msgstr "Gõ %s để gỡ cài đặt."
+
+#: src/features/apps/apps.module.ts:186
+msgid "Not the module's name: nothing was uninstalled."
+msgstr "Không đúng tên module: không gỡ gì cả."
+
+#: src/features/apps/apps.module.ts:188
+msgid "Asks to confirm, then to type its name"
+msgstr "Hỏi xác nhận, rồi yêu cầu gõ tên module"
+
+#: src/features/apps/apps.module.ts:191
+msgid "What Odoo's uninstall wizard computes: every module depending on it goes too, and the models only these modules define lose their table and data."
+msgstr "Kết quả từ wizard gỡ cài đặt của Odoo: mọi module phụ thuộc vào nó bị gỡ theo, và các model chỉ do những module này định nghĩa sẽ mất bảng cùng dữ liệu."
+
+#: src/features/apps/apps.module.ts:192
+msgid "Modules removed with it (%s)"
+msgstr "Module bị gỡ theo (%s)"
+
+#: src/features/apps/apps.module.ts:193
+msgid "Models whose data is deleted (%s)"
+msgstr "Model bị xoá dữ liệu (%s)"
+
+#: src/features/apps/apps.module.ts:194
+msgid "None: no model loses its data."
+msgstr "Không có: không model nào mất dữ liệu."
+
+#: src/features/apps/apps.module.ts:203
+msgid "Not installable: its manifest says installable: False, or it is not on this server's addons path any more."
+msgstr "Không cài được: manifest ghi installable: False, hoặc module không còn trên addons path của server."
+
+#: src/features/apps/apps.module.ts:204
+msgid "%s: waiting for Odoo's next module operation (see Pending)."
+msgstr "%s: đang chờ thao tác module tiếp theo của Odoo (xem Đang chờ)."
+
+#: src/features/apps/apps.module.ts:214
+msgid "Not on this server"
+msgstr "Không có trên server này"
+
+#: src/features/apps/apps.module.ts:220
+msgid "● installed · ○ not installed · ✗ not on this server. Click a module to open it."
+msgstr "● đã cài · ○ chưa cài · ✗ không có trên server. Bấm vào một module để mở."
+
+#: src/features/apps/apps.module.ts:224
+msgid "Technical name"
+msgstr "Tên kỹ thuật"
+
+#: src/features/apps/apps.module.ts:225
+msgid "Title (name)"
+msgstr "Tiêu đề (name)"
+
+#: src/features/apps/apps.module.ts:226
+msgid "Version on disk"
+msgstr "Phiên bản trên đĩa"
+
+#: src/features/apps/apps.module.ts:227
+msgid "Version installed"
+msgstr "Phiên bản đã cài"
+
+#: src/features/apps/apps.module.ts:228
+msgid "Summary"
+msgstr "Tóm tắt"
+
+#: src/features/apps/apps.module.ts:229
+msgid "Author"
+msgstr "Tác giả"
+
+#: src/features/apps/apps.module.ts:230
+msgid "Maintainer"
+msgstr "Người bảo trì"
+
+#: src/features/apps/apps.module.ts:231
+msgid "Contributors"
+msgstr "Người đóng góp"
+
+#: src/features/apps/apps.module.ts:232
+msgid "Website"
+msgstr "Website"
+
+#: src/features/apps/apps.module.ts:233
+msgid "License"
+msgstr "Giấy phép"
+
+#: src/features/apps/apps.module.ts:234
+#: src/features/apps/apps.ui.ts:130
+#: src/features/apps/apps.ui.ts:132
+msgid "Category"
+msgstr "Danh mục"
+
+#: src/features/apps/apps.module.ts:236
+msgid "Application"
+msgstr "Ứng dụng"
+
+#: src/features/apps/apps.module.ts:236
+#: src/features/apps/apps.module.ts:237
+#: src/features/apps/apps.module.ts:238
+#: src/features/view/view.field.ts:133
+msgid "yes"
+msgstr "có"
+
+#: src/features/apps/apps.module.ts:236
+#: src/features/apps/apps.module.ts:237
+#: src/features/apps/apps.module.ts:238
+#: src/features/view/view.field.ts:133
+msgid "no"
+msgstr "không"
+
+#: src/features/apps/apps.module.ts:237
+msgid "Auto-install"
+msgstr "Tự cài"
+
+#: src/features/apps/apps.module.ts:238
+msgid "Demo data loaded"
+msgstr "Đã nạp dữ liệu demo"
+
+#: src/features/apps/apps.module.ts:258
+#: src/features/security/security.groups.ts:151
+#: src/features/security/security.record.ts:174
+#: src/features/translations/translations.modules.ts:139
+msgid "… and %s more"
+msgstr "… và %s nữa"
+
+#: src/features/apps/apps.modules.ts:35
+msgid "Choose a module: its description, dependencies and data show here."
+msgstr "Chọn một module: mô tả, phụ thuộc và dữ liệu của nó hiện ở đây."
+
+#: src/features/apps/apps.modules.ts:48
+msgid "Pick %s"
+msgstr "Chọn %s"
+
+#: src/features/apps/apps.modules.ts:62
+#: src/features/apps/apps.pending.ts:46
+#: src/features/translations/translations.modules.ts:123
+msgid "Module"
+msgstr "Module"
+
+#: src/features/apps/apps.modules.ts:62
+msgid "State"
+msgstr "Trạng thái"
+
+#: src/features/apps/apps.modules.ts:62
+msgid "Version"
+msgstr "Phiên bản"
+
+#: src/features/apps/apps.modules.ts:73
+msgid "%s/%s modules"
+msgstr "%s/%s module"
+
+#: src/features/apps/apps.modules.ts:117
+msgid "Pick at least one module."
+msgstr "Chọn ít nhất một module."
+
+#: src/features/apps/apps.modules.ts:124
+#: src/features/translations/translations.langs.ts:52
+msgid "Activate"
+msgstr "Kích hoạt"
+
+#: src/features/apps/apps.modules.ts:124
+msgid "Update Apps List, then install every module picked (with its dependencies)"
+msgstr "Cập nhật danh sách ứng dụng, rồi cài mọi module đã chọn (cùng các phụ thuộc)"
+
+#: src/features/apps/apps.modules.ts:125
+msgid "Upgrade every module picked (they must be installed)"
+msgstr "Nâng cấp mọi module đã chọn (phải đã cài)"
+
+#: src/features/apps/apps.modules.ts:126
+msgid "Open Forms ↗"
+msgstr "Mở form ↗"
+
+#: src/features/apps/apps.modules.ts:126
+msgid "Open the form of every module picked in a new tab"
+msgstr "Mở form của mọi module đã chọn, mỗi module một tab mới"
+
+#: src/features/apps/apps.modules.ts:128
+#: src/features/rpc/rpc.tpl.html:8
+msgid "Clear"
+msgstr "Xoá"
+
+#: src/features/apps/apps.modules.ts:128
+msgid "Unpick every module"
+msgstr "Bỏ chọn mọi module"
+
+#: src/features/apps/apps.modules.ts:135
+msgid "+ This screen: %s"
+msgstr "+ Màn hình này: %s"
+
+#: src/features/apps/apps.modules.ts:138
+msgid "Pick the modules not by Odoo S.A. defining or extending %s: %s (all of them: %s)"
+msgstr "Chọn các module không phải của Odoo S.A. định nghĩa hoặc mở rộng %s: %s (tất cả: %s)"
+
+#: src/features/apps/apps.modules.ts:141
+msgid "+ Upgrade needed (%s)"
+msgstr "+ Cần nâng cấp (%s)"
+
+#: src/features/apps/apps.modules.ts:144
+msgid "Pick the installed modules whose manifest on disk is newer than the database: %s"
+msgstr "Chọn các module đã cài có manifest trên đĩa mới hơn database: %s"
+
+#: src/features/apps/apps.modules.ts:147
+msgid "Picked:"
+msgstr "Đã chọn:"
+
+#: src/features/apps/apps.modules.ts:147
+msgid "Tick modules, or type names then Enter, to act on them."
+msgstr "Tick module, hoặc gõ tên rồi Enter, để thao tác."
+
+#: src/features/apps/apps.modules.ts:151
+msgid "Not in the list yet: Activate runs Update Apps List first"
+msgstr "Chưa có trong danh sách: Kích hoạt sẽ chạy Cập nhật danh sách ứng dụng trước"
+
+#: src/features/apps/apps.modules.ts:174
+msgid "On disk: %s, newer than the database: Upgrade applies it"
+msgstr "Trên đĩa: %s, mới hơn database: Nâng cấp để áp dụng"
+
+#: src/features/apps/apps.modules.ts:175
+msgid "On disk: %s, older than the database"
+msgstr "Trên đĩa: %s, cũ hơn database"
+
+#: src/features/apps/apps.modules.ts:180
+msgid "%s modules wait for an operation (%s): Odoo runs them at its next one."
+msgstr "%s module đang chờ thao tác (%s): Odoo sẽ chạy chúng ở thao tác module kế tiếp."
+
+#: src/features/apps/apps.modules.ts:181
+msgid "Pending →"
+msgstr "Đang chờ →"
+
+#: src/features/apps/apps.ops.ts:24
+msgid "Modules are waiting for an operation: %s. Odoo refuses another one until they are applied or cancelled (Pending)."
+msgstr "Có module đang chờ thao tác: %s. Odoo từ chối thao tác mới cho tới khi chúng được áp dụng hoặc huỷ (Đang chờ)."
+
+#: src/features/apps/apps.ops.ts:25
+msgid "Modules are waiting for an operation: %s. Odoo 18 would run them along with this one: apply or cancel them first (Pending)."
+msgstr "Có module đang chờ thao tác: %s. Odoo 18 sẽ chạy luôn chúng cùng thao tác này: hãy áp dụng hoặc huỷ trước (Đang chờ)."
+
+#: src/features/apps/apps.ops.ts:44
+#: src/features/apps/apps.pending.ts:32
+msgid "Reloading the Odoo page…"
+msgstr "Đang tải lại trang Odoo…"
+
+#: src/features/apps/apps.ops.ts:51
+msgid "Update Apps List"
+msgstr "Cập nhật danh sách ứng dụng"
+
+#: src/features/apps/apps.ops.ts:53
+msgid "%s updated · %s added"
+msgstr "%s cập nhật · %s thêm mới"
+
+#: src/features/apps/apps.ops.ts:55
+msgid "Not found, even after Update Apps List: %s"
+msgstr "Không tìm thấy, kể cả sau khi cập nhật danh sách ứng dụng: %s"
+
+#: src/features/apps/apps.ops.ts:56
+msgid "Not installable: %s"
+msgstr "Không cài được: %s"
+
+#: src/features/apps/apps.ops.ts:57
+msgid "Waiting to be uninstalled: %s"
+msgstr "Đang chờ gỡ cài đặt: %s"
+
+#: src/features/apps/apps.ops.ts:58
+msgid "Already installed: %s"
+msgstr "Đã cài sẵn: %s"
+
+#: src/features/apps/apps.ops.ts:64
+msgid "With its dependencies: %s"
+msgstr "Kèm các phụ thuộc: %s"
+
+#: src/features/apps/apps.ops.ts:66
+msgid "Install %s"
+msgstr "Cài %s"
+
+#: src/features/apps/apps.ops.ts:76
+msgid "Not found: %s"
+msgstr "Không tìm thấy: %s"
+
+#: src/features/apps/apps.ops.ts:77
+msgid "Not installed (use Activate): %s"
+msgstr "Chưa cài (hãy dùng Kích hoạt): %s"
+
+#: src/features/apps/apps.ops.ts:78
+msgid "Upgrade %s"
+msgstr "Nâng cấp %s"
+
+#: src/features/apps/apps.ops.ts:87
+msgid "Uninstall %s"
+msgstr "Gỡ %s"
+
+#: src/features/apps/apps.ops.ts:98
+msgid "Opened %s tab(s): %s"
+msgstr "Đã mở %s tab: %s"
+
+#: src/features/apps/apps.ops.ts:100
+msgid "Not found: %s (Activate runs Update Apps List first)"
+msgstr "Không tìm thấy: %s (Kích hoạt sẽ cập nhật danh sách ứng dụng trước)"
+
+#: src/features/apps/apps.pending.ts:19
+msgid "Odoo refuses to install, upgrade or uninstall anything while modules wait (\"Odoo is currently processing another module operation\")."
+msgstr "Odoo từ chối cài, nâng cấp hay gỡ bất cứ module nào khi còn module đang chờ (\"Odoo is currently processing another module operation\")."
+
+#: src/features/apps/apps.pending.ts:20
+msgid "Odoo 18 runs the waiting modules along with the next install, upgrade or uninstall: an install could also uninstall a module waiting here."
+msgstr "Odoo 18 chạy luôn các module đang chờ cùng lần cài, nâng cấp hay gỡ kế tiếp: cài một module có thể gỡ luôn một module đang chờ ở đây."
+
+#: src/features/apps/apps.pending.ts:21
+msgid "No module is waiting for an operation."
+msgstr "Không có module nào đang chờ thao tác."
+
+#: src/features/apps/apps.pending.ts:26
+msgid "Apply Now"
+msgstr "Áp dụng ngay"
+
+#: src/features/apps/apps.pending.ts:27
+msgid "Run every waiting operation now?\n\n%s"
+msgstr "Chạy ngay mọi thao tác đang chờ?\n\n%s"
+
+#: src/features/apps/apps.pending.ts:29
+msgid "Apply Scheduled Upgrades"
+msgstr "Áp dụng các nâng cấp đã lên lịch"
+
+#: src/features/apps/apps.pending.ts:35
+msgid "Odoo's Apply Scheduled Upgrades: installs, upgrades and uninstalls them"
+msgstr "Apply Scheduled Upgrades của Odoo: cài, nâng cấp và gỡ các module đang chờ"
+
+#: src/features/apps/apps.pending.ts:36
+msgid "Cancel All"
+msgstr "Huỷ tất cả"
+
+#: src/features/apps/apps.pending.ts:37
+msgid "Cancel every waiting operation? The modules go back to installed / not installed."
+msgstr "Huỷ mọi thao tác đang chờ? Các module trở về trạng thái đã cài / chưa cài."
+
+#: src/features/apps/apps.pending.ts:39
+msgid "Cancel the waiting operations"
+msgstr "Huỷ các thao tác đang chờ"
+
+#: src/features/apps/apps.pending.ts:44
+msgid "Back to installed (to upgrade, to remove) or not installed (to install): nothing runs"
+msgstr "Trở về đã cài (chờ nâng cấp, chờ gỡ) hoặc chưa cài (chờ cài): không chạy gì"
+
+#: src/features/apps/apps.pending.ts:46
+msgid "Waiting for"
+msgstr "Đang chờ"
+
+#: src/features/apps/apps.tab.ts:30
+msgid "The Apps tab needs Settings rights (base.group_system), as Odoo's Apps menu."
+msgstr "Tab Apps cần quyền Settings (base.group_system), giống menu Apps của Odoo."
+
+#: src/features/apps/apps.tab.ts:40
+msgid "Pending (%s)"
+msgstr "Đang chờ (%s)"
+
+#: src/features/apps/apps.tab.ts:40
+msgid "Pending"
+msgstr "Đang chờ"
+
+#: src/features/apps/apps.tpl.html:14
+msgid "Search, or type names then Enter: sale; stock"
+msgstr "Tìm, hoặc gõ tên rồi Enter: sale; stock"
+
+#: src/features/apps/apps.tpl.html:14
+msgid "Search modules"
+msgstr "Tìm module"
+
+#: src/features/apps/apps.tpl.html:16
+#: src/features/apps/apps.tpl.html:16
+#: src/features/apps/apps.ui.ts:136
+msgid "Filters"
+msgstr "Bộ lọc"
+
+#: src/features/apps/apps.tpl.html:30
+#: src/features/apps/apps.tpl.html:30
+#: src/features/apps/apps.tpl.html:42
+#: src/features/apps/apps.tpl.html:42
+#: src/features/translations/translations.modules.ts:74
+msgid "Remove"
+msgstr "Bỏ"
+
+#: src/features/apps/apps.tpl.html:48
+msgid "Running…"
+msgstr "Đang chạy…"
+
+#: src/features/apps/apps.tpl.html:79
+msgid "Module description"
+msgstr "Mô tả module"
+
+#: src/features/apps/apps.ui.ts:83
+#: src/features/rpc/rpc.tab.ts:97
+#: src/features/rpc/rpc.tab.ts:179
+msgid "error"
+msgstr "lỗi"
+
+#: src/features/apps/apps.ui.ts:100
+#: src/features/apps/apps.ui.ts:154
+msgid "Installed"
+msgstr "Đã cài"
+
+#: src/features/apps/apps.ui.ts:100
+msgid "Not Installed"
+msgstr "Chưa cài"
+
+#: src/features/apps/apps.ui.ts:101
+msgid "Extra"
+msgstr "Bổ sung"
+
+#: src/features/apps/apps.ui.ts:129
+msgid " or "
+msgstr " hoặc "
+
+#: src/features/apps/apps.ui.ts:132
+msgid "All Categories"
+msgstr "Mọi danh mục"
+
+#: src/features/apps/apps.ui.ts:154
+msgid "Not installable"
+msgstr "Không cài được"
+
+#: src/features/apps/apps.ui.ts:154
+msgid "Not installed"
+msgstr "Chưa cài"
+
+#: src/features/apps/apps.ui.ts:155
+msgid "To upgrade"
+msgstr "Chờ nâng cấp"
+
+#: src/features/apps/apps.ui.ts:155
+msgid "To uninstall"
+msgstr "Chờ gỡ"
+
+#: src/features/apps/apps.ui.ts:155
+msgid "To install"
+msgstr "Chờ cài"
+
 #: src/features/record/record.logic.ts:62
 msgid "change → recomputes %s"
 msgstr "đổi → tính lại %s"
@@ -198,11 +992,6 @@ msgstr "Màn hình này không gắn với model nào."
 #: src/features/record/record.tab.ts:27
 msgid "Identity & metadata"
 msgstr "Định danh & metadata"
-
-#: src/features/record/record.tab.ts:28
-#: src/features/view/view.overview.ts:73
-msgid "Fields"
-msgstr "Fields"
 
 #: src/features/record/record.tab.ts:45
 msgid "(none / several records)"
@@ -299,11 +1088,6 @@ msgstr "Giờ · route"
 msgid "Select a call to see its parameters and result."
 msgstr "Chọn một lời gọi để xem tham số và kết quả."
 
-#: src/features/rpc/rpc.tab.ts:97
-#: src/features/rpc/rpc.tab.ts:179
-msgid "error"
-msgstr "lỗi"
-
 #: src/features/rpc/rpc.tab.ts:110
 msgid "Parameters"
 msgstr "Tham số"
@@ -343,10 +1127,6 @@ msgstr "Lọc model / method"
 #: src/features/rpc/rpc.tpl.html:7
 msgid "Errors Only"
 msgstr "Chỉ lỗi"
-
-#: src/features/rpc/rpc.tpl.html:8
-msgid "Clear"
-msgstr "Xoá"
 
 #: src/features/rpc/rpc.tpl.html:9
 #: src/features/rpc/rpc.tpl.html:35
@@ -469,7 +1249,7 @@ msgid "Trying %s: every view is simulated with it, nothing is written."
 msgstr "Đang thử %s: mọi màn hình được mô phỏng với nhóm này, chưa ghi gì."
 
 #: src/features/security/security.bar.ts:104
-#: src/features/security/security.groups.ts:228
+#: src/features/security/security.groups.ts:229
 msgid "Add %s to %s?"
 msgstr "Thêm %s cho %s?"
 
@@ -568,12 +1348,6 @@ msgid "Brought by (groups implying it)"
 msgstr "Được kéo theo bởi (nhóm bao gồm nhóm này)"
 
 #: src/features/security/security.groups.ts:123
-#: src/features/security/security.model.ts:29
-#: src/features/security/security.record.ts:85
-msgid "Access rights (ACL)"
-msgstr "Quyền truy cập (ACL)"
-
-#: src/features/security/security.groups.ts:123
 #: src/features/security/security.models.ts:59
 msgid "%s models"
 msgstr "%s model"
@@ -593,16 +1367,6 @@ msgstr "Nhóm này được %s"
 #: src/features/security/security.groups.ts:129
 msgid "Not granted by this group"
 msgstr "Nhóm này không cấp"
-
-#: src/features/security/security.groups.ts:130
-#: src/features/security/security.models.ts:62
-msgid "Model"
-msgstr "Model"
-
-#: src/features/security/security.groups.ts:134
-#: src/features/security/security.model.ts:40
-msgid "Record rules"
-msgstr "Record rule"
 
 #: src/features/security/security.groups.ts:134
 msgid "%s rules"
@@ -645,12 +1409,6 @@ msgid "%s · look at this user"
 msgstr "%s · xem user này"
 
 #: src/features/security/security.groups.ts:151
-#: src/features/security/security.record.ts:174
-#: src/features/translations/translations.modules.ts:139
-msgid "… and %s more"
-msgstr "… và %s nữa"
-
-#: src/features/security/security.groups.ts:151
 msgid "No user."
 msgstr "Không có user nào."
 
@@ -662,123 +1420,123 @@ msgstr "Nếu thêm cho %s"
 msgid "No new right on any model."
 msgstr "Không thêm quyền nào trên model khác."
 
-#: src/features/security/security.groups.ts:165
+#: src/features/security/security.groups.ts:166
 msgid "● set on the user · ◐ implied by another group · + being tried · ○ not. ACL: models its ACLs open · Rules: rules it carries · Users: users in it. Click a group for the details."
 msgstr "● đặt trực tiếp cho user · ◐ ngầm định qua nhóm khác · + đang thử · ○ không có. ACL: số model nhóm mở · Rule: số rule của nhóm · User: số user trong nhóm. Bấm vào nhóm để xem chi tiết."
 
-#: src/features/security/security.groups.ts:166
+#: src/features/security/security.groups.ts:167
 msgid "Risks of %s"
 msgstr "Rủi ro của %s"
 
-#: src/features/security/security.groups.ts:196
+#: src/features/security/security.groups.ts:197
 msgid "Being tried"
 msgstr "Đang thử"
 
-#: src/features/security/security.groups.ts:197
+#: src/features/security/security.groups.ts:198
 msgid "Set on %s"
 msgstr "Đặt trực tiếp cho %s"
 
-#: src/features/security/security.groups.ts:198
+#: src/features/security/security.groups.ts:199
 msgid "Implied by %s"
 msgstr "Kế thừa từ %s"
 
-#: src/features/security/security.groups.ts:199
+#: src/features/security/security.groups.ts:200
 #: src/features/security/security.model.ts:24
 #: src/features/security/security.record.ts:75
 #: src/features/security/security.record.ts:76
 msgid "%s doesn't have this group"
 msgstr "%s không có nhóm này"
 
-#: src/features/security/security.groups.ts:205
+#: src/features/security/security.groups.ts:206
 msgid "being tried (simulated, nothing written)"
 msgstr "đang thử (chỉ mô phỏng, chưa ghi gì)"
 
-#: src/features/security/security.groups.ts:207
+#: src/features/security/security.groups.ts:208
 msgid "set on them"
 msgstr "đặt trực tiếp"
 
-#: src/features/security/security.groups.ts:208
+#: src/features/security/security.groups.ts:209
 msgid "has it through %s"
 msgstr "có qua %s"
 
-#: src/features/security/security.groups.ts:209
+#: src/features/security/security.groups.ts:210
 msgid "doesn't have it"
 msgstr "không có"
 
-#: src/features/security/security.groups.ts:219
+#: src/features/security/security.groups.ts:220
 msgid "Stop trying it"
 msgstr "Thôi thử nhóm này"
 
-#: src/features/security/security.groups.ts:222
+#: src/features/security/security.groups.ts:223
 msgid "To take it away, remove the group bringing it."
 msgstr "Muốn bỏ nhóm này, hãy gỡ nhóm đang kéo theo nó."
 
-#: src/features/security/security.groups.ts:223
+#: src/features/security/security.groups.ts:224
 msgid "Remove from %s"
 msgstr "Gỡ khỏi %s"
 
-#: src/features/security/security.groups.ts:223
+#: src/features/security/security.groups.ts:224
 msgid "Remove %s from %s?"
 msgstr "Gỡ %s khỏi %s?"
 
-#: src/features/security/security.groups.ts:227
+#: src/features/security/security.groups.ts:228
 msgid "Try on %s"
 msgstr "Thử cho %s"
 
-#: src/features/security/security.groups.ts:227
+#: src/features/security/security.groups.ts:228
 #: src/features/security/security.record.ts:166
 msgid "Simulate this group in every view, nothing is written"
 msgstr "Mô phỏng nhóm này ở mọi màn hình, không ghi gì"
 
-#: src/features/security/security.groups.ts:228
+#: src/features/security/security.groups.ts:229
 msgid "Add to %s"
 msgstr "Thêm cho %s"
 
-#: src/features/security/security.groups.ts:246
+#: src/features/security/security.groups.ts:247
 msgid "Copy the groups of %s"
 msgstr "Sao chép nhóm của %s"
 
-#: src/features/security/security.groups.ts:246
+#: src/features/security/security.groups.ts:247
 msgid "Same groups set on both."
 msgstr "Hai user có cùng các nhóm đặt trực tiếp."
 
-#: src/features/security/security.groups.ts:248
+#: src/features/security/security.groups.ts:249
 msgid "Added"
 msgstr "Được thêm"
 
-#: src/features/security/security.groups.ts:249
+#: src/features/security/security.groups.ts:250
 msgid "Removed by \"the same\"; kept by \"add only\""
 msgstr "Bị gỡ nếu chọn \"đặt giống hệt\"; giữ lại nếu chọn \"chỉ thêm\""
 
-#: src/features/security/security.groups.ts:252
+#: src/features/security/security.groups.ts:253
 msgid "Change the groups of %s?"
 msgstr "Thay đổi nhóm của %s?"
 
-#: src/features/security/security.groups.ts:253
+#: src/features/security/security.groups.ts:254
 msgid "Add: %s"
 msgstr "Thêm: %s"
 
-#: src/features/security/security.groups.ts:254
+#: src/features/security/security.groups.ts:255
 msgid "Remove: %s"
 msgstr "Gỡ: %s"
 
-#: src/features/security/security.groups.ts:255
+#: src/features/security/security.groups.ts:256
 msgid "Warning: one is a portal user, the other is not: the user type changes."
 msgstr "Lưu ý: một người là user portal, người kia thì không: loại user sẽ thay đổi."
 
-#: src/features/security/security.groups.ts:258
+#: src/features/security/security.groups.ts:259
 msgid "Add only the missing ones (%s)"
 msgstr "Chỉ thêm các nhóm còn thiếu (%s)"
 
-#: src/features/security/security.groups.ts:259
+#: src/features/security/security.groups.ts:260
 msgid "Make them the same (+%s, −%s)"
 msgstr "Đặt giống hệt (+%s, −%s)"
 
-#: src/features/security/security.groups.ts:262
+#: src/features/security/security.groups.ts:263
 msgid "Copy the groups of %s onto %s"
 msgstr "Sao chép nhóm của %s sang %s"
 
-#: src/features/security/security.groups.ts:262
+#: src/features/security/security.groups.ts:263
 msgid "Group set on the user"
 msgstr "Nhóm đặt cho user"
 
@@ -1366,11 +2124,6 @@ msgstr "Bản ghi #%s"
 msgid "By model"
 msgstr "Theo model"
 
-#: src/features/security/security.tab.ts:64
-#: src/features/view/view.tpl.html:65
-msgid "Groups"
-msgstr "Nhóm"
-
 #: src/features/security/security.tpl.html:23
 msgid "Archived too"
 msgstr "Gồm đã lưu trữ"
@@ -1562,10 +2315,6 @@ msgid "Make it your language and reload the page"
 msgstr "Đặt làm ngôn ngữ của bạn và tải lại trang"
 
 #: src/features/translations/translations.langs.ts:52
-msgid "Activate"
-msgstr "Kích hoạt"
-
-#: src/features/translations/translations.langs.ts:52
 msgid "Activate %s and load its translations for every installed module?"
 msgstr "Bật %s và nạp bản dịch cho mọi module đã cài?"
 
@@ -1634,10 +2383,6 @@ msgid "base.language.export, tgz"
 msgstr "base.language.export, tgz"
 
 #: src/features/translations/translations.modules.ts:66
-msgid "Modules"
-msgstr "Module"
-
-#: src/features/translations/translations.modules.ts:66
 #: src/features/translations/translations.tab.ts:39
 msgid "Languages"
 msgstr "Ngôn ngữ"
@@ -1645,10 +2390,6 @@ msgstr "Ngôn ngữ"
 #: src/features/translations/translations.modules.ts:67
 msgid "Import a .po into the database"
 msgstr "Nhập file .po vào database"
-
-#: src/features/translations/translations.modules.ts:74
-msgid "Remove"
-msgstr "Bỏ"
 
 #: src/features/translations/translations.modules.ts:75
 msgid "No module yet."
@@ -1661,10 +2402,6 @@ msgstr "%s câu"
 #: src/features/translations/translations.modules.ts:121
 msgid "Share of the template's terms translated in each language; fuzzy ones count as not translated. Click a module for the missing terms."
 msgstr "Tỉ lệ câu trong file mẫu đã được dịch ở mỗi ngôn ngữ; câu fuzzy tính là chưa dịch. Bấm vào module để xem các câu còn thiếu."
-
-#: src/features/translations/translations.modules.ts:123
-msgid "Module"
-msgstr "Module"
 
 #: src/features/translations/translations.modules.ts:123
 msgid "Template"
@@ -1995,14 +2732,6 @@ msgstr "không bao giờ"
 msgid "error: %s"
 msgstr "lỗi: %s"
 
-#: src/features/view/view.field.ts:133
-msgid "yes"
-msgstr "có"
-
-#: src/features/view/view.field.ts:133
-msgid "no"
-msgstr "không"
-
 #: src/features/view/view.field.ts:151
 msgid "placed"
 msgstr "đặt"
@@ -2282,9 +3011,6 @@ msgstr "Chưa rõ: không kiểm tra được"
 #: src/ui/matrix.ts:44
 msgid "Added by the groups being tried"
 msgstr "Có thêm nhờ các nhóm đang thử"
-
-msgid "Models"
-msgstr "Model"
 
 msgid "Filter or try a group…"
 msgstr "Lọc hoặc thử một nhóm…"
@@ -2598,89 +3324,17 @@ msgstr "Các view đụng tới field này"
 msgid "Search or type: sale; stock; my_module"
 msgstr "Tìm hoặc gõ: sale; stock; my_module"
 
-msgid "%s/%s modules"
-msgstr "%s/%s module"
-
-msgid "Running…"
-msgstr "Đang chạy…"
-
-msgid "Reloading the Odoo page…"
-msgstr "Đang tải lại trang Odoo…"
-
 msgid "Enter at least one module."
 msgstr "Nhập ít nhất một module."
 
 msgid "Update Apps List, then install every module (with its dependencies)"
 msgstr "Cập nhật danh sách ứng dụng, rồi cài mọi module (kèm các module phụ thuộc)"
 
-msgid "Update Apps List"
-msgstr "Cập nhật danh sách ứng dụng"
-
-msgid "%s updated · %s added"
-msgstr "%s cập nhật · %s thêm mới"
-
-msgid "Not found, even after Update Apps List: %s"
-msgstr "Không tìm thấy, kể cả sau khi cập nhật danh sách ứng dụng: %s"
-
-msgid "Not installable: %s"
-msgstr "Không cài được: %s"
-
-msgid "Waiting to be uninstalled: %s"
-msgstr "Đang chờ gỡ cài đặt: %s"
-
-msgid "Already installed: %s"
-msgstr "Đã cài sẵn: %s"
-
-msgid "Install %s"
-msgstr "Cài %s"
-
-msgid "Upgrade"
-msgstr "Nâng cấp"
-
 msgid "Upgrade every module (they must be installed)"
 msgstr "Nâng cấp mọi module (phải đã được cài)"
 
-msgid "Not found: %s"
-msgstr "Không tìm thấy: %s"
-
-msgid "Not installed (use Activate): %s"
-msgstr "Chưa cài (hãy dùng Kích hoạt): %s"
-
-msgid "Upgrade %s"
-msgstr "Nâng cấp %s"
-
-msgid "Open Forms ↗"
-msgstr "Mở form ↗"
-
 msgid "Open the form of every module in a new tab"
 msgstr "Mở form của từng module trong tab mới"
-
-msgid "Opened %s tab(s): %s"
-msgstr "Đã mở %s tab: %s"
-
-msgid "Not found: %s (Activate runs Update Apps List first)"
-msgstr "Không tìm thấy: %s (Kích hoạt sẽ cập nhật danh sách ứng dụng trước)"
-
-msgid "Installed"
-msgstr "Đã cài"
-
-msgid "Not Installed"
-msgstr "Chưa cài"
-
-msgid "Extra"
-msgstr "Bổ sung"
-
-msgid "Filters"
-msgstr "Bộ lọc"
-
-msgid " or "
-msgstr " hoặc "
-
-msgid "Category"
-msgstr "Danh mục"
-
-msgid "All Categories"
-msgstr "Mọi danh mục"
 
 msgid "// JavaScript with env, print, Command. ⌘/Ctrl+Enter runs it."
 msgstr "// JavaScript với env, print, Command. ⌘/Ctrl+Enter để chạy."

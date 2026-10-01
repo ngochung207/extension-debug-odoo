@@ -38,7 +38,8 @@ Odoo Debug trả lời các câu hỏi này ngay trên màn hình, dưới dạn
 | **RPC** | Các lời gọi JSON-RPC của trang, kèm thời gian và lỗi; sửa và gửi lại; Copy as cURL cho external API (18: `/jsonrpc`, 19: `/json/2`) |
 | **Security** | Quyền dạng bảng: ACL và rule của một bản ghi × đọc / ghi / tạo / xoá, domain được đánh giá với user; quyền trên mọi model; nhóm, nhóm cấp gì và ai đang có; thử một nhóm trước khi cấp; so sánh hai user |
 | **Translations** | Chữ đến từ đâu và sửa ở đâu; bản dịch của bản ghi và view theo từng ngôn ngữ; độ phủ `.po`, xuất và nhập; ngôn ngữ |
-| Apps · Perf · Code | Đang chuyển từ bản JavaScript |
+| **Apps** | Module như menu Apps của Odoo (cùng bộ lọc, dạng facet): chọn nhiều module rồi Kích hoạt (Cập nhật danh sách ứng dụng + cài kèm phụ thuộc), Nâng cấp hoặc mở form; ⚠ khi manifest trên đĩa mới hơn database. Mở một module: mô tả (`index.html` hoặc README), manifest, phụ thuộc hai chiều, dữ liệu và model của nó, gỡ cài đặt có xem trước bằng chính wizard của Odoo; các thao tác đang treo, áp dụng hoặc huỷ (quyền Settings) |
+| Perf · Code | Đang chuyển từ bản JavaScript |
 
 Phiên bản Odoo được nhận diện trên từng trang, và mọi khác biệt giữa 18.0 và 19.0 mà panel cần đều nằm ở một chỗ
 (`src/odoo/adapters/`).

@@ -3,6 +3,7 @@
 import type { ExtMessage } from '../contracts/messages.ts';
 import type { PageState } from '../injected/page-state.ts';
 import type { OdooContext } from '../odoo/detect.ts';
+import { appsTab } from './apps/apps.tab.ts';
 import { recordTab } from './record/record.tab.ts';
 import { rpcTab } from './rpc/rpc.tab.ts';
 import { securityTab } from './security/security.tab.ts';
@@ -45,7 +46,7 @@ export const TABS: Readonly<Record<TabName, TabModule | null>> = {
   rpc: rpcTab,
   security: securityTab,
   translations: translationsTab,
-  apps: null,
+  apps: appsTab,
   perf: null,
   code: null,
 };
