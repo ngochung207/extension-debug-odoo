@@ -64,6 +64,12 @@ code, pre, .mono { font-family: var(--mono); font-size: var(--fs-sm); line-heigh
 .brand-row { display: flex; flex-wrap: wrap; align-items: center; gap: 2px 8px; padding: 10px 10px 8px 12px; }
 .brand { display: flex; align-items: center; gap: 8px; }
 .brand strong { font-size: var(--fs-md); font-weight: 600; letter-spacing: -.01em; }
+/* the clock under the name: the time in the accent colour, digits of equal width (no jump at each minute), the date muted */
+.brand-text { display: flex; flex-direction: column; gap: 1px; line-height: 1.2; }
+.clock { display: flex; align-items: baseline; gap: 5px; font-size: var(--fs-xs); color: var(--muted); white-space: nowrap; cursor: default; }
+.clock time { color: var(--accent); font-weight: 600; font-variant-numeric: tabular-nums; letter-spacing: .02em; }
+.clock-dot { opacity: .6; }
+@media (max-width: 899.98px) { .clock-dot, #clock-date { display: none; } } /* narrow panel: the time only (the date on hover), the header stays one line */
 .spacer { flex: 1; }
 /* segmented control: a sunken track, the chosen option raised on it (popup: debug mode, language) */
 .seg { display: inline-flex; gap: 2px; padding: 2px; border-radius: var(--r); background: var(--bg); box-shadow: inset 0 0 0 1px var(--line); }
