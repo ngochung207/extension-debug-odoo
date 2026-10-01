@@ -11,7 +11,7 @@ test('each adapter self-checks the fields it names', () => {
   for (const a of Object.values(ADAPTERS)) {
     const checked = new Set(a.expects.map((e) => `${e.model}.${e.field}`));
     for (const f of [`res.users.${a.users.allGroupsField}`, `res.users.${a.users.writeGroupsField}`, `res.groups.${a.groups.impliedField}`,
-      `res.groups.${a.groups.appField}`]) {
+      `res.groups.${a.groups.appField}`, `res.groups.${a.groups.usersField}`]) {
       assert.ok(checked.has(f), `v${a.major} uses ${f} without checking it`);
     }
   }
@@ -44,6 +44,6 @@ test('the webclient translations route: a unique segment in 18, none in 19', () 
 test('self-check: missing fields', () => {
   const expects = ADAPTERS[19].expects;
   assert.deepEqual(missingFields(expects, Object.fromEntries(expects.map((e) => [e.model, expects.filter((x) => x.model === e.model).map((x) => x.field)]))), []);
-  const missing = missingFields(expects, { 'res.users': ['group_ids', 'all_group_ids'], 'res.groups': ['all_implied_ids', 'privilege_id'] }); // ir.profile unreadable
+  const missing = missingFields(expects, { 'res.users': ['group_ids', 'all_group_ids'], 'res.groups': ['all_implied_ids', 'privilege_id', 'all_user_ids'] }); // ir.profile unreadable
   assert.deepEqual(missing.map((m) => `${m.model}.${m.field}`), ['ir.profile.cpu_duration']);
 });

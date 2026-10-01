@@ -107,3 +107,26 @@
 <template data-tpl="okline">
   <div class="okline" data-i18n="text">✓ No issue found.</div>
 </template>
+
+<!-- Groups view: the list of groups, and beside it (wide panel) the group opened. -->
+<template data-tpl="groups-md">
+  <div class="groups-md" data-ref="root"><div class="groups-list" data-ref="list"></div><aside class="groups-pane" data-ref="pane"></aside></div>
+</template>
+<!-- A group opened: its name, xmlid and application, its description, where each user stands, what to do. -->
+<template data-tpl="group-head">
+  <div class="group-head" data-ref="box">
+    <h3 data-ref="name"></h3>
+    <div class="row" data-ref="meta"></div>
+    <div class="muted" data-ref="comment"></div>
+    <div class="group-status" data-ref="status"></div>
+    <div class="row" data-ref="actions"></div>
+  </div>
+</template>
+<!-- A part of the group opened, folding by its title. -->
+<template data-tpl="fold">
+  <details class="fold"><summary><span data-ref="title"></span><span class="muted" data-ref="count"></span></summary><div class="fold-body" data-ref="body"></div></details>
+</template>
+<template data-tpl="status-line">
+  <div class="row" data-ref="line"></div>
+</template>
+

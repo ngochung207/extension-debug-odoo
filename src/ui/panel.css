@@ -706,3 +706,25 @@ button[data-tip] { cursor: pointer; }
 .cov-full { color: var(--ok); font-weight: 600; }
 .cov-good { color: var(--fg); }
 .cov-low { color: var(--warn); font-weight: 600; }
+
+/* Security › Groups: the list, and the group opened beside it (wide panel) or under its row */
+.groups-pane { display: none; }
+@media (min-width: 900px) {
+  .groups-md { display: grid; grid-template-columns: minmax(340px, 2fr) minmax(0, 3fr); gap: 16px; align-items: start; }
+  .groups-pane { display: block; position: sticky; top: 8px; max-height: calc(100vh - 120px); overflow: auto; padding: 14px 16px;
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); }
+}
+.matrix tr.selected td { background: var(--accent-soft); }
+.matrix tr.selected td:first-child { box-shadow: inset 3px 0 var(--accent); }
+.group-head { display: flex; flex-direction: column; gap: 8px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+.group-head h3 { margin: 0; font-size: var(--fs-md); }
+.group-status { display: flex; flex-direction: column; gap: 4px; }
+.group-status .row { align-items: center; }
+.fold { margin-top: 10px; border: 1px solid var(--line); border-radius: var(--r); }
+.fold > summary { color: var(--fg); font-weight: 600; padding: 8px 12px; }
+.fold > summary:hover { background: var(--hover); }
+.fold[open] > summary { border-bottom: 1px solid var(--line); }
+.fold > summary .muted { font-weight: 400; }
+.fold-body { display: flex; flex-direction: column; gap: 8px; padding: 10px 12px; }
+.fold-body > div:has(> .chip) { display: flex; flex-wrap: wrap; gap: 6px; }
+.fold-body .story-title { margin: 4px 0 0; }
