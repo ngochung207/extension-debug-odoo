@@ -110,3 +110,12 @@ test('rights per model from the ACLs, and the module of a model', async () => {
   assert.equal(firstModule('sale, sale_stock'), 'sale');
   assert.equal(firstModule(false), '');
 });
+
+test('the session companies as a tree: parents first, a disallowed ancestor flagged', async () => {
+  const { companyTree } = await import('../../../../src/features/security/security.logic.ts');
+  const c = (id: number, name: string, parent: number | false, children: number[], sequence = 10) => ({ id, name, sequence, parent_id: parent, child_ids: children });
+  const tree = companyTree({ current_company: 2,
+    allowed_companies: { 2: c(2, 'SF', 1, [4]), 3: c(3, 'Chicago', 1, []), 4: c(4, 'SF Shop', 2, []), 9: c(9, 'Other', false, [], 5) },
+    disallowed_ancestor_companies: { 1: c(1, 'Holding', false, [2, 3]) } });
+  assert.deepEqual(tree.map((t) => `${'  '.repeat(t.depth)}${t.company.name}${t.allowed ? '' : ' ×'}`), ['Other', 'Holding ×', '  Chicago', '  SF', '    SF Shop']);
+});

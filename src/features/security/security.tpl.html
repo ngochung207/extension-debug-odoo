@@ -6,6 +6,9 @@
 <template data-tpl="bar">
   <div class="sec-bar card" data-ref="bar"><dl class="facts" data-ref="facts"></dl></div>
 </template>
+<template data-tpl="facts">
+  <dl class="facts" data-ref="list"></dl>
+</template>
 <template data-tpl="fact">
   <div class="fact"><dt data-ref="label"></dt><dd class="row" data-ref="value"></dd></div>
 </template>
@@ -82,8 +85,8 @@
 <!-- A rule opened: its domain as written, as evaluated for the user, why it couldn't be checked. -->
 <template data-tpl="rule-detail">
   <div class="rule-detail" data-ref="box">
-    <div class="kv-line"><span class="muted" data-i18n="text">Domain</span><code data-ref="domain"></code></div>
-    <div class="kv-line" data-ref="evRow"><span class="muted" data-i18n="text">For the user</span><code data-ref="evaluated"></code></div>
+    <div class="kv-line"><span class="muted" data-i18n="text">As written</span><span data-ref="domain"></span></div>
+    <div class="kv-line" data-ref="evRow"><span class="muted" data-i18n="text">For the user</span><span data-ref="evaluated"></span></div>
     <div class="error" data-ref="note"></div>
   </div>
 </template>
