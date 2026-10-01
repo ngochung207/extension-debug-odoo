@@ -1,10 +1,11 @@
 // The panel's small components: markup in components.tpl.html, styles in panel.css. Odoo data only ever goes through
-// textContent. The list widgets (cards, filtered / expandable lists, master-detail) come with the first tab needing them.
+// textContent. List widgets: lists.ts.
 import { translateDom } from '../i18n/i18n.ts';
 import { templates } from './template.ts';
 import html from './components.tpl.html';
 
-const tpl = templates(html, translateDom);
+/** The templates of components.tpl.html (lists.ts uses them too). */
+export const tpl = templates(html, translateDom);
 
 export type PillKind = '' | 'ok' | 'err' | 'med' | 'low' | 'high' | 'info' | 'accent';
 
@@ -82,4 +83,14 @@ export function copyable(text: string, cls = 'name', label = text): HTMLButtonEl
     setTimeout(() => button.classList.remove('copied'), 1000);
   });
   return button;
+}
+
+export const loading = (): HTMLElement => tpl('loading').root;
+
+/** Column names of a .list, shown only when the list is laid out as a table (wide panel). */
+export function listHead(main: string, desc: string): HTMLElement {
+  const { root, refs } = tpl('list-head', { main: HTMLSpanElement, desc: HTMLSpanElement });
+  refs.main.textContent = main;
+  refs.desc.textContent = desc;
+  return root;
 }

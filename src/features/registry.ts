@@ -3,6 +3,7 @@
 import type { ExtMessage } from '../contracts/messages.ts';
 import type { PageState } from '../injected/page-state.ts';
 import type { OdooContext } from '../odoo/detect.ts';
+import { rpcTab } from './rpc/rpc.tab.ts';
 
 /** In the order of the tab bar (entrypoints/panel/index.html). */
 export const TAB_NAMES = ['record', 'view', 'rpc', 'code', 'security', 'translations', 'apps', 'perf'] as const;
@@ -14,6 +15,8 @@ export interface PanelContext {
   state(): PageState;
   odoo(): OdooContext | null;
   showTab(name: TabName): void;
+  /** The small count on a tab's button (RPC: calls recorded); '' hides it. */
+  setBadge(name: TabName, text: string): void;
 }
 
 export interface TabModule {
@@ -33,7 +36,7 @@ export interface TabModule {
 export const TABS: Readonly<Record<TabName, TabModule | null>> = {
   record: null,
   view: null,
-  rpc: null,
+  rpc: rpcTab,
   code: null,
   security: null,
   translations: null,
