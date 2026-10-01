@@ -118,3 +118,31 @@
 <template data-tpl="json-more">
   <button type="button" class="chip json-more" data-ref="button"></button>
 </template>
+
+<!-- A part of a tab told as a story (parts.ts → part), folded by its title: number, title, a one-line summary, its tools (segmented control,
+     search), which work folded too and don't fold it. -->
+<template data-tpl="part">
+  <details class="card part" data-ref="part">
+    <summary class="part-head">
+      <span class="part-no" data-ref="no"></span>
+      <h3 data-ref="title"></h3>
+      <span class="muted part-sub" data-ref="sub"></span>
+      <span class="spacer"></span>
+      <span class="part-tools" data-ref="tools"></span>
+    </summary>
+    <div class="card-body" data-ref="body"></div>
+  </details>
+</template>
+
+<!-- Segmented control (parts.ts → segmented): one button per option. -->
+<template data-tpl="seg">
+  <div class="seg" role="radiogroup" data-ref="seg"></div>
+</template>
+<template data-tpl="seg-option">
+  <button type="button" role="radio" aria-checked="false" data-ref="button"></button>
+</template>
+
+<!-- Why something is missing (rights), or a hint (parts.ts → note). -->
+<template data-tpl="note">
+  <div class="note" data-ref="text"></div>
+</template>

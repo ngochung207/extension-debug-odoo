@@ -10,7 +10,8 @@ test('every supported major has its adapter, under its own number', () => {
 test('each adapter self-checks the fields it names', () => {
   for (const a of Object.values(ADAPTERS)) {
     const checked = new Set(a.expects.map((e) => `${e.model}.${e.field}`));
-    for (const f of [`res.users.${a.users.allGroupsField}`, `res.users.${a.users.writeGroupsField}`, `res.groups.${a.groups.impliedField}`]) {
+    for (const f of [`res.users.${a.users.allGroupsField}`, `res.users.${a.users.writeGroupsField}`, `res.groups.${a.groups.impliedField}`,
+      `res.groups.${a.groups.appField}`]) {
       assert.ok(checked.has(f), `v${a.major} uses ${f} without checking it`);
     }
   }
@@ -30,9 +31,14 @@ test('ORM method lists: model-level reads are read methods; each version keeps o
   }
 });
 
+test('record rules: `time` only reaches the domains of 18', () => {
+  assert.ok(ADAPTERS[18].rules.evalNames.includes('time'));
+  assert.ok(!ADAPTERS[19].rules.evalNames.includes('time'));
+});
+
 test('self-check: missing fields', () => {
   const expects = ADAPTERS[19].expects;
   assert.deepEqual(missingFields(expects, Object.fromEntries(expects.map((e) => [e.model, expects.filter((x) => x.model === e.model).map((x) => x.field)]))), []);
-  const missing = missingFields(expects, { 'res.users': ['group_ids', 'all_group_ids'], 'res.groups': ['all_implied_ids'] }); // ir.profile unreadable
+  const missing = missingFields(expects, { 'res.users': ['group_ids', 'all_group_ids'], 'res.groups': ['all_implied_ids', 'privilege_id'] }); // ir.profile unreadable
   assert.deepEqual(missing.map((m) => `${m.model}.${m.field}`), ['ir.profile.cpu_duration']);
 });

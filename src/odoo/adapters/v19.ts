@@ -61,8 +61,12 @@ export const v19: OdooAdapter = {
   groups: {
     impliedField: 'all_implied_ids', // renamed from trans_implied_ids
     impliedIncludesSelf: true, // all_implied_ids = g.ids + its supersets
+    appField: 'privilege_id', // new res.groups.privilege; full_name = '<privilege> / <name>'
   },
-  rules: { inheritsStoredOnly: true }, // _compute_domain skips a non-stored _inherits link
+  rules: {
+    inheritsStoredOnly: true, // _compute_domain skips a non-stored _inherits link
+    evalNames: ['user', 'company_ids', 'company_id'], // `time` is gone from ir.rule._eval_context
+  },
   profiler: { listFields: ['name', 'session', 'duration', 'cpu_duration', 'sql_count', 'create_date'] }, // cpu_duration is new
   // /json/2/<model>/<method> (addons/rpc/controllers/json2.py, auto_install): binds NAMED arguments only
   // (signature.bind(records, **kwargs)), 422 when ids are given to an @api.model method. /jsonrpc still answers but is
@@ -73,6 +77,7 @@ export const v19: OdooAdapter = {
     { model: 'res.users', field: 'group_ids', usedBy: 'Security: groups' },
     { model: 'res.users', field: 'all_group_ids', usedBy: 'Security: groups' },
     { model: 'res.groups', field: 'all_implied_ids', usedBy: 'Security: implied groups' },
+    { model: 'res.groups', field: 'privilege_id', usedBy: 'Security: groups by application' },
     { model: 'ir.profile', field: 'cpu_duration', usedBy: 'Perf' },
   ],
 };

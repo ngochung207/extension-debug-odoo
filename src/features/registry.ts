@@ -5,10 +5,11 @@ import type { PageState } from '../injected/page-state.ts';
 import type { OdooContext } from '../odoo/detect.ts';
 import { recordTab } from './record/record.tab.ts';
 import { rpcTab } from './rpc/rpc.tab.ts';
+import { securityTab } from './security/security.tab.ts';
 import { viewTab } from './view/view.tab.ts';
 
 /** In the order of the tab bar (entrypoints/panel/index.html). */
-export const TAB_NAMES = ['record', 'view', 'rpc', 'code', 'security', 'translations', 'apps', 'perf'] as const;
+export const TAB_NAMES = ['record', 'view', 'rpc', 'security', 'translations', 'apps', 'perf', 'code'] as const;
 export type TabName = (typeof TAB_NAMES)[number];
 export const isTabName = (s: unknown): s is TabName => (TAB_NAMES as readonly unknown[]).includes(s);
 
@@ -17,6 +18,8 @@ export interface PanelContext {
   state(): PageState;
   odoo(): OdooContext | null;
   showTab(name: TabName): void;
+  /** Shows the tab `name`, rendered anew (something was handed to it). */
+  rerender(name: TabName): void;
   /** The small count on a tab's button (RPC: calls recorded); '' hides it. */
   setBadge(name: TabName, text: string): void;
 }
@@ -39,9 +42,9 @@ export const TABS: Readonly<Record<TabName, TabModule | null>> = {
   record: recordTab,
   view: viewTab,
   rpc: rpcTab,
-  code: null,
-  security: null,
+  security: securityTab,
   translations: null,
   apps: null,
   perf: null,
+  code: null,
 };

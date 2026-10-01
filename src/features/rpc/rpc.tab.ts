@@ -4,6 +4,7 @@
 import type { ExtMessage } from '../../contracts/messages.ts';
 import { exec, isExecError } from '../../extension/run-in-tab.ts';
 import { _t, translateDom } from '../../i18n/i18n.ts';
+import { idsOfCall, modeOfCall, parseAccessError, reportAccessProblem } from '../../odoo/access-error.ts';
 import { odoo } from '../../odoo/detect.ts';
 import { methodSignature } from '../../odoo/method-doc.ts';
 import { sessionInfo } from '../../odoo/reads.ts';
@@ -115,7 +116,12 @@ function detail(e: RpcEntry): HTMLElement {
     curl.remove();
     params.replaceWith(composer(e.route, e.body));
   });
-  if (isAccessDenied(e)) refs.why.addEventListener('click', () => panel.showTab('security'));
+  if (isAccessDenied(e)) refs.why.addEventListener('click', () => { // the Security tab diagnoses it: the error's model, records, operation
+    const p = parseAccessError(e.error ?? '');
+    reportAccessProblem({ kind: p?.kind ?? null, user: p?.user ?? null, rules: p?.rules ?? [], groups: p?.groups ?? [],
+      model: e.model || p?.model || null, ids: p?.ids.length ? p.ids : idsOfCall(e.args), mode: modeOfCall(e.method, e.args) ?? p?.mode ?? null });
+    panel.rerender('security');
+  });
   else refs.why.remove();
   if (e.error) refs.body.append(errBox({ message: e.error, traceback: e.traceback }), params);
   else refs.body.append(params, unfolded(details(_t('Result'), ...cutNote(e.answerCut), readable(e.result))));

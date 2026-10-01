@@ -14,7 +14,8 @@ import { archFields, fieldSteps, moduleOf, type Step } from './arch.logic.ts';
 import type { Composition } from './view.data.ts';
 import { pagePick, type FormField, type FormFields, type Modifier } from './view.injected.ts';
 import { inspect, inspectedField, onInspect, revealLine } from './view.state.ts';
-import { frag, note, part, shortName, tpl } from './view.ui.ts';
+import { frag, note, part } from '../../ui/parts.ts';
+import { shortName, tpl } from './view.ui.ts';
 
 const MODIFIERS = ['invisible', 'readonly', 'required'] as const;
 

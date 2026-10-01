@@ -146,7 +146,7 @@ const setBadge = (name: TabName, text: string) => {
   const badge = document.querySelector(`.tabs [data-tab="${name}"] .count`);
   if (badge) badge.textContent = text;
 };
-const panel: PanelContext = { state: () => state, odoo: () => ctx, showTab, setBadge };
+const panel: PanelContext = { state: () => state, odoo: () => ctx, showTab, setBadge, rerender: (name) => { rendered.delete(name); showTab(name); } };
 // before mounting: the RPC log reads what the page recorded already
 setTab(ownWindowOf != null ? await chrome.tabs.get(ownWindowOf).catch(() => undefined) : await chrome.tabs.getCurrent());
 for (const name of TAB_NAMES) await TABS[name]?.mount?.(section(name), panel);

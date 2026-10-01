@@ -44,11 +44,15 @@ export interface OdooAdapter {
     readonly impliedField: string;
     /** whether impliedField lists the group itself too */
     readonly impliedIncludesSelf: boolean;
+    /** res.groups many2one: the application a group belongs to, the prefix of its full_name ("Sales / User") */
+    readonly appField: string;
   };
 
   readonly rules: {
     /** ir.rule._compute_domain skips _inherits parents whose link field is not stored */
     readonly inheritsStoredOnly: boolean;
+    /** the names ir.rule._eval_context gives a rule's domain (the webclient's py_js knows more: `time` always) */
+    readonly evalNames: readonly string[];
   };
 
   readonly profiler: {

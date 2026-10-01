@@ -2,35 +2,12 @@
      ① overview → ② how the view is built → ③ one field → ④ action & context → ⑤ arch.
      data-ref: filled by the code, text only. -->
 
-<!-- A part of the story, folded by its title: number, title, a one-line summary, its tools (segmented control,
-     search), which work folded too and don't fold it. -->
-<template data-tpl="part">
-  <details class="card part" data-ref="part">
-    <summary class="part-head">
-      <span class="part-no" data-ref="no"></span>
-      <h3 data-ref="title"></h3>
-      <span class="muted part-sub" data-ref="sub"></span>
-      <span class="spacer"></span>
-      <span class="part-tools" data-ref="tools"></span>
-    </summary>
-    <div class="card-body" data-ref="body"></div>
-  </details>
-</template>
-
 <!-- ① a fact of the overview: what, then its value. -->
 <template data-tpl="facts">
   <dl class="facts" data-ref="list"></dl>
 </template>
 <template data-tpl="fact">
   <div class="fact"><dt data-ref="label"></dt><dd data-ref="value"></dd></div>
-</template>
-
-<!-- Form | Search, in parts ② and ⑤. -->
-<template data-tpl="seg">
-  <div class="seg" role="radiogroup" data-ref="seg"></div>
-</template>
-<template data-tpl="seg-option">
-  <button type="button" role="radio" aria-checked="false" data-ref="button"></button>
 </template>
 
 <!-- ② a view of the composition: module, name, marks on the first line; what it does on the second; file below. -->
@@ -63,11 +40,6 @@
 <!-- Copies a view's own arch. -->
 <template data-tpl="copy-arch">
   <button type="button" class="chip" data-ref="button" data-i18n="text">Copy</button>
-</template>
-
-<!-- Why a part is missing (rights), or a hint. -->
-<template data-tpl="note">
-  <div class="note" data-ref="text"></div>
 </template>
 
 <!-- ③ the field to inspect: typed (suggestions: the fields of the view) or picked on the page. -->
