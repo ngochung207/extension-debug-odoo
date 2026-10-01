@@ -8,7 +8,7 @@ import { call } from '../../odoo/rpc.ts';
 import { pageHasFile } from './apps.injected.ts';
 import { PENDING, type AppModule, type DepRow, type XmlIdRow } from './apps.logic.ts';
 
-const LIST = ['name', 'shortdesc', 'summary', 'state', 'latest_version', 'author', 'application', 'category_id', 'auto_install', 'to_buy'];
+const LIST = ['name', 'shortdesc', 'summary', 'state', 'latest_version', 'author', 'application', 'category_id', 'auto_install', 'to_buy', 'country_ids'];
 
 /** Every module the database knows (Update Apps List adds the ones new on disk). */
 export const readModules = () => call<AppModule[]>('ir.module.module', 'search_read', [[]], { fields: LIST, order: 'name' });
@@ -20,7 +20,11 @@ export async function readDiskVersions(ids: readonly number[]): Promise<Map<numb
   return new Map(rows.map((r) => [r.id, r.installed_version]));
 }
 
-export const readDependencies = () => call<DepRow[]>('ir.module.module.dependency', 'search_read', [[]], { fields: ['name', 'module_id'] });
+export const readDependencies = () => call<DepRow[]>('ir.module.module.dependency', 'search_read', [[]], { fields: ['name', 'module_id', 'auto_install_required'] });
+
+/** The countries of the companies (a localization auto-installs only for them), as button_install reads them. */
+export const readCompanyCountries = () => call<{ country_id: [number, string] | false }[]>('res.company', 'search_read', [[]], { fields: ['country_id'] })
+  .then((rows) => [...new Set(rows.flatMap((r) => (r.country_id ? [r.country_id[0]] : [])))]);
 
 /** A module opened: what its manifest gave Odoo, and its description as Odoo renders it. */
 export interface ModuleDetail {

@@ -187,590 +187,724 @@ msgstr "debug"
 msgid "No tab is open."
 msgstr "No tab is open."
 
-#: src/features/apps/apps.module.ts:40
-#: src/features/apps/apps.module.ts:150
+#: src/features/apps/apps.graph.ts:30
+msgid "The module opened"
+msgstr "The module opened"
+
+#: src/features/apps/apps.graph.ts:30
+#: src/features/apps/apps.ui.ts:100
+#: src/features/apps/apps.ui.ts:154
+msgid "Installed"
+msgstr "Installed"
+
+#: src/features/apps/apps.graph.ts:30
+msgid "Installed with it, as a dependency"
+msgstr "Installed with it, as a dependency"
+
+#: src/features/apps/apps.graph.ts:31
+msgid "Auto-installed with it"
+msgstr "Auto-installed with it"
+
+#: src/features/apps/apps.graph.ts:31
+#: src/features/apps/apps.module.ts:230
+msgid "Not on this server"
+msgstr "Not on this server"
+
+#: src/features/apps/apps.graph.ts:31
+#: src/features/apps/apps.ui.ts:154
+msgid "Not installed"
+msgstr "Not installed"
+
+#: src/features/apps/apps.graph.ts:38
+#: src/features/apps/apps.module.ts:127
+msgid "auto-installed: %s all installed or being installed"
+msgstr "auto-installed: %s all installed or being installed"
+
+#: src/features/apps/apps.graph.ts:39
+#: src/features/apps/apps.module.ts:127
+msgid "a dependency of %s"
+msgstr "a dependency of %s"
+
+#: src/features/apps/apps.graph.ts:40
+msgid "Needs"
+msgstr "Needs"
+
+#: src/features/apps/apps.graph.ts:40
+msgid "Install brings"
+msgstr "Install brings"
+
+#: src/features/apps/apps.graph.ts:40
+#: src/features/apps/apps.module.ts:146
+msgid "Used by"
+msgstr "Used by"
+
+#: src/features/apps/apps.graph.ts:52
+msgid "Hide the hubs (base, web, mail…)"
+msgstr "Hide the hubs (base, web, mail…)"
+
+#: src/features/apps/apps.graph.ts:56
+msgid "Installed only"
+msgstr "Installed only"
+
+#: src/features/apps/apps.graph.ts:59
+msgid "1 level"
+msgstr "1 level"
+
+#: src/features/apps/apps.graph.ts:59
+msgid "2 levels"
+msgstr "2 levels"
+
+#: src/features/apps/apps.graph.ts:59
+msgid "All"
+msgstr "All"
+
+#: src/features/apps/apps.graph.ts:72
+msgid "Over the whole tab (Esc to come back)"
+msgstr "Over the whole tab (Esc to come back)"
+
+#: src/features/apps/apps.graph.ts:75
+msgid "Zoom out (Ctrl + wheel)"
+msgstr "Zoom out (Ctrl + wheel)"
+
+#: src/features/apps/apps.graph.ts:75
+msgid "Zoom in (Ctrl + wheel)"
+msgstr "Zoom in (Ctrl + wheel)"
+
+#: src/features/apps/apps.graph.ts:76
+msgid "Fit"
+msgstr "Fit"
+
+#: src/features/apps/apps.graph.ts:76
+msgid "The whole diagram in the width"
+msgstr "The whole diagram in the width"
+
+#: src/features/apps/apps.graph.ts:125
+#: src/features/apps/apps.module.ts:146
+#: src/features/apps/apps.modules.ts:136
+msgid "%s modules"
+msgstr "%s modules"
+
+#: src/features/apps/apps.graph.ts:154
+msgid "Open"
+msgstr "Open"
+
+#: src/features/apps/apps.graph.ts:154
+msgid "Open this module"
+msgstr "Open this module"
+
+#: src/features/apps/apps.graph.ts:156
+msgid "Arrows point to what a module depends on. Click a module for the chain to %s; double-click to open it."
+msgstr "Arrows point to what a module depends on. Click a module for the chain to %s; double-click to open it."
+
+#: src/features/apps/apps.graph.ts:158
+msgid "Hidden hubs: %s"
+msgstr "Hidden hubs: %s"
+
+#: src/features/apps/apps.graph.ts:159
+msgid "… and %s more not drawn"
+msgstr "… and %s more not drawn"
+
+#: src/features/apps/apps.module.ts:44
+#: src/features/apps/apps.module.ts:166
 msgid "Models"
 msgstr "Models"
 
-#: src/features/apps/apps.module.ts:40
+#: src/features/apps/apps.module.ts:44
 #: src/features/record/record.tab.ts:28
 #: src/features/view/view.overview.ts:73
 msgid "Fields"
 msgstr "Fields"
 
-#: src/features/apps/apps.module.ts:40
+#: src/features/apps/apps.module.ts:44
 msgid "Selection values"
 msgstr "Selection values"
 
-#: src/features/apps/apps.module.ts:41
+#: src/features/apps/apps.module.ts:45
 msgid "Views"
 msgstr "Views"
 
-#: src/features/apps/apps.module.ts:41
+#: src/features/apps/apps.module.ts:45
 msgid "Menus"
 msgstr "Menus"
 
-#: src/features/apps/apps.module.ts:41
+#: src/features/apps/apps.module.ts:45
 msgid "Window actions"
 msgstr "Window actions"
 
-#: src/features/apps/apps.module.ts:42
+#: src/features/apps/apps.module.ts:46
 msgid "Server actions"
 msgstr "Server actions"
 
-#: src/features/apps/apps.module.ts:42
+#: src/features/apps/apps.module.ts:46
 msgid "Reports"
 msgstr "Reports"
 
-#: src/features/apps/apps.module.ts:42
+#: src/features/apps/apps.module.ts:46
 msgid "Client actions"
 msgstr "Client actions"
 
-#: src/features/apps/apps.module.ts:43
+#: src/features/apps/apps.module.ts:47
 msgid "URL actions"
 msgstr "URL actions"
 
-#: src/features/apps/apps.module.ts:43
+#: src/features/apps/apps.module.ts:47
 msgid "Scheduled actions"
 msgstr "Scheduled actions"
 
-#: src/features/apps/apps.module.ts:43
+#: src/features/apps/apps.module.ts:47
 #: src/features/security/security.tab.ts:64
 #: src/features/view/view.tpl.html:65
 msgid "Groups"
 msgstr "Groups"
 
-#: src/features/apps/apps.module.ts:44
+#: src/features/apps/apps.module.ts:48
 #: src/features/security/security.groups.ts:123
 #: src/features/security/security.model.ts:29
 #: src/features/security/security.record.ts:85
 msgid "Access rights (ACL)"
 msgstr "Access rights (ACL)"
 
-#: src/features/apps/apps.module.ts:44
+#: src/features/apps/apps.module.ts:48
 #: src/features/security/security.groups.ts:134
 #: src/features/security/security.model.ts:40
 msgid "Record rules"
 msgstr "Record rules"
 
-#: src/features/apps/apps.module.ts:44
+#: src/features/apps/apps.module.ts:48
 msgid "Constraints"
 msgstr "Constraints"
 
-#: src/features/apps/apps.module.ts:45
+#: src/features/apps/apps.module.ts:49
 msgid "Many2many tables"
 msgstr "Many2many tables"
 
-#: src/features/apps/apps.module.ts:45
+#: src/features/apps/apps.module.ts:49
 msgid "Categories"
 msgstr "Categories"
 
-#: src/features/apps/apps.module.ts:45
+#: src/features/apps/apps.module.ts:49
 msgid "Assets"
 msgstr "Assets"
 
-#: src/features/apps/apps.module.ts:62
+#: src/features/apps/apps.module.ts:66
 msgid "App"
 msgstr "App"
 
-#: src/features/apps/apps.module.ts:63
+#: src/features/apps/apps.module.ts:67
 msgid "auto-install"
 msgstr "auto-install"
 
-#: src/features/apps/apps.module.ts:63
+#: src/features/apps/apps.module.ts:67
 msgid "Installed by itself once every module it depends on is"
 msgstr "Installed by itself once every module it depends on is"
 
-#: src/features/apps/apps.module.ts:64
+#: src/features/apps/apps.module.ts:68
 msgid "Enterprise"
 msgstr "Enterprise"
 
-#: src/features/apps/apps.module.ts:72
+#: src/features/apps/apps.module.ts:77
 msgid "Installed: %s"
 msgstr "Installed: %s"
 
-#: src/features/apps/apps.module.ts:72
+#: src/features/apps/apps.module.ts:77
 msgid "ir.module.module.latest_version: the version in the database, written by the last install or upgrade"
 msgstr "ir.module.module.latest_version: the version in the database, written by the last install or upgrade"
 
-#: src/features/apps/apps.module.ts:74
+#: src/features/apps/apps.module.ts:79
 msgid "On disk: %s"
 msgstr "On disk: %s"
 
-#: src/features/apps/apps.module.ts:74
+#: src/features/apps/apps.module.ts:79
 msgid "installed_version: the version in the manifest on the server's addons path"
 msgstr "installed_version: the version in the manifest on the server's addons path"
 
-#: src/features/apps/apps.module.ts:75
+#: src/features/apps/apps.module.ts:80
 msgid "upgrade needed"
 msgstr "upgrade needed"
 
-#: src/features/apps/apps.module.ts:75
+#: src/features/apps/apps.module.ts:80
 msgid "older on disk"
 msgstr "older on disk"
 
-#: src/features/apps/apps.module.ts:76
+#: src/features/apps/apps.module.ts:81
 msgid "The code on disk is newer than the database: Upgrade applies it."
 msgstr "The code on disk is newer than the database: Upgrade applies it."
 
-#: src/features/apps/apps.module.ts:77
+#: src/features/apps/apps.module.ts:82
 msgid "The code on disk is older than the database: another branch, or a version bumped back?"
 msgstr "The code on disk is older than the database: another branch, or a version bumped back?"
 
-#: src/features/apps/apps.module.ts:80
+#: src/features/apps/apps.module.ts:85
 msgid "missing"
 msgstr "missing"
 
-#: src/features/apps/apps.module.ts:80
+#: src/features/apps/apps.module.ts:85
 msgid "Depends on modules this server doesn't have: %s"
 msgstr "Depends on modules this server doesn't have: %s"
 
-#: src/features/apps/apps.module.ts:90
-#: src/features/apps/apps.module.ts:92
+#: src/features/apps/apps.module.ts:95
+#: src/features/apps/apps.module.ts:97
 msgid "Picked ✓"
 msgstr "Picked ✓"
 
-#: src/features/apps/apps.module.ts:90
-#: src/features/apps/apps.module.ts:92
+#: src/features/apps/apps.module.ts:95
+#: src/features/apps/apps.module.ts:97
 msgid "Pick"
 msgstr "Pick"
 
-#: src/features/apps/apps.module.ts:93
+#: src/features/apps/apps.module.ts:98
 msgid "Add to / remove from the modules picked for an action"
 msgstr "Add to / remove from the modules picked for an action"
 
-#: src/features/apps/apps.module.ts:96
+#: src/features/apps/apps.module.ts:101
 msgid "Install"
 msgstr "Install"
 
-#: src/features/apps/apps.module.ts:96
+#: src/features/apps/apps.module.ts:101
 msgid "Update Apps List, then install it with its dependencies"
 msgstr "Update Apps List, then install it with its dependencies"
 
-#: src/features/apps/apps.module.ts:97
-#: src/features/apps/apps.modules.ts:125
+#: src/features/apps/apps.module.ts:102
+#: src/features/apps/apps.modules.ts:126
 msgid "Upgrade"
 msgstr "Upgrade"
 
-#: src/features/apps/apps.module.ts:97
+#: src/features/apps/apps.module.ts:102
 msgid "Upgrade it now (and the modules depending on it)"
 msgstr "Upgrade it now (and the modules depending on it)"
 
-#: src/features/apps/apps.module.ts:98
+#: src/features/apps/apps.module.ts:103
 msgid "Uninstall…"
 msgstr "Uninstall…"
 
-#: src/features/apps/apps.module.ts:98
+#: src/features/apps/apps.module.ts:103
 msgid "What it would remove, then confirm"
 msgstr "What it would remove, then confirm"
 
-#: src/features/apps/apps.module.ts:100
+#: src/features/apps/apps.module.ts:105
 msgid "Form ↗"
 msgstr "Form ↗"
 
-#: src/features/apps/apps.module.ts:106
+#: src/features/apps/apps.module.ts:111
 msgid "Description"
 msgstr "Description"
 
-#: src/features/apps/apps.module.ts:109
+#: src/features/apps/apps.module.ts:114
 msgid "From static/description/index.html"
 msgstr "From static/description/index.html"
 
-#: src/features/apps/apps.module.ts:109
+#: src/features/apps/apps.module.ts:114
 msgid "From the manifest's description (RST) or the README"
 msgstr "From the manifest's description (RST) or the README"
 
-#: src/features/apps/apps.module.ts:110
+#: src/features/apps/apps.module.ts:115
 msgid "Open the page ↗"
 msgstr "Open the page ↗"
 
-#: src/features/apps/apps.module.ts:111
+#: src/features/apps/apps.module.ts:116
 msgid "No description."
 msgstr "No description."
 
-#: src/features/apps/apps.module.ts:115
+#: src/features/apps/apps.module.ts:120
 msgid "Manifest"
 msgstr "Manifest"
 
-#: src/features/apps/apps.module.ts:118
-#: src/features/apps/apps.module.ts:235
+#: src/features/apps/apps.module.ts:123
+#: src/features/apps/apps.module.ts:252
 msgid "Depends"
 msgstr "Depends"
 
-#: src/features/apps/apps.module.ts:118
+#: src/features/apps/apps.module.ts:123
 msgid "%s declared"
 msgstr "%s declared"
 
-#: src/features/apps/apps.module.ts:122
+#: src/features/apps/apps.module.ts:129
 msgid "Declared in its manifest"
 msgstr "Declared in its manifest"
 
-#: src/features/apps/apps.module.ts:122
+#: src/features/apps/apps.module.ts:129
 msgid "Nothing: it depends on no module."
 msgstr "Nothing: it depends on no module."
 
-#: src/features/apps/apps.module.ts:123
+#: src/features/apps/apps.module.ts:130
 msgid "Needs in all (%s)"
 msgstr "Needs in all (%s)"
 
-#: src/features/apps/apps.module.ts:123
+#: src/features/apps/apps.module.ts:130
+#: src/features/apps/apps.module.ts:135
 msgid "Nothing."
 msgstr "Nothing."
 
-#: src/features/apps/apps.module.ts:124
+#: src/features/apps/apps.module.ts:132
 msgid "Installing it also installs (%s)"
 msgstr "Installing it also installs (%s)"
 
-#: src/features/apps/apps.module.ts:130
-msgid "Used by"
-msgstr "Used by"
+#: src/features/apps/apps.module.ts:133
+msgid "Nothing: every dependency is installed."
+msgstr "Nothing: every dependency is installed."
 
-#: src/features/apps/apps.module.ts:130
+#: src/features/apps/apps.module.ts:134
+msgid "And auto-installs (%s)"
+msgstr "And auto-installs (%s)"
+
+#: src/features/apps/apps.module.ts:136
+msgid "Odoo will refuse it: %s"
+msgstr "Odoo will refuse it: %s"
+
+#: src/features/apps/apps.module.ts:136
+msgid "%s depends on %s, not on this server"
+msgstr "%s depends on %s, not on this server"
+
+#: src/features/apps/apps.module.ts:137
+msgid "Not installable, the install will fail: %s"
+msgstr "Not installable, the install will fail: %s"
+
+#: src/features/apps/apps.module.ts:138
+msgid "As Odoo's button_install computes it: the dependencies not installed, then every auto_install module whose triggers are all installed or being installed (and, for a localization, a company in its countries)."
+msgstr "As Odoo's button_install computes it: the dependencies not installed, then every auto_install module whose triggers are all installed or being installed (and, for a localization, a company in its countries)."
+
+#: src/features/apps/apps.module.ts:142
+#: src/features/apps/apps.tpl.html:88
+msgid "Dependency diagram"
+msgstr "Dependency diagram"
+
+#: src/features/apps/apps.module.ts:146
 msgid "%s installed depend on it"
 msgstr "%s installed depend on it"
 
-#: src/features/apps/apps.module.ts:130
-#: src/features/apps/apps.modules.ts:135
-msgid "%s modules"
-msgstr "%s modules"
-
-#: src/features/apps/apps.module.ts:131
+#: src/features/apps/apps.module.ts:147
 msgid "Declaring it in their depends (%s)"
 msgstr "Declaring it in their depends (%s)"
 
-#: src/features/apps/apps.module.ts:131
+#: src/features/apps/apps.module.ts:147
 msgid "No module depends on it."
 msgstr "No module depends on it."
 
-#: src/features/apps/apps.module.ts:132
+#: src/features/apps/apps.module.ts:148
 msgid "Uninstalling it also removes (%s)"
 msgstr "Uninstalling it also removes (%s)"
 
-#: src/features/apps/apps.module.ts:132
-#: src/features/apps/apps.module.ts:192
+#: src/features/apps/apps.module.ts:148
+#: src/features/apps/apps.module.ts:208
 msgid "No other module."
 msgstr "No other module."
 
-#: src/features/apps/apps.module.ts:135
+#: src/features/apps/apps.module.ts:151
 msgid "Data (xmlids)"
 msgstr "Data (xmlids)"
 
-#: src/features/apps/apps.module.ts:137
+#: src/features/apps/apps.module.ts:153
 msgid "No xmlid: the module brings no data."
 msgstr "No xmlid: the module brings no data."
 
-#: src/features/apps/apps.module.ts:137
+#: src/features/apps/apps.module.ts:153
 msgid "Not installed: its data is known once it is."
 msgstr "Not installed: its data is known once it is."
 
-#: src/features/apps/apps.module.ts:143
+#: src/features/apps/apps.module.ts:159
 msgid "noupdate: an upgrade doesn't overwrite them"
 msgstr "noupdate: an upgrade doesn't overwrite them"
 
-#: src/features/apps/apps.module.ts:147
+#: src/features/apps/apps.module.ts:163
 msgid "%s xmlids. Click a kind for its records."
 msgstr "%s xmlids. Click a kind for its records."
 
-#: src/features/apps/apps.module.ts:147
+#: src/features/apps/apps.module.ts:163
 msgid "Kind"
 msgstr "Kind"
 
-#: src/features/apps/apps.module.ts:147
+#: src/features/apps/apps.module.ts:163
 msgid "Records"
 msgstr "Records"
 
-#: src/features/apps/apps.module.ts:152
+#: src/features/apps/apps.module.ts:168
 msgid "It creates or extends no model."
 msgstr "It creates or extends no model."
 
-#: src/features/apps/apps.module.ts:152
+#: src/features/apps/apps.module.ts:168
 msgid "Not installed: its models are known once it is."
 msgstr "Not installed: its models are known once it is."
 
-#: src/features/apps/apps.module.ts:160
+#: src/features/apps/apps.module.ts:176
 msgid "Installed modules defining or extending it: %s"
 msgstr "Installed modules defining or extending it: %s"
 
-#: src/features/apps/apps.module.ts:162
+#: src/features/apps/apps.module.ts:178
 msgid "%s · created by %s"
 msgstr "%s · created by %s"
 
-#: src/features/apps/apps.module.ts:162
+#: src/features/apps/apps.module.ts:178
 msgid "%s · also in %s"
 msgstr "%s · also in %s"
 
-#: src/features/apps/apps.module.ts:164
+#: src/features/apps/apps.module.ts:180
 #: src/features/security/security.groups.ts:130
 #: src/features/security/security.models.ts:62
 msgid "Model"
 msgstr "Model"
 
-#: src/features/apps/apps.module.ts:164
-#: src/features/apps/apps.tab.ts:40
+#: src/features/apps/apps.module.ts:180
+#: src/features/apps/apps.tab.ts:41
 #: src/features/translations/translations.modules.ts:66
 msgid "Modules"
 msgstr "Modules"
 
-#: src/features/apps/apps.module.ts:165
+#: src/features/apps/apps.module.ts:181
 msgid "Creates (%s)"
 msgstr "Creates (%s)"
 
-#: src/features/apps/apps.module.ts:166
+#: src/features/apps/apps.module.ts:182
 msgid "Extends (%s)"
 msgstr "Extends (%s)"
 
-#: src/features/apps/apps.module.ts:174
+#: src/features/apps/apps.module.ts:190
 msgid "Uninstall"
 msgstr "Uninstall"
 
-#: src/features/apps/apps.module.ts:179
+#: src/features/apps/apps.module.ts:195
 msgid "Uninstall %s…"
 msgstr "Uninstall %s…"
 
-#: src/features/apps/apps.module.ts:180
+#: src/features/apps/apps.module.ts:196
 msgid "Uninstall %s?"
 msgstr "Uninstall %s?"
 
-#: src/features/apps/apps.module.ts:181
+#: src/features/apps/apps.module.ts:197
 msgid "Removed with it: %s"
 msgstr "Removed with it: %s"
 
-#: src/features/apps/apps.module.ts:181
+#: src/features/apps/apps.module.ts:197
 msgid "No other module is removed."
 msgstr "No other module is removed."
 
-#: src/features/apps/apps.module.ts:182
+#: src/features/apps/apps.module.ts:198
 msgid "Models whose data is deleted for good: %s"
 msgstr "Models whose data is deleted for good: %s"
 
-#: src/features/apps/apps.module.ts:182
+#: src/features/apps/apps.module.ts:198
 msgid "This cannot be undone."
 msgstr "This cannot be undone."
 
-#: src/features/apps/apps.module.ts:184
+#: src/features/apps/apps.module.ts:200
 msgid "Type %s to uninstall it."
 msgstr "Type %s to uninstall it."
 
-#: src/features/apps/apps.module.ts:186
+#: src/features/apps/apps.module.ts:202
 msgid "Not the module's name: nothing was uninstalled."
 msgstr "Not the module's name: nothing was uninstalled."
 
-#: src/features/apps/apps.module.ts:188
+#: src/features/apps/apps.module.ts:204
 msgid "Asks to confirm, then to type its name"
 msgstr "Asks to confirm, then to type its name"
 
-#: src/features/apps/apps.module.ts:191
+#: src/features/apps/apps.module.ts:207
 msgid "What Odoo's uninstall wizard computes: every module depending on it goes too, and the models only these modules define lose their table and data."
 msgstr "What Odoo's uninstall wizard computes: every module depending on it goes too, and the models only these modules define lose their table and data."
 
-#: src/features/apps/apps.module.ts:192
+#: src/features/apps/apps.module.ts:208
 msgid "Modules removed with it (%s)"
 msgstr "Modules removed with it (%s)"
 
-#: src/features/apps/apps.module.ts:193
+#: src/features/apps/apps.module.ts:209
 msgid "Models whose data is deleted (%s)"
 msgstr "Models whose data is deleted (%s)"
 
-#: src/features/apps/apps.module.ts:194
+#: src/features/apps/apps.module.ts:210
 msgid "None: no model loses its data."
 msgstr "None: no model loses its data."
 
-#: src/features/apps/apps.module.ts:203
+#: src/features/apps/apps.module.ts:219
 msgid "Not installable: its manifest says installable: False, or it is not on this server's addons path any more."
 msgstr "Not installable: its manifest says installable: False, or it is not on this server's addons path any more."
 
-#: src/features/apps/apps.module.ts:204
+#: src/features/apps/apps.module.ts:220
 msgid "%s: waiting for Odoo's next module operation (see Pending)."
 msgstr "%s: waiting for Odoo's next module operation (see Pending)."
 
-#: src/features/apps/apps.module.ts:214
-msgid "Not on this server"
-msgstr "Not on this server"
-
-#: src/features/apps/apps.module.ts:220
+#: src/features/apps/apps.module.ts:237
 msgid "● installed · ○ not installed · ✗ not on this server. Click a module to open it."
 msgstr "● installed · ○ not installed · ✗ not on this server. Click a module to open it."
 
-#: src/features/apps/apps.module.ts:224
+#: src/features/apps/apps.module.ts:241
 msgid "Technical name"
 msgstr "Technical name"
 
-#: src/features/apps/apps.module.ts:225
+#: src/features/apps/apps.module.ts:242
 msgid "Title (name)"
 msgstr "Title (name)"
 
-#: src/features/apps/apps.module.ts:226
+#: src/features/apps/apps.module.ts:243
 msgid "Version on disk"
 msgstr "Version on disk"
 
-#: src/features/apps/apps.module.ts:227
+#: src/features/apps/apps.module.ts:244
 msgid "Version installed"
 msgstr "Version installed"
 
-#: src/features/apps/apps.module.ts:228
+#: src/features/apps/apps.module.ts:245
 msgid "Summary"
 msgstr "Summary"
 
-#: src/features/apps/apps.module.ts:229
+#: src/features/apps/apps.module.ts:246
 msgid "Author"
 msgstr "Author"
 
-#: src/features/apps/apps.module.ts:230
+#: src/features/apps/apps.module.ts:247
 msgid "Maintainer"
 msgstr "Maintainer"
 
-#: src/features/apps/apps.module.ts:231
+#: src/features/apps/apps.module.ts:248
 msgid "Contributors"
 msgstr "Contributors"
 
-#: src/features/apps/apps.module.ts:232
+#: src/features/apps/apps.module.ts:249
 msgid "Website"
 msgstr "Website"
 
-#: src/features/apps/apps.module.ts:233
+#: src/features/apps/apps.module.ts:250
 msgid "License"
 msgstr "License"
 
-#: src/features/apps/apps.module.ts:234
+#: src/features/apps/apps.module.ts:251
 #: src/features/apps/apps.ui.ts:130
 #: src/features/apps/apps.ui.ts:132
 msgid "Category"
 msgstr "Category"
 
-#: src/features/apps/apps.module.ts:236
+#: src/features/apps/apps.module.ts:253
 msgid "Application"
 msgstr "Application"
 
-#: src/features/apps/apps.module.ts:236
-#: src/features/apps/apps.module.ts:237
-#: src/features/apps/apps.module.ts:238
+#: src/features/apps/apps.module.ts:253
+#: src/features/apps/apps.module.ts:254
+#: src/features/apps/apps.module.ts:255
 #: src/features/view/view.field.ts:133
 msgid "yes"
 msgstr "yes"
 
-#: src/features/apps/apps.module.ts:236
-#: src/features/apps/apps.module.ts:237
-#: src/features/apps/apps.module.ts:238
+#: src/features/apps/apps.module.ts:253
+#: src/features/apps/apps.module.ts:254
+#: src/features/apps/apps.module.ts:255
 #: src/features/view/view.field.ts:133
 msgid "no"
 msgstr "no"
 
-#: src/features/apps/apps.module.ts:237
+#: src/features/apps/apps.module.ts:254
 msgid "Auto-install"
 msgstr "Auto-install"
 
-#: src/features/apps/apps.module.ts:238
+#: src/features/apps/apps.module.ts:255
 msgid "Demo data loaded"
 msgstr "Demo data loaded"
 
-#: src/features/apps/apps.module.ts:258
+#: src/features/apps/apps.module.ts:275
 #: src/features/security/security.groups.ts:151
 #: src/features/security/security.record.ts:174
 #: src/features/translations/translations.modules.ts:139
 msgid "… and %s more"
 msgstr "… and %s more"
 
-#: src/features/apps/apps.modules.ts:35
+#: src/features/apps/apps.modules.ts:36
 msgid "Choose a module: its description, dependencies and data show here."
 msgstr "Choose a module: its description, dependencies and data show here."
 
-#: src/features/apps/apps.modules.ts:48
+#: src/features/apps/apps.modules.ts:49
 msgid "Pick %s"
 msgstr "Pick %s"
 
-#: src/features/apps/apps.modules.ts:62
+#: src/features/apps/apps.modules.ts:63
 #: src/features/apps/apps.pending.ts:46
 #: src/features/translations/translations.modules.ts:123
 msgid "Module"
 msgstr "Module"
 
-#: src/features/apps/apps.modules.ts:62
+#: src/features/apps/apps.modules.ts:63
 msgid "State"
 msgstr "State"
 
-#: src/features/apps/apps.modules.ts:62
+#: src/features/apps/apps.modules.ts:63
 msgid "Version"
 msgstr "Version"
 
-#: src/features/apps/apps.modules.ts:73
+#: src/features/apps/apps.modules.ts:74
 msgid "%s/%s modules"
 msgstr "%s/%s modules"
 
-#: src/features/apps/apps.modules.ts:117
+#: src/features/apps/apps.modules.ts:118
 msgid "Pick at least one module."
 msgstr "Pick at least one module."
 
-#: src/features/apps/apps.modules.ts:124
+#: src/features/apps/apps.modules.ts:125
 #: src/features/translations/translations.langs.ts:52
 msgid "Activate"
 msgstr "Activate"
 
-#: src/features/apps/apps.modules.ts:124
+#: src/features/apps/apps.modules.ts:125
 msgid "Update Apps List, then install every module picked (with its dependencies)"
 msgstr "Update Apps List, then install every module picked (with its dependencies)"
 
-#: src/features/apps/apps.modules.ts:125
+#: src/features/apps/apps.modules.ts:126
 msgid "Upgrade every module picked (they must be installed)"
 msgstr "Upgrade every module picked (they must be installed)"
 
-#: src/features/apps/apps.modules.ts:126
+#: src/features/apps/apps.modules.ts:127
 msgid "Open Forms ↗"
 msgstr "Open Forms ↗"
 
-#: src/features/apps/apps.modules.ts:126
+#: src/features/apps/apps.modules.ts:127
 msgid "Open the form of every module picked in a new tab"
 msgstr "Open the form of every module picked in a new tab"
 
-#: src/features/apps/apps.modules.ts:128
+#: src/features/apps/apps.modules.ts:129
 #: src/features/rpc/rpc.tpl.html:8
 msgid "Clear"
 msgstr "Clear"
 
-#: src/features/apps/apps.modules.ts:128
+#: src/features/apps/apps.modules.ts:129
 msgid "Unpick every module"
 msgstr "Unpick every module"
 
-#: src/features/apps/apps.modules.ts:135
+#: src/features/apps/apps.modules.ts:136
 msgid "+ This screen: %s"
 msgstr "+ This screen: %s"
 
-#: src/features/apps/apps.modules.ts:138
+#: src/features/apps/apps.modules.ts:139
 msgid "Pick the modules not by Odoo S.A. defining or extending %s: %s (all of them: %s)"
 msgstr "Pick the modules not by Odoo S.A. defining or extending %s: %s (all of them: %s)"
 
-#: src/features/apps/apps.modules.ts:141
+#: src/features/apps/apps.modules.ts:142
 msgid "+ Upgrade needed (%s)"
 msgstr "+ Upgrade needed (%s)"
 
-#: src/features/apps/apps.modules.ts:144
+#: src/features/apps/apps.modules.ts:145
 msgid "Pick the installed modules whose manifest on disk is newer than the database: %s"
 msgstr "Pick the installed modules whose manifest on disk is newer than the database: %s"
 
-#: src/features/apps/apps.modules.ts:147
+#: src/features/apps/apps.modules.ts:148
 msgid "Picked:"
 msgstr "Picked:"
 
-#: src/features/apps/apps.modules.ts:147
+#: src/features/apps/apps.modules.ts:148
 msgid "Tick modules, or type names then Enter, to act on them."
 msgstr "Tick modules, or type names then Enter, to act on them."
 
-#: src/features/apps/apps.modules.ts:151
+#: src/features/apps/apps.modules.ts:152
 msgid "Not in the list yet: Activate runs Update Apps List first"
 msgstr "Not in the list yet: Activate runs Update Apps List first"
 
-#: src/features/apps/apps.modules.ts:174
+#: src/features/apps/apps.modules.ts:175
 msgid "On disk: %s, newer than the database: Upgrade applies it"
 msgstr "On disk: %s, newer than the database: Upgrade applies it"
 
-#: src/features/apps/apps.modules.ts:175
+#: src/features/apps/apps.modules.ts:176
 msgid "On disk: %s, older than the database"
 msgstr "On disk: %s, older than the database"
 
-#: src/features/apps/apps.modules.ts:180
+#: src/features/apps/apps.modules.ts:181
 msgid "%s modules wait for an operation (%s): Odoo runs them at its next one."
 msgstr "%s modules wait for an operation (%s): Odoo runs them at its next one."
 
-#: src/features/apps/apps.modules.ts:181
+#: src/features/apps/apps.modules.ts:182
 msgid "Pending →"
 msgstr "Pending →"
 
@@ -787,33 +921,37 @@ msgstr "Modules are waiting for an operation: %s. Odoo 18 would run them along w
 msgid "Reloading the Odoo page…"
 msgstr "Reloading the Odoo page…"
 
-#: src/features/apps/apps.ops.ts:51
+#: src/features/apps/apps.ops.ts:52
 msgid "Update Apps List"
 msgstr "Update Apps List"
 
-#: src/features/apps/apps.ops.ts:53
+#: src/features/apps/apps.ops.ts:54
 msgid "%s updated · %s added"
 msgstr "%s updated · %s added"
 
-#: src/features/apps/apps.ops.ts:55
+#: src/features/apps/apps.ops.ts:56
 msgid "Not found, even after Update Apps List: %s"
 msgstr "Not found, even after Update Apps List: %s"
 
-#: src/features/apps/apps.ops.ts:56
+#: src/features/apps/apps.ops.ts:57
 msgid "Not installable: %s"
 msgstr "Not installable: %s"
 
-#: src/features/apps/apps.ops.ts:57
+#: src/features/apps/apps.ops.ts:58
 msgid "Waiting to be uninstalled: %s"
 msgstr "Waiting to be uninstalled: %s"
 
-#: src/features/apps/apps.ops.ts:58
+#: src/features/apps/apps.ops.ts:59
 msgid "Already installed: %s"
 msgstr "Already installed: %s"
 
 #: src/features/apps/apps.ops.ts:64
 msgid "With its dependencies: %s"
 msgstr "With its dependencies: %s"
+
+#: src/features/apps/apps.ops.ts:65
+msgid "And auto-installed with them: %s"
+msgstr "And auto-installed with them: %s"
 
 #: src/features/apps/apps.ops.ts:66
 msgid "Install %s"
@@ -895,11 +1033,11 @@ msgstr "Waiting for"
 msgid "The Apps tab needs Settings rights (base.group_system), as Odoo's Apps menu."
 msgstr "The Apps tab needs Settings rights (base.group_system), as Odoo's Apps menu."
 
-#: src/features/apps/apps.tab.ts:40
+#: src/features/apps/apps.tab.ts:41
 msgid "Pending (%s)"
 msgstr "Pending (%s)"
 
-#: src/features/apps/apps.tab.ts:40
+#: src/features/apps/apps.tab.ts:41
 msgid "Pending"
 msgstr "Pending"
 
@@ -940,11 +1078,6 @@ msgid "error"
 msgstr "error"
 
 #: src/features/apps/apps.ui.ts:100
-#: src/features/apps/apps.ui.ts:154
-msgid "Installed"
-msgstr "Installed"
-
-#: src/features/apps/apps.ui.ts:100
 msgid "Not Installed"
 msgstr "Not Installed"
 
@@ -963,10 +1096,6 @@ msgstr "All Categories"
 #: src/features/apps/apps.ui.ts:154
 msgid "Not installable"
 msgstr "Not installable"
-
-#: src/features/apps/apps.ui.ts:154
-msgid "Not installed"
-msgstr "Not installed"
 
 #: src/features/apps/apps.ui.ts:155
 msgid "To upgrade"

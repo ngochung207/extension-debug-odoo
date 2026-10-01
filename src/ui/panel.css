@@ -751,3 +751,33 @@ button[data-tip] { cursor: pointer; }
 .module-head .row { align-items: center; }
 /* the description: Odoo's own page, on white (it expects it), as tall as its content */
 .module-desc { width: 100%; height: 420px; border: 1px solid var(--line); border-radius: var(--r); background: #fff; }
+/* the dependency diagram (apps.graph.ts): modules as boxes coloured by state, arrows to what each depends on */
+.dep-graph { display: flex; flex-direction: column; gap: 8px; }
+.graph-bar { align-items: center; gap: 6px; }
+.graph-bar .seg { flex-wrap: wrap; }
+.graph-scroll { overflow: auto; max-height: 70vh; border: 1px solid var(--line); border-radius: var(--r); background: var(--bg); }
+.graph-svg { display: block; }
+.graph-info { align-items: center; gap: 6px; font-size: var(--fs-xs); min-height: 22px; }
+.g-edge { fill: none; stroke: color-mix(in srgb, var(--muted) 55%, transparent); stroke-width: 1.2; }
+.g-arrow { fill: color-mix(in srgb, var(--muted) 70%, transparent); }
+.g-node { cursor: pointer; outline: none; }
+.g-node rect { fill: var(--surface); stroke: var(--line); stroke-width: 1.2; }
+.g-node text { fill: var(--fg); font: 12px var(--mono); pointer-events: none; }
+.g-node.installed rect { fill: var(--ok-soft); stroke: color-mix(in srgb, var(--ok) 60%, var(--line)); }
+.g-node.new rect { fill: var(--accent-soft); stroke: var(--accent); stroke-dasharray: 4 3; }
+.g-node.auto rect { fill: var(--warn-soft); stroke: var(--warn); stroke-dasharray: 4 3; }
+.g-node.missing rect { fill: var(--err-soft); stroke: var(--err); }
+.g-node.missing text, .g-node.other text { fill: var(--muted); }
+.g-node.center rect { fill: var(--accent); stroke: var(--accent); }
+.g-node.center text { fill: var(--on-accent, #fff); font-weight: 700; }
+.g-node:hover rect, .g-node:focus-visible rect { stroke-width: 2.4; }
+.focused .g-node:not(.hl) { opacity: .35; }
+.focused .g-edge:not(.hl) { opacity: .2; }
+.g-edge.hl { stroke: var(--accent); stroke-width: 2.2; opacity: 1; }
+.g-node.picked rect { stroke-width: 2.6; }
+.graph-bar > [hidden] { display: none !important; } /* the depth and "installed only" tools: Used by only */
+.chip[aria-pressed=true] { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+/* ⤢: the diagram over the whole tab */
+.dep-graph.full { position: fixed; inset: 8px; z-index: 20; padding: 12px; background: var(--bg); border: 1px solid var(--line);
+  border-radius: var(--r); box-shadow: 0 8px 30px rgb(0 0 0 / .35); }
+.dep-graph.full .graph-scroll { flex: 1; max-height: none; }

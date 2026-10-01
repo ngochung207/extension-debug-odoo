@@ -2,12 +2,12 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import {
   byKind, compareVersions, definingModule, descriptionDoc, moduleFilter, moduleGraph, pendingOf, planInstall, planUpgrade, searchText,
-  splitNames, stateKind, versionDrift, type AppModule, type DepRow, type ModuleState,
+  simulateInstall, splitNames, stateKind, versionDrift, type AppModule, type DepRow, type ModuleState,
 } from '../../../../src/features/apps/apps.logic.ts';
 
 const mod = (id: number, name: string, state: ModuleState, extra: Partial<AppModule> = {}): AppModule => ({
   id, name, shortdesc: name, summary: false, state, latest_version: false, author: false, application: false,
-  category_id: false, auto_install: false, to_buy: false, ...extra,
+  category_id: false, auto_install: false, to_buy: false, country_ids: [], ...extra,
 });
 
 test('splitNames: separators, blanks and repeats', () => {
@@ -105,4 +105,44 @@ test('descriptionDoc: resolved against the Odoo it comes from, links in a new ta
   assert.match(doc, /<base href="http:\/\/localhost:8069\/" target="_blank">/);
   assert.match(doc, /<body><p>Hi<\/p><\/body>/);
   assert.match(descriptionDoc('http://a"b', ''), /href="http:\/\/a&#34;b\/"/, 'the origin cannot close the attribute');
+});
+
+test('simulateInstall: dependencies first, then the auto_install modules their triggers bring, round after round', () => {
+  const mods = [
+    mod(1, 'base', 'installed'), mod(2, 'product', 'uninstalled'), mod(3, 'sale', 'uninstalled'), mod(4, 'stock', 'installed'),
+    mod(5, 'sale_stock', 'uninstalled', { auto_install: true }), mod(6, 'sale_stock_margin', 'uninstalled', { auto_install: true }),
+    mod(7, 'sale_mrp', 'uninstalled', { auto_install: true }), mod(8, 'mrp', 'uninstalled'),
+    mod(9, 'l10n_vn', 'uninstalled', { auto_install: true, country_ids: [241] }), mod(10, 'account', 'installed'),
+    mod(11, 'sale_loyalty', 'uninstalled', { auto_install: true }), mod(12, 'loyalty', 'uninstalled'),
+  ];
+  const d = (id: number, name: string, auto = false): DepRow => ({ name, module_id: [id, `Title ${id}`], auto_install_required: auto });
+  const deps = [
+    d(2, 'base'), d(3, 'product'), d(4, 'product'),
+    d(5, 'sale', true), d(5, 'stock', true), // sale_stock: auto_install True (every depends)
+    d(6, 'sale_stock', true), // a second round: brought by sale_stock
+    d(7, 'sale', true), d(7, 'mrp', true), // mrp not installed: not triggered
+    d(9, 'account', true), // a localization
+    d(11, 'sale', true), d(11, 'loyalty'), // auto_install: ['sale']; loyalty a plain dependency
+  ];
+  const sim = simulateInstall(['sale'], mods, deps, [1]);
+  assert.deepEqual(sim.brought.map((b) => `${b.name}:${b.reason}`), [
+    'product:depends', 'sale:depends', 'sale_stock:auto', 'loyalty:depends', 'sale_loyalty:auto', 'sale_stock_margin:auto',
+  ]);
+  assert.deepEqual(sim.brought.find((b) => b.name === 'sale_stock')?.via, ['sale', 'stock']);
+  assert.deepEqual(sim.brought.find((b) => b.name === 'loyalty')?.via, ['sale_loyalty'], 'a non-trigger dependency comes with the auto module');
+  assert.ok(!sim.brought.some((b) => b.name === 'l10n_vn'), 'account is installed, not being installed: not triggered');
+  assert.ok(!sim.brought.some((b) => b.name === 'sale_mrp'));
+  assert.deepEqual(simulateInstall(['stock'], mods, deps, []).brought, [], 'already installed: nothing');
+});
+
+test('simulateInstall: a localization only for a company in its countries; missing and uninstallable dependencies', () => {
+  const mods = [mod(1, 'account', 'uninstalled'), mod(2, 'l10n_vn', 'uninstalled', { auto_install: true, country_ids: [241] }),
+    mod(3, 'x', 'uninstalled'), mod(4, 'old', 'uninstallable')];
+  const deps: DepRow[] = [{ name: 'account', module_id: [2, 'Vietnam'], auto_install_required: true },
+    { name: 'ghost', module_id: [3, 'X'] }, { name: 'old', module_id: [3, 'X'] }];
+  assert.deepEqual(simulateInstall(['account'], mods, deps, [241]).brought.map((b) => b.name), ['account', 'l10n_vn']);
+  assert.deepEqual(simulateInstall(['account'], mods, deps, [233]).brought.map((b) => b.name), ['account']);
+  const x = simulateInstall(['x'], mods, deps, []);
+  assert.deepEqual(x.missing, [{ module: 'x', dependency: 'ghost' }]);
+  assert.deepEqual(x.uninstallable, ['old']);
 });

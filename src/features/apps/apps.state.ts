@@ -40,6 +40,8 @@ export interface AppsCtx {
   s: AppsState;
   modules: Promise<AppModule[]>;
   deps: Promise<DepRow[]>;
+  /** the companies' countries (a localization auto-installs for them only) */
+  countries: Promise<number[]>;
   /** the installed modules' manifest versions on disk, read once per render after the list */
   disk: Promise<Map<number, string | false>>;
   show(view: View): void;

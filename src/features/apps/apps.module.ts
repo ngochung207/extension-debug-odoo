@@ -5,6 +5,7 @@
 //                 description; shown in a sandboxed frame (no script runs, its own styles)
 //   Manifest      what the manifest gave ir.module.module
 //   Depends       what it declares, what it needs in all, what installing it also installs, what is missing
+//   Diagram       the same, drawn: what it needs, what installing it brings, what uses it (apps.graph.ts)
 //   Used by       the modules depending on it: what uninstalling it also removes
 //   Data          its xmlids by kind (views, menus, actions, groups, ACLs…), each record ↗
 //   Models        the models it creates and the ones it extends (and who created them)
@@ -15,8 +16,9 @@ import { copyable, kv, odooLink, pill } from '../../ui/components.ts';
 import { matrix, type MxRow } from '../../ui/matrix.ts';
 import { frag, note } from '../../ui/parts.ts';
 import { tip } from '../../ui/tooltip.ts';
+import { dependencyDiagram } from './apps.graph.ts';
 import { hasIndexHtml, readDetail, readModels, readXmlIds, uninstallPreview, type ModuleDetail } from './apps.data.ts';
-import { byKind, definingModule, descriptionDoc, isInstalled, versionDrift, type AppModule, type ModuleGraph, type XmlIdRow } from './apps.logic.ts';
+import { byKind, definingModule, descriptionDoc, isInstalled, versionDrift, type AppModule, type InstallSim, type ModuleGraph, type XmlIdRow } from './apps.logic.ts';
 import { activate, formPath, run, uninstall, upgrade } from './apps.ops.ts';
 import type { AppsCtx } from './apps.state.ts';
 import { box, button, fold, link, plainList, row, stateLabel, statePill, stepLog, text, title, tpl } from './apps.ui.ts';
@@ -30,6 +32,8 @@ export interface ModuleEnv {
   byName: ReadonlyMap<string, AppModule>;
   byId: ReadonlyMap<number, AppModule>;
   disk: ReadonlyMap<number, string | false>;
+  /** what installing `names` would set to install, as Odoo's button_install */
+  simulate(names: readonly string[]): InstallSim;
   isPicked(name: string): boolean;
   togglePick(name: string): void;
   /** opens another module (shown in the list first) */
@@ -65,7 +69,8 @@ export async function moduleDetail(m: AppModule, e: ModuleEnv): Promise<Node> {
   if (m.summary) h.summary.textContent = m.summary;
   else h.summary.remove();
   const line = (...nodes: (Node | string | false | null | undefined)[]) => { const { line: l } = tpl('line', { line: HTMLDivElement }).refs; l.append(...nodes.filter((n): n is Node | string => !!n)); h.status.append(l); };
-  line(stateExplained(m));
+  const explained = stateExplained(m);
+  if (explained) line(explained);
   if (installed || m.latest_version) {
     const disk = e.disk.get(m.id);
     const drift = versionDrift(m.latest_version, disk);
@@ -93,7 +98,7 @@ export async function moduleDetail(m: AppModule, e: ModuleEnv): Promise<Node> {
   }, 'chip', _t('Add to / remove from the modules picked for an action'));
   const uninstallPart = installed ? uninstallFold() : null;
   h.actions.append(...[
-    m.state === 'uninstalled' && op(_t('Install'), _t('Update Apps List, then install it with its dependencies'), (begin) => activate([m.name], c.a, graph, begin)),
+    m.state === 'uninstalled' && op(_t('Install'), _t('Update Apps List, then install it with its dependencies'), (begin) => activate([m.name], c.a, e.simulate, begin)),
     (m.state === 'installed' || m.state === 'to upgrade') && op(_t('Upgrade'), _t('Upgrade it now (and the modules depending on it)'), (begin) => upgrade([m.name], c.a, begin)),
     uninstallPart && button(_t('Uninstall…'), () => { uninstallPart.open = true; uninstallPart.scrollIntoView({ block: 'nearest' }); }, 'btn', _t('What it would remove, then confirm')),
     pickChip,
@@ -117,13 +122,24 @@ export async function moduleDetail(m: AppModule, e: ModuleEnv): Promise<Node> {
   const depends = graph.depends(m.name);
   parts.push(fold('depends', _t('Depends'), _t('%s declared', depends.length), () => {
     const all = graph.upstream([m.name]);
-    const toInstall = all.filter((n) => e.byName.get(n)?.state === 'uninstalled');
+    const sim = m.state === 'uninstalled' ? e.simulate([m.name]) : null;
+    const added = (reason: 'depends' | 'auto') => sim?.brought.filter((b) => b.reason === reason && b.name !== m.name) ?? [];
+    const why = new Map(sim?.brought.map((b) => [b.name, b.reason === 'auto' ? _t('auto-installed: %s all installed or being installed', b.via.join(', ')) : _t('a dependency of %s', b.via.join(', '))]));
     return box(
       title(_t('Declared in its manifest')), depends.length ? chips(depends, e) : note(_t('Nothing: it depends on no module.')),
       title(_t('Needs in all (%s)', all.length)), all.length ? chips(all, e) : note(_t('Nothing.')),
-      !installed && toInstall.length > 0 && frag(title(_t('Installing it also installs (%s)', toInstall.length)), chips(toInstall, e)),
+      sim && frag(
+        title(_t('Installing it also installs (%s)', added('depends').length)),
+        added('depends').length ? chips(added('depends').map((b) => b.name), e, why) : note(_t('Nothing: every dependency is installed.')),
+        title(_t('And auto-installs (%s)', added('auto').length)),
+        added('auto').length ? chips(added('auto').map((b) => b.name), e, why) : note(_t('Nothing.')),
+        sim.missing.length > 0 && note(_t('Odoo will refuse it: %s', sim.missing.map((x) => _t('%s depends on %s, not on this server', x.module, x.dependency)).join('; '))),
+        sim.uninstallable.length > 0 && note(_t('Not installable, the install will fail: %s', sim.uninstallable.join(', '))),
+        note(_t('As Odoo\'s button_install computes it: the dependencies not installed, then every auto_install module whose triggers are all installed or being installed (and, for a localization, a company in its countries).'))),
       legend());
   }));
+
+  parts.push(fold('graph', _t('Dependency diagram'), '', () => dependencyDiagram(m, e)));
 
   const usedBy = graph.dependents(m.name);
   const removed = graph.downstream([m.name]).filter((n) => { const x = e.byName.get(n); return !!x && isInstalled(x); });
@@ -197,21 +213,22 @@ export async function moduleDetail(m: AppModule, e: ModuleEnv): Promise<Node> {
   }
 }
 
-/** The state in words. */
-function stateExplained(m: AppModule): string {
+/** What the state pill can't say: why it can't be installed, or that it waits. */
+function stateExplained(m: AppModule): string | null {
   switch (m.state) {
     case 'uninstallable': return _t('Not installable: its manifest says installable: False, or it is not on this server\'s addons path any more.');
     case 'to install': case 'to upgrade': case 'to remove': return _t('%s: waiting for Odoo\'s next module operation (see Pending).', stateLabel(m.state));
-    default: return stateLabel(m.state);
+    default: return null;
   }
 }
 
 /** Modules as chips: ● installed, ○ not, ✗ unknown here; a click opens it. */
-function chips(names: readonly string[], e: ModuleEnv): HTMLDivElement {
+function chips(names: readonly string[], e: ModuleEnv, why?: ReadonlyMap<string, string>): HTMLDivElement {
   return box(...names.map((n) => {
     const x = e.byName.get(n);
     const mark = !x ? '✗' : isInstalled(x) ? '●' : '○';
-    const b = button(`${mark} ${n}`, () => { if (x) e.open(n); }, 'chip', x ? `${x.shortdesc} · ${stateLabel(x.state)}` : _t('Not on this server'));
+    const hint = x ? [x.shortdesc, stateLabel(x.state), why?.get(n)].filter(Boolean).join(' · ') : _t('Not on this server');
+    const b = button(`${mark} ${n}`, () => { if (x) e.open(n); }, 'chip', hint);
     if (!x) b.disabled = true;
     return b;
   }));

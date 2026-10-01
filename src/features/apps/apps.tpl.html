@@ -79,6 +79,30 @@
   <iframe class="module-desc" sandbox="allow-same-origin allow-popups allow-popups-to-escape-sandbox" referrerpolicy="no-referrer" title="Module description" data-i18n="title" data-ref="frame"></iframe>
 </template>
 
+<!-- The dependency diagram (apps.graph.ts): its tools, the drawing (scrolls, zooms), what the module clicked is.
+     SVG pieces are cloned from a wrapper (a template's root must be an HTML element) and moved into the drawing. -->
+<template data-tpl="graph">
+  <div class="dep-graph" data-ref="root">
+    <div class="row graph-bar" data-ref="bar"></div>
+    <div class="graph-scroll" data-ref="scroll">
+      <svg class="graph-svg" data-ref="svg" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Dependency diagram" data-i18n="aria-label">
+        <defs><marker id="dep-arrow" viewBox="0 0 8 8" refX="8" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path class="g-arrow" d="M0,0 L8,4 L0,8 z"></path></marker></defs>
+        <g data-ref="edges"></g><g data-ref="nodes"></g>
+      </svg>
+    </div>
+    <div class="row graph-info" data-ref="info"></div>
+  </div>
+</template>
+<template data-tpl="g-node">
+  <div><svg><g class="g-node" tabindex="0" data-ref="node"><rect rx="6" data-ref="box"></rect><text dy="0.35em" data-ref="label"></text></g></svg></div>
+</template>
+<template data-tpl="g-edge">
+  <div><svg><path class="g-edge" marker-end="url(#dep-arrow)" data-ref="edge"></path></svg></div>
+</template>
+<template data-tpl="check">
+  <label class="check" data-ref="label"><input type="checkbox" data-ref="box"> <span data-ref="text"></span></label>
+</template>
+
 <!-- Small pieces. -->
 <template data-tpl="toolbar">
   <div class="toolbar" data-ref="bar"></div>
