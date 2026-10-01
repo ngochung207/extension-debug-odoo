@@ -92,7 +92,7 @@ async function refresh() {
 }
 
 // ---------- header ----------
-mountRpc($('#rpc'), () => showTab('security'));
+mountRpc($('#rpc'), () => showTab('security'), () => state);
 let saved = null;
 try { saved = sessionStorage.getItem(TAB_KEY); } catch { /* storage off */ }
 if ([...document.querySelectorAll('.tabs button')].some((b) => b.dataset.tab === saved)) showTab(saved, false);

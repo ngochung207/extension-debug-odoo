@@ -36,7 +36,8 @@ msgstr ""
 #: src/features/apps/apps.js:48
 #: src/features/code/code.js:135
 #: src/features/code/code.js:174
-#: src/features/rpc/rpc.js:38
+#: src/features/rpc/rpc.js:51
+#: src/features/rpc/rpc.js:96
 #: src/features/translations/translations.js:90
 msgid "error"
 msgstr ""
@@ -222,6 +223,7 @@ msgid "page not refreshed"
 msgstr ""
 
 #: src/features/code/code.js:132
+#: src/features/rpc/rpc.js:94
 #: src/shared/bridge.js:30
 msgid "No response — is this an Odoo page?"
 msgstr ""
@@ -604,49 +606,96 @@ msgstr ""
 msgid "Label · storage · compute · module"
 msgstr ""
 
-#: src/features/rpc/rpc.js:15
+#: src/features/rpc/rpc.js:16
 msgid "Filter model / method"
 msgstr ""
 
-#: src/features/rpc/rpc.js:17
+#: src/features/rpc/rpc.js:18
 msgid "Errors Only"
 msgstr ""
 
-#: src/features/rpc/rpc.js:23
+#: src/features/rpc/rpc.js:24
 msgid "Clear"
 msgstr ""
 
-#: src/features/rpc/rpc.js:25
+#: src/features/rpc/rpc.js:30
+#: src/features/rpc/rpc.js:36
+msgid "New Request"
+msgstr ""
+
+#: src/features/rpc/rpc.js:30
+#: src/features/rpc/rpc.js:30
+msgid "Close"
+msgstr ""
+
+#: src/features/rpc/rpc.js:38
 msgid "No RPC yet. Use the Odoo page to record some."
 msgstr ""
 
-#: src/features/rpc/rpc.js:26
+#: src/features/rpc/rpc.js:39
 msgid "Method · model · duration"
 msgstr ""
 
-#: src/features/rpc/rpc.js:26
+#: src/features/rpc/rpc.js:39
 msgid "Time · route"
 msgstr ""
 
-#: src/features/rpc/rpc.js:27
+#: src/features/rpc/rpc.js:40
 msgid "Select a call to see its parameters and result."
 msgstr ""
 
-#: src/features/rpc/rpc.js:46
-#: src/features/rpc/rpc.js:50
+#: src/features/rpc/rpc.js:59
 msgid "Parameters"
 msgstr ""
 
-#: src/features/rpc/rpc.js:47
+#: src/features/rpc/rpc.js:66
+msgid "Edit & Resend"
+msgstr ""
+
+#: src/features/rpc/rpc.js:67
 msgid "Why was it blocked? → Security"
 msgstr ""
 
-#: src/features/rpc/rpc.js:51
+#: src/features/rpc/rpc.js:69
 msgid "Result"
 msgstr ""
 
-#: src/features/rpc/rpc.js:51
+#: src/features/rpc/rpc.js:77
 msgid "… (%s characters)"
+msgstr ""
+
+#: src/features/rpc/rpc.js:83
+msgid "Route"
+msgstr ""
+
+#: src/features/rpc/rpc.js:84
+msgid "Body (JSON)"
+msgstr ""
+
+#: src/features/rpc/rpc.js:85
+msgid "Send"
+msgstr ""
+
+#: src/features/rpc/rpc.js:89
+msgid "Invalid JSON: %s"
+msgstr ""
+
+#: src/features/rpc/rpc.js:91
+#: src/shared/ui.js:87
+#: src/shared/ui.js:149
+msgid "Loading…"
+msgstr ""
+
+#: src/features/rpc/rpc.js:100
+msgid "Ctrl/⌘ + Enter"
+msgstr ""
+
+#: src/features/rpc/rpc.js:111
+msgid "call_kw: the external API (execute_kw), with an API key of this user in $ODOO_API_KEY. Other routes: the session_id cookie in $ODOO_SESSION."
+msgstr ""
+
+#: src/features/rpc/rpc.js:119
+msgid "Copy as cURL"
 msgstr ""
 
 #: src/features/security/logic.js:37
@@ -1398,11 +1447,6 @@ msgstr ""
 msgid "Open /odoo/%s"
 msgstr ""
 
-#: src/shared/ui.js:87
-#: src/shared/ui.js:145
-msgid "Loading…"
-msgstr ""
-
-#: src/shared/ui.js:94
+#: src/shared/ui.js:104
 msgid "Click to copy"
 msgstr ""

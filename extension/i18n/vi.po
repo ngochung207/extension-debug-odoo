@@ -36,7 +36,8 @@ msgstr "Đang chạy…"
 #: src/features/apps/apps.js:48
 #: src/features/code/code.js:135
 #: src/features/code/code.js:174
-#: src/features/rpc/rpc.js:38
+#: src/features/rpc/rpc.js:51
+#: src/features/rpc/rpc.js:96
 #: src/features/translations/translations.js:90
 msgid "error"
 msgstr "lỗi"
@@ -222,6 +223,7 @@ msgid "page not refreshed"
 msgstr "chưa làm mới trang"
 
 #: src/features/code/code.js:132
+#: src/features/rpc/rpc.js:94
 #: src/shared/bridge.js:30
 msgid "No response — is this an Odoo page?"
 msgstr "Không có phản hồi — đây có phải trang Odoo?"
@@ -604,50 +606,97 @@ msgstr "Field · kiểu · giá trị"
 msgid "Label · storage · compute · module"
 msgstr "Nhãn · lưu trữ · compute · module"
 
-#: src/features/rpc/rpc.js:15
+#: src/features/rpc/rpc.js:16
 msgid "Filter model / method"
 msgstr "Lọc model / method"
 
-#: src/features/rpc/rpc.js:17
+#: src/features/rpc/rpc.js:18
 msgid "Errors Only"
 msgstr "Chỉ lỗi"
 
-#: src/features/rpc/rpc.js:23
+#: src/features/rpc/rpc.js:24
 msgid "Clear"
 msgstr "Xoá"
 
-#: src/features/rpc/rpc.js:25
+#: src/features/rpc/rpc.js:30
+#: src/features/rpc/rpc.js:36
+msgid "New Request"
+msgstr "Request mới"
+
+#: src/features/rpc/rpc.js:30
+#: src/features/rpc/rpc.js:30
+msgid "Close"
+msgstr "Đóng"
+
+#: src/features/rpc/rpc.js:38
 msgid "No RPC yet. Use the Odoo page to record some."
 msgstr "Chưa có RPC nào. Thao tác trên trang Odoo để ghi lại."
 
-#: src/features/rpc/rpc.js:26
+#: src/features/rpc/rpc.js:39
 msgid "Method · model · duration"
 msgstr "Method · model · thời gian"
 
-#: src/features/rpc/rpc.js:26
+#: src/features/rpc/rpc.js:39
 msgid "Time · route"
 msgstr "Giờ · route"
 
-#: src/features/rpc/rpc.js:27
+#: src/features/rpc/rpc.js:40
 msgid "Select a call to see its parameters and result."
 msgstr "Chọn một lời gọi để xem tham số và kết quả."
 
-#: src/features/rpc/rpc.js:46
-#: src/features/rpc/rpc.js:50
+#: src/features/rpc/rpc.js:59
 msgid "Parameters"
 msgstr "Tham số"
 
-#: src/features/rpc/rpc.js:47
+#: src/features/rpc/rpc.js:66
+msgid "Edit & Resend"
+msgstr "Sửa & Gửi lại"
+
+#: src/features/rpc/rpc.js:67
 msgid "Why was it blocked? → Security"
 msgstr "Vì sao bị chặn? → Security"
 
-#: src/features/rpc/rpc.js:51
+#: src/features/rpc/rpc.js:69
 msgid "Result"
 msgstr "Kết quả"
 
-#: src/features/rpc/rpc.js:51
+#: src/features/rpc/rpc.js:77
 msgid "… (%s characters)"
 msgstr "… (%s ký tự)"
+
+#: src/features/rpc/rpc.js:83
+msgid "Route"
+msgstr "Route"
+
+#: src/features/rpc/rpc.js:84
+msgid "Body (JSON)"
+msgstr "Body (JSON)"
+
+#: src/features/rpc/rpc.js:85
+msgid "Send"
+msgstr "Gửi"
+
+#: src/features/rpc/rpc.js:89
+msgid "Invalid JSON: %s"
+msgstr "JSON không hợp lệ: %s"
+
+#: src/features/rpc/rpc.js:91
+#: src/shared/ui.js:87
+#: src/shared/ui.js:149
+msgid "Loading…"
+msgstr "Đang tải…"
+
+#: src/features/rpc/rpc.js:100
+msgid "Ctrl/⌘ + Enter"
+msgstr "Ctrl/⌘ + Enter"
+
+#: src/features/rpc/rpc.js:111
+msgid "call_kw: the external API (execute_kw), with an API key of this user in $ODOO_API_KEY. Other routes: the session_id cookie in $ODOO_SESSION."
+msgstr "call_kw: qua API ngoài (execute_kw), với API key của người dùng này trong $ODOO_API_KEY. Các route khác: cookie session_id trong $ODOO_SESSION."
+
+#: src/features/rpc/rpc.js:119
+msgid "Copy as cURL"
+msgstr "Sao chép dạng cURL"
 
 #: src/features/security/logic.js:37
 msgid "No ACL grants this to the user's groups."
@@ -1398,11 +1447,6 @@ msgstr "Không có tab đang mở."
 msgid "Open /odoo/%s"
 msgstr "Mở /odoo/%s"
 
-#: src/shared/ui.js:87
-#: src/shared/ui.js:145
-msgid "Loading…"
-msgstr "Đang tải…"
-
-#: src/shared/ui.js:94
+#: src/shared/ui.js:104
 msgid "Click to copy"
 msgstr "Bấm để copy"

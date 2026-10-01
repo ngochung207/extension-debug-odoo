@@ -125,6 +125,16 @@ details.card { margin-top: 0; }
 .pad-bottom { padding: 0 10px 8px; }
 .pad-x { padding: 0 10px; }
 .mt { margin-top: 6px; }
+/* RPC: a request edited and sent again, or a new one (above the log) */
+.composer { display: grid; gap: 6px; margin-top: 6px; }
+.actions-bar { align-items: center; gap: 6px; }
+.composer :is(input, textarea) { width: 100%; font: 11px/1.45 var(--mono); background: var(--surface); color: var(--fg); border: 1px solid var(--line); border-radius: var(--r); padding: 6px 10px; }
+.composer textarea { resize: vertical; tab-size: 2; }
+.composer :is(input, textarea):focus { outline: 0; box-shadow: var(--ring); border-color: var(--accent); }
+.rpc-draft { margin: 0 8px 8px; padding: 8px 10px 10px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+.rpc-draft > .row { align-items: center; }
+.rpc-draft h3 { margin: 0; font-size: 12px; font-weight: 600; }
+.rpc-draft .close { --icon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'><path d='M18 6 6 18M6 6l12 12'/></svg>"); width: 24px; height: 24px; }
 
 .toolbar { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 8px; }
 /* Filters stay on top while the list scrolls. */
@@ -270,7 +280,7 @@ summary:hover { color: var(--fg); }
 /* copy a name with one click (the row's own click still expands it) */
 .copy { border: 0; background: none; padding: 0; color: inherit; cursor: copy; text-align: left; overflow-wrap: anywhere; }
 .copy:hover { text-decoration: underline dotted; }
-.copy.copied::after { content: ' ✓'; color: var(--ok); }
+.copied::after { content: ' ✓'; color: var(--ok); }
 
 /* toolbar popup + options page (src/popup/) */
 body.popup { width: 320px; height: auto; display: block; padding-bottom: 14px; background: var(--surface); }

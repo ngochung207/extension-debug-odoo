@@ -169,6 +169,11 @@
     location.replace(u);
   }
 
+  // Injected again by background.js after an update: the copy before it is orphaned (its chrome.* calls fail, the panel
+  // hangs on Connecting… and neither − nor the button work), so it makes way. The page is loaded already: no ready event
+  // will come, the DOM tells it is Odoo (webclient, or a frontend page), as for the toolbar icon.
+  for (const old of document.querySelectorAll('odoo-debug-root')) old.remove();
+  if (document.readyState !== 'loading' && document.querySelector('body.o_web_client, #wrapwrap')) mount();
   document.addEventListener('odoo-debug-ready', (e) => { autoDebug(e.detail); mount(); });
   chrome.runtime.onMessage.addListener((msg, _sender, reply) => {
     if (msg?.type === 'odoo-full') { // from the panel: { on } sets it, no `on` just asks; the answer is the current state
