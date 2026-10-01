@@ -26,6 +26,7 @@ export const v18: OdooAdapter = {
     impliedField: 'trans_implied_ids',
     impliedIncludesSelf: false, // trans_implied_ids = implied_ids | implied_ids.trans_implied_ids
     appField: 'category_id', // full_name = '<category> / <name>' (ir.module.category)
+    usersField: 'users', // implied users included: res.users.groups_id stores the implied groups
   },
   rules: {
     inheritsStoredOnly: false, // every _inherits parent's rules apply
@@ -41,6 +42,7 @@ export const v18: OdooAdapter = {
     { model: 'res.users', field: 'groups_id', usedBy: 'Security: groups' },
     { model: 'res.groups', field: 'trans_implied_ids', usedBy: 'Security: implied groups' },
     { model: 'res.groups', field: 'category_id', usedBy: 'Security: groups by application' },
+    { model: 'res.groups', field: 'users', usedBy: 'Security: users of a group' },
     { model: 'ir.profile', field: 'sql_count', usedBy: 'Perf' },
   ],
 };

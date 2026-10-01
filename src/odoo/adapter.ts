@@ -46,6 +46,8 @@ export interface OdooAdapter {
     readonly impliedIncludesSelf: boolean;
     /** res.groups many2one: the application a group belongs to, the prefix of its full_name ("Sales / User") */
     readonly appField: string;
+    /** res.groups many2many: every user in the group, through an implying group too */
+    readonly usersField: string;
   };
 
   readonly rules: {

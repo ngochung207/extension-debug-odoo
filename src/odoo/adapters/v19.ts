@@ -62,6 +62,7 @@ export const v19: OdooAdapter = {
     impliedField: 'all_implied_ids', // renamed from trans_implied_ids
     impliedIncludesSelf: true, // all_implied_ids = g.ids + its supersets
     appField: 'privilege_id', // new res.groups.privilege; full_name = '<privilege> / <name>'
+    usersField: 'all_user_ids', // user_ids holds only the users set in the group
   },
   rules: {
     inheritsStoredOnly: true, // _compute_domain skips a non-stored _inherits link
@@ -79,6 +80,7 @@ export const v19: OdooAdapter = {
     { model: 'res.users', field: 'all_group_ids', usedBy: 'Security: groups' },
     { model: 'res.groups', field: 'all_implied_ids', usedBy: 'Security: implied groups' },
     { model: 'res.groups', field: 'privilege_id', usedBy: 'Security: groups by application' },
+    { model: 'res.groups', field: 'all_user_ids', usedBy: 'Security: users of a group' },
     { model: 'ir.profile', field: 'cpu_duration', usedBy: 'Perf' },
   ],
 };

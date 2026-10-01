@@ -4,6 +4,7 @@
 // Every symbol explains itself on hover (tooltip.ts). Markup: components.tpl.html (matrix, mx-*, sym).
 import { N_, _t } from '../i18n/i18n.ts';
 import { errBox, loading, tpl } from './components.ts';
+import { WIDE } from './lists.ts';
 import { tip } from './tooltip.ts';
 
 /** true / false / null: could not be told. */
@@ -23,6 +24,10 @@ export interface MxRow {
   q?: string;
   /** what a filter can keep it by (filterMatrix's `keep`) */
   tags?: string[];
+  /** its detail open from the start */
+  open?: boolean;
+  /** found again by it: tr[data-id] */
+  id?: string;
 }
 export interface MxSection { title?: string; note?: string; rows: MxRow[]; /** set: the section folds by its title */ folded?: boolean }
 
@@ -50,7 +55,9 @@ function fillCell(td: HTMLTableCellElement, c: Cell) {
  * A table: `heads` name the columns after the first; `sections` group the rows under a title line (folding by it when
  * asked). `focus`: a column to underline (the operation an error named). A row with a detail opens it below on click.
  */
-export function matrix(first: string, heads: readonly string[], sections: readonly MxSection[], focus = -1, wide = false): HTMLTableElement {
+export function matrix(first: string, heads: readonly string[], sections: readonly MxSection[], focus = -1, wide = false,
+  /** a pane beside the table: on a wide panel a row's detail shows there (one at a time) instead of under the row */
+  pane?: HTMLElement): HTMLTableElement {
   const t = tpl('matrix', { head: HTMLTableRowElement, first: HTMLTableCellElement }).refs;
   const table = t.head.closest('table')!;
   if (wide) table.classList.add('wide'); // text in the columns: they share the width, left aligned
@@ -74,19 +81,20 @@ export function matrix(first: string, heads: readonly string[], sections: readon
         sec.row.addEventListener('click', () => sec.body.classList.toggle('folded'));
       }
     } else sec.row.remove();
-    for (const r of s.rows) sec.body.append(...row(r, span, focus));
+    for (const r of s.rows) sec.body.append(...row(r, span, focus, table, pane));
     table.append(sec.body);
   }
   return table;
 }
 
-function row(r: MxRow, span: number, focus: number): HTMLTableRowElement[] {
+function row(r: MxRow, span: number, focus: number, table: HTMLTableElement, pane?: HTMLElement): HTMLTableRowElement[] {
   const x = tpl('mx-row', { row: HTMLTableRowElement, main: HTMLDivElement, sub: HTMLDivElement }).refs;
   x.main.append(...r.label);
   if (r.sub) x.sub.textContent = r.sub;
   else x.sub.remove();
   if (r.kind) x.row.classList.add(r.kind);
   if (r.q) x.row.dataset.q = r.q.toLowerCase();
+  if (r.id) x.row.dataset.id = r.id;
   if (r.tags?.length) x.row.dataset.tags = r.tags.join(' ');
   r.cells.forEach((c, i) => {
     const { cell } = tpl('mx-cell', { cell: HTMLTableCellElement }).refs;
@@ -100,6 +108,16 @@ function row(r: MxRow, span: number, focus: number): HTMLTableRowElement[] {
   x.row.tabIndex = 0;
   let d: HTMLTableRowElement | null = null;
   const toggle = () => {
+    if (pane && WIDE.matches) { // master / detail: the row selected, its detail in the pane
+      for (const o of table.querySelectorAll('tr.selected')) o.classList.remove('selected');
+      x.row.classList.add('selected');
+      pane.replaceChildren(loading());
+      Promise.resolve().then(build).then((n) => pane.replaceChildren(n), (e: unknown) => pane.replaceChildren(errBox(e)));
+      return;
+    }
+    if (pane && (!d || d.hidden)) { // master / detail on a narrow panel: one row open at a time, like the pane
+      for (const o of table.querySelectorAll<HTMLTableRowElement>('tr.open')) if (o !== x.row) o.click();
+    }
     if (!d) {
       const dt = tpl('mx-detail', { row: HTMLTableRowElement, cell: HTMLTableCellElement }).refs;
       dt.cell.colSpan = span;
@@ -112,6 +130,7 @@ function row(r: MxRow, span: number, focus: number): HTMLTableRowElement[] {
   };
   x.row.addEventListener('click', (e) => { if (!(e.target as Element).closest('button, a, input')) toggle(); });
   x.row.addEventListener('keydown', (e) => { if (e.target === x.row && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); toggle(); } });
+  if (r.open) queueMicrotask(toggle); // once the row is in its table
   return [x.row];
 }
 

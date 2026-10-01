@@ -153,6 +153,7 @@ msgid "Shortcuts"
 msgstr ""
 
 #: src/entrypoints/popup/index.html:36
+#: src/features/security/security.groups.ts:262
 msgid "Change"
 msgstr ""
 
@@ -468,6 +469,7 @@ msgid "Trying %s: every view is simulated with it, nothing is written."
 msgstr ""
 
 #: src/features/security/security.bar.ts:104
+#: src/features/security/security.groups.ts:228
 msgid "Add %s to %s?"
 msgstr ""
 
@@ -483,109 +485,301 @@ msgstr ""
 msgid "Applied: no operation changed on this record."
 msgstr ""
 
-#: src/features/security/security.data.ts:249
-#: src/features/security/security.data.ts:249
-msgid "no result"
-msgstr ""
-
-#: src/features/security/security.data.ts:252
+#: src/features/security/security.data.ts:240
 msgid "You cannot read this record yourself, so its rules cannot be checked."
 msgstr ""
 
-#: src/features/security/security.groups.ts:25
-msgid "Other"
+#: src/features/security/security.data.ts:266
+#: src/features/security/security.data.ts:266
+msgid "no result"
 msgstr ""
 
-#: src/features/security/security.groups.ts:35
+#: src/features/security/security.groups.ts:41
+msgid "Choose a group: its rights, rules and users show here."
+msgstr ""
+
+#: src/features/security/security.groups.ts:44
 #: src/features/security/security.model.ts:30
 msgid "Group"
 msgstr ""
 
-#: src/features/security/security.groups.ts:35
-msgid "Models"
+#: src/features/security/security.groups.ts:44
+#: src/features/security/security.models.ts:62
+msgid "Rules"
 msgstr ""
 
-#: src/features/security/security.groups.ts:38
-msgid "Filter or try a group…"
+#: src/features/security/security.groups.ts:44
+#: src/features/security/security.groups.ts:148
+#: src/features/translations/translations.langs.ts:55
+msgid "Users"
 msgstr ""
 
-#: src/features/security/security.groups.ts:42
-msgid "%s groups found"
+#: src/features/security/security.groups.ts:45
+msgid "Other"
 msgstr ""
 
-#: src/features/security/security.groups.ts:42
+#: src/features/security/security.groups.ts:46
+#: src/features/security/security.groups.ts:71
 msgid "%s groups"
 msgstr ""
 
-#: src/features/security/security.groups.ts:47
-msgid "● set on the user · ◐ implied by another group · + being tried · ○ not. Models: how many models the group's own ACLs open. Type to find a group the users don't have."
+#: src/features/security/security.groups.ts:48
+msgid "%s has %s"
 msgstr ""
 
-#: src/features/security/security.groups.ts:49
+#: src/features/security/security.groups.ts:67
+msgid "Filter groups…"
+msgstr ""
+
+#: src/features/security/security.groups.ts:74
+msgid "Their groups"
+msgstr ""
+
+#: src/features/security/security.groups.ts:74
+msgid "Groups of %s"
+msgstr ""
+
+#: src/features/security/security.groups.ts:74
+msgid "All groups"
+msgstr ""
+
+#: src/features/security/security.groups.ts:117
+msgid "Open this group"
+msgstr ""
+
+#: src/features/security/security.groups.ts:117
+msgid "none"
+msgstr ""
+
+#: src/features/security/security.groups.ts:118
+msgid "Inheritance"
+msgstr ""
+
+#: src/features/security/security.groups.ts:118
+msgid "brings %s · brought by %s"
+msgstr ""
+
+#: src/features/security/security.groups.ts:119
+msgid "Brings (implied groups)"
+msgstr ""
+
+#: src/features/security/security.groups.ts:120
+msgid "Brought by (groups implying it)"
+msgstr ""
+
+#: src/features/security/security.groups.ts:123
+#: src/features/security/security.model.ts:29
+#: src/features/security/security.record.ts:85
+msgid "Access rights (ACL)"
+msgstr ""
+
+#: src/features/security/security.groups.ts:123
+#: src/features/security/security.models.ts:59
+msgid "%s models"
+msgstr ""
+
+#: src/features/security/security.groups.ts:124
+msgid "Reading the ACLs needs Access Rights (base.group_erp_manager)."
+msgstr ""
+
+#: src/features/security/security.groups.ts:125
+msgid "This group grants no ACL of its own."
+msgstr ""
+
+#: src/features/security/security.groups.ts:129
+msgid "This group may %s"
+msgstr ""
+
+#: src/features/security/security.groups.ts:129
+msgid "Not granted by this group"
+msgstr ""
+
+#: src/features/security/security.groups.ts:130
+#: src/features/security/security.models.ts:62
+msgid "Model"
+msgstr ""
+
+#: src/features/security/security.groups.ts:134
+#: src/features/security/security.model.ts:40
+msgid "Record rules"
+msgstr ""
+
+#: src/features/security/security.groups.ts:134
+msgid "%s rules"
+msgstr ""
+
+#: src/features/security/security.groups.ts:135
+msgid "Reading the rules needs Access Rights (base.group_erp_manager)."
+msgstr ""
+
+#: src/features/security/security.groups.ts:136
+msgid "This group carries no record rule."
+msgstr ""
+
+#: src/features/security/security.groups.ts:140
+#: src/features/security/security.model.ts:44
+msgid "The rule covers this operation"
+msgstr ""
+
+#: src/features/security/security.groups.ts:140
+#: src/features/security/security.model.ts:44
+#: src/features/security/security.record.ts:100
+msgid "The rule doesn't cover this operation"
+msgstr ""
+
+#: src/features/security/security.groups.ts:143
+#: src/features/security/security.model.ts:49
+msgid "Rule"
+msgstr ""
+
+#: src/features/security/security.groups.ts:144
+msgid "A group's rules: the user sees a record if any of their group rules matches (and every global rule). Click a rule for its domain, evaluated for %s."
+msgstr ""
+
+#: src/features/security/security.groups.ts:148
+msgid "%s users"
+msgstr ""
+
+#: src/features/security/security.groups.ts:150
+msgid "%s · look at this user"
+msgstr ""
+
+#: src/features/security/security.groups.ts:151
+#: src/features/security/security.record.ts:174
+#: src/features/translations/translations.modules.ts:139
+msgid "… and %s more"
+msgstr ""
+
+#: src/features/security/security.groups.ts:151
+msgid "No user."
+msgstr ""
+
+#: src/features/security/security.groups.ts:155
+msgid "If added to %s"
+msgstr ""
+
+#: src/features/security/security.groups.ts:158
+msgid "No new right on any model."
+msgstr ""
+
+#: src/features/security/security.groups.ts:165
+msgid "● set on the user · ◐ implied by another group · + being tried · ○ not. ACL: models its ACLs open · Rules: rules it carries · Users: users in it. Click a group for the details."
+msgstr ""
+
+#: src/features/security/security.groups.ts:166
 msgid "Risks of %s"
 msgstr ""
 
-#: src/features/security/security.groups.ts:61
+#: src/features/security/security.groups.ts:196
 msgid "Being tried"
 msgstr ""
 
-#: src/features/security/security.groups.ts:62
+#: src/features/security/security.groups.ts:197
 msgid "Set on %s"
 msgstr ""
 
-#: src/features/security/security.groups.ts:63
+#: src/features/security/security.groups.ts:198
 msgid "Implied by %s"
 msgstr ""
 
-#: src/features/security/security.groups.ts:69
+#: src/features/security/security.groups.ts:199
+#: src/features/security/security.model.ts:24
+#: src/features/security/security.record.ts:75
+#: src/features/security/security.record.ts:76
+msgid "%s doesn't have this group"
+msgstr ""
+
+#: src/features/security/security.groups.ts:205
+msgid "being tried (simulated, nothing written)"
+msgstr ""
+
+#: src/features/security/security.groups.ts:207
+msgid "set on them"
+msgstr ""
+
+#: src/features/security/security.groups.ts:208
+msgid "has it through %s"
+msgstr ""
+
+#: src/features/security/security.groups.ts:209
+msgid "doesn't have it"
+msgstr ""
+
+#: src/features/security/security.groups.ts:219
 msgid "Stop trying it"
 msgstr ""
 
-#: src/features/security/security.groups.ts:72
-#: src/features/translations/translations.modules.ts:74
-msgid "Remove"
+#: src/features/security/security.groups.ts:222
+msgid "To take it away, remove the group bringing it."
 msgstr ""
 
-#: src/features/security/security.groups.ts:73
+#: src/features/security/security.groups.ts:223
+msgid "Remove from %s"
+msgstr ""
+
+#: src/features/security/security.groups.ts:223
 msgid "Remove %s from %s?"
 msgstr ""
 
-#: src/features/security/security.groups.ts:77
-#: src/features/security/security.record.ts:166
-msgid "Try"
+#: src/features/security/security.groups.ts:227
+msgid "Try on %s"
 msgstr ""
 
-#: src/features/security/security.groups.ts:77
+#: src/features/security/security.groups.ts:227
 #: src/features/security/security.record.ts:166
 msgid "Simulate this group in every view, nothing is written"
 msgstr ""
 
-#: src/features/security/security.groups.ts:99
-msgid "Give %s the groups of %s they lack (%s)"
+#: src/features/security/security.groups.ts:228
+msgid "Add to %s"
 msgstr ""
 
-#: src/features/security/security.groups.ts:100
-msgid "Make the groups of %s the same as %s"
+#: src/features/security/security.groups.ts:246
+msgid "Copy the groups of %s"
 msgstr ""
 
-#: src/features/security/security.groups.ts:102
-msgid "Add: %s"
+#: src/features/security/security.groups.ts:246
+msgid "Same groups set on both."
 msgstr ""
 
-#: src/features/security/security.groups.ts:103
-msgid "Remove: %s"
+#: src/features/security/security.groups.ts:248
+msgid "Added"
 msgstr ""
 
-#: src/features/security/security.groups.ts:104
-msgid "Warning: one is a portal user, the other is not: the user type changes."
+#: src/features/security/security.groups.ts:249
+msgid "Removed by \"the same\"; kept by \"add only\""
 msgstr ""
 
-#: src/features/security/security.groups.ts:106
+#: src/features/security/security.groups.ts:252
 msgid "Change the groups of %s?"
 msgstr ""
 
-#: src/features/security/security.groups.ts:112
-msgid "Copy the groups of %s"
+#: src/features/security/security.groups.ts:253
+msgid "Add: %s"
+msgstr ""
+
+#: src/features/security/security.groups.ts:254
+msgid "Remove: %s"
+msgstr ""
+
+#: src/features/security/security.groups.ts:255
+msgid "Warning: one is a portal user, the other is not: the user type changes."
+msgstr ""
+
+#: src/features/security/security.groups.ts:258
+msgid "Add only the missing ones (%s)"
+msgstr ""
+
+#: src/features/security/security.groups.ts:259
+msgid "Make them the same (+%s, −%s)"
+msgstr ""
+
+#: src/features/security/security.groups.ts:262
+msgid "Copy the groups of %s onto %s"
+msgstr ""
+
+#: src/features/security/security.groups.ts:262
+msgid "Group set on the user"
 msgstr ""
 
 #: src/features/security/security.injected.ts:14
@@ -719,19 +913,8 @@ msgstr ""
 msgid "%s has this group"
 msgstr ""
 
-#: src/features/security/security.model.ts:24
-#: src/features/security/security.record.ts:75
-#: src/features/security/security.record.ts:76
-msgid "%s doesn't have this group"
-msgstr ""
-
 #: src/features/security/security.model.ts:27
 msgid "Reading the ACLs and record rules needs Access Rights (base.group_erp_manager)."
-msgstr ""
-
-#: src/features/security/security.model.ts:29
-#: src/features/security/security.record.ts:85
-msgid "Access rights (ACL)"
 msgstr ""
 
 #: src/features/security/security.model.ts:32
@@ -751,29 +934,12 @@ msgstr ""
 msgid "This ACL doesn't grant it"
 msgstr ""
 
-#: src/features/security/security.model.ts:40
-msgid "Record rules"
-msgstr ""
-
 #: src/features/security/security.model.ts:43
 msgid "of %s, through %s"
 msgstr ""
 
 #: src/features/security/security.model.ts:43
 msgid "global: every user"
-msgstr ""
-
-#: src/features/security/security.model.ts:44
-msgid "The rule covers this operation"
-msgstr ""
-
-#: src/features/security/security.model.ts:44
-#: src/features/security/security.record.ts:100
-msgid "The rule doesn't cover this operation"
-msgstr ""
-
-#: src/features/security/security.model.ts:49
-msgid "Rule"
 msgstr ""
 
 #: src/features/security/security.model.ts:49
@@ -834,18 +1000,6 @@ msgstr ""
 
 #: src/features/security/security.models.ts:55
 msgid "(unknown module)"
-msgstr ""
-
-#: src/features/security/security.models.ts:59
-msgid "%s models"
-msgstr ""
-
-#: src/features/security/security.models.ts:62
-msgid "Model"
-msgstr ""
-
-#: src/features/security/security.models.ts:62
-msgid "Rules"
 msgstr ""
 
 #: src/features/security/security.models.ts:68
@@ -1059,6 +1213,10 @@ msgstr ""
 msgid "No single group allows it."
 msgstr ""
 
+#: src/features/security/security.record.ts:166
+msgid "Try"
+msgstr ""
+
 #: src/features/security/security.record.ts:167
 msgid "also adds: %s"
 msgstr ""
@@ -1077,11 +1235,6 @@ msgstr ""
 
 #: src/features/security/security.record.ts:172
 msgid "No new right on other models."
-msgstr ""
-
-#: src/features/security/security.record.ts:174
-#: src/features/translations/translations.modules.ts:139
-msgid "… and %s more"
 msgstr ""
 
 #: src/features/security/security.record.ts:175
@@ -1420,10 +1573,6 @@ msgstr ""
 msgid "Yours"
 msgstr ""
 
-#: src/features/translations/translations.langs.ts:55
-msgid "Users"
-msgstr ""
-
 #: src/features/translations/translations.langs.ts:58
 msgid "Find a language to activate…"
 msgstr ""
@@ -1495,6 +1644,10 @@ msgstr ""
 
 #: src/features/translations/translations.modules.ts:67
 msgid "Import a .po into the database"
+msgstr ""
+
+#: src/features/translations/translations.modules.ts:74
+msgid "Remove"
 msgstr ""
 
 #: src/features/translations/translations.modules.ts:75
@@ -2110,22 +2263,22 @@ msgstr ""
 msgid "Show %s more (of %s)"
 msgstr ""
 
-#: src/ui/matrix.ts:32
+#: src/ui/matrix.ts:37
 msgid "Allowed / matches"
 msgstr ""
 
-#: src/ui/matrix.ts:32
+#: src/ui/matrix.ts:37
 msgid "Refused / doesn't match"
 msgstr ""
 
-#: src/ui/matrix.ts:32
+#: src/ui/matrix.ts:37
 msgid "Does not apply"
 msgstr ""
 
-#: src/ui/matrix.ts:32
+#: src/ui/matrix.ts:37
 msgid "Unknown: could not be checked"
 msgstr ""
 
-#: src/ui/matrix.ts:39
+#: src/ui/matrix.ts:44
 msgid "Added by the groups being tried"
 msgstr ""

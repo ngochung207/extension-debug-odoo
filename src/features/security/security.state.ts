@@ -26,6 +26,9 @@ export type View = (typeof VIEWS)[number];
 export interface SecurityState {
   /** the view shown; null: the default for the screen */
   view: View | null;
+  /** Groups view: the group opened, and whether the list shows the users' groups only */
+  group: number | null;
+  allGroups: boolean;
   /** null: yourself */
   uid: number | null;
   tried: Set<number>;
@@ -45,7 +48,7 @@ const states = new Map<string, SecurityState>();
 
 export function stateOf(origin: string): SecurityState {
   let s = states.get(origin);
-  if (!s) states.set(origin, s = { view: null, uid: null, tried: new Set(), companies: null, compare: null, subject: null, archived: false, baseline: null, before: null });
+  if (!s) states.set(origin, s = { view: null, group: null, allGroups: false, uid: null, tried: new Set(), companies: null, compare: null, subject: null, archived: false, baseline: null, before: null });
   return s;
 }
 

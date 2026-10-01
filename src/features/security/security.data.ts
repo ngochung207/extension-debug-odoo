@@ -228,25 +228,13 @@ export async function assess(model: string, resId: number | null, sim: Simulated
   const notes = new Map<number, string>();
   if (!sec.acls || !sec.rules) return { rights: false, input: null, verdicts: [], server: await server, evaluated, notes };
 
-  const ctx = ruleEvalContext({
-    id: sim.user.id, login: sim.user.login, partner_id: sim.user.partner_id ? sim.user.partner_id[0] : 0, commercial_partner_id: sim.commercialPartner,
-    company_id: sim.user.company_id ? sim.user.company_id[0] : false, company_ids: sim.user.company_ids,
-    employee_id: sim.user.employee_id ? sim.user.employee_id[0] : false, employee_ids: sim.user.employee_ids ?? [], groupIds: [...sim.groupIds],
-  }, sim.companies);
   const rules = sec.rules;
-  // what the rules read of `user` beyond the usual (fields of custom modules too), from the real user; the groups stay
-  // the simulated ones
-  const extra = await recordObject('res.users', [sim.user.id], userPaths(rules.map((r) => r.domain_force || '')), false);
-  const groups = { groups_id: ctx.user.groups_id, group_ids: ctx.user.group_ids, all_group_ids: ctx.user.all_group_ids };
-  const evalCtx = { ...ctx, user: { ...ctx.user, ...extra, ...groups } };
-  const evals = await exec(pageEvalDomains, rules.map((r) => r.domain_force || '[]'), evalCtx as Json);
+  const evaluatedNow = await evaluateFor(sim, rules, a);
   const count = (domain: Json[]) => call<number>(model, 'search_count', [[['id', '=', resId], ...domain]], { context: { active_test: false } });
   const visible = resId ? await count([]).catch(() => 0) : 0;
   const passed = new Map<number, boolean>();
-  await Promise.all(rules.map(async (r, i) => {
-    const missing = unavailableNames(r.domain_force || '', a.rules.evalNames);
-    const ev: Evaluated = missing.length ? { error: `name '${missing[0]}' is not defined` }
-      : Array.isArray(evals) ? evals[i] ?? { error: N_('no result') } : { error: isExecError(evals) ? evals.error : N_('no result') };
+  await Promise.all(rules.map(async (r) => {
+    const ev = evaluatedNow.get(r.id)!;
     evaluated.set(r.id, ev);
     if ('error' in ev || !resId) return;
     if (!visible) return notes.set(r.id, N_('You cannot read this record yourself, so its rules cannot be checked.'));
@@ -256,6 +244,58 @@ export async function assess(model: string, resId: number | null, sim: Simulated
   }));
   const input: VerdictInput = { superuser: sim.superuser, groupIds: sim.groupIds, acls: sec.acls, rules, resId, passed };
   return { rights: true, input, verdicts: verdicts(input), server: await server, evaluated, notes };
+}
+
+/**
+ * The rules' domains evaluated for the simulated user (py_js in the page): ir.rule._eval_context with the companies
+ * on, `user` with every attribute the rules read (custom fields too, from the real user; the groups simulated).
+ */
+export async function evaluateFor(sim: Simulated, rules: readonly IrRule[], a: OdooAdapter): Promise<Map<number, Evaluated>> {
+  const ctx = ruleEvalContext({
+    id: sim.user.id, login: sim.user.login, partner_id: sim.user.partner_id ? sim.user.partner_id[0] : 0, commercial_partner_id: sim.commercialPartner,
+    company_id: sim.user.company_id ? sim.user.company_id[0] : false, company_ids: sim.user.company_ids,
+    employee_id: sim.user.employee_id ? sim.user.employee_id[0] : false, employee_ids: sim.user.employee_ids ?? [], groupIds: [...sim.groupIds],
+  }, sim.companies);
+  const extra = await recordObject('res.users', [sim.user.id], userPaths(rules.map((r) => r.domain_force || '')), false);
+  const groups = { groups_id: ctx.user.groups_id, group_ids: ctx.user.group_ids, all_group_ids: ctx.user.all_group_ids };
+  const evalCtx = { ...ctx, user: { ...ctx.user, ...extra, ...groups } };
+  const evals = rules.length ? await exec(pageEvalDomains, rules.map((r) => r.domain_force || '[]'), evalCtx as Json) : [];
+  return new Map(rules.map((r, i) => {
+    const missing = unavailableNames(r.domain_force || '', a.rules.evalNames);
+    const ev: Evaluated = missing.length ? { error: `name '${missing[0]}' is not defined` }
+      : Array.isArray(evals) ? evals[i] ?? { error: N_('no result') } : { error: isExecError(evals) ? evals.error : N_('no result') };
+    return [r.id, ev];
+  }));
+}
+
+/** A group in detail: its description, xmlid, the groups it implies directly, its ACLs, its rules, its users. */
+export interface GroupDetail {
+  comment: string;
+  xmlid: string | false;
+  implies: number[];
+  acls: AclRow[] | null;
+  rules: (IrRule & { model_id: Many2one })[] | null;
+  users: { id: number; name: string; login: string; share: boolean }[];
+}
+
+export async function groupDetail(id: number, a: OdooAdapter): Promise<GroupDetail> {
+  const [[g], meta, acls, rules] = await Promise.all([
+    call<Record<string, unknown>[]>('res.groups', 'read', [[id], ['comment', 'implied_ids', a.groups.usersField]]),
+    call<{ xmlid: string | false }[]>('res.groups', 'get_metadata', [[id]]).catch(() => []),
+    unlessDenied(call<AclRow[]>('ir.model.access', 'search_read', [[['group_id', '=', id]]], { fields: ['model_id', 'group_id', ...MODES.map((m) => `perm_${m}`)] })),
+    unlessDenied(call<(IrRule & { model_id: Many2one })[]>('ir.rule', 'search_read', [[['groups', 'in', [id]]]],
+      { fields: ['name', 'model_id', 'groups', 'global', 'domain_force', ...MODES.map((m) => `perm_${m}`)] })),
+  ]);
+  const userIds = ((g?.[a.groups.usersField] as number[] | undefined) ?? []).slice(0, 500);
+  const users = userIds.length ? await call<GroupDetail['users']>('res.users', 'read', [userIds, ['name', 'login', 'share']]).catch(() => []) : [];
+  return { comment: String(g?.comment || ''), xmlid: meta[0]?.xmlid ?? false, implies: (g?.implied_ids as number[] | undefined) ?? [], acls, rules,
+    users: users.sort((x, y) => x.name.localeCompare(y.name)) };
+}
+
+/** How many users each group has (implied ones too). Not cached: groups are written in the tab. */
+export async function usersPerGroup(a: OdooAdapter): Promise<Map<number, number>> {
+  const rows = await call<Record<string, unknown>[]>('res.groups', 'search_read', [[]], { fields: [a.groups.usersField] }).catch(() => []);
+  return new Map(rows.map((r) => [r.id as number, ((r[a.groups.usersField] as number[] | undefined) ?? []).length]));
 }
 
 /** The ACL rows of the user's groups and of `adds`, every model: what adding them opens elsewhere. */
