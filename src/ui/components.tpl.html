@@ -1,0 +1,43 @@
+<!-- ui/components.ts: the panel's small components (styles: panel.css). data-ref: the elements the code fills, with text only.
+     data-i18n: translated on first use (npm run i18n extracts it). -->
+
+<!-- A short label: a type, a state, a count. Kind (ok, err, med, info, accent…) added by the code. -->
+<template data-tpl="pill">
+  <span class="pill" data-ref="pill"></span>
+</template>
+
+<!-- Nothing to show, and why. -->
+<template data-tpl="empty">
+  <div class="empty" data-ref="text"></div>
+</template>
+
+<!-- JSON or raw text, as it is. -->
+<template data-tpl="pre">
+  <pre data-ref="text"></pre>
+</template>
+
+<!-- A collapsible section, closed until its summary is clicked. -->
+<template data-tpl="details">
+  <details data-ref="details"><summary data-ref="summary"></summary></details>
+</template>
+
+<!-- An error: its message, and the server traceback when there is one (removed otherwise). -->
+<template data-tpl="error">
+  <div class="error">
+    <span data-ref="message"></span>
+    <details data-ref="trace"><summary data-i18n="text">Traceback</summary><pre data-ref="traceback"></pre></details>
+  </div>
+</template>
+
+<!-- Key / value list; one kv-row per entry. -->
+<template data-tpl="kv">
+  <dl class="kv" data-ref="list"></dl>
+</template>
+<template data-tpl="kv-row">
+  <div class="kv-row"><dt data-ref="key"></dt><dd data-ref="value"></dd></div>
+</template>
+
+<!-- A field name, model, xmlid…: clicking copies it (✓ for a second). Extra classes added by the code. -->
+<template data-tpl="copy">
+  <button type="button" class="copy" data-ref="button" title="Click to copy" data-i18n="title"></button>
+</template>

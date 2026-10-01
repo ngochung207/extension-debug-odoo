@@ -1,0 +1,85 @@
+// The panel's small components: markup in components.tpl.html, styles in panel.css. Odoo data only ever goes through
+// textContent. The list widgets (cards, filtered / expandable lists, master-detail) come with the first tab needing them.
+import { translateDom } from '../i18n/i18n.ts';
+import { templates } from './template.ts';
+import html from './components.tpl.html';
+
+const tpl = templates(html, translateDom);
+
+export type PillKind = '' | 'ok' | 'err' | 'med' | 'low' | 'high' | 'info' | 'accent';
+
+export function pill(text: string, kind: PillKind = ''): HTMLSpanElement {
+  const { pill: p } = tpl('pill', { pill: HTMLSpanElement }).refs;
+  p.textContent = text;
+  if (kind) p.classList.add(kind);
+  return p;
+}
+
+/** true / false / anything else (unknown) → green / red / `unknownKind` pill with the matching label. */
+export const triPill = (v: unknown, [yes, no, unknown]: [string, string, string] = ['✓', '✗', '?'], unknownKind: PillKind = '') =>
+  v === true ? pill(yes, 'ok') : v === false ? pill(no, 'err') : pill(unknown, unknownKind);
+
+export function empty(msg: string): HTMLElement {
+  const { root, refs } = tpl('empty', { text: HTMLDivElement });
+  refs.text.textContent = msg;
+  return root;
+}
+
+export function pre(o: unknown): HTMLPreElement {
+  const { text } = tpl('pre', { text: HTMLPreElement }).refs;
+  text.textContent = typeof o === 'string' ? o : JSON.stringify(o, null, 2) ?? String(o);
+  return text;
+}
+
+/** Collapsible section, closed until its summary is clicked (every one in the panel starts closed). */
+export function details(summary: string | Node, ...body: Node[]): HTMLDetailsElement {
+  const { details: d, summary: s } = tpl('details', { details: HTMLDetailsElement, summary: HTMLElement }).refs;
+  s.append(summary);
+  d.append(...body);
+  return d;
+}
+
+/** An error (Error, RpcError with its traceback, or anything thrown) as the panel shows it. */
+export function errBox(e: unknown): HTMLElement {
+  const { message, traceback } = (e ?? {}) as { message?: string; traceback?: string };
+  const { root, refs } = tpl('error', { message: HTMLSpanElement, trace: HTMLDetailsElement, traceback: HTMLPreElement });
+  refs.message.textContent = message ?? String(e);
+  if (traceback) refs.traceback.textContent = traceback;
+  else refs.trace.remove();
+  return root;
+}
+
+export function kv(obj: Record<string, unknown>): HTMLElement {
+  const { root, refs } = tpl('kv', { list: HTMLDListElement });
+  for (const [k, v] of Object.entries(obj)) {
+    const row = tpl('kv-row', { key: HTMLElement, value: HTMLElement });
+    row.refs.key.textContent = k;
+    row.refs.value.textContent = v !== null && typeof v === 'object' ? JSON.stringify(v) : String(v ?? '');
+    refs.list.append(row.root);
+  }
+  return root;
+}
+
+export async function copyText(text: string) {
+  try { await navigator.clipboard.writeText(text); } catch { // clipboard API refused (focus, permissions policy): the old way
+    const ta = document.createElement('textarea'); // markup-ok: off-screen copy helper, not UI
+    ta.value = text;
+    document.body.append(ta);
+    ta.select();
+    document.execCommand('copy');
+    ta.remove();
+  }
+}
+
+/** `text` (a field name, xmlid…) as a button copying it to the clipboard; ✓ for a second after. `label`: shown instead (e.g. masked). */
+export function copyable(text: string, cls = 'name', label = text): HTMLButtonElement {
+  const { button } = tpl('copy', { button: HTMLButtonElement }).refs;
+  button.classList.add(...cls.split(/\s+/).filter(Boolean));
+  button.textContent = label;
+  button.addEventListener('click', async () => {
+    await copyText(text);
+    button.classList.add('copied');
+    setTimeout(() => button.classList.remove('copied'), 1000);
+  });
+  return button;
+}

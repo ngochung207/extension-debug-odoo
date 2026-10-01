@@ -1,0 +1,1136 @@
+# Odoo Debug — English
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Debug\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/entrypoints/panel/index.html:14
+msgid "Connecting…"
+msgstr "Connecting…"
+
+#: src/entrypoints/panel/index.html:17
+#: src/entrypoints/panel/index.html:17
+msgid "Reload Data"
+msgstr "Reload Data"
+
+#: src/entrypoints/panel/index.html:18
+msgid "Minimize (the Odoo Debug button reopens it)"
+msgstr "Minimize (the Odoo Debug button reopens it)"
+
+#: src/entrypoints/panel/index.html:18
+msgid "Minimize"
+msgstr "Minimize"
+
+#: src/entrypoints/panel/index.html:19
+msgid "Full Screen (Esc to exit)"
+msgstr "Full Screen (Esc to exit)"
+
+#: src/entrypoints/panel/index.html:19
+msgid "Full Screen"
+msgstr "Full Screen"
+
+#: src/entrypoints/panel/index.html:22
+msgid "Record"
+msgstr "Record"
+
+#: src/entrypoints/panel/index.html:23
+msgid "View"
+msgstr "View"
+
+#: src/entrypoints/panel/index.html:24
+msgid "RPC"
+msgstr "RPC"
+
+#: src/entrypoints/panel/index.html:25
+msgid "Code"
+msgstr "Code"
+
+#: src/entrypoints/panel/index.html:26
+msgid "Security"
+msgstr "Security"
+
+#: src/entrypoints/panel/index.html:27
+msgid "Translations"
+msgstr "Translations"
+
+#: src/entrypoints/panel/index.html:28
+msgid "Apps"
+msgstr "Apps"
+
+#: src/entrypoints/panel/index.html:29
+msgid "Perf"
+msgstr "Perf"
+
+#: src/entrypoints/panel/index.ts:43
+#: src/entrypoints/panel/index.ts:44
+msgid "Cannot read this tab: %s"
+msgstr "Cannot read this tab: %s"
+
+#: src/entrypoints/panel/index.ts:43
+msgid "The current tab is not an Odoo page."
+msgstr "The current tab is not an Odoo page."
+
+#: src/entrypoints/panel/index.ts:46
+msgid "Not available on Odoo %s: %s"
+msgstr "Not available on Odoo %s: %s"
+
+#: src/entrypoints/panel/index.ts:93
+msgid "Odoo %s is not tested: the panel uses its Odoo %s support, some cards may fail."
+msgstr "Odoo %s is not tested: the panel uses its Odoo %s support, some cards may fail."
+
+#: src/entrypoints/panel/index.ts:94
+msgid "Odoo %s is older than every supported version: some cards may fail."
+msgstr "Odoo %s is older than every supported version: some cards may fail."
+
+#: src/entrypoints/panel/index.ts:95
+msgid "This database lacks fields the panel expects for Odoo %s: %s"
+msgstr "This database lacks fields the panel expects for Odoo %s: %s"
+
+#: src/entrypoints/panel/index.ts:99
+msgid "Odoo %s, supported"
+msgstr "Odoo %s, supported"
+
+#: src/entrypoints/panel/panel.tpl.html:5
+msgid "Not an Odoo page"
+msgstr "Not an Odoo page"
+
+#: src/entrypoints/popup/index.html:17
+msgid "This page"
+msgstr "This page"
+
+#: src/entrypoints/popup/index.html:20
+msgid "Show / Hide Panel"
+msgstr "Show / Hide Panel"
+
+#: src/entrypoints/popup/index.html:22
+#: src/entrypoints/popup/index.html:23
+msgid "Debug Mode"
+msgstr "Debug Mode"
+
+#: src/entrypoints/popup/index.html:24
+msgid "Keep it on for this Odoo"
+msgstr "Keep it on for this Odoo"
+
+#: src/entrypoints/popup/index.html:27
+msgid "Language"
+msgstr "Language"
+
+#: src/entrypoints/popup/index.html:31
+#: src/entrypoints/popup/index.html:32
+msgid "Theme"
+msgstr "Theme"
+
+#: src/entrypoints/popup/index.html:35
+msgid "Shortcuts"
+msgstr "Shortcuts"
+
+#: src/entrypoints/popup/index.html:36
+msgid "Change"
+msgstr "Change"
+
+#: src/entrypoints/popup/index.html:38
+msgid "Tip: ⌥/Alt + click a field on the Odoo page to copy its technical name."
+msgstr "Tip: ⌥/Alt + click a field on the Odoo page to copy its technical name."
+
+#: src/entrypoints/popup/index.ts:11
+msgid "System"
+msgstr "System"
+
+#: src/entrypoints/popup/index.ts:11
+msgid "Light"
+msgstr "Light"
+
+#: src/entrypoints/popup/index.ts:11
+msgid "Dark"
+msgstr "Dark"
+
+#: src/entrypoints/popup/index.ts:46
+msgid "panel"
+msgstr "panel"
+
+#: src/entrypoints/popup/index.ts:46
+msgid "debug"
+msgstr "debug"
+
+#: src/extension/run-in-tab.ts:16
+msgid "No tab is open."
+msgstr "No tab is open."
+
+#: src/odoo/detect.ts:32
+msgid "Cannot read the Odoo version (%s)."
+msgstr "Cannot read the Odoo version (%s)."
+
+#: src/odoo/rpc.ts:25
+msgid "No response — is this an Odoo page?"
+msgstr "No response — is this an Odoo page?"
+
+#: src/ui/components.tpl.html:28
+msgid "Traceback"
+msgstr "Traceback"
+
+#: src/ui/components.tpl.html:42
+msgid "Click to copy"
+msgstr "Click to copy"
+
+msgid "Needs Settings rights (base.group_system)."
+msgstr "Needs Settings rights (base.group_system)."
+
+msgid "Search or type: sale; stock; my_module"
+msgstr "Search or type: sale; stock; my_module"
+
+msgid "Modules"
+msgstr "Modules"
+
+msgid "%s/%s modules"
+msgstr "%s/%s modules"
+
+msgid "Running…"
+msgstr "Running…"
+
+msgid "error"
+msgstr "error"
+
+msgid "Reloading the Odoo page…"
+msgstr "Reloading the Odoo page…"
+
+msgid "Enter at least one module."
+msgstr "Enter at least one module."
+
+msgid "Activate"
+msgstr "Activate"
+
+msgid "Update Apps List, then install every module (with its dependencies)"
+msgstr "Update Apps List, then install every module (with its dependencies)"
+
+msgid "Update Apps List"
+msgstr "Update Apps List"
+
+msgid "%s updated · %s added"
+msgstr "%s updated · %s added"
+
+msgid "Not found, even after Update Apps List: %s"
+msgstr "Not found, even after Update Apps List: %s"
+
+msgid "Not installable: %s"
+msgstr "Not installable: %s"
+
+msgid "Waiting to be uninstalled: %s"
+msgstr "Waiting to be uninstalled: %s"
+
+msgid "Already installed: %s"
+msgstr "Already installed: %s"
+
+msgid "Install %s"
+msgstr "Install %s"
+
+msgid "Upgrade"
+msgstr "Upgrade"
+
+msgid "Upgrade every module (they must be installed)"
+msgstr "Upgrade every module (they must be installed)"
+
+msgid "Not found: %s"
+msgstr "Not found: %s"
+
+msgid "Not installed (use Activate): %s"
+msgstr "Not installed (use Activate): %s"
+
+msgid "Upgrade %s"
+msgstr "Upgrade %s"
+
+msgid "Open Forms ↗"
+msgstr "Open Forms ↗"
+
+msgid "Open the form of every module in a new tab"
+msgstr "Open the form of every module in a new tab"
+
+msgid "Opened %s tab(s): %s"
+msgstr "Opened %s tab(s): %s"
+
+msgid "Not found: %s (Activate runs Update Apps List first)"
+msgstr "Not found: %s (Activate runs Update Apps List first)"
+
+msgid "Installed"
+msgstr "Installed"
+
+msgid "Not Installed"
+msgstr "Not Installed"
+
+msgid "Extra"
+msgstr "Extra"
+
+msgid "Filters"
+msgstr "Filters"
+
+msgid " or "
+msgstr " or "
+
+msgid "Category"
+msgstr "Category"
+
+msgid "All Categories"
+msgstr "All Categories"
+
+msgid "Remove"
+msgstr "Remove"
+
+msgid "// JavaScript with env, print, Command. ⌘/Ctrl+Enter runs it."
+msgstr "// JavaScript with env, print, Command. ⌘/Ctrl+Enter runs it."
+
+msgid "After writes, reload the data of the view on screen (Odoo's soft_reload), without reloading the page"
+msgstr "After writes, reload the data of the view on screen (Odoo's soft_reload), without reloading the page"
+
+msgid "Auto Refresh"
+msgstr "Auto Refresh"
+
+msgid "Run (⌘/Ctrl+Enter)"
+msgstr "Run (⌘/Ctrl+Enter)"
+
+msgid "Run"
+msgstr "Run"
+
+msgid "Guide"
+msgstr "Guide"
+
+msgid "Available variables, recordset API, examples"
+msgstr "Available variables, recordset API, examples"
+
+msgid "Lets the code call write, create, unlink and any other method that is not a read"
+msgstr "Lets the code call write, create, unlink and any other method that is not a read"
+
+msgid "Read-only by default. With writes allowed, each call is committed at once: there is no rollback."
+msgstr "Read-only by default. With writes allowed, each call is committed at once: there is no rollback."
+
+msgid "Allow Writes"
+msgstr "Allow Writes"
+
+msgid "Runs as %s (uid %s): their access rights, record rules and companies apply."
+msgstr "Runs as %s (uid %s): their access rights, record rules and companies apply."
+
+msgid "page refreshed"
+msgstr "page refreshed"
+
+msgid "page not refreshed"
+msgstr "page not refreshed"
+
+msgid "ok"
+msgstr "ok"
+
+msgid "read-only"
+msgstr "read-only"
+
+msgid "writes allowed"
+msgstr "writes allowed"
+
+msgid "%s ms"
+msgstr "%s ms"
+
+msgid "%s calls"
+msgstr "%s calls"
+
+msgid "%s write calls"
+msgstr "%s write calls"
+
+msgid "No return value: end with return … to see one."
+msgstr "No return value: end with return … to see one."
+
+msgid "(line %s)"
+msgstr "(line %s)"
+
+msgid "This page's Content-Security-Policy forbids running code (a proxy in front of Odoo adds script-src)."
+msgstr "This page's Content-Security-Policy forbids running code (a proxy in front of Odoo adds script-src)."
+
+msgid "%s rows (first %s shown)"
+msgstr "%s rows (first %s shown)"
+
+msgid "%s rows"
+msgstr "%s rows"
+
+msgid "JSON"
+msgstr "JSON"
+
+msgid "Calls (%s)"
+msgstr "Calls (%s)"
+
+msgid "write"
+msgstr "write"
+
+msgid "Copy code"
+msgstr "Copy code"
+
+msgid "Copied"
+msgstr "Copied"
+
+msgid "Available variables:"
+msgstr "Available variables:"
+
+msgid "environment of the logged-in user, with their access rights and record rules; env['res.partner'] is a void recordset"
+msgstr "environment of the logged-in user, with their access rights and record rules; env['res.partner'] is a void recordset"
+
+msgid "current user, current company, active companies"
+msgstr "current user, current company, active companies"
+
+msgid "user id, context sent with every call, language"
+msgstr "user id, context sent with every call, language"
+
+msgid "record of an external id, if you can read it"
+msgstr "record of an external id, if you can read it"
+
+msgid "shows values above the result"
+msgstr "shows values above the result"
+
+msgid "x2many commands namespace: Command.create(vals), link(id), set(ids)…"
+msgstr "x2many commands namespace: Command.create(vals), link(id), set(ids)…"
+
+msgid "Recordsets:"
+msgstr "Recordsets:"
+
+msgid "read from the server"
+msgstr "read from the server"
+
+msgid "work like in Python"
+msgstr "work like in Python"
+
+msgid "field value of a single record, as in Python; await it inside an expression: if (await rec.state === 'sale')"
+msgstr "field value of a single record, as in Python; await it inside an expression: if (await rec.state === 'sale')"
+
+msgid "records one by one; each field is read once for all of them"
+msgstr "records one by one; each field is read once for all of them"
+
+msgid "writes the field, like in Python (needs \"Allow Writes\"); later lines see the new value"
+msgstr "writes the field, like in Python (needs \"Allow Writes\"); later lines see the new value"
+
+msgid "record ids, first id, count"
+msgstr "record ids, first id, count"
+
+msgid "write to the server: need \"Allow Writes\""
+msgstr "write to the server: need \"Allow Writes\""
+
+msgid "any other public method, called on these records (also needs \"Allow Writes\")"
+msgstr "any other public method, called on these records (also needs \"Allow Writes\")"
+
+msgid "a method called on the model, without records"
+msgstr "a method called on the model, without records"
+
+msgid "Suggestions:"
+msgstr "Suggestions:"
+
+msgid "models of the installed modules"
+msgstr "models of the installed modules"
+
+msgid "fields of the last env[…] model, following relations (partner_id.country_id.)"
+msgstr "fields of the last env[…] model, following relations (partner_id.country_id.)"
+
+msgid "recordset methods, env and Command members"
+msgstr "recordset methods, env and Command members"
+
+msgid "pick, insert, close, ask for suggestions"
+msgstr "pick, insert, close, ask for suggestions"
+
+msgid "To show a result, return it: lists of records show as a table."
+msgstr "To show a result, return it: lists of records show as a table."
+
+msgid "JavaScript, not Python: await every server call, lists and objects in JS syntax (true / false / null)."
+msgstr "JavaScript, not Python: await every server call, lists and objects in JS syntax (true / false / null)."
+
+msgid "Every call goes through /web/dataset/call_kw as the logged-in user: no sudo(), no SQL, no private _methods. Methods that switch to sudo() inside still do so, as when clicked in Odoo."
+msgstr "Every call goes through /web/dataset/call_kw as the logged-in user: no sudo(), no SQL, no private _methods. Methods that switch to sudo() inside still do so, as when clicked in Odoo."
+
+msgid "The code runs in the Odoo page with its own JavaScript rights: only run code you understand. An endless loop freezes the page (reload it)."
+msgstr "The code runs in the Odoo page with its own JavaScript rights: only run code you understand. An endless loop freezes the page (reload it)."
+
+msgid "%s writes: blocked in read-only mode (tick \"Allow Writes\" to run it)"
+msgstr "%s writes: blocked in read-only mode (tick \"Allow Writes\" to run it)"
+
+msgid "Stopped after %s calls"
+msgstr "Stopped after %s calls"
+
+msgid "%s has no field %s"
+msgstr "%s has no field %s"
+
+msgid "%s.%s is not relational"
+msgstr "%s.%s is not relational"
+
+msgid "Expected singleton: %s"
+msgstr "Expected singleton: %s"
+
+msgid "%s is read from the server: await it before using its value"
+msgstr "%s is read from the server: await it before using its value"
+
+msgid "No view to refresh on this page"
+msgstr "No view to refresh on this page"
+
+msgid "Suggestions"
+msgstr "Suggestions"
+
+msgid "Cannot call /web/set_profiling"
+msgstr "Cannot call /web/set_profiling"
+
+msgid "Profiling is not enabled on this database.\nEnable it for 5 minutes? (writes ir.config_parameter base.profiling_enabled_until)"
+msgstr "Profiling is not enabled on this database.\nEnable it for 5 minutes? (writes ir.config_parameter base.profiling_enabled_until)"
+
+msgid "Profiling could not be enabled."
+msgstr "Profiling could not be enabled."
+
+msgid "Stop Profiling"
+msgstr "Stop Profiling"
+
+msgid "Start Profiling"
+msgstr "Start Profiling"
+
+msgid "RECORDING"
+msgstr "RECORDING"
+
+msgid "off"
+msgstr "off"
+
+msgid "since %s"
+msgstr "since %s"
+
+msgid "Each request of this session writes one ir.profile row; ⟳ reloads the list."
+msgstr "Each request of this session writes one ir.profile row; ⟳ reloads the list."
+
+msgid "Records the SQL + Python stacks of every request of this session (Odoo's built-in profiler, base.group_system)."
+msgstr "Records the SQL + Python stacks of every request of this session (Odoo's built-in profiler, base.group_system)."
+
+msgid "No request yet: use the Odoo page, then press ⟳."
+msgstr "No request yet: use the Odoo page, then press ⟳."
+
+msgid "No profile data yet."
+msgstr "No profile data yet."
+
+msgid "Filter request"
+msgstr "Filter request"
+
+msgid "%s requests"
+msgstr "%s requests"
+
+msgid "%s/%s requests"
+msgstr "%s/%s requests"
+
+msgid "Request · SQL · duration"
+msgstr "Request · SQL · duration"
+
+msgid "Id · time · CPU"
+msgstr "Id · time · CPU"
+
+msgid "Select a request to see its SQL queries."
+msgstr "Select a request to see its SQL queries."
+
+msgid "Latest session: %s"
+msgstr "Latest session: %s"
+
+msgid "Flame Graph (speedscope)"
+msgstr "Flame Graph (speedscope)"
+
+msgid "No SQL recorded."
+msgstr "No SQL recorded."
+
+msgid "Full SQL + stack"
+msgstr "Full SQL + stack"
+
+msgid "%s queries · SQL %s / total %s · Python ≈ %s"
+msgstr "%s queries · SQL %s / total %s · Python ≈ %s"
+
+msgid "Repeated queries — N+1 suspects (%s)"
+msgstr "Repeated queries — N+1 suspects (%s)"
+
+msgid "Count · caller · time"
+msgstr "Count · caller · time"
+
+msgid "Query"
+msgstr "Query"
+
+msgid "✓ No repeated query."
+msgstr "✓ No repeated query."
+
+msgid "Slowest queries (%s)"
+msgstr "Slowest queries (%s)"
+
+msgid "Caller · time"
+msgstr "Caller · time"
+
+msgid "This screen is not bound to a model."
+msgstr "This screen is not bound to a model."
+
+msgid "Identity & metadata"
+msgstr "Identity & metadata"
+
+msgid "(none / several records)"
+msgstr "(none / several records)"
+
+msgid "created by"
+msgstr "created by"
+
+msgid "last updated by"
+msgstr "last updated by"
+
+msgid "Fields"
+msgstr "Fields"
+
+msgid "change → recomputes %s"
+msgstr "change → recomputes %s"
+
+msgid "%s fields"
+msgstr "%s fields"
+
+msgid "Filter name / label / value / type / module"
+msgstr "Filter name / label / value / type / module"
+
+msgid "%s/%s fields"
+msgstr "%s/%s fields"
+
+msgid "Field · type · value"
+msgstr "Field · type · value"
+
+msgid "Label · storage · compute · module"
+msgstr "Label · storage · compute · module"
+
+msgid "A computed field failed: values of the stored fields only."
+msgstr "A computed field failed: values of the stored fields only."
+
+msgid "Filter model / method"
+msgstr "Filter model / method"
+
+msgid "Errors Only"
+msgstr "Errors Only"
+
+msgid "Clear"
+msgstr "Clear"
+
+msgid "New Request"
+msgstr "New Request"
+
+msgid "Close"
+msgstr "Close"
+
+msgid "No RPC yet. Use the Odoo page to record some."
+msgstr "No RPC yet. Use the Odoo page to record some."
+
+msgid "Method · model · duration"
+msgstr "Method · model · duration"
+
+msgid "Time · route"
+msgstr "Time · route"
+
+msgid "Select a call to see its parameters and result."
+msgstr "Select a call to see its parameters and result."
+
+msgid "Parameters"
+msgstr "Parameters"
+
+msgid "Edit & Resend"
+msgstr "Edit & Resend"
+
+msgid "Why was it blocked? → Security"
+msgstr "Why was it blocked? → Security"
+
+msgid "Result"
+msgstr "Result"
+
+msgid "… (%s characters)"
+msgstr "… (%s characters)"
+
+msgid "Route"
+msgstr "Route"
+
+msgid "Body (JSON)"
+msgstr "Body (JSON)"
+
+msgid "Send"
+msgstr "Send"
+
+msgid "Invalid JSON: %s"
+msgstr "Invalid JSON: %s"
+
+msgid "Loading…"
+msgstr "Loading…"
+
+msgid "Ctrl/⌘ + Enter"
+msgstr "Ctrl/⌘ + Enter"
+
+msgid "call_kw: the external API (execute_kw), with an API key of this user in $ODOO_API_KEY. Other routes: the session_id cookie in $ODOO_SESSION."
+msgstr "call_kw: the external API (execute_kw), with an API key of this user in $ODOO_API_KEY. Other routes: the session_id cookie in $ODOO_SESSION."
+
+msgid "Copy as cURL"
+msgstr "Copy as cURL"
+
+msgid "No ACL grants this to the user's groups."
+msgstr "No ACL grants this to the user's groups."
+
+msgid "ACL: %s. No record to check the rules against."
+msgstr "ACL: %s. No record to check the rules against."
+
+msgid "Blocked by a record rule (see below)."
+msgstr "Blocked by a record rule (see below)."
+
+msgid "A rule could not be evaluated, not certain."
+msgstr "A rule could not be evaluated, not certain."
+
+msgid "ACL: %s · %s rules pass."
+msgstr "ACL: %s · %s rules pass."
+
+msgid "No ACL: only the superuser can access this model."
+msgstr "No ACL: only the superuser can access this model."
+
+msgid "ACL \"%s\" has no group → applies to EVERY user, portal/public included (%s)."
+msgstr "ACL \"%s\" has no group → applies to EVERY user, portal/public included (%s)."
+
+msgid "ACL \"%s\" grants %s to %s."
+msgstr "ACL \"%s\" grants %s to %s."
+
+msgid "Has company_id but no global multi-company rule → records may leak across companies."
+msgstr "Has company_id but no global multi-company rule → records may leak across companies."
+
+msgid "Field \"%s\" looks sensitive but has no groups=."
+msgstr "Field \"%s\" looks sensitive but has no groups=."
+
+msgid "Not served over HTTPS."
+msgstr "Not served over HTTPS."
+
+msgid "Cannot read the session_id cookie."
+msgstr "Cannot read the session_id cookie."
+
+msgid "session_id cookie is not HttpOnly → readable by JS/XSS."
+msgstr "session_id cookie is not HttpOnly → readable by JS/XSS."
+
+msgid "session_id cookie lacks the Secure flag."
+msgstr "session_id cookie lacks the Secure flag."
+
+msgid "session_id cookie is SameSite=None → larger CSRF surface."
+msgstr "session_id cookie is SameSite=None → larger CSRF surface."
+
+msgid "Missing Strict-Transport-Security (HSTS) header."
+msgstr "Missing Strict-Transport-Security (HSTS) header."
+
+msgid "Missing X-Frame-Options / CSP frame-ancestors → clickjacking."
+msgstr "Missing X-Frame-Options / CSP frame-ancestors → clickjacking."
+
+msgid "Missing X-Content-Type-Options: nosniff."
+msgstr "Missing X-Content-Type-Options: nosniff."
+
+msgid "Missing Content-Security-Policy."
+msgstr "Missing Content-Security-Policy."
+
+msgid "Header %s discloses a version: %s"
+msgstr "Header %s discloses a version: %s"
+
+msgid "Database manager has NO master password (default \"admin\")!"
+msgstr "Database manager has NO master password (default \"admin\")!"
+
+msgid "/web/database/manager is reachable → block /web/database/* at the proxy or set list_db = False."
+msgstr "/web/database/manager is reachable → block /web/database/* at the proxy or set list_db = False."
+
+msgid "list_db is on: database names are exposed (%s)."
+msgstr "list_db is on: database names are exposed (%s)."
+
+msgid "Server version is public via /web/webclient/version_info: %s"
+msgstr "Server version is public via /web/webclient/version_info: %s"
+
+msgid "__system__ (superuser): bypasses every ACL and record rule."
+msgstr "__system__ (superuser): bypasses every ACL and record rule."
+
+msgid "Settings administrator (base.group_system)."
+msgstr "Settings administrator (base.group_system)."
+
+msgid "Access Rights manager (base.group_erp_manager): can grant itself any group."
+msgstr "Access Rights manager (base.group_erp_manager): can grant itself any group."
+
+msgid "Has Technical Features (base.group_no_one)."
+msgstr "Has Technical Features (base.group_no_one)."
+
+msgid "Public user."
+msgstr "Public user."
+
+msgid "Portal user (share)."
+msgstr "Portal user (share)."
+
+msgid "Login \"admin\" is the default, easy to guess."
+msgstr "Login \"admin\" is the default, easy to guess."
+
+msgid "auth_totp is not installed → no 2FA."
+msgstr "auth_totp is not installed → no 2FA."
+
+msgid "2FA (TOTP) is not enabled."
+msgstr "2FA (TOTP) is not enabled."
+
+msgid "%s API key(s): direct RPC calls with this user's rights."
+msgstr "%s API key(s): direct RPC calls with this user's rights."
+
+msgid "User is archived."
+msgstr "User is archived."
+
+msgid "py_js is not loaded"
+msgstr "py_js is not loaded"
+
+msgid "HIGH"
+msgstr "HIGH"
+
+msgid "MEDIUM"
+msgstr "MEDIUM"
+
+msgid "LOW"
+msgstr "LOW"
+
+msgid "INFO"
+msgstr "INFO"
+
+msgid "Needs Access Rights (base.group_erp_manager)."
+msgstr "Needs Access Rights (base.group_erp_manager)."
+
+msgid "✓ No issue found."
+msgstr "✓ No issue found."
+
+msgid "Search a user by name or login…"
+msgstr "Search a user by name or login…"
+
+msgid "Log in as %s in an incognito window"
+msgstr "Log in as %s in an incognito window"
+
+msgid "User"
+msgstr "User"
+
+msgid "My User"
+msgstr "My User"
+
+msgid "me"
+msgstr "me"
+
+msgid "%s · #%s · %s (%s companies) · %s groups"
+msgstr "%s · #%s · %s (%s companies) · %s groups"
+
+msgid "Simulates the selected user's rights without logging in as them (reading other users' groups needs admin rights)."
+msgstr "Simulates the selected user's rights without logging in as them (reading other users' groups needs admin rights)."
+
+msgid "Click their name to log in as them in an incognito window: your session here stays."
+msgstr "Click their name to log in as them in an incognito window: your session here stays."
+
+msgid "Groups"
+msgstr "Groups"
+
+msgid "User risks"
+msgstr "User risks"
+
+msgid "Why allowed / blocked"
+msgstr "Why allowed / blocked"
+
+msgid "ACL (ir.model.access) — green = applies to the user"
+msgstr "ACL (ir.model.access) — green = applies to the user"
+
+msgid "No ACL."
+msgstr "No ACL."
+
+msgid "ACL / group"
+msgstr "ACL / group"
+
+msgid "(all users)"
+msgstr "(all users)"
+
+msgid "Fields hidden from the user (groups=)"
+msgstr "Fields hidden from the user (groups=)"
+
+msgid "No field declares groups=."
+msgstr "No field declares groups=."
+
+msgid "Real groups only: the tried groups are not counted here."
+msgstr "Real groups only: the tried groups are not counted here."
+
+msgid "Field · label · for this user"
+msgstr "Field · label · for this user"
+
+msgid "visible"
+msgstr "visible"
+
+msgid "hidden"
+msgstr "hidden"
+
+msgid "Model configuration audit"
+msgstr "Model configuration audit"
+
+msgid "Instance"
+msgstr "Instance"
+
+msgid "Session"
+msgstr "Session"
+
+msgid "Companies"
+msgstr "Companies"
+
+msgid "Odoo's built-in /web/become route, base.group_system only"
+msgstr "Odoo's built-in /web/become route, base.group_system only"
+
+msgid "Switch the current session to superuser (bypasses every rule)?"
+msgstr "Switch the current session to superuser (bypasses every rule)?"
+
+msgid "Become Superuser"
+msgstr "Become Superuser"
+
+msgid "System parameters (ir.config_parameter)"
+msgstr "System parameters (ir.config_parameter)"
+
+msgid "Filter key / value"
+msgstr "Filter key / value"
+
+msgid "%s parameters"
+msgstr "%s parameters"
+
+msgid "%s/%s parameters"
+msgstr "%s/%s parameters"
+
+msgid "Key"
+msgstr "Key"
+
+msgid "Value"
+msgstr "Value"
+
+msgid "No parameter."
+msgstr "No parameter."
+
+msgid "Instance check"
+msgstr "Instance check"
+
+msgid "Check failed"
+msgstr "Check failed"
+
+msgid "Raw data"
+msgstr "Raw data"
+
+msgid "Check Again"
+msgstr "Check Again"
+
+msgid "implied"
+msgstr "implied"
+
+msgid "Remove %s from %s?"
+msgstr "Remove %s from %s?"
+
+msgid "Simulate this group below, nothing is written"
+msgstr "Simulate this group below, nothing is written"
+
+msgid "Try"
+msgstr "Try"
+
+msgid "Stop trying it"
+msgstr "Stop trying it"
+
+msgid "Implied by %s"
+msgstr "Implied by %s"
+
+msgid "trying"
+msgstr "trying"
+
+msgid "%s groups"
+msgstr "%s groups"
+
+msgid "Filter or try a group…"
+msgstr "Filter or try a group…"
+
+msgid "%s/%s groups"
+msgstr "%s/%s groups"
+
+msgid "Trying %s: every card below is simulated with it."
+msgstr "Trying %s: every card below is simulated with it."
+
+msgid "Add %s to %s?"
+msgstr "Add %s to %s?"
+
+msgid "Apply"
+msgstr "Apply"
+
+msgid "Discard"
+msgstr "Discard"
+
+msgid "no result"
+msgstr "no result"
+
+msgid "cannot evaluate: %s"
+msgstr "cannot evaluate: %s"
+
+msgid "You cannot read this record yourself, so its rules cannot be checked."
+msgstr "You cannot read this record yourself, so its rules cannot be checked."
+
+msgid "Try:"
+msgstr "Try:"
+
+msgid "Also adds %s"
+msgstr "Also adds %s"
+
+msgid "No single group allows it."
+msgstr "No single group allows it."
+
+msgid "server ✓"
+msgstr "server ✓"
+
+msgid "server ✗"
+msgstr "server ✗"
+
+msgid "server ?"
+msgstr "server ?"
+
+msgid "has_access, run by the server as you"
+msgstr "has_access, run by the server as you"
+
+msgid "ALLOWED"
+msgstr "ALLOWED"
+
+msgid "BLOCKED"
+msgstr "BLOCKED"
+
+msgid "UNKNOWN"
+msgstr "UNKNOWN"
+
+msgid "not applicable"
+msgstr "not applicable"
+
+msgid "Rule · operations · result"
+msgstr "Rule · operations · result"
+
+msgid "Groups · domain"
+msgstr "Groups · domain"
+
+msgid "This model has no record rule."
+msgstr "This model has no record rule."
+
+msgid "Assumes the user selected every allowed company. Rules of parent models through _inherits are not counted. This is a simulation; for your own user, “server” is the exact answer (has_access)."
+msgstr "Assumes the user selected every allowed company. Rules of parent models through _inherits are not counted. This is a simulation; for your own user, “server” is the exact answer (has_access)."
+
+msgid "Reading the ACLs and record rules needs Access Rights (base.group_erp_manager): the rule-by-rule explanation and the groups that would allow an operation are not available."
+msgstr "Reading the ACLs and record rules needs Access Rights (base.group_erp_manager): the rule-by-rule explanation and the groups that would allow an operation are not available."
+
+msgid "Apps To Export"
+msgstr "Apps To Export"
+
+msgid "Export & Download"
+msgstr "Export & Download"
+
+msgid "Export & Download · 1 file"
+msgstr "Export & Download · 1 file"
+
+msgid "Export & Download · %s files"
+msgstr "Export & Download · %s files"
+
+msgid "%s/%s installed modules"
+msgstr "%s/%s installed modules"
+
+msgid "Technical names, separated by ;"
+msgstr "Technical names, separated by ;"
+
+msgid "Languages:"
+msgstr "Languages:"
+
+msgid "Always exported: the empty template, as <module>.pot"
+msgstr "Always exported: the empty template, as <module>.pot"
+
+msgid "Template (.pot)"
+msgstr "Template (.pot)"
+
+msgid "Enter at least one app."
+msgstr "Enter at least one app."
+
+msgid "Not an active language: %s. Active: %s"
+msgstr "Not an active language: %s. Active: %s"
+
+msgid "Unknown app: %s"
+msgstr "Unknown app: %s"
+
+msgid "Not installed: %s"
+msgstr "Not installed: %s"
+
+msgid "Exporting…"
+msgstr "Exporting…"
+
+msgid "%s files"
+msgstr "%s files"
+
+msgid "nothing to export"
+msgstr "nothing to export"
+
+msgid "Webclient internals are not reachable."
+msgstr "Webclient internals are not reachable."
+
+msgid "No form view is open."
+msgstr "No form view is open."
+
+msgid "Inherited views — %s"
+msgstr "Inherited views — %s"
+
+msgid "Combined arch (view #%s)"
+msgstr "Combined arch (view #%s)"
+
+msgid "The inheritance tree needs Settings rights (base.group_system)."
+msgstr "The inheritance tree needs Settings rights (base.group_system)."
+
+msgid "inactive"
+msgstr "inactive"
+
+msgid "View · mode · priority"
+msgstr "View · mode · priority"
+
+msgid "Name · id · file"
+msgstr "Name · id · file"
+
+msgid "Action"
+msgstr "Action"
+
+msgid "Open Action Record ↗"
+msgstr "Open Action Record ↗"
+
+msgid "Full action (JSON)"
+msgstr "Full action (JSON)"
+
+msgid "Form fields — invisible / readonly / required"
+msgstr "Form fields — invisible / readonly / required"
+
+msgid "Context & domain"
+msgstr "Context & domain"
+
+msgid "Context"
+msgstr "Context"
+
+msgid "Domain"
+msgstr "Domain"
+
+msgid "Cannot read the form."
+msgstr "Cannot read the form."
+
+msgid "not shown"
+msgstr "not shown"
+
+msgid "The field is not invisible itself but is not on screen: it is on another notebook page, or a parent node (group/page/div) is invisible."
+msgstr "The field is not invisible itself but is not on screen: it is on another notebook page, or a parent node (group/page/div) is invisible."
+
+msgid "Values used in the expressions"
+msgstr "Values used in the expressions"
+
+msgid "Full node"
+msgstr "Full node"
+
+msgid "Filter name / label / widget"
+msgstr "Filter name / label / widget"
+
+msgid "Click a field on the Odoo page (Esc to cancel)"
+msgstr "Click a field on the Odoo page (Esc to cancel)"
+
+msgid "Picking… (Esc to cancel)"
+msgstr "Picking… (Esc to cancel)"
+
+msgid "⌖ Pick on Page"
+msgstr "⌖ Pick on Page"
+
+msgid "Field · widget · label · state"
+msgstr "Field · widget · label · state"
+
+msgid "Modifier expressions"
+msgstr "Modifier expressions"
+
+msgid "The form is read-only: every field is readonly."
+msgstr "The form is read-only: every field is readonly."
+
+msgid "Open /odoo/%s"
+msgstr "Open /odoo/%s"
