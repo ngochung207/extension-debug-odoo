@@ -6,6 +6,7 @@ import { _t } from '../../i18n/i18n.ts';
 import { MODES } from '../../odoo/models.ts';
 import { fill, filterBox } from '../../ui/cards.ts';
 import { note } from '../../ui/parts.ts';
+import { tip } from '../../ui/tooltip.ts';
 import { readAllRules, readModels, type Simulated } from './security.data.ts';
 import { firstModule, modelRights, type ModelRights } from './security.logic.ts';
 import type { SecurityCtx } from './security.state.ts';
@@ -37,12 +38,16 @@ export function modelsView(body: HTMLElement, c: SecurityCtx) {
         q: `${name} ${tech} ${firstModule(m?.modules)}`,
         tags: [changed && 'added', differs && 'differs'].filter((t): t is string => !!t),
         cells: [
-          ...MODES.map((x) => ({
-            v: a?.modes.has(x) ? true : 'na' as const,
-            ...(theirs ? { b: b?.modes.has(x) ? true : 'na' as const } : {}),
-            plus: !!a?.modes.has(x) && !was?.modes.has(x),
-          })),
-          rs.length ? String(rs.length) : '',
+          ...MODES.map((x) => {
+            const has = (u: string, ok: boolean) => (ok ? _t('%s: granted by an ACL', u) : _t('%s: no ACL grants it', u));
+            return {
+              v: a?.modes.has(x) ? true : 'na' as const,
+              title: has(sim.user.name, !!a?.modes.has(x)),
+              ...(theirs ? { b: b?.modes.has(x) ? true : 'na' as const, titleB: has(other!.user.name, !!b?.modes.has(x)) } : {}),
+              plus: !!a?.modes.has(x) && !was?.modes.has(x),
+            };
+          }),
+          rs.length ? tip(box(String(rs.length)), _t('%s rules limit which records %s sees', rs.length, sim.user.name)) : '',
         ],
         detail: () => detail(a, rs.map((r) => r.name)),
       };

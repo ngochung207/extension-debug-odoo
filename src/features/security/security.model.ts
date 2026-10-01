@@ -19,7 +19,8 @@ export function modelView(body: HTMLElement, c: SecurityCtx) {
     const [sim, other, sec, x, graph, keys] = await Promise.all([c.sim, c.other, c.sec!, c.assessment!, groupGraph(c.a), keyGroups()]);
     const users = [sim, ...(other ? [other] : [])];
     const userHeads = users.map((u) => u.user.name);
-    const marks = (groups: number[], global: boolean): Cell[] => users.map((u) => (global ? '—' : mark(groups.some((g) => u.groupIds.has(g)) ? 'has' : 'no')));
+    const marks = (groups: number[], global: boolean): Cell[] => users.map((u) => (global ? '—' : groups.some((g) => u.groupIds.has(g))
+      ? mark('has', _t('%s has this group', u.user.name)) : mark('no', _t('%s doesn\'t have this group', u.user.name))));
     const out: (Node | null)[] = [];
 
     if (!sec.acls || !sec.rules) out.push(note(_t('Reading the ACLs and record rules needs Access Rights (base.group_erp_manager).')));
@@ -29,7 +30,8 @@ export function modelView(body: HTMLElement, c: SecurityCtx) {
         rows: sec.acls.map((a): MxRow => ({
           label: [a.group_id ? a.group_id[1] : _t('every user')],
           sub: a.name,
-          cells: [...MODES.map((m) => ({ v: a[`perm_${m}`] ? true : 'na' as const })), ...marks(a.group_id ? [a.group_id[0]] : [], !a.group_id)],
+          cells: [...MODES.map((m) => (a[`perm_${m}`] ? { v: true, title: _t('This ACL grants it') } : { v: 'na' as const, title: _t('This ACL doesn\'t grant it') })),
+            ...marks(a.group_id ? [a.group_id[0]] : [], !a.group_id)],
           kind: !a.group_id || sim.groupIds.has(a.group_id[0]) ? undefined : 'off',
         })),
       }]) : note(_t('No ACL: only the superuser can access this model.')));
@@ -38,7 +40,8 @@ export function modelView(body: HTMLElement, c: SecurityCtx) {
       const ruleRow = (r: Rule): MxRow => ({
         label: [r.name],
         sub: r.via ? _t('of %s, through %s', r.via.model, r.via.link) : r.global ? _t('global: every user') : r.groups.map((g) => graph.name(g)).join(', '),
-        cells: [...MODES.map((m) => ({ v: r[`perm_${m}`] ? true : 'na' as const })), ...marks(r.groups, r.global)],
+        cells: [...MODES.map((m) => (r[`perm_${m}`] ? { v: true, title: _t('The rule covers this operation') } : { v: 'na' as const, title: _t('The rule doesn\'t cover this operation') })),
+          ...marks(r.groups, r.global)],
         kind: r.global || r.groups.some((g) => sim.groupIds.has(g)) ? undefined : 'off',
         detail: () => domainDetail(r.domain_force || '[]', x.evaluated.get(r.id), x.notes.get(r.id)),
       });
@@ -72,7 +75,7 @@ async function fieldsTable(fields: Record<string, { string: string; groups?: str
     rows: restricted.map(([name, f]): MxRow => ({
       label: [copyable(name)],
       sub: `${f.string} · ${groupsLabel(f.groups!, names).replace(/^🔒 /, '')}`,
-      cells: users.map((u) => ({ v: sees(u, f.groups!), title: sees(u, f.groups!) ? _t('visible') : _t('hidden') })),
+      cells: users.map((u) => ({ v: sees(u, f.groups!), title: sees(u, f.groups!) ? _t('%s sees this field', u.user.name) : _t('Hidden from %s', u.user.name) })),
     })),
   }]);
 }

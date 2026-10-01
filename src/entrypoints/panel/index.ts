@@ -15,12 +15,14 @@ import { copyable, empty, pill } from '../../ui/components.ts';
 import { $ } from '../../ui/dom.ts';
 import { clearForms } from '../../ui/form-state.ts';
 import { templates } from '../../ui/template.ts';
+import { startTooltips } from '../../ui/tooltip.ts';
 import html from './panel.tpl.html';
 
 const settings = await loadSettings();
 await loadLang(settings.lang); // before anything renders: every _t() below needs the catalog
 document.documentElement.lang = lang;
 translateDom();
+startTooltips();
 const tpl = templates(html, translateDom);
 /** In its own window: the tab it inspects (?tab=), else null (in the page). */
 const ownWindowOf = Number(new URLSearchParams(location.search).get('tab')) || null;

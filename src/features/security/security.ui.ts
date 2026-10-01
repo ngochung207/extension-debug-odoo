@@ -1,13 +1,14 @@
 // Security tab: the pieces its views share. Markup: security.tpl.html. Every table is a matrix(): one symbol language
 // everywhere: ✓ allowed / matches, ✗ refused / no match, · does not apply, ? unknown; +✓ what a tried group adds.
-import { translateDom, _t } from '../../i18n/i18n.ts';
+import { N_, translateDom, _t } from '../../i18n/i18n.ts';
 import type { OdooAdapter } from '../../odoo/adapter.ts';
 import { MODES, type Mode } from '../../odoo/models.ts';
 import { errBox, loading, pill, type PillKind } from '../../ui/components.ts';
 import { domainView, pyCode } from '../../ui/domain-view.ts';
 import { templates } from '../../ui/template.ts';
+import { tip } from '../../ui/tooltip.ts';
 import { keyGroups, searchUsers } from './security.data.ts';
-import type { Finding, Level, Tri } from './security.logic.ts';
+import { shortError, type Finding, type Level, type Tri } from './security.logic.ts';
 import html from './security.tpl.html';
 
 export const tpl = templates(html, translateDom);
@@ -56,19 +57,26 @@ export function plainList(items: readonly string[]): HTMLUListElement {
 /** Shows an error in `out` (a refused write: Access Rights needed). */
 export const errBoxTo = (out: HTMLElement, e: unknown) => out.replaceChildren(errBox(e));
 
-/** A membership mark: ● has it, ◐ through another group, ○ hasn't, + being tried. */
-export function mark(kind: 'has' | 'implied' | 'no' | 'tried', title = ''): HTMLSpanElement {
+const MARK_TIP = {
+  has: N_('Has this group: set on the user'),
+  implied: N_('Has this group through another one (implied)'),
+  no: N_('Doesn\'t have this group'),
+  tried: N_('Being tried: simulated, nothing written'),
+} as const;
+
+/** A membership mark: ● has it, ◐ through another group, ○ hasn't, + being tried; its meaning on hover (`text`:
+ * a more precise one). */
+export function mark(kind: 'has' | 'implied' | 'no' | 'tried', text = ''): HTMLSpanElement {
   const { mark: m } = tpl('mark', { mark: HTMLSpanElement }).refs;
   m.textContent = { has: '●', implied: '◐', no: '○', tried: '+' }[kind];
   m.classList.add(kind);
-  if (title) m.title = title;
-  return m;
+  return tip(m, text || _t(MARK_TIP[kind]));
 }
 
 // ---------- the permission table ----------
 
 /** A cell: a result (✓ ✗ · ?) with a second user's beside it, `plus` when a tried group brings it; or text, or a node. */
-export type Cell = { v: Tri | 'na'; b?: Tri | 'na'; plus?: boolean; title?: string } | string | Node;
+export type Cell = { v: Tri | 'na'; b?: Tri | 'na'; plus?: boolean; /** what it means here, on hover */ title?: string; titleB?: string } | string | Node;
 export interface MxRow {
   label: (Node | string)[];
   sub?: string;
@@ -87,19 +95,21 @@ export interface MxSection { title?: string; note?: string; rows: MxRow[]; /** s
 const SYMBOL = (v: Tri | 'na') => (v === true ? '✓' : v === false ? '✗' : v === 'na' ? '·' : '?');
 const CLASS = (v: Tri | 'na') => (v === true ? 'yes' : v === false ? 'no' : v === 'na' ? 'na' : 'unk');
 
-export function symbol(v: Tri | 'na', plus = false): HTMLSpanElement {
+const SYMBOL_TIP = { yes: N_('Allowed / matches'), no: N_('Refused / doesn\'t match'), na: N_('Does not apply'), unk: N_('Unknown: could not be checked') } as const;
+
+/** ✓ ✗ · ? (+✓: brought by a tried group), its meaning on hover (`text`: a more precise one). */
+export function symbol(v: Tri | 'na', plus = false, text = ''): HTMLSpanElement {
   const { mark: s } = tpl('mark', { mark: HTMLSpanElement }).refs;
   s.className = `sym ${CLASS(v)}${plus ? ' plus' : ''}`;
   s.textContent = `${plus && v === true ? '+' : ''}${SYMBOL(v)}`;
-  return s;
+  return tip(s, text || (plus && v === true ? _t('Added by the groups being tried') : _t(SYMBOL_TIP[CLASS(v)])));
 }
 
 function fillCell(td: HTMLTableCellElement, c: Cell) {
   if (typeof c === 'string') { td.textContent = c; return; }
   if (c instanceof Node) { td.append(c); td.classList.add('act'); return; }
-  td.append(symbol(c.v, c.plus));
-  if (c.b !== undefined) { td.append(symbol(c.b)); td.classList.add('two'); if (c.b !== c.v) td.classList.add('diff'); }
-  if (c.title) td.title = c.title;
+  td.append(symbol(c.v, c.plus, c.title));
+  if (c.b !== undefined) { td.append(symbol(c.b, false, c.titleB)); td.classList.add('two'); if (c.b !== c.v) td.classList.add('diff'); }
 }
 
 /**
@@ -197,7 +207,7 @@ export function domainDetail(domain: string, ev: { domain: unknown } | { error: 
   d.domain.replaceWith(pyCode(domain));
   if (ev && 'domain' in ev) d.evaluated.replaceWith(domainView(ev.domain));
   else d.evRow.remove();
-  const text = why ? _t(why) : ev && 'error' in ev ? _t('cannot evaluate: %s', _t(ev.error)) : '';
+  const text = why ? _t(why) : ev && 'error' in ev ? _t('cannot evaluate: %s', shortError(_t(ev.error))) : '';
   if (text) d.note.textContent = text;
   else d.note.remove();
   return d.box;

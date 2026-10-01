@@ -84,32 +84,32 @@ msgstr "Perf"
 msgid "Code"
 msgstr "Code"
 
-#: src/entrypoints/panel/index.ts:48
-#: src/entrypoints/panel/index.ts:49
+#: src/entrypoints/panel/index.ts:50
+#: src/entrypoints/panel/index.ts:51
 msgid "Cannot read this tab: %s"
 msgstr "Không đọc được tab này: %s"
 
-#: src/entrypoints/panel/index.ts:48
+#: src/entrypoints/panel/index.ts:50
 msgid "The current tab is not an Odoo page."
 msgstr "Tab hiện tại không phải trang Odoo."
 
-#: src/entrypoints/panel/index.ts:51
+#: src/entrypoints/panel/index.ts:53
 msgid "Not available on Odoo %s: %s"
 msgstr "Không dùng được trên Odoo %s: %s"
 
-#: src/entrypoints/panel/index.ts:98
+#: src/entrypoints/panel/index.ts:100
 msgid "Odoo %s is not tested: the panel uses its Odoo %s support, some cards may fail."
 msgstr "Odoo %s chưa được kiểm thử: panel dùng phần hỗ trợ Odoo %s, một số card có thể lỗi."
 
-#: src/entrypoints/panel/index.ts:99
+#: src/entrypoints/panel/index.ts:101
 msgid "Odoo %s is older than every supported version: some cards may fail."
 msgstr "Odoo %s cũ hơn mọi phiên bản được hỗ trợ: một số card có thể lỗi."
 
-#: src/entrypoints/panel/index.ts:100
+#: src/entrypoints/panel/index.ts:102
 msgid "This database lacks fields the panel expects for Odoo %s: %s"
 msgstr "Database này thiếu các field panel cần cho Odoo %s: %s"
 
-#: src/entrypoints/panel/index.ts:104
+#: src/entrypoints/panel/index.ts:106
 msgid "Odoo %s, supported"
 msgstr "Odoo %s, được hỗ trợ"
 
@@ -304,9 +304,9 @@ msgid "Parameters"
 msgstr "Tham số"
 
 #: src/features/rpc/rpc.tab.ts:127
-#: src/features/security/security.record.ts:132
-#: src/features/security/security.record.ts:133
-#: src/features/security/security.record.ts:136
+#: src/features/security/security.record.ts:143
+#: src/features/security/security.record.ts:144
+#: src/features/security/security.record.ts:147
 msgid "Result"
 msgstr "Kết quả"
 
@@ -400,7 +400,7 @@ msgstr "Tìm user theo tên hoặc login…"
 
 #: src/features/security/security.bar.ts:33
 #: src/features/security/security.system.ts:59
-#: src/features/security/security.system.ts:69
+#: src/features/security/security.system.ts:70
 msgid "Companies"
 msgstr "Công ty"
 
@@ -433,17 +433,17 @@ msgid "superuser"
 msgstr "superuser"
 
 #: src/features/security/security.bar.ts:75
-#: src/features/security/security.ui.ts:252
+#: src/features/security/security.ui.ts:262
 msgid "public"
 msgstr "public"
 
 #: src/features/security/security.bar.ts:75
-#: src/features/security/security.ui.ts:252
+#: src/features/security/security.ui.ts:262
 msgid "portal"
 msgstr "portal"
 
 #: src/features/security/security.bar.ts:76
-#: src/features/security/security.ui.ts:252
+#: src/features/security/security.ui.ts:262
 msgid "archived"
 msgstr "đã lưu trữ"
 
@@ -479,12 +479,12 @@ msgstr "Đã áp trên %s: %s"
 msgid "Applied: no operation changed on this record."
 msgstr "Đã áp: không thao tác nào thay đổi trên bản ghi này."
 
-#: src/features/security/security.data.ts:217
-#: src/features/security/security.data.ts:217
+#: src/features/security/security.data.ts:249
+#: src/features/security/security.data.ts:249
 msgid "no result"
 msgstr "không có kết quả"
 
-#: src/features/security/security.data.ts:220
+#: src/features/security/security.data.ts:252
 msgid "You cannot read this record yourself, so its rules cannot be checked."
 msgstr "Chính bạn không đọc được record này nên không kiểm được rule."
 
@@ -493,7 +493,7 @@ msgid "Other"
 msgstr "Khác"
 
 #: src/features/security/security.groups.ts:34
-#: src/features/security/security.model.ts:28
+#: src/features/security/security.model.ts:29
 msgid "Group"
 msgstr "Nhóm"
 
@@ -546,12 +546,12 @@ msgid "Remove %s from %s?"
 msgstr "Gỡ %s khỏi %s?"
 
 #: src/features/security/security.groups.ts:76
-#: src/features/security/security.record.ts:154
+#: src/features/security/security.record.ts:165
 msgid "Try"
 msgstr "Thử"
 
 #: src/features/security/security.groups.ts:76
-#: src/features/security/security.record.ts:154
+#: src/features/security/security.record.ts:165
 msgid "Simulate this group in every view, nothing is written"
 msgstr "Mô phỏng nhóm này ở mọi màn hình, không ghi gì"
 
@@ -588,7 +588,7 @@ msgid "py_js is not loaded"
 msgstr "py_js chưa được tải"
 
 #: src/features/security/security.logic.ts:289
-#: src/features/security/security.model.ts:35
+#: src/features/security/security.model.ts:37
 msgid "No ACL: only the superuser can access this model."
 msgstr "Không có ACL nào: chỉ superuser truy cập được model này."
 
@@ -708,139 +708,191 @@ msgstr "Có %s API key: gọi RPC trực tiếp bằng quyền của user này."
 msgid "User is archived."
 msgstr "User đang bị lưu trữ (archived)."
 
-#: src/features/security/security.model.ts:25
+#: src/features/security/security.model.ts:23
+#: src/features/security/security.record.ts:74
+#: src/features/security/security.record.ts:75
+msgid "%s has this group"
+msgstr "%s có nhóm này"
+
+#: src/features/security/security.model.ts:23
+#: src/features/security/security.record.ts:74
+#: src/features/security/security.record.ts:75
+msgid "%s doesn't have this group"
+msgstr "%s không có nhóm này"
+
+#: src/features/security/security.model.ts:26
 msgid "Reading the ACLs and record rules needs Access Rights (base.group_erp_manager)."
 msgstr "Đọc ACL và record rule cần quyền Access Rights (base.group_erp_manager)."
 
-#: src/features/security/security.model.ts:27
-#: src/features/security/security.record.ts:81
+#: src/features/security/security.model.ts:28
+#: src/features/security/security.record.ts:84
 msgid "Access rights (ACL)"
 msgstr "Quyền truy cập (ACL)"
 
-#: src/features/security/security.model.ts:30
-#: src/features/security/security.models.ts:80
-#: src/features/security/security.record.ts:83
-#: src/features/security/security.record.ts:98
+#: src/features/security/security.model.ts:31
+#: src/features/security/security.models.ts:85
+#: src/features/security/security.record.ts:86
+#: src/features/security/security.record.ts:105
 msgid "every user"
 msgstr "mọi user"
 
-#: src/features/security/security.model.ts:37
+#: src/features/security/security.model.ts:33
+#: src/features/security/security.record.ts:88
+msgid "This ACL grants it"
+msgstr "ACL này cấp quyền này"
+
+#: src/features/security/security.model.ts:33
+#: src/features/security/security.record.ts:88
+msgid "This ACL doesn't grant it"
+msgstr "ACL này không cấp quyền này"
+
+#: src/features/security/security.model.ts:39
 msgid "Record rules"
 msgstr "Record rule"
 
-#: src/features/security/security.model.ts:40
+#: src/features/security/security.model.ts:42
 msgid "of %s, through %s"
 msgstr "của %s, qua %s"
 
-#: src/features/security/security.model.ts:40
+#: src/features/security/security.model.ts:42
 msgid "global: every user"
 msgstr "toàn cục: mọi user"
 
-#: src/features/security/security.model.ts:45
+#: src/features/security/security.model.ts:43
+msgid "The rule covers this operation"
+msgstr "Rule áp cho thao tác này"
+
+#: src/features/security/security.model.ts:43
+#: src/features/security/security.record.ts:99
+msgid "The rule doesn't cover this operation"
+msgstr "Rule không áp cho thao tác này"
+
+#: src/features/security/security.model.ts:48
 msgid "Rule"
 msgstr "Rule"
 
-#: src/features/security/security.model.ts:45
+#: src/features/security/security.model.ts:48
 msgid "This model has no record rule."
 msgstr "Model này không có record rule."
 
-#: src/features/security/security.model.ts:46
+#: src/features/security/security.model.ts:49
 msgid "Rules of %s (through %s) count as one more global rule."
 msgstr "Rule của %s (qua %s) được tính như thêm một rule toàn cục."
 
-#: src/features/security/security.model.ts:47
+#: src/features/security/security.model.ts:50
 msgid "Rules of %s are not counted: %s is not stored (Odoo %s)."
 msgstr "Rule của %s không được tính: %s không lưu trong DB (Odoo %s)."
 
-#: src/features/security/security.model.ts:48
+#: src/features/security/security.model.ts:51
 msgid "✓ the rule applies to this operation · ● the user has one of its groups · ○ not · — every user. Click a rule for its domain."
 msgstr "✓ rule áp cho thao tác này · ● user có một nhóm của rule · ○ không có · — mọi user. Bấm vào rule để xem domain."
 
-#: src/features/security/security.model.ts:53
+#: src/features/security/security.model.ts:56
 msgid "Fields restricted to groups"
 msgstr "Field giới hạn theo nhóm"
 
-#: src/features/security/security.model.ts:56
+#: src/features/security/security.model.ts:59
 msgid "Configuration check"
 msgstr "Kiểm tra cấu hình"
 
-#: src/features/security/security.model.ts:66
+#: src/features/security/security.model.ts:69
 msgid "No field is restricted to groups."
 msgstr "Không field nào giới hạn theo nhóm."
 
-#: src/features/security/security.model.ts:71
+#: src/features/security/security.model.ts:74
 msgid "Field"
 msgstr "Field"
 
-#: src/features/security/security.model.ts:75
-msgid "visible"
-msgstr "thấy"
+#: src/features/security/security.model.ts:78
+msgid "%s sees this field"
+msgstr "%s thấy field này"
 
-#: src/features/security/security.model.ts:75
-#: src/features/view/view.field.ts:190
-msgid "hidden"
-msgstr "ẩn"
+#: src/features/security/security.model.ts:78
+msgid "Hidden from %s"
+msgstr "Bị ẩn với %s"
 
-#: src/features/security/security.models.ts:17
+#: src/features/security/security.models.ts:18
 msgid "The rights across models need Access Rights (base.group_erp_manager)."
 msgstr "Xem quyền trên toàn bộ model cần quyền Access Rights (base.group_erp_manager)."
 
-#: src/features/security/security.models.ts:49
+#: src/features/security/security.models.ts:42
+msgid "%s: granted by an ACL"
+msgstr "%s: được một ACL cấp"
+
+#: src/features/security/security.models.ts:42
+msgid "%s: no ACL grants it"
+msgstr "%s: không ACL nào cấp"
+
+#: src/features/security/security.models.ts:50
+msgid "%s rules limit which records %s sees"
+msgstr "%s rule giới hạn các bản ghi %s thấy"
+
+#: src/features/security/security.models.ts:54
 msgid "(unknown module)"
 msgstr "(không rõ module)"
 
-#: src/features/security/security.models.ts:53
+#: src/features/security/security.models.ts:58
 msgid "%s models"
 msgstr "%s model"
 
-#: src/features/security/security.models.ts:56
+#: src/features/security/security.models.ts:61
 msgid "Model"
 msgstr "Model"
 
-#: src/features/security/security.models.ts:56
+#: src/features/security/security.models.ts:61
 msgid "Rules"
 msgstr "Rule"
 
-#: src/features/security/security.models.ts:62
+#: src/features/security/security.models.ts:67
 msgid "%s of %s models"
 msgstr "%s / %s model"
 
-#: src/features/security/security.models.ts:63
+#: src/features/security/security.models.ts:68
 msgid "Filter models or modules…"
 msgstr "Lọc model hoặc module…"
 
-#: src/features/security/security.models.ts:70
+#: src/features/security/security.models.ts:75
 msgid "Only what the tried groups add"
 msgstr "Chỉ phần nhóm đang thử thêm vào"
 
-#: src/features/security/security.models.ts:70
+#: src/features/security/security.models.ts:75
 msgid "Only differences"
 msgstr "Chỉ chỗ khác nhau"
 
-#: src/features/security/security.models.ts:72
+#: src/features/security/security.models.ts:77
 msgid "Each cell: %s | %s. From the ACLs: the Rules column counts the rules limiting which records. Click a model for the details."
 msgstr "Mỗi ô: %s | %s. Theo ACL: cột Rule đếm số rule giới hạn bản ghi. Bấm vào model để xem chi tiết."
 
-#: src/features/security/security.models.ts:73
+#: src/features/security/security.models.ts:78
 msgid "From the ACLs: the Rules column counts the rules limiting which records. +✓ added by the tried groups. Click a model for the details."
 msgstr "Theo ACL: cột Rule đếm số rule giới hạn bản ghi. +✓ là phần nhóm đang thử thêm vào. Bấm vào model để xem chi tiết."
 
-#: src/features/security/security.models.ts:82
+#: src/features/security/security.models.ts:87
 msgid "Granted by"
 msgstr "Được cấp bởi"
 
-#: src/features/security/security.models.ts:82
+#: src/features/security/security.models.ts:87
 msgid "nothing for this user"
 msgstr "không có gì cho user này"
 
-#: src/features/security/security.models.ts:83
+#: src/features/security/security.models.ts:88
 msgid "Rules limiting the records"
 msgstr "Rule giới hạn bản ghi"
 
 #: src/features/security/security.record.ts:33
-#: src/features/security/security.record.ts:134
+#: src/features/security/security.record.ts:145
 msgid "Server (has_access)"
 msgstr "Server (has_access)"
+
+#: src/features/security/security.record.ts:33
+#: src/features/security/security.record.ts:146
+msgid "Odoo says: allowed"
+msgstr "Odoo trả lời: được phép"
+
+#: src/features/security/security.record.ts:33
+#: src/features/security/security.record.ts:146
+msgid "Odoo says: refused"
+msgstr "Odoo trả lời: bị chặn"
 
 #: src/features/security/security.record.ts:35
 msgid "Reading the ACLs and record rules needs Access Rights (base.group_erp_manager): this is the server's answer for you, without the why."
@@ -882,112 +934,167 @@ msgstr "thông báo không có bản ghi: chế độ debug sẽ thêm vào"
 msgid "No record open: the ACLs only, the rules are checked on a record."
 msgstr "Chưa mở bản ghi: chỉ xét ACL, rule được kiểm tra trên một bản ghi."
 
-#: src/features/security/security.record.ts:74
-#: src/features/security/security.record.ts:75
-msgid "%s has this group"
-msgstr "%s có nhóm này"
+#: src/features/security/security.record.ts:82
+msgid "An ACL of the user's groups grants it"
+msgstr "Có ACL của nhóm user cấp quyền này"
 
-#: src/features/security/security.record.ts:74
-#: src/features/security/security.record.ts:75
-msgid "%s doesn't have this group"
-msgstr "%s không có nhóm này"
+#: src/features/security/security.record.ts:82
+msgid "No ACL of the user's groups grants it: refused"
+msgstr "Không ACL nào của nhóm user cấp quyền này: bị chặn"
 
-#: src/features/security/security.record.ts:81
+#: src/features/security/security.record.ts:84
 msgid "one is enough"
 msgstr "chỉ cần một"
 
-#: src/features/security/security.record.ts:88
+#: src/features/security/security.record.ts:91
 msgid "No ACL: only the superuser"
 msgstr "Không có ACL: chỉ superuser"
 
-#: src/features/security/security.record.ts:89
-#: src/features/security/security.record.ts:111
-#: src/features/security/security.record.ts:125
+#: src/features/security/security.record.ts:92
+#: src/features/security/security.record.ts:118
+#: src/features/security/security.record.ts:134
 msgid "→ for the user"
 msgstr "→ với user"
 
-#: src/features/security/security.record.ts:105
+#: src/features/security/security.record.ts:101
+msgid "The record matches this rule"
+msgstr "Bản ghi khớp rule này"
+
+#: src/features/security/security.record.ts:101
+msgid "The record doesn't match this rule"
+msgstr "Bản ghi không khớp rule này"
+
+#: src/features/security/security.record.ts:101
+msgid "Could not be checked: open the rule"
+msgstr "Không kiểm tra được: bấm vào rule để xem"
+
+#: src/features/security/security.record.ts:112
 msgid "Global rules"
 msgstr "Rule toàn cục"
 
-#: src/features/security/security.record.ts:105
+#: src/features/security/security.record.ts:112
 msgid "the record must match every one"
 msgstr "bản ghi phải khớp tất cả"
 
-#: src/features/security/security.record.ts:109
+#: src/features/security/security.record.ts:116
 msgid "Group rules"
 msgstr "Rule nhóm"
 
-#: src/features/security/security.record.ts:109
+#: src/features/security/security.record.ts:116
 msgid "the record must match one of the user's"
 msgstr "bản ghi chỉ cần khớp một rule của user"
 
-#: src/features/security/security.record.ts:113
+#: src/features/security/security.record.ts:121
 msgid "No group rule of the user for this operation: no restriction from them"
 msgstr "User không có rule nhóm nào cho thao tác này: không bị giới hạn"
 
-#: src/features/security/security.record.ts:123
+#: src/features/security/security.record.ts:122
+msgid "One of the user's group rules matches: enough"
+msgstr "Có một rule nhóm của user khớp: đủ"
+
+#: src/features/security/security.record.ts:122
+msgid "None of the user's group rules matches: refused"
+msgstr "Không rule nhóm nào của user khớp: bị chặn"
+
+#: src/features/security/security.record.ts:122
+#: src/features/security/security.record.ts:135
+msgid "Could not be checked"
+msgstr "Không kiểm tra được"
+
+#: src/features/security/security.record.ts:132
 msgid "Rules of %s, through %s"
 msgstr "Rule của %s, qua %s"
 
-#: src/features/security/security.record.ts:123
+#: src/features/security/security.record.ts:132
 msgid "counted as one global rule"
 msgstr "tính như một rule toàn cục"
 
-#: src/features/security/security.record.ts:134
+#: src/features/security/security.record.ts:135
+msgid "The parent record passes its rules"
+msgstr "Bản ghi cha qua được các rule của nó"
+
+#: src/features/security/security.record.ts:135
+msgid "The parent record doesn't pass its rules: refused"
+msgstr "Bản ghi cha không qua được các rule của nó: bị chặn"
+
+#: src/features/security/security.record.ts:142
+msgid "%s can do it"
+msgstr "%s được phép"
+
+#: src/features/security/security.record.ts:142
+msgid "%s is refused"
+msgstr "%s bị chặn"
+
+#: src/features/security/security.record.ts:142
+msgid "Not certain: a rule could not be checked"
+msgstr "Chưa chắc chắn: có rule không kiểm tra được"
+
+#: src/features/security/security.record.ts:145
 msgid "Odoo's own answer for you, same companies"
 msgstr "câu trả lời của chính Odoo cho bạn, cùng các công ty"
 
-#: src/features/security/security.record.ts:135
+#: src/features/security/security.record.ts:146
 msgid "The server disagrees with the simulation"
 msgstr "Server khác với kết quả mô phỏng"
 
-#: src/features/security/security.record.ts:140
+#: src/features/security/security.record.ts:151
 msgid "✓ allowed / matches · ✗ refused / no match · · does not apply · ? unknown · ● the user has the group · ○ not. Click a rule for its domain."
 msgstr "✓ được / khớp · ✗ bị chặn / không khớp · · không áp dụng · ? chưa rõ · ● user có nhóm · ○ không có. Bấm vào rule để xem domain."
 
-#: src/features/security/security.record.ts:141
+#: src/features/security/security.record.ts:152
 msgid "Marks: %s, then %s."
 msgstr "Ký hiệu: %s trước, %s sau."
 
-#: src/features/security/security.record.ts:150
-#: src/features/security/security.record.ts:166
+#: src/features/security/security.record.ts:161
+#: src/features/security/security.record.ts:178
 msgid "To allow it"
 msgstr "Để được phép"
 
-#: src/features/security/security.record.ts:150
+#: src/features/security/security.record.ts:161
 msgid "No single group allows it."
 msgstr "Không có nhóm nào tự mở được quyền này."
 
-#: src/features/security/security.record.ts:155
+#: src/features/security/security.record.ts:166
 msgid "also adds: %s"
 msgstr "kéo theo: %s"
 
-#: src/features/security/security.record.ts:159
+#: src/features/security/security.record.ts:167
+msgid "Adding this group allows it"
+msgstr "Thêm nhóm này thì được phép"
+
+#: src/features/security/security.record.ts:168
+msgid "Already allowed"
+msgstr "Đã được phép sẵn"
+
+#: src/features/security/security.record.ts:168
+msgid "Still refused with this group"
+msgstr "Thêm nhóm này vẫn bị chặn"
+
+#: src/features/security/security.record.ts:171
 msgid "No new right on other models."
 msgstr "Không thêm quyền trên model khác."
 
-#: src/features/security/security.record.ts:161
+#: src/features/security/security.record.ts:173
 msgid "… and %s more"
 msgstr "… và %s nữa"
 
-#: src/features/security/security.record.ts:162
+#: src/features/security/security.record.ts:174
 msgid "Also opens, on %s other models:"
 msgstr "Còn mở thêm trên %s model khác:"
 
-#: src/features/security/security.record.ts:166
+#: src/features/security/security.record.ts:178
 msgid "Group to add"
 msgstr "Nhóm cần thêm"
 
-#: src/features/security/security.record.ts:167
+#: src/features/security/security.record.ts:179
 msgid "Fewest new groups first; %s more not shown. Click a group for what else it opens."
 msgstr "Ít nhóm phải thêm nhất xếp trước; còn %s cách khác không hiện. Bấm vào nhóm để xem còn mở thêm gì."
 
-#: src/features/security/security.record.ts:168
+#: src/features/security/security.record.ts:180
 msgid "Fewest new groups first. Click a group for what else it opens."
 msgstr "Ít nhóm phải thêm nhất xếp trước. Bấm vào nhóm để xem còn mở thêm gì."
 
-#: src/features/security/security.record.ts:176
+#: src/features/security/security.record.ts:188
 msgid "No model found in this message: is it an access error?"
 msgstr "Không tìm thấy model trong thông báo: đây có phải lỗi phân quyền không?"
 
@@ -1023,51 +1130,71 @@ msgstr "Không có trong session info."
 msgid "parent only: the user is not in it"
 msgstr "chỉ là công ty cha: user không thuộc công ty này"
 
-#: src/features/security/security.system.ts:67
+#: src/features/security/security.system.ts:65
+msgid "The user's default company"
+msgstr "Công ty mặc định của user"
+
+#: src/features/security/security.system.ts:65
+msgid "Not the default company"
+msgstr "Không phải công ty mặc định"
+
+#: src/features/security/security.system.ts:66
+msgid "On in the page's company switcher"
+msgstr "Đang bật trong bộ chọn công ty của trang"
+
+#: src/features/security/security.system.ts:66
+msgid "Off in the page's company switcher"
+msgstr "Đang tắt trong bộ chọn công ty của trang"
+
+#: src/features/security/security.system.ts:66
+msgid "The user is not in this company"
+msgstr "User không thuộc công ty này"
+
+#: src/features/security/security.system.ts:68
 msgid "Default: the company the user starts in. On: enabled in the page's company switcher (record rules read these)."
 msgstr "Mặc định: công ty user vào khi đăng nhập. Bật: đang bật trong bộ chọn công ty của trang (record rule đọc các công ty này)."
 
-#: src/features/security/security.system.ts:69
+#: src/features/security/security.system.ts:70
 msgid "Company"
 msgstr "Công ty"
 
-#: src/features/security/security.system.ts:69
+#: src/features/security/security.system.ts:70
 msgid "Default"
 msgstr "Mặc định"
 
-#: src/features/security/security.system.ts:69
+#: src/features/security/security.system.ts:70
 msgid "On"
 msgstr "Bật"
 
-#: src/features/security/security.system.ts:74
+#: src/features/security/security.system.ts:75
 msgid "Needs Settings rights (base.group_system)."
 msgstr "Cần quyền Settings (base.group_system)."
 
-#: src/features/security/security.system.ts:76
+#: src/features/security/security.system.ts:77
 msgid "No parameter."
 msgstr "Không có tham số."
 
-#: src/features/security/security.system.ts:77
+#: src/features/security/security.system.ts:78
 msgid "Key"
 msgstr "Key"
 
-#: src/features/security/security.system.ts:85
+#: src/features/security/security.system.ts:86
 msgid "Copy the value"
 msgstr "Sao chép giá trị"
 
-#: src/features/security/security.system.ts:91
+#: src/features/security/security.system.ts:92
 msgid "Filter key / value"
 msgstr "Lọc key / giá trị"
 
-#: src/features/security/security.system.ts:92
+#: src/features/security/security.system.ts:93
 msgid "%s of %s parameters"
 msgstr "%s / %s tham số"
 
-#: src/features/security/security.system.ts:103
+#: src/features/security/security.system.ts:104
 msgid "Raw data"
 msgstr "Dữ liệu thô"
 
-#: src/features/security/security.system.ts:104
+#: src/features/security/security.system.ts:105
 msgid "Check Again"
 msgstr "Kiểm tra lại"
 
@@ -1124,11 +1251,47 @@ msgstr "Với user"
 msgid "✓ No issue found."
 msgstr "✓ Không phát hiện vấn đề."
 
-#: src/features/security/security.ui.ts:200
+#: src/features/security/security.ui.ts:61
+msgid "Has this group: set on the user"
+msgstr "Có nhóm này: đặt trực tiếp cho user"
+
+#: src/features/security/security.ui.ts:62
+msgid "Has this group through another one (implied)"
+msgstr "Có nhóm này qua một nhóm khác (ngầm định)"
+
+#: src/features/security/security.ui.ts:63
+msgid "Doesn't have this group"
+msgstr "Không có nhóm này"
+
+#: src/features/security/security.ui.ts:64
+msgid "Being tried: simulated, nothing written"
+msgstr "Đang thử: chỉ mô phỏng, chưa ghi gì"
+
+#: src/features/security/security.ui.ts:98
+msgid "Allowed / matches"
+msgstr "Được phép / khớp"
+
+#: src/features/security/security.ui.ts:98
+msgid "Refused / doesn't match"
+msgstr "Bị chặn / không khớp"
+
+#: src/features/security/security.ui.ts:98
+msgid "Does not apply"
+msgstr "Không áp dụng"
+
+#: src/features/security/security.ui.ts:98
+msgid "Unknown: could not be checked"
+msgstr "Chưa rõ: không kiểm tra được"
+
+#: src/features/security/security.ui.ts:105
+msgid "Added by the groups being tried"
+msgstr "Có thêm nhờ các nhóm đang thử"
+
+#: src/features/security/security.ui.ts:210
 msgid "cannot evaluate: %s"
 msgstr "không eval được: %s"
 
-#: src/features/security/security.ui.ts:281
+#: src/features/security/security.ui.ts:291
 msgid "Log in as %s in an incognito window"
 msgstr "Đăng nhập thành %s trong cửa sổ ẩn danh"
 
@@ -1364,6 +1527,10 @@ msgid "No field in this view."
 msgstr "View này không có field nào."
 
 #: src/features/view/view.field.ts:190
+msgid "hidden"
+msgstr "ẩn"
+
+#: src/features/view/view.field.ts:190
 msgid "not shown"
 msgstr "không hiển thị"
 
@@ -1575,6 +1742,9 @@ msgstr "%s khoá"
 #: src/ui/json-view.ts:71
 msgid "Show %s more (of %s)"
 msgstr "Hiện thêm %s (trên %s)"
+
+msgid "visible"
+msgstr "thấy"
 
 msgid "Access on this record"
 msgstr "Quyền trên bản ghi này"

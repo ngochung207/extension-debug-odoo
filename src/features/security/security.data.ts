@@ -11,7 +11,7 @@ import { fieldsOf, groupIds, readAcls, readRules, sessionInfo } from '../../odoo
 import { call, isAccessError } from '../../odoo/rpc.ts';
 import { pageCompanies, pageEvalDomains, type Evaluated } from './security.injected.ts';
 import {
-  ruleEvalContext, unavailableNames, verdicts, type AclRow, type ModeVerdict, type Rule, type Tri, type VerdictInput,
+  ruleEvalContext, unavailableNames, userPaths, verdicts, type AclRow, type ModeVerdict, type Rule, type Tri, type VerdictInput,
 } from './security.logic.ts';
 
 /** null when the server refuses for lack of rights; any other failure goes on. */
@@ -190,6 +190,33 @@ export interface Assessment {
 const N_ = (s: string) => s;
 
 /**
+ * A record as a rule's domain reads it: the attributes `paths` name, read from the database. A many2one is
+ * { id, …its attributes }, an x2many { ids, …its attributes, read on all its records }: what `user.x.ids`,
+ * `user.x.y.id` evaluate to. Fields the viewer can't read stay missing (the rule then says it can't be evaluated).
+ */
+async function recordObject(model: string, ids: number[], paths: string[][], many: boolean): Promise<Record<string, unknown>> {
+  const obj: Record<string, unknown> = many ? { ids } : { id: ids[0] ?? false };
+  const names = [...new Set(paths.map((p) => p[0]!).filter((n) => n !== 'id' && n !== 'ids'))];
+  if (!ids.length || !names.length) return obj;
+  const fields = await fieldsOf(model).catch((): FieldsGet => ({}));
+  const known = names.filter((n) => n in fields);
+  if (!known.length) return obj;
+  const rows = await call<Record<string, unknown>[]>(model, 'read', [ids, known], { context: { active_test: false } }).catch(() => []);
+  for (const n of known) {
+    const f = fields[n]!;
+    const rest = paths.filter((p) => p[0] === n && p.length > 1).map((p) => p.slice(1));
+    const vals = rows.map((r) => r[n]);
+    if (f.type === 'many2one' && f.relation) {
+      const rel = [...new Set(vals.flatMap((v) => (Array.isArray(v) ? [v[0] as number] : [])))];
+      obj[n] = await recordObject(f.relation, rel, rest, many);
+    } else if ((f.type === 'one2many' || f.type === 'many2many') && f.relation) {
+      obj[n] = await recordObject(f.relation, [...new Set(vals.flatMap((v) => (Array.isArray(v) ? v as number[] : [])))], rest, true);
+    } else obj[n] = many ? vals : vals[0];
+  }
+  return obj;
+}
+
+/**
  * Each rule's domain evaluated for the user (py_js in the page), then the record checked against it with search_count
  * (filtered_domain is not callable over RPC): [('id', '=', record)] + the domain, or + (link, 'any', domain) for a
  * parent's rule, as _compute_domain does. Run under the viewer's own rules: a record the viewer can't read can't be
@@ -207,7 +234,12 @@ export async function assess(model: string, resId: number | null, sim: Simulated
     employee_id: sim.user.employee_id ? sim.user.employee_id[0] : false, employee_ids: sim.user.employee_ids ?? [], groupIds: [...sim.groupIds],
   }, sim.companies);
   const rules = sec.rules;
-  const evals = await exec(pageEvalDomains, rules.map((r) => r.domain_force || '[]'), ctx as Json);
+  // what the rules read of `user` beyond the usual (fields of custom modules too), from the real user; the groups stay
+  // the simulated ones
+  const extra = await recordObject('res.users', [sim.user.id], userPaths(rules.map((r) => r.domain_force || '')), false);
+  const groups = { groups_id: ctx.user.groups_id, group_ids: ctx.user.group_ids, all_group_ids: ctx.user.all_group_ids };
+  const evalCtx = { ...ctx, user: { ...ctx.user, ...extra, ...groups } };
+  const evals = await exec(pageEvalDomains, rules.map((r) => r.domain_force || '[]'), evalCtx as Json);
   const count = (domain: Json[]) => call<number>(model, 'search_count', [[['id', '=', resId], ...domain]], { context: { active_test: false } });
   const visible = resId ? await count([]).catch(() => 0) : 0;
   const passed = new Map<number, boolean>();

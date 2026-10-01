@@ -396,3 +396,20 @@ export function companyTree(uc: UserCompanies): { company: SessionCompany; depth
   for (const root of [...all.values()].map((x) => x.company).filter((c) => !c.parent_id || !all.has(c.parent_id)).sort(order)) visit(root.id, 0);
   return out;
 }
+
+/** The attribute paths of `user` the domains read ("user.employee_id.department_id.id" → ['employee_id',
+ * 'department_id', 'id']), strings left out, each once. */
+export function userPaths(domains: readonly string[]): string[][] {
+  const seen = new Map<string, string[]>();
+  for (const d of domains) {
+    const code = d.replace(/(['"]).*?\1/g, '');
+    for (const m of code.matchAll(/(?<![\w.])user((?:\.[A-Za-z_]\w*)+)/g)) {
+      const path = m[1]!.slice(1).split('.');
+      seen.set(path.join('.'), path);
+    }
+  }
+  return [...seen.values()];
+}
+
+/** The last line of an evaluation error: py_js repeats the whole expression before it. */
+export const shortError = (message: string) => message.trim().split('\n').filter((l) => l.trim()).pop()?.replace(/^Error:\s*/, '') ?? message;
