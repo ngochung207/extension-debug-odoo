@@ -1,4 +1,6 @@
-// Panel shell (in an iframe inside the Odoo page): header (status, Odoo version), tab switching, binding to its tab.
+// Panel shell: header (status, Odoo version), tab switching, binding to its tab. Two homes: an iframe inside the Odoo
+// page (entrypoints/launcher), bound to the tab it is in; or its own window (?tab=<id>, opened by
+// entrypoints/background/detached-panel.ts), bound to that tab from anywhere, e.g. on a second screen.
 // The debug mode switch and the settings live in the toolbar popup (entrypoints/popup); each tab's content in
 // features/<tab>/, listed in features/registry.ts.
 import { isExtMessage, type ExtMessage } from '../../contracts/messages.ts';
@@ -20,6 +22,9 @@ await loadLang(settings.lang); // before anything renders: every _t() below need
 document.documentElement.lang = lang;
 translateDom();
 const tpl = templates(html, translateDom);
+/** In its own window: the tab it inspects (?tab=), else null (in the page). */
+const ownWindowOf = Number(new URLSearchParams(location.search).get('tab')) || null;
+document.documentElement.classList.toggle('detached', ownWindowOf != null);
 for (const b of document.querySelectorAll<HTMLButtonElement>('.tabs button')) b.title = b.firstChild?.textContent?.trim() || ''; // narrow panel: icons only, the name on hover
 
 let state: PageState = { url: '', origin: '', loadedAt: 0, odoo: false, debug: '' };
@@ -128,6 +133,7 @@ async function refresh() {
   if (n !== seq) return;
   $('#refresh').classList.remove('spin');
   state = next;
+  if (ownWindowOf != null) document.title = state.url ? `Odoo Debug · ${new URL(state.url).host}` : 'Odoo Debug'; // its window's title
   $('#status').replaceChildren(...statusParts());
   showVersion();
   rendered.clear();
@@ -141,7 +147,8 @@ const setBadge = (name: TabName, text: string) => {
   if (badge) badge.textContent = text;
 };
 const panel: PanelContext = { state: () => state, odoo: () => ctx, showTab, setBadge };
-setTab(await chrome.tabs.getCurrent()); // before mounting: the RPC log reads what the page recorded already
+// before mounting: the RPC log reads what the page recorded already
+setTab(ownWindowOf != null ? await chrome.tabs.get(ownWindowOf).catch(() => undefined) : await chrome.tabs.getCurrent());
 for (const name of TAB_NAMES) await TABS[name]?.mount?.(section(name), panel);
 let saved: string | null = null;
 try { saved = sessionStorage.getItem(TAB_KEY); } catch { /* storage off */ }
@@ -194,5 +201,14 @@ addEventListener('keydown', (e) => { // Esc leaves full screen, unless it is cle
   if (e.key === 'Escape' && isFull() && !(e.target as HTMLInputElement | null)?.value) setFull(false);
 });
 
-setFull(); // no argument: just read the state (full screen survives a reload)
+// ---------- its own window: open it (from the page), back into the page (from the window) ----------
+const detachBtn = $('#detach');
+const attachBtn = $('#attach');
+detachBtn.hidden = ownWindowOf != null;
+attachBtn.hidden = ownWindowOf == null;
+detachBtn.addEventListener('click', () => { if (tabId != null) chrome.runtime.sendMessage({ type: 'odoo-detach', tabId } satisfies ExtMessage).catch(() => {}); });
+attachBtn.addEventListener('click', () => { if (tabId != null) chrome.runtime.sendMessage({ type: 'odoo-attach', tabId } satisfies ExtMessage).catch(() => {}); });
+if (ownWindowOf != null) chrome.tabs.onRemoved.addListener((id) => { if (id === ownWindowOf) window.close(); }); // nothing left to inspect
+
+if (ownWindowOf == null) setFull(); // no argument: just read the state (full screen survives a reload)
 void refresh();

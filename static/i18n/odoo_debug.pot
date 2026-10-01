@@ -35,64 +35,77 @@ msgstr ""
 msgid "Full Screen"
 msgstr ""
 
+#: src/entrypoints/panel/index.html:21
+msgid "Open in Its Own Window (for a second screen)"
+msgstr ""
+
+#: src/entrypoints/panel/index.html:21
+msgid "Open in Its Own Window"
+msgstr ""
+
 #: src/entrypoints/panel/index.html:22
-msgid "Record"
-msgstr ""
-
-#: src/entrypoints/panel/index.html:23
-msgid "View"
-msgstr ""
-
-#: src/entrypoints/panel/index.html:24
-msgid "RPC"
+#: src/entrypoints/panel/index.html:22
+msgid "Back into the Odoo Page"
 msgstr ""
 
 #: src/entrypoints/panel/index.html:25
-msgid "Code"
+msgid "Record"
 msgstr ""
 
 #: src/entrypoints/panel/index.html:26
-msgid "Security"
+msgid "View"
 msgstr ""
 
 #: src/entrypoints/panel/index.html:27
-msgid "Translations"
+msgid "RPC"
 msgstr ""
 
 #: src/entrypoints/panel/index.html:28
-msgid "Apps"
+msgid "Code"
 msgstr ""
 
 #: src/entrypoints/panel/index.html:29
+msgid "Security"
+msgstr ""
+
+#: src/entrypoints/panel/index.html:30
+msgid "Translations"
+msgstr ""
+
+#: src/entrypoints/panel/index.html:31
+msgid "Apps"
+msgstr ""
+
+#: src/entrypoints/panel/index.html:32
 msgid "Perf"
 msgstr ""
 
-#: src/entrypoints/panel/index.ts:43
-#: src/entrypoints/panel/index.ts:44
+#: src/entrypoints/panel/index.ts:48
+#: src/entrypoints/panel/index.ts:49
 msgid "Cannot read this tab: %s"
 msgstr ""
 
-#: src/entrypoints/panel/index.ts:43
+#: src/entrypoints/panel/index.ts:48
 msgid "The current tab is not an Odoo page."
 msgstr ""
 
-#: src/entrypoints/panel/index.ts:46
+#: src/entrypoints/panel/index.ts:51
 msgid "Not available on Odoo %s: %s"
 msgstr ""
 
-#: src/entrypoints/panel/index.ts:93
+#: src/entrypoints/panel/index.ts:98
 msgid "Odoo %s is not tested: the panel uses its Odoo %s support, some cards may fail."
 msgstr ""
 
-#: src/entrypoints/panel/index.ts:94
+#: src/entrypoints/panel/index.ts:99
 msgid "Odoo %s is older than every supported version: some cards may fail."
 msgstr ""
 
-#: src/entrypoints/panel/index.ts:95
+#: src/entrypoints/panel/index.ts:100
 msgid "This database lacks fields the panel expects for Odoo %s: %s"
 msgstr ""
 
-#: src/entrypoints/panel/index.ts:99
+#: src/entrypoints/panel/index.ts:104
 msgid "Odoo %s, supported"
 msgstr ""
 
