@@ -14,7 +14,8 @@ How the extension is built, for whoever works on it. Using it: [README](../READM
 | Tab View, told as a story: ① overview (view, file, modules, menu, action, record, fields) ② how the view is built (views in the order Odoo applies them, what each does, own arch; form / search) ③ one field (now, its story through the views, its groups) ④ action & context ⑤ combined arch | ✅ unit tests; Chrome against a simulated 18 / 19 webclient, admin and user |
 | Tab Security, as permission tables: a bar (the user searched on the server, archived too; their companies; a user to compare; groups being tried) then five views: Record (ACL, global / group / parent rules × read · write · create · delete, the result, the server's answer; the groups that would allow a refusal and what else they open; an AccessError from the RPC tab or pasted) · By model (the user's rights on every model, by module; what tried groups add; differences with the compared user) · This model (ACLs, rules, restricted fields, configuration check) · Groups (a list by application — each user's relation, ACL models, rules, users — and the group opened beside it: inheritance, its ACLs, its rules with their domains evaluated for the user, its users, what adding it would open; try, add, remove; copy the compared user's groups, previewed) · System | ✅ unit tests; Chrome against a simulated 18 / 19, admin and user |
 | Tab Translations, as tables: Find a text (typed or picked on the page → code term and its module .po, field label, selection, menu, action, record value, view term; its English source; where to change it) · Record (translated fields × languages, by term for html; edit) · View (the screen's views' terms × languages; edit) · Modules (.po coverage per language, the missing terms; export .pot / .po to Downloads; import a .po) · Languages (active, yours, users; activate, update, use one) | ✅ unit tests; Chrome against a simulated 18 / 19 |
-| Tabs: Apps · Perf · Code | ⏳ not ported (placeholder) |
+| Tab Apps: Odoo's search bar (filters as facets) over every module; pick several → Activate (Update Apps List, install with dependencies), Upgrade, Open Forms; ⚠ manifest on disk newer than the database; a module opened beside the list: description (`description_html` in a sandboxed frame), manifest, depends / used by, its xmlids by kind, models created / extended, uninstall previewed by `base.module.uninstall` (confirm, then type its name) · Pending: apply or cancel the operations left waiting (18 runs them along with the next one, 19 refuses one) | ✅ unit tests; every server call against a throwaway 18 / 19 database |
+| Tabs: Perf · Code | ⏳ not ported (placeholder) |
 | E2E against Odoo 18.0 / 19.0 (Docker) | ⏳ |
 
 ## Develop
@@ -123,6 +124,7 @@ answer.
   fails on `innerHTML` / `createElement` in a `.ts` (except non-UI helpers marked `markup-ok:`).
 - **Injected functions** reach the Odoo page as their own source text only: nothing from outside them but browser
   globals and types. `npm run check:page` bundles them as the build does and fails otherwise.
-- Odoo data reaches the DOM through `textContent` only.
+- Odoo data reaches the DOM through `textContent` only. One exception: a module's description (Apps), Odoo's own
+  sanitized `description_html`, shown in a sandboxed `<iframe srcdoc>` with no `allow-scripts` (nothing in it runs).
 - `entrypoints/rpc-recorder` runs on every site: no imports but types (the build fails above 4 KB).
 - Erasable TypeScript only (no `enum`, `namespace`, parameter properties): Node runs tests and scripts as they are.

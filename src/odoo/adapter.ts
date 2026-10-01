@@ -68,6 +68,15 @@ export interface OdooAdapter {
     readonly listFields: readonly string[];
   };
 
+  readonly modules: {
+    /** base.module.uninstall, the preview Odoo shows before an uninstall: the field taking the module (18: a many2one,
+     * one module; 19: a many2many) and the one listing every module removed with it (itself included) */
+    readonly uninstallWizard: { readonly moduleField: string; readonly many: boolean; readonly impactedField: string };
+    /** Odoo refuses an install / upgrade / uninstall while modules wait for one (to install / upgrade / remove);
+     * false: it runs the waiting ones along with it */
+    readonly refusesWhilePending: boolean;
+  };
+
   /** The external API a call of the page is replayed with (RPC tab → Copy as cURL). */
   readonly api: ExternalApi;
 

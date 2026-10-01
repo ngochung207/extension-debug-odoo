@@ -665,7 +665,7 @@ ul.plain li + li { margin-top: 3px; }
 #security .findings { border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); }
 .paste > summary { font-size: var(--fs-xs); }
 .paste .composer { margin-top: 8px; }
-#security .subview, #translations .subview { margin: 12px 8px 20px; }
+#security .subview, #translations .subview, #apps .subview { margin: 12px 8px 20px; }
 #security > .sec-bar { margin: 8px 8px 0; }
 .mx-label .row { flex-wrap: nowrap; align-items: baseline; }
 .mx-label .mark { flex: none; }
@@ -734,3 +734,20 @@ button[data-tip] { cursor: pointer; }
 .fold-body { display: flex; flex-direction: column; gap: 8px; padding: 10px 12px; }
 .fold-body > div:has(> .chip) { display: flex; flex-wrap: wrap; gap: 6px; }
 .fold-body .story-title { margin: 4px 0 0; }
+
+/* ---------- Apps tab (features/apps): Odoo's search bar, the modules picked, the list and the module opened beside it ---------- */
+#apps .searchbar { flex: 1; }
+#apps .searchbar > input { flex: 1; min-width: 90px; border: 0; background: none; outline: none; padding: 4px 2px; color: var(--fg); }
+.pickbar { display: flex; flex-direction: column; gap: 8px; }
+.pickbar .row { align-items: center; }
+.pickbar .steps:empty, .module-head .steps:empty { display: none; }
+.pick-box { margin: 0 6px 0 0; vertical-align: middle; cursor: pointer; }
+.trybar.warn { border: 1px solid var(--line); border-radius: var(--r); padding: 8px 12px; font-size: var(--fs-sm); background: var(--warn-soft); }
+.drift { color: var(--warn); font-weight: 600; }
+.btn.danger { color: var(--err); }
+.btn.danger:hover { border-color: color-mix(in srgb, var(--err) 40%, var(--line)); }
+.module-title { flex-wrap: nowrap; align-items: center; gap: 10px; }
+.module-icon { width: 36px; height: 36px; flex: none; border-radius: 6px; object-fit: contain; }
+.module-head .row { align-items: center; }
+/* the description: Odoo's own page, on white (it expects it), as tall as its content */
+.module-desc { width: 100%; height: 420px; border: 1px solid var(--line); border-radius: var(--r); background: #fff; }

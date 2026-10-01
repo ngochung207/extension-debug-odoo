@@ -1,5 +1,5 @@
 // Odoo 19.0. Every value checked against the 19.0 sources (odoo/orm/models.py, base/models/res_users.py,
-// res_groups.py, ir_rule.py, ir_profile.py, addons/rpc); the comment says what changed since 18.0.
+// res_groups.py, ir_rule.py, ir_module.py, ir_profile.py, addons/rpc); the comment says what changed since 18.0.
 import type { MethodSignature, OdooAdapter } from '../adapter.ts';
 
 const READ = [
@@ -70,6 +70,10 @@ export const v19: OdooAdapter = {
   },
   i18n: { webTranslationsPath: '/web/webclient/translations' }, // ?hash= instead of the segment: without it, everything comes back
   profiler: { listFields: ['name', 'session', 'duration', 'cpu_duration', 'sql_count', 'create_date'] }, // cpu_duration is new
+  modules: {
+    uninstallWizard: { moduleField: 'module_ids', many: true, impactedField: 'impacted_module_ids' }, // several modules at once, renamed
+    refusesWhilePending: true, // _button_immediate_function: "Odoo is currently processing another module operation"
+  },
   // /json/2/<model>/<method> (addons/rpc/controllers/json2.py, auto_install): binds NAMED arguments only
   // (signature.bind(records, **kwargs)), 422 when ids are given to an @api.model method. /jsonrpc still answers but is
   // deprecated, removed in Odoo 22 (documentation/19.0 external_api, "Migrating from XML-RPC / JSON-RPC").
@@ -82,5 +86,6 @@ export const v19: OdooAdapter = {
     { model: 'res.groups', field: 'privilege_id', usedBy: 'Security: groups by application' },
     { model: 'res.groups', field: 'all_user_ids', usedBy: 'Security: users of a group' },
     { model: 'ir.profile', field: 'cpu_duration', usedBy: 'Perf' },
+    { model: 'base.module.uninstall', field: 'impacted_module_ids', usedBy: 'Apps: uninstall preview' },
   ],
 };
