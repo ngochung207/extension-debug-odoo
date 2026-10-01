@@ -1,6 +1,6 @@
 // The panel's small components: markup in components.tpl.html, styles in panel.css. Odoo data only ever goes through
 // textContent. List widgets: lists.ts.
-import { translateDom } from '../i18n/i18n.ts';
+import { _t, translateDom } from '../i18n/i18n.ts';
 import { templates } from './template.ts';
 import html from './components.tpl.html';
 
@@ -93,4 +93,13 @@ export function listHead(main: string, desc: string): HTMLElement {
   refs.main.textContent = main;
   refs.desc.textContent = desc;
   return root;
+}
+
+/** Opens /odoo/<path> (e.g. res.partner/7) of the inspected Odoo in a new tab (the inspected tab stays put). */
+export function odooLink(origin: string, path: string, text = '↗'): HTMLAnchorElement {
+  const { link } = tpl('odoo-link', { link: HTMLAnchorElement }).refs;
+  link.href = `${origin}/odoo/${path}`;
+  link.title = _t('Open /odoo/%s', path);
+  link.textContent = text;
+  return link;
 }

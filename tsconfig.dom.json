@@ -2,7 +2,7 @@
   // dom: DOM helpers any page or content script may use (templates). DOM, no chrome.*.
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "lib": ["es2023", "dom"],
+    "lib": ["es2023", "dom", "dom.iterable"],
     "types": [],
     "declarationDir": ".tsbuild/dom",
     "tsBuildInfoFile": ".tsbuild/dom.tsbuildinfo"

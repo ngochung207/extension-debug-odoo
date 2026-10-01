@@ -175,6 +175,98 @@ msgstr "debug"
 msgid "No tab is open."
 msgstr "Không có tab đang mở."
 
+#: src/features/record/record.logic.ts:62
+msgid "change → recomputes %s"
+msgstr "đổi → tính lại %s"
+
+#: src/features/record/record.logic.ts:99
+msgid "not %s"
+msgstr "trừ %s"
+
+#: src/features/record/record.tab.ts:23
+msgid "This screen is not bound to a model."
+msgstr "Màn hình này không gắn với model nào."
+
+#: src/features/record/record.tab.ts:24
+msgid "Identity & metadata"
+msgstr "Định danh & metadata"
+
+#: src/features/record/record.tab.ts:25
+msgid "Fields"
+msgstr "Fields"
+
+#: src/features/record/record.tab.ts:42
+msgid "(none / several records)"
+msgstr "(chưa có / nhiều record)"
+
+#: src/features/record/record.tab.ts:44
+msgid "created by"
+msgstr "tạo bởi"
+
+#: src/features/record/record.tab.ts:44
+msgid "last updated by"
+msgstr "sửa bởi"
+
+#: src/features/record/record.tab.ts:87
+msgid "Click to copy the value"
+msgstr "Bấm để copy giá trị"
+
+#: src/features/record/record.tab.ts:102
+msgid "%s fields"
+msgstr "%s field"
+
+#: src/features/record/record.tab.ts:102
+msgid "%s/%s fields"
+msgstr "%s/%s field"
+
+#: src/features/record/record.tab.ts:103
+msgid "Filter name / label / value / type / module"
+msgstr "Lọc tên / nhãn / giá trị / type / module"
+
+#: src/features/record/record.tab.ts:114
+msgid "Field · type · value"
+msgstr "Field · kiểu · giá trị"
+
+#: src/features/record/record.tab.ts:114
+msgid "Label · storage · compute · module"
+msgstr "Nhãn · lưu trữ · compute · module"
+
+#: src/features/record/record.tab.ts:126
+msgid "A computed field failed: values of the stored fields only."
+msgstr "Một field compute bị lỗi: chỉ hiện giá trị của các field stored."
+
+#: src/features/record/record.tab.ts:131
+msgid "Modules and indexes need Access Rights (base.group_erp_manager)."
+msgstr "Cột module và index cần quyền Access Rights (base.group_erp_manager)."
+
+#: src/features/record/record.tab.ts:132
+msgid "Modules and indexes unavailable: %s"
+msgstr "Không lấy được module và index: %s"
+
+#: src/features/record/record.tpl.html:7
+msgid "Stored"
+msgstr "Stored"
+
+#: src/features/record/record.tpl.html:8
+msgid "Computed"
+msgstr "Computed"
+
+#: src/features/record/record.tpl.html:9
+msgid "Relational"
+msgstr "Quan hệ"
+
+#: src/features/record/record.tpl.html:10
+msgid "Required"
+msgstr "Bắt buộc"
+
+#: src/features/record/record.tpl.html:13
+msgid "Copy as JSON"
+msgstr "Copy dạng JSON"
+
+#: src/features/record/record.tpl.html:13
+msgid "Copy the values of the record as JSON"
+msgstr "Copy giá trị của bản ghi dưới dạng JSON"
+
 #: src/features/rpc/rpc.logic.ts:155
 msgid "Signature of %s.%s unknown: ids and argument names are guessed."
 msgstr "Không rõ chữ ký của %s.%s: ids và tên tham số được đoán."
@@ -302,6 +394,10 @@ msgstr "Bấm để copy"
 #: src/ui/components.tpl.html:47
 msgid "Loading…"
 msgstr "Đang tải…"
+
+#: src/ui/components.ts:102
+msgid "Open /odoo/%s"
+msgstr "Mở /odoo/%s"
 
 msgid "Needs Settings rights (base.group_system)."
 msgstr "Cần quyền Settings (base.group_system)."
@@ -677,45 +773,6 @@ msgstr "Query chậm nhất (%s)"
 
 msgid "Caller · time"
 msgstr "Nơi gọi · thời gian"
-
-msgid "This screen is not bound to a model."
-msgstr "Màn hình này không gắn với model nào."
-
-msgid "Identity & metadata"
-msgstr "Định danh & metadata"
-
-msgid "(none / several records)"
-msgstr "(chưa có / nhiều record)"
-
-msgid "created by"
-msgstr "tạo bởi"
-
-msgid "last updated by"
-msgstr "sửa bởi"
-
-msgid "Fields"
-msgstr "Fields"
-
-msgid "change → recomputes %s"
-msgstr "đổi → tính lại %s"
-
-msgid "%s fields"
-msgstr "%s field"
-
-msgid "Filter name / label / value / type / module"
-msgstr "Lọc tên / nhãn / giá trị / type / module"
-
-msgid "%s/%s fields"
-msgstr "%s/%s field"
-
-msgid "Field · type · value"
-msgstr "Field · kiểu · giá trị"
-
-msgid "Label · storage · compute · module"
-msgstr "Nhãn · lưu trữ · compute · module"
-
-msgid "A computed field failed: values of the stored fields only."
-msgstr "Một field compute bị lỗi: chỉ hiện giá trị của các field stored."
 
 msgid "No ACL grants this to the user's groups."
 msgstr "Không ACL nào cấp quyền này cho group của user."
@@ -1187,6 +1244,3 @@ msgstr "Biểu thức modifier"
 
 msgid "The form is read-only: every field is readonly."
 msgstr "Form đang ở chế độ chỉ đọc: mọi field đều readonly."
-
-msgid "Open /odoo/%s"
-msgstr "Mở /odoo/%s"

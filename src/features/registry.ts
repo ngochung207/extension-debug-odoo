@@ -3,6 +3,7 @@
 import type { ExtMessage } from '../contracts/messages.ts';
 import type { PageState } from '../injected/page-state.ts';
 import type { OdooContext } from '../odoo/detect.ts';
+import { recordTab } from './record/record.tab.ts';
 import { rpcTab } from './rpc/rpc.tab.ts';
 
 /** In the order of the tab bar (entrypoints/panel/index.html). */
@@ -34,7 +35,7 @@ export interface TabModule {
 }
 
 export const TABS: Readonly<Record<TabName, TabModule | null>> = {
-  record: null,
+  record: recordTab,
   view: null,
   rpc: rpcTab,
   code: null,
