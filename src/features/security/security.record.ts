@@ -30,7 +30,7 @@ export function recordView(body: HTMLElement, c: SecurityCtx) {
     const [sim, x, graph, other, ox] = await Promise.all([c.sim, c.assessment!, groupGraph(c.a), c.other, c.otherAssessment]);
     const focus = subject.mode ? MODES.indexOf(subject.mode) : -1;
     if (!x.rights || !x.input) {
-      const rows: MxRow[] = x.server ? [{ label: [_t('Server (has_access)')], cells: x.server.map((v) => ({ v })), kind: 'result' }] : [];
+      const rows: MxRow[] = x.server ? [{ label: [_t('Server (has_access)')], cells: x.server.map((v) => ({ v, title: v ? _t('Odoo says: allowed') : _t('Odoo says: refused') })), kind: 'result' }] : [];
       return frag(rows.length ? matrix('', modeHeads(), [{ rows }], focus) : null,
         note(x.server ? _t('Reading the ACLs and record rules needs Access Rights (base.group_erp_manager): this is the server\'s answer for you, without the why.')
           : _t('Reading the ACLs and record rules needs Access Rights (base.group_erp_manager): nothing can be said for another user.')));
@@ -77,12 +77,15 @@ function sections(sim: Simulated, x: Assessment, graph: GroupGraph, other: Simul
 
   // ACLs: any one granting the operation
   const acls = input.acls.filter((a) => MODES.some((m) => a[`perm_${m}`]));
-  const aclSum = MODES.map((m) => ({ v: x.verdicts.find((v) => v.mode === m)!.grants.length > 0 || input.superuser }));
+  const aclSum = MODES.map((m) => {
+    const ok = x.verdicts.find((v) => v.mode === m)!.grants.length > 0 || input.superuser;
+    return { v: ok, title: ok ? _t('An ACL of the user\'s groups grants it') : _t('No ACL of the user\'s groups grants it: refused') };
+  });
   out.push({ title: _t('Access rights (ACL)'), note: _t('one is enough'), rows: [
     ...acls.map((a): MxRow => ({
       label: [...marks(a.group_id ? [a.group_id[0]] : [], !a.group_id), a.group_id ? a.group_id[1] : _t('every user')],
       sub: a.name,
-      cells: MODES.map((m) => ({ v: a[`perm_${m}`] ? true : 'na' as const })),
+      cells: MODES.map((m) => (a[`perm_${m}`] ? { v: true, title: _t('This ACL grants it') } : { v: 'na' as const, title: _t('This ACL doesn\'t grant it') })),
       kind: !a.group_id || sim.groupIds.has(a.group_id[0]) ? undefined : 'off',
     })),
     ...(acls.length ? [] : [{ label: [_t('No ACL: only the superuser')], cells: MODES.map(() => ({ v: 'na' as const })), kind: 'off' as const }]),
@@ -92,7 +95,11 @@ function sections(sim: Simulated, x: Assessment, graph: GroupGraph, other: Simul
   if (resId == null) return [...out, result(sim, x, other, ox)];
 
   const own = input.rules.filter((r) => !r.via);
-  const cellsOf = (r: Rule): Cell[] => MODES.map((m) => (r[`perm_${m}`] ? { v: x.notes.has(r.id) || 'error' in (x.evaluated.get(r.id) ?? {}) ? null : passed.get(r.id) ?? null } : { v: 'na' as const }));
+  const cellsOf = (r: Rule): Cell[] => MODES.map((m) => {
+    if (!r[`perm_${m}`]) return { v: 'na' as const, title: _t('The rule doesn\'t cover this operation') };
+    const v = x.notes.has(r.id) || 'error' in (x.evaluated.get(r.id) ?? {}) ? null : passed.get(r.id) ?? null;
+    return { v, title: v === true ? _t('The record matches this rule') : v === false ? _t('The record doesn\'t match this rule') : _t('Could not be checked: open the rule') };
+  });
   const ruleRow = (r: Rule, applies: boolean): MxRow => ({
     label: [...marks(r.groups, r.global), r.name],
     sub: r.global ? _t('every user') : r.groups.map((g) => graph.name(g)).join(', '),
@@ -110,7 +117,9 @@ function sections(sim: Simulated, x: Assessment, graph: GroupGraph, other: Simul
       ...groupRules.map((r) => ruleRow(r, has(sim, r.groups))),
       { label: [_t('→ for the user')], kind: 'sum', cells: MODES.map((m) => {
         const mine = rulesFor(groupRules, input.groupIds, m);
-        return { v: mine.length ? groupRulesVerdict(mine, passed) : true, title: mine.length ? '' : _t('No group rule of the user for this operation: no restriction from them') };
+        const v = mine.length ? groupRulesVerdict(mine, passed) : true;
+        return { v, title: !mine.length ? _t('No group rule of the user for this operation: no restriction from them')
+          : v === true ? _t('One of the user\'s group rules matches: enough') : v === false ? _t('None of the user\'s group rules matches: refused') : _t('Could not be checked') };
       }) },
     ] });
   }
@@ -122,17 +131,19 @@ function sections(sim: Simulated, x: Assessment, graph: GroupGraph, other: Simul
     const link = rs[0]!.via!.link;
     out.push({ title: _t('Rules of %s, through %s', model, link), note: _t('counted as one global rule'), rows: [
       ...rs.map((r) => ruleRow(r, r.global || has(sim, r.groups))),
-      { label: [_t('→ for the user')], kind: 'sum', cells: MODES.map((m) => ({ v: rulesVerdict(rulesFor(rs.map(({ via: _, ...r }) => r), input.groupIds, m), passed) })) },
+      { label: [_t('→ for the user')], kind: 'sum', cells: MODES.map((m) => { const v = rulesVerdict(rulesFor(rs.map(({ via: _, ...r }) => r), input.groupIds, m), passed);
+        return { v, title: v === true ? _t('The parent record passes its rules') : v === false ? _t('The parent record doesn\'t pass its rules: refused') : _t('Could not be checked') }; }) },
     ] });
   }
   return [...out, result(sim, x, other, ox)];
 }
 
 function result(sim: Simulated, x: Assessment, other: Simulated | null, ox: Assessment | null): MxSection {
-  const rows: MxRow[] = [{ label: [_t('Result'), other ? `(${sim.user.name})` : ''], cells: x.verdicts.map((v) => ({ v: v.ok })), kind: 'result' }];
-  if (other && ox?.verdicts.length) rows.push({ label: [_t('Result'), `(${other.user.name})`], cells: ox.verdicts.map((v) => ({ v: v.ok })), kind: 'result' });
+  const res = (ok: Tri, who: string) => ({ v: ok, title: ok === true ? _t('%s can do it', who) : ok === false ? _t('%s is refused', who) : _t('Not certain: a rule could not be checked') });
+  const rows: MxRow[] = [{ label: [_t('Result'), other ? `(${sim.user.name})` : ''], cells: x.verdicts.map((v) => res(v.ok, sim.user.name)), kind: 'result' }];
+  if (other && ox?.verdicts.length) rows.push({ label: [_t('Result'), `(${other.user.name})`], cells: ox.verdicts.map((v) => res(v.ok, other.user.name)), kind: 'result' });
   if (x.server) rows.push({ label: [_t('Server (has_access)')], sub: _t('Odoo\'s own answer for you, same companies'), kind: 'sum',
-    cells: x.server.map((v, i) => ({ v, title: v !== x.verdicts[i]?.ok ? _t('The server disagrees with the simulation') : '' })) });
+    cells: x.server.map((v, i) => ({ v, title: v !== x.verdicts[i]?.ok ? _t('The server disagrees with the simulation') : v ? _t('Odoo says: allowed') : _t('Odoo says: refused') })) });
   return { title: _t('Result'), rows };
 }
 
@@ -153,7 +164,8 @@ function fixList(sim: Simulated, x: Assessment, graph: GroupGraph, c: SecurityCt
     return {
       label: [graph.name(f.id), button(_t('Try'), () => void tryGroup(c, f.id), 'chip', _t('Simulate this group in every view, nothing is written'))],
       sub: extra.length ? _t('also adds: %s', extra.map((g) => graph.name(g)).join(', ')) : undefined,
-      cells: MODES.map((m) => (f.allows.includes(m) ? { v: true, plus: true } : { v: (x.verdicts.find((v) => v.mode === m)!.ok as Tri) === true ? true : 'na' as const })),
+      cells: MODES.map((m) => (f.allows.includes(m) ? { v: true, plus: true, title: _t('Adding this group allows it') }
+        : (x.verdicts.find((v) => v.mode === m)!.ok as Tri) === true ? { v: true, title: _t('Already allowed') } : { v: 'na' as const, title: _t('Still refused with this group') })),
       detail: async () => {
         const gained = newGrants((await aclRows([...sim.groupIds, ...f.adds])) ?? [], sim.groupIds, f.adds);
         if (!gained.length) return note(_t('No new right on other models.'));

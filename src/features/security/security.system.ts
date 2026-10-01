@@ -62,7 +62,8 @@ async function companies(uc: unknown): Promise<Node> {
     label: [`${depth ? `${'\u00a0\u00a0\u00a0'.repeat(depth - 1)}└ ` : ''}${co.name}`],
     sub: allowed ? undefined : _t('parent only: the user is not in it'),
     kind: allowed ? undefined : 'off',
-    cells: [String(co.id), { v: co.id === data.current_company ? true : 'na' }, { v: allowed ? on.has(co.id) || 'na' : 'na' }],
+    cells: [String(co.id), co.id === data.current_company ? { v: true, title: _t('The user\'s default company') } : { v: 'na', title: _t('Not the default company') },
+      allowed && on.has(co.id) ? { v: true, title: _t('On in the page\'s company switcher') } : { v: 'na', title: allowed ? _t('Off in the page\'s company switcher') : _t('The user is not in this company') }],
   }));
   const legend = note(_t('Default: the company the user starts in. On: enabled in the page\'s company switcher (record rules read these).'));
   legend.classList.add('legend');

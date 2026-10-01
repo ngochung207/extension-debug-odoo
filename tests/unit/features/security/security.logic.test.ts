@@ -119,3 +119,14 @@ test('the session companies as a tree: parents first, a disallowed ancestor flag
     disallowed_ancestor_companies: { 1: c(1, 'Holding', false, [2, 3]) } });
   assert.deepEqual(tree.map((t) => `${'  '.repeat(t.depth)}${t.company.name}${t.allowed ? '' : ' ×'}`), ['Other', 'Holding ×', '  Chicago', '  SF', '    SF Shop']);
 });
+
+test('the user attributes the rules read, and a short evaluation error', async () => {
+  const { userPaths, shortError } = await import('../../../../src/features/security/security.logic.ts');
+  assert.deepEqual(userPaths([
+    "['|', ('crm_group_id', 'child_of', user.manager_crm_group_ids.ids), ('user_id', '=', user.id)]",
+    "[('department_id', '=', user.employee_id.department_id.id), ('name', '=', 'user.fake')]",
+    "[('x', 'in', user.manager_crm_group_ids.ids)]",
+  ]), [['manager_crm_group_ids', 'ids'], ['id'], ['employee_id', 'department_id', 'id']]);
+  assert.equal(shortError("Can not evaluate python expression: ([\n  '|',\n])\nError: Cannot read properties of undefined (reading 'ids')"),
+    "Cannot read properties of undefined (reading 'ids')");
+});

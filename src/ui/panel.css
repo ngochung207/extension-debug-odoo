@@ -673,3 +673,9 @@ ul.plain li + li { margin-top: 3px; }
 .dom-group.any > .dom-children { border-left-color: color-mix(in srgb, var(--info) 50%, var(--line)); }
 .dom-group.not > .dom-children { border-left-color: color-mix(in srgb, var(--err) 50%, var(--line)); }
 .dom-leaf code { font-size: var(--fs-sm); }
+
+/* tooltip.ts: shown at once over an element with data-tip */
+.tooltip { position: fixed; z-index: 100; max-width: 280px; padding: 6px 10px; border-radius: 6px; background: var(--fg); color: var(--bg);
+  font-size: var(--fs-xs); line-height: var(--lh); pointer-events: none; box-shadow: 0 4px 12px rgb(0 0 0 / .25); }
+[data-tip] { cursor: help; }
+button[data-tip] { cursor: pointer; }
