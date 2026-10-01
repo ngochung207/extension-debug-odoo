@@ -10,7 +10,8 @@ import { tip } from '../../ui/tooltip.ts';
 import { readAllRules, readModels, type Simulated } from './security.data.ts';
 import { firstModule, modelRights, type ModelRights } from './security.logic.ts';
 import type { SecurityCtx } from './security.state.ts';
-import { box, button, filterMatrix, matrix, modeHeads, modeLabel, plainList, tpl, type MxRow, type MxSection } from './security.ui.ts';
+import { filterMatrix, matrix, type MxRow, type MxSection } from '../../ui/matrix.ts';
+import { box, button, modeHeads, modeLabel, plainList, tpl } from './security.ui.ts';
 
 export function modelsView(body: HTMLElement, c: SecurityCtx) {
   fill(body, async () => {

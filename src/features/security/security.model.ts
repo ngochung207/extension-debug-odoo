@@ -12,7 +12,8 @@ import { frag, note } from '../../ui/parts.ts';
 import { groupGraph, keyGroups, type Simulated } from './security.data.ts';
 import { auditModel, groupsSpecAllows, type Rule } from './security.logic.ts';
 import type { SecurityCtx } from './security.state.ts';
-import { domainDetail, findings, mark, matrix, modeHeads, title, type Cell, type MxRow } from './security.ui.ts';
+import { matrix, type Cell, type MxRow } from '../../ui/matrix.ts';
+import { domainDetail, findings, mark, modeHeads, title } from './security.ui.ts';
 
 export function modelView(body: HTMLElement, c: SecurityCtx) {
   fill(body, async () => {

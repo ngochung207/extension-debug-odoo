@@ -31,6 +31,7 @@ export const v18: OdooAdapter = {
     inheritsStoredOnly: false, // every _inherits parent's rules apply
     evalNames: ['user', 'time', 'company_ids', 'company_id'],
   },
+  i18n: { webTranslationsPath: '/web/webclient/translations/{unique}' }, // web/controllers/webclient.py: a mandatory unique segment
   profiler: { listFields: ['name', 'session', 'duration', 'sql_count', 'create_date'] }, // no cpu_duration before 19
   // /jsonrpc (base/controllers/rpc.py) → service/model.py execute_kw; the API key replaces the password
   // (documentation/18.0 external_api: "simply replace your password by the key"). No /json/2 in 18.

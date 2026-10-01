@@ -10,7 +10,8 @@ import { frag, note } from '../../ui/parts.ts';
 import { groupGraph, writeGroups, type GroupGraph, type Simulated } from './security.data.ts';
 import { byApp, copyGroups, directGroups, impliedBy, shortGroupName, userRisks, type AclRow } from './security.logic.ts';
 import { afterWrite, stopTrying, tryGroup, type SecurityCtx } from './security.state.ts';
-import { box, button, errBoxTo, filterMatrix, findings, mark, matrix, title, tpl, type Cell, type MxRow } from './security.ui.ts';
+import { filterMatrix, matrix, type Cell, type MxRow } from '../../ui/matrix.ts';
+import { box, button, errBoxTo, findings, mark, title, tpl } from './security.ui.ts';
 
 export function groupsView(body: HTMLElement, c: SecurityCtx) {
   fill(body, async () => {

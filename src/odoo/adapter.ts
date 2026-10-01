@@ -55,6 +55,12 @@ export interface OdooAdapter {
     readonly evalNames: readonly string[];
   };
 
+  readonly i18n: {
+    /** GET route of the webclient's code translations, per module: { modules: { <module>: { messages: [{ id, string }] } } }
+     * (?lang=, every installed module); `{unique}` stands for any string */
+    readonly webTranslationsPath: string;
+  };
+
   readonly profiler: {
     /** ir.profile fields read for the list of profiled requests */
     readonly listFields: readonly string[];
