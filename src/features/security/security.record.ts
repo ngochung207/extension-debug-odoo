@@ -16,7 +16,8 @@ import { frag, note } from '../../ui/parts.ts';
 import { aclRows, groupGraph, type Assessment, type GroupGraph, type Simulated } from './security.data.ts';
 import { fixes, groupRulesVerdict, newGrants, rulesFor, rulesVerdict, type Rule, type Tri } from './security.logic.ts';
 import { tryGroup, type SecurityCtx, type Subject } from './security.state.ts';
-import { box, button, domainDetail, mark, matrix, modeHeads, modeLabel, plainList, title, tpl, type Cell, type MxRow, type MxSection } from './security.ui.ts';
+import { matrix, type Cell, type MxRow, type MxSection } from '../../ui/matrix.ts';
+import { box, button, domainDetail, mark, modeHeads, modeLabel, plainList, title, tpl } from './security.ui.ts';
 
 const SHOWN_FIXES = 4;
 const SHOWN_MODELS = 40;

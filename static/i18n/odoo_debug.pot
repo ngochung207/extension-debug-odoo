@@ -50,11 +50,13 @@ msgstr ""
 
 #: src/entrypoints/panel/index.html:25
 #: src/features/security/security.tab.ts:61
+#: src/features/translations/translations.find.ts:69
 #: src/features/view/view.overview.ts:64
 msgid "Record"
 msgstr ""
 
 #: src/entrypoints/panel/index.html:26
+#: src/features/translations/translations.find.ts:70
 #: src/features/view/view.overview.ts:34
 #: src/features/view/view.overview.ts:37
 msgid "View"
@@ -81,6 +83,7 @@ msgid "Perf"
 msgstr ""
 
 #: src/entrypoints/panel/index.html:32
+#: src/features/translations/translations.find.ts:59
 msgid "Code"
 msgstr ""
 
@@ -118,7 +121,7 @@ msgid "Not an Odoo page"
 msgstr ""
 
 #: src/entrypoints/popup/index.html:17
-#: src/features/security/security.record.ts:47
+#: src/features/security/security.record.ts:48
 msgid "This page"
 msgstr ""
 
@@ -136,6 +139,7 @@ msgid "Keep it on for this Odoo"
 msgstr ""
 
 #: src/entrypoints/popup/index.html:27
+#: src/features/translations/translations.langs.ts:55
 msgid "Language"
 msgstr ""
 
@@ -304,9 +308,9 @@ msgid "Parameters"
 msgstr ""
 
 #: src/features/rpc/rpc.tab.ts:127
-#: src/features/security/security.record.ts:143
 #: src/features/security/security.record.ts:144
-#: src/features/security/security.record.ts:147
+#: src/features/security/security.record.ts:145
+#: src/features/security/security.record.ts:148
 msgid "Result"
 msgstr ""
 
@@ -390,7 +394,7 @@ msgid "Copy as cURL"
 msgstr ""
 
 #: src/features/security/security.bar.ts:25
-#: src/features/security/security.system.ts:43
+#: src/features/security/security.system.ts:44
 msgid "User"
 msgstr ""
 
@@ -399,8 +403,8 @@ msgid "Search a user by name or login…"
 msgstr ""
 
 #: src/features/security/security.bar.ts:33
-#: src/features/security/security.system.ts:59
-#: src/features/security/security.system.ts:70
+#: src/features/security/security.system.ts:60
+#: src/features/security/security.system.ts:71
 msgid "Companies"
 msgstr ""
 
@@ -433,17 +437,17 @@ msgid "superuser"
 msgstr ""
 
 #: src/features/security/security.bar.ts:75
-#: src/features/security/security.ui.ts:262
+#: src/features/security/security.ui.ts:135
 msgid "public"
 msgstr ""
 
 #: src/features/security/security.bar.ts:75
-#: src/features/security/security.ui.ts:262
+#: src/features/security/security.ui.ts:135
 msgid "portal"
 msgstr ""
 
 #: src/features/security/security.bar.ts:76
-#: src/features/security/security.ui.ts:262
+#: src/features/security/security.ui.ts:135
 msgid "archived"
 msgstr ""
 
@@ -488,98 +492,99 @@ msgstr ""
 msgid "You cannot read this record yourself, so its rules cannot be checked."
 msgstr ""
 
-#: src/features/security/security.groups.ts:24
+#: src/features/security/security.groups.ts:25
 msgid "Other"
 msgstr ""
 
-#: src/features/security/security.groups.ts:34
-#: src/features/security/security.model.ts:29
+#: src/features/security/security.groups.ts:35
+#: src/features/security/security.model.ts:30
 msgid "Group"
 msgstr ""
 
-#: src/features/security/security.groups.ts:34
+#: src/features/security/security.groups.ts:35
 msgid "Models"
 msgstr ""
 
-#: src/features/security/security.groups.ts:37
+#: src/features/security/security.groups.ts:38
 msgid "Filter or try a group…"
 msgstr ""
 
-#: src/features/security/security.groups.ts:41
+#: src/features/security/security.groups.ts:42
 msgid "%s groups found"
 msgstr ""
 
-#: src/features/security/security.groups.ts:41
+#: src/features/security/security.groups.ts:42
 msgid "%s groups"
 msgstr ""
 
-#: src/features/security/security.groups.ts:46
+#: src/features/security/security.groups.ts:47
 msgid "● set on the user · ◐ implied by another group · + being tried · ○ not. Models: how many models the group's own ACLs open. Type to find a group the users don't have."
 msgstr ""
 
-#: src/features/security/security.groups.ts:48
+#: src/features/security/security.groups.ts:49
 msgid "Risks of %s"
 msgstr ""
 
-#: src/features/security/security.groups.ts:60
+#: src/features/security/security.groups.ts:61
 msgid "Being tried"
 msgstr ""
 
-#: src/features/security/security.groups.ts:61
+#: src/features/security/security.groups.ts:62
 msgid "Set on %s"
 msgstr ""
 
-#: src/features/security/security.groups.ts:62
+#: src/features/security/security.groups.ts:63
 msgid "Implied by %s"
 msgstr ""
 
-#: src/features/security/security.groups.ts:68
+#: src/features/security/security.groups.ts:69
 msgid "Stop trying it"
 msgstr ""
 
-#: src/features/security/security.groups.ts:71
+#: src/features/security/security.groups.ts:72
+#: src/features/translations/translations.modules.ts:74
 msgid "Remove"
 msgstr ""
 
-#: src/features/security/security.groups.ts:72
+#: src/features/security/security.groups.ts:73
 msgid "Remove %s from %s?"
 msgstr ""
 
-#: src/features/security/security.groups.ts:76
-#: src/features/security/security.record.ts:165
+#: src/features/security/security.groups.ts:77
+#: src/features/security/security.record.ts:166
 msgid "Try"
 msgstr ""
 
-#: src/features/security/security.groups.ts:76
-#: src/features/security/security.record.ts:165
+#: src/features/security/security.groups.ts:77
+#: src/features/security/security.record.ts:166
 msgid "Simulate this group in every view, nothing is written"
 msgstr ""
 
-#: src/features/security/security.groups.ts:98
+#: src/features/security/security.groups.ts:99
 msgid "Give %s the groups of %s they lack (%s)"
 msgstr ""
 
-#: src/features/security/security.groups.ts:99
+#: src/features/security/security.groups.ts:100
 msgid "Make the groups of %s the same as %s"
 msgstr ""
 
-#: src/features/security/security.groups.ts:101
+#: src/features/security/security.groups.ts:102
 msgid "Add: %s"
 msgstr ""
 
-#: src/features/security/security.groups.ts:102
+#: src/features/security/security.groups.ts:103
 msgid "Remove: %s"
 msgstr ""
 
-#: src/features/security/security.groups.ts:103
+#: src/features/security/security.groups.ts:104
 msgid "Warning: one is a portal user, the other is not: the user type changes."
 msgstr ""
 
-#: src/features/security/security.groups.ts:105
+#: src/features/security/security.groups.ts:106
 msgid "Change the groups of %s?"
 msgstr ""
 
-#: src/features/security/security.groups.ts:111
+#: src/features/security/security.groups.ts:112
 msgid "Copy the groups of %s"
 msgstr ""
 
@@ -588,7 +593,7 @@ msgid "py_js is not loaded"
 msgstr ""
 
 #: src/features/security/security.logic.ts:289
-#: src/features/security/security.model.ts:37
+#: src/features/security/security.model.ts:38
 msgid "No ACL: only the superuser can access this model."
 msgstr ""
 
@@ -708,497 +713,499 @@ msgstr ""
 msgid "User is archived."
 msgstr ""
 
-#: src/features/security/security.model.ts:23
-#: src/features/security/security.record.ts:74
+#: src/features/security/security.model.ts:24
 #: src/features/security/security.record.ts:75
+#: src/features/security/security.record.ts:76
 msgid "%s has this group"
 msgstr ""
 
-#: src/features/security/security.model.ts:23
-#: src/features/security/security.record.ts:74
+#: src/features/security/security.model.ts:24
 #: src/features/security/security.record.ts:75
+#: src/features/security/security.record.ts:76
 msgid "%s doesn't have this group"
 msgstr ""
 
-#: src/features/security/security.model.ts:26
+#: src/features/security/security.model.ts:27
 msgid "Reading the ACLs and record rules needs Access Rights (base.group_erp_manager)."
 msgstr ""
 
-#: src/features/security/security.model.ts:28
-#: src/features/security/security.record.ts:84
+#: src/features/security/security.model.ts:29
+#: src/features/security/security.record.ts:85
 msgid "Access rights (ACL)"
 msgstr ""
 
-#: src/features/security/security.model.ts:31
-#: src/features/security/security.models.ts:85
-#: src/features/security/security.record.ts:86
-#: src/features/security/security.record.ts:105
+#: src/features/security/security.model.ts:32
+#: src/features/security/security.models.ts:86
+#: src/features/security/security.record.ts:87
+#: src/features/security/security.record.ts:106
 msgid "every user"
 msgstr ""
 
-#: src/features/security/security.model.ts:33
-#: src/features/security/security.record.ts:88
+#: src/features/security/security.model.ts:34
+#: src/features/security/security.record.ts:89
 msgid "This ACL grants it"
 msgstr ""
 
-#: src/features/security/security.model.ts:33
-#: src/features/security/security.record.ts:88
+#: src/features/security/security.model.ts:34
+#: src/features/security/security.record.ts:89
 msgid "This ACL doesn't grant it"
 msgstr ""
 
-#: src/features/security/security.model.ts:39
+#: src/features/security/security.model.ts:40
 msgid "Record rules"
 msgstr ""
 
-#: src/features/security/security.model.ts:42
+#: src/features/security/security.model.ts:43
 msgid "of %s, through %s"
 msgstr ""
 
-#: src/features/security/security.model.ts:42
+#: src/features/security/security.model.ts:43
 msgid "global: every user"
 msgstr ""
 
-#: src/features/security/security.model.ts:43
+#: src/features/security/security.model.ts:44
 msgid "The rule covers this operation"
 msgstr ""
 
-#: src/features/security/security.model.ts:43
-#: src/features/security/security.record.ts:99
+#: src/features/security/security.model.ts:44
+#: src/features/security/security.record.ts:100
 msgid "The rule doesn't cover this operation"
 msgstr ""
 
-#: src/features/security/security.model.ts:48
+#: src/features/security/security.model.ts:49
 msgid "Rule"
 msgstr ""
 
-#: src/features/security/security.model.ts:48
+#: src/features/security/security.model.ts:49
 msgid "This model has no record rule."
 msgstr ""
 
-#: src/features/security/security.model.ts:49
+#: src/features/security/security.model.ts:50
 msgid "Rules of %s (through %s) count as one more global rule."
 msgstr ""
 
-#: src/features/security/security.model.ts:50
+#: src/features/security/security.model.ts:51
 msgid "Rules of %s are not counted: %s is not stored (Odoo %s)."
 msgstr ""
 
-#: src/features/security/security.model.ts:51
+#: src/features/security/security.model.ts:52
 msgid "✓ the rule applies to this operation · ● the user has one of its groups · ○ not · — every user. Click a rule for its domain."
 msgstr ""
 
-#: src/features/security/security.model.ts:56
+#: src/features/security/security.model.ts:57
 msgid "Fields restricted to groups"
 msgstr ""
 
-#: src/features/security/security.model.ts:59
+#: src/features/security/security.model.ts:60
 msgid "Configuration check"
 msgstr ""
 
-#: src/features/security/security.model.ts:69
+#: src/features/security/security.model.ts:70
 msgid "No field is restricted to groups."
 msgstr ""
 
-#: src/features/security/security.model.ts:74
+#: src/features/security/security.model.ts:75
 msgid "Field"
 msgstr ""
 
-#: src/features/security/security.model.ts:78
+#: src/features/security/security.model.ts:79
 msgid "%s sees this field"
 msgstr ""
 
-#: src/features/security/security.model.ts:78
+#: src/features/security/security.model.ts:79
 msgid "Hidden from %s"
 msgstr ""
 
-#: src/features/security/security.models.ts:18
+#: src/features/security/security.models.ts:19
 msgid "The rights across models need Access Rights (base.group_erp_manager)."
 msgstr ""
 
-#: src/features/security/security.models.ts:42
+#: src/features/security/security.models.ts:43
 msgid "%s: granted by an ACL"
 msgstr ""
 
-#: src/features/security/security.models.ts:42
+#: src/features/security/security.models.ts:43
 msgid "%s: no ACL grants it"
 msgstr ""
 
-#: src/features/security/security.models.ts:50
+#: src/features/security/security.models.ts:51
 msgid "%s rules limit which records %s sees"
 msgstr ""
 
-#: src/features/security/security.models.ts:54
+#: src/features/security/security.models.ts:55
 msgid "(unknown module)"
 msgstr ""
 
-#: src/features/security/security.models.ts:58
+#: src/features/security/security.models.ts:59
 msgid "%s models"
 msgstr ""
 
-#: src/features/security/security.models.ts:61
+#: src/features/security/security.models.ts:62
 msgid "Model"
 msgstr ""
 
-#: src/features/security/security.models.ts:61
+#: src/features/security/security.models.ts:62
 msgid "Rules"
 msgstr ""
 
-#: src/features/security/security.models.ts:67
+#: src/features/security/security.models.ts:68
 msgid "%s of %s models"
 msgstr ""
 
-#: src/features/security/security.models.ts:68
+#: src/features/security/security.models.ts:69
 msgid "Filter models or modules…"
 msgstr ""
 
-#: src/features/security/security.models.ts:75
+#: src/features/security/security.models.ts:76
 msgid "Only what the tried groups add"
 msgstr ""
 
-#: src/features/security/security.models.ts:75
+#: src/features/security/security.models.ts:76
 msgid "Only differences"
 msgstr ""
 
-#: src/features/security/security.models.ts:77
+#: src/features/security/security.models.ts:78
 msgid "Each cell: %s | %s. From the ACLs: the Rules column counts the rules limiting which records. Click a model for the details."
 msgstr ""
 
-#: src/features/security/security.models.ts:78
+#: src/features/security/security.models.ts:79
 msgid "From the ACLs: the Rules column counts the rules limiting which records. +✓ added by the tried groups. Click a model for the details."
 msgstr ""
 
-#: src/features/security/security.models.ts:87
+#: src/features/security/security.models.ts:88
 msgid "Granted by"
 msgstr ""
 
-#: src/features/security/security.models.ts:87
+#: src/features/security/security.models.ts:88
 msgid "nothing for this user"
 msgstr ""
 
-#: src/features/security/security.models.ts:88
+#: src/features/security/security.models.ts:89
 msgid "Rules limiting the records"
 msgstr ""
 
-#: src/features/security/security.record.ts:33
-#: src/features/security/security.record.ts:145
+#: src/features/security/security.record.ts:34
+#: src/features/security/security.record.ts:146
 msgid "Server (has_access)"
 msgstr ""
 
-#: src/features/security/security.record.ts:33
-#: src/features/security/security.record.ts:146
+#: src/features/security/security.record.ts:34
+#: src/features/security/security.record.ts:147
 msgid "Odoo says: allowed"
 msgstr ""
 
-#: src/features/security/security.record.ts:33
-#: src/features/security/security.record.ts:146
+#: src/features/security/security.record.ts:34
+#: src/features/security/security.record.ts:147
 msgid "Odoo says: refused"
 msgstr ""
 
-#: src/features/security/security.record.ts:35
+#: src/features/security/security.record.ts:36
 msgid "Reading the ACLs and record rules needs Access Rights (base.group_erp_manager): this is the server's answer for you, without the why."
 msgstr ""
 
-#: src/features/security/security.record.ts:36
+#: src/features/security/security.record.ts:37
 msgid "Reading the ACLs and record rules needs Access Rights (base.group_erp_manager): nothing can be said for another user."
 msgstr ""
 
-#: src/features/security/security.record.ts:47
+#: src/features/security/security.record.ts:48
 msgid "From an error"
 msgstr ""
 
-#: src/features/security/security.record.ts:51
+#: src/features/security/security.record.ts:52
 msgid "Back to this page"
 msgstr ""
 
-#: src/features/security/security.record.ts:55
+#: src/features/security/security.record.ts:56
 msgid "the first record is checked"
 msgstr ""
 
-#: src/features/security/security.record.ts:56
+#: src/features/security/security.record.ts:57
 msgid "rules blamed: %s"
 msgstr ""
 
-#: src/features/security/security.record.ts:57
+#: src/features/security/security.record.ts:58
 msgid "groups allowed: %s"
 msgstr ""
 
-#: src/features/security/security.record.ts:58
+#: src/features/security/security.record.ts:59
 msgid "operation not named in the message"
 msgstr ""
 
-#: src/features/security/security.record.ts:59
+#: src/features/security/security.record.ts:60
 msgid "no record in the message: debug mode adds them"
 msgstr ""
 
-#: src/features/security/security.record.ts:60
+#: src/features/security/security.record.ts:61
 msgid "No record open: the ACLs only, the rules are checked on a record."
 msgstr ""
 
-#: src/features/security/security.record.ts:82
+#: src/features/security/security.record.ts:83
 msgid "An ACL of the user's groups grants it"
 msgstr ""
 
-#: src/features/security/security.record.ts:82
+#: src/features/security/security.record.ts:83
 msgid "No ACL of the user's groups grants it: refused"
 msgstr ""
 
-#: src/features/security/security.record.ts:84
+#: src/features/security/security.record.ts:85
 msgid "one is enough"
 msgstr ""
 
-#: src/features/security/security.record.ts:91
+#: src/features/security/security.record.ts:92
 msgid "No ACL: only the superuser"
 msgstr ""
 
-#: src/features/security/security.record.ts:92
-#: src/features/security/security.record.ts:118
-#: src/features/security/security.record.ts:134
+#: src/features/security/security.record.ts:93
+#: src/features/security/security.record.ts:119
+#: src/features/security/security.record.ts:135
 msgid "→ for the user"
 msgstr ""
 
-#: src/features/security/security.record.ts:101
+#: src/features/security/security.record.ts:102
 msgid "The record matches this rule"
 msgstr ""
 
-#: src/features/security/security.record.ts:101
+#: src/features/security/security.record.ts:102
 msgid "The record doesn't match this rule"
 msgstr ""
 
-#: src/features/security/security.record.ts:101
+#: src/features/security/security.record.ts:102
 msgid "Could not be checked: open the rule"
 msgstr ""
 
-#: src/features/security/security.record.ts:112
+#: src/features/security/security.record.ts:113
 msgid "Global rules"
 msgstr ""
 
-#: src/features/security/security.record.ts:112
+#: src/features/security/security.record.ts:113
 msgid "the record must match every one"
 msgstr ""
 
-#: src/features/security/security.record.ts:116
+#: src/features/security/security.record.ts:117
 msgid "Group rules"
 msgstr ""
 
-#: src/features/security/security.record.ts:116
+#: src/features/security/security.record.ts:117
 msgid "the record must match one of the user's"
 msgstr ""
 
-#: src/features/security/security.record.ts:121
+#: src/features/security/security.record.ts:122
 msgid "No group rule of the user for this operation: no restriction from them"
 msgstr ""
 
-#: src/features/security/security.record.ts:122
+#: src/features/security/security.record.ts:123
 msgid "One of the user's group rules matches: enough"
 msgstr ""
 
-#: src/features/security/security.record.ts:122
+#: src/features/security/security.record.ts:123
 msgid "None of the user's group rules matches: refused"
 msgstr ""
 
-#: src/features/security/security.record.ts:122
-#: src/features/security/security.record.ts:135
+#: src/features/security/security.record.ts:123
+#: src/features/security/security.record.ts:136
 msgid "Could not be checked"
 msgstr ""
 
-#: src/features/security/security.record.ts:132
+#: src/features/security/security.record.ts:133
 msgid "Rules of %s, through %s"
 msgstr ""
 
-#: src/features/security/security.record.ts:132
+#: src/features/security/security.record.ts:133
 msgid "counted as one global rule"
 msgstr ""
 
-#: src/features/security/security.record.ts:135
+#: src/features/security/security.record.ts:136
 msgid "The parent record passes its rules"
 msgstr ""
 
-#: src/features/security/security.record.ts:135
+#: src/features/security/security.record.ts:136
 msgid "The parent record doesn't pass its rules: refused"
 msgstr ""
 
-#: src/features/security/security.record.ts:142
+#: src/features/security/security.record.ts:143
 msgid "%s can do it"
 msgstr ""
 
-#: src/features/security/security.record.ts:142
+#: src/features/security/security.record.ts:143
 msgid "%s is refused"
 msgstr ""
 
-#: src/features/security/security.record.ts:142
+#: src/features/security/security.record.ts:143
 msgid "Not certain: a rule could not be checked"
 msgstr ""
 
-#: src/features/security/security.record.ts:145
+#: src/features/security/security.record.ts:146
 msgid "Odoo's own answer for you, same companies"
 msgstr ""
 
-#: src/features/security/security.record.ts:146
+#: src/features/security/security.record.ts:147
 msgid "The server disagrees with the simulation"
 msgstr ""
 
-#: src/features/security/security.record.ts:151
+#: src/features/security/security.record.ts:152
 msgid "✓ allowed / matches · ✗ refused / no match · · does not apply · ? unknown · ● the user has the group · ○ not. Click a rule for its domain."
 msgstr ""
 
-#: src/features/security/security.record.ts:152
+#: src/features/security/security.record.ts:153
 msgid "Marks: %s, then %s."
 msgstr ""
 
-#: src/features/security/security.record.ts:161
-#: src/features/security/security.record.ts:178
+#: src/features/security/security.record.ts:162
+#: src/features/security/security.record.ts:179
 msgid "To allow it"
 msgstr ""
 
-#: src/features/security/security.record.ts:161
+#: src/features/security/security.record.ts:162
 msgid "No single group allows it."
 msgstr ""
 
-#: src/features/security/security.record.ts:166
+#: src/features/security/security.record.ts:167
 msgid "also adds: %s"
 msgstr ""
 
-#: src/features/security/security.record.ts:167
+#: src/features/security/security.record.ts:168
 msgid "Adding this group allows it"
 msgstr ""
 
-#: src/features/security/security.record.ts:168
+#: src/features/security/security.record.ts:169
 msgid "Already allowed"
 msgstr ""
 
-#: src/features/security/security.record.ts:168
+#: src/features/security/security.record.ts:169
 msgid "Still refused with this group"
 msgstr ""
 
-#: src/features/security/security.record.ts:171
+#: src/features/security/security.record.ts:172
 msgid "No new right on other models."
 msgstr ""
 
-#: src/features/security/security.record.ts:173
+#: src/features/security/security.record.ts:174
+#: src/features/translations/translations.modules.ts:139
 msgid "… and %s more"
 msgstr ""
 
-#: src/features/security/security.record.ts:174
+#: src/features/security/security.record.ts:175
 msgid "Also opens, on %s other models:"
 msgstr ""
 
-#: src/features/security/security.record.ts:178
+#: src/features/security/security.record.ts:179
 msgid "Group to add"
 msgstr ""
 
-#: src/features/security/security.record.ts:179
+#: src/features/security/security.record.ts:180
 msgid "Fewest new groups first; %s more not shown. Click a group for what else it opens."
 msgstr ""
 
-#: src/features/security/security.record.ts:180
+#: src/features/security/security.record.ts:181
 msgid "Fewest new groups first. Click a group for what else it opens."
 msgstr ""
 
-#: src/features/security/security.record.ts:188
+#: src/features/security/security.record.ts:189
 msgid "No model found in this message: is it an access error?"
 msgstr ""
 
-#: src/features/security/security.system.ts:25
+#: src/features/security/security.system.ts:26
 msgid "Session"
 msgstr ""
 
-#: src/features/security/security.system.ts:26
+#: src/features/security/security.system.ts:27
 msgid "System parameters (ir.config_parameter)"
 msgstr ""
 
-#: src/features/security/security.system.ts:27
+#: src/features/security/security.system.ts:28
 msgid "Instance check"
 msgstr ""
 
-#: src/features/security/security.system.ts:49
+#: src/features/security/security.system.ts:50
 msgid "Become Superuser"
 msgstr ""
 
-#: src/features/security/security.system.ts:50
+#: src/features/security/security.system.ts:51
 msgid "Switch the current session to superuser (bypasses every rule)?"
 msgstr ""
 
-#: src/features/security/security.system.ts:51
+#: src/features/security/security.system.ts:52
 msgid "Odoo's built-in /web/become route, base.group_system only"
 msgstr ""
 
-#: src/features/security/security.system.ts:59
+#: src/features/security/security.system.ts:60
 msgid "Not in the session info."
 msgstr ""
 
-#: src/features/security/security.system.ts:63
+#: src/features/security/security.system.ts:64
 msgid "parent only: the user is not in it"
 msgstr ""
 
-#: src/features/security/security.system.ts:65
+#: src/features/security/security.system.ts:66
 msgid "The user's default company"
 msgstr ""
 
-#: src/features/security/security.system.ts:65
+#: src/features/security/security.system.ts:66
 msgid "Not the default company"
 msgstr ""
 
-#: src/features/security/security.system.ts:66
+#: src/features/security/security.system.ts:67
 msgid "On in the page's company switcher"
 msgstr ""
 
-#: src/features/security/security.system.ts:66
+#: src/features/security/security.system.ts:67
 msgid "Off in the page's company switcher"
 msgstr ""
 
-#: src/features/security/security.system.ts:66
+#: src/features/security/security.system.ts:67
 msgid "The user is not in this company"
 msgstr ""
 
-#: src/features/security/security.system.ts:68
+#: src/features/security/security.system.ts:69
 msgid "Default: the company the user starts in. On: enabled in the page's company switcher (record rules read these)."
 msgstr ""
 
-#: src/features/security/security.system.ts:70
+#: src/features/security/security.system.ts:71
 msgid "Company"
 msgstr ""
 
-#: src/features/security/security.system.ts:70
+#: src/features/security/security.system.ts:71
 msgid "Default"
 msgstr ""
 
-#: src/features/security/security.system.ts:70
+#: src/features/security/security.system.ts:71
 msgid "On"
 msgstr ""
 
-#: src/features/security/security.system.ts:75
+#: src/features/security/security.system.ts:76
 msgid "Needs Settings rights (base.group_system)."
 msgstr ""
 
-#: src/features/security/security.system.ts:77
+#: src/features/security/security.system.ts:78
 msgid "No parameter."
 msgstr ""
 
-#: src/features/security/security.system.ts:78
+#: src/features/security/security.system.ts:79
 msgid "Key"
 msgstr ""
 
-#: src/features/security/security.system.ts:86
+#: src/features/security/security.system.ts:87
 msgid "Copy the value"
 msgstr ""
 
-#: src/features/security/security.system.ts:92
+#: src/features/security/security.system.ts:93
 msgid "Filter key / value"
 msgstr ""
 
-#: src/features/security/security.system.ts:93
+#: src/features/security/security.system.ts:94
 msgid "%s of %s parameters"
 msgstr ""
 
-#: src/features/security/security.system.ts:104
+#: src/features/security/security.system.ts:105
 msgid "Raw data"
 msgstr ""
 
-#: src/features/security/security.system.ts:105
+#: src/features/security/security.system.ts:106
 msgid "Check Again"
 msgstr ""
 
 #: src/features/security/security.tab.ts:61
+#: src/features/translations/translations.tab.ts:36
 msgid "Record #%s"
 msgstr ""
 
@@ -1223,76 +1230,449 @@ msgstr ""
 msgid "Discard"
 msgstr ""
 
-#: src/features/security/security.tpl.html:78
+#: src/features/security/security.tpl.html:58
 msgid "Diagnose an access error message"
 msgstr ""
 
-#: src/features/security/security.tpl.html:80
+#: src/features/security/security.tpl.html:60
 msgid "Paste the message of the error dialog (debug mode adds the records and the rules)"
 msgstr ""
 
-#: src/features/security/security.tpl.html:80
+#: src/features/security/security.tpl.html:60
 msgid "Access error message"
 msgstr ""
 
-#: src/features/security/security.tpl.html:81
+#: src/features/security/security.tpl.html:61
 msgid "Diagnose"
 msgstr ""
 
-#: src/features/security/security.tpl.html:88
+#: src/features/security/security.tpl.html:68
 msgid "As written"
 msgstr ""
 
-#: src/features/security/security.tpl.html:89
+#: src/features/security/security.tpl.html:69
 msgid "For the user"
 msgstr ""
 
-#: src/features/security/security.tpl.html:128
+#: src/features/security/security.tpl.html:108
 msgid "✓ No issue found."
 msgstr ""
 
-#: src/features/security/security.ui.ts:61
+#: src/features/security/security.ui.ts:62
 msgid "Has this group: set on the user"
 msgstr ""
 
-#: src/features/security/security.ui.ts:62
+#: src/features/security/security.ui.ts:63
 msgid "Has this group through another one (implied)"
 msgstr ""
 
-#: src/features/security/security.ui.ts:63
+#: src/features/security/security.ui.ts:64
 msgid "Doesn't have this group"
 msgstr ""
 
-#: src/features/security/security.ui.ts:64
+#: src/features/security/security.ui.ts:65
 msgid "Being tried: simulated, nothing written"
 msgstr ""
 
-#: src/features/security/security.ui.ts:98
-msgid "Allowed / matches"
-msgstr ""
-
-#: src/features/security/security.ui.ts:98
-msgid "Refused / doesn't match"
-msgstr ""
-
-#: src/features/security/security.ui.ts:98
-msgid "Does not apply"
-msgstr ""
-
-#: src/features/security/security.ui.ts:98
-msgid "Unknown: could not be checked"
-msgstr ""
-
-#: src/features/security/security.ui.ts:105
-msgid "Added by the groups being tried"
-msgstr ""
-
-#: src/features/security/security.ui.ts:210
+#: src/features/security/security.ui.ts:83
 msgid "cannot evaluate: %s"
 msgstr ""
 
-#: src/features/security/security.ui.ts:291
+#: src/features/security/security.ui.ts:164
 msgid "Log in as %s in an incognito window"
+msgstr ""
+
+#: src/features/translations/translations.find.ts:28
+msgid "Type a text shown on the page, or pick it: its source, its English text and where to change it are listed."
+msgstr ""
+
+#: src/features/translations/translations.find.ts:35
+msgid "Click a text on the page… (Esc to cancel)"
+msgstr ""
+
+#: src/features/translations/translations.find.ts:38
+#: src/features/translations/translations.tpl.html:15
+#: src/features/view/view.tpl.html:50
+msgid "⌖ Pick on Page"
+msgstr ""
+
+#: src/features/translations/translations.find.ts:59
+msgid "contains the text"
+msgstr ""
+
+#: src/features/translations/translations.find.ts:61
+msgid "Selection"
+msgstr ""
+
+#: src/features/translations/translations.find.ts:61
+msgid "Field label"
+msgstr ""
+
+#: src/features/translations/translations.find.ts:62
+msgid "Field %s: its module's .po (model:ir.model.fields…), or Settings › Technical › Fields"
+msgstr ""
+
+#: src/features/translations/translations.find.ts:63
+#: src/features/view/view.overview.ts:57
+msgid "Menu"
+msgstr ""
+
+#: src/features/translations/translations.find.ts:63
+msgid "The menu's name (translated in Odoo, or the module's .po)"
+msgstr ""
+
+#: src/features/translations/translations.find.ts:67
+#: src/features/view/view.overview.ts:58
+#: src/features/view/view.overview.ts:59
+msgid "Action"
+msgstr ""
+
+#: src/features/translations/translations.find.ts:67
+msgid "The action's name (translated in Odoo, or the module's .po)"
+msgstr ""
+
+#: src/features/translations/translations.find.ts:69
+msgid "Translations › Record: edit it there"
+msgstr ""
+
+#: src/features/translations/translations.find.ts:70
+msgid "Translations › View: edit it there"
+msgstr ""
+
+#: src/features/translations/translations.find.ts:73
+msgid "Source"
+msgstr ""
+
+#: src/features/translations/translations.find.ts:73
+msgid "English (source)"
+msgstr ""
+
+#: src/features/translations/translations.find.ts:73
+msgid "Where to change it"
+msgstr ""
+
+#: src/features/translations/translations.find.ts:74
+msgid "Not found in %s. It may be a code text with no translation (it then shows in English), data of a record not on this screen, or a text built from several parts: pick a smaller piece."
+msgstr ""
+
+#: src/features/translations/translations.find.ts:75
+msgid "The views' terms were not searched: reading views needs Settings rights (base.group_system)."
+msgstr ""
+
+#: src/features/translations/translations.find.ts:76
+msgid "Your language is English: code texts have no translation to find. Switch language in Translations › Languages to look for one."
+msgstr ""
+
+#: src/features/translations/translations.langs.ts:30
+msgid "Working… (loading terms can take a minute)"
+msgstr ""
+
+#: src/features/translations/translations.langs.ts:34
+msgid "Switch your language to %s? The page reloads."
+msgstr ""
+
+#: src/features/translations/translations.langs.ts:45
+#: src/features/translations/translations.langs.ts:55
+msgid "Active"
+msgstr ""
+
+#: src/features/translations/translations.langs.ts:45
+msgid "Not active"
+msgstr ""
+
+#: src/features/translations/translations.langs.ts:46
+msgid "Your language"
+msgstr ""
+
+#: src/features/translations/translations.langs.ts:46
+msgid "Not your language"
+msgstr ""
+
+#: src/features/translations/translations.langs.ts:49
+msgid "Update"
+msgstr ""
+
+#: src/features/translations/translations.langs.ts:49
+msgid "Reload the translations of %s from the modules' .po, replacing the ones changed in the database?"
+msgstr ""
+
+#: src/features/translations/translations.langs.ts:50
+msgid "Load the modules' translations again, replacing the ones changed in the database"
+msgstr ""
+
+#: src/features/translations/translations.langs.ts:51
+msgid "Use"
+msgstr ""
+
+#: src/features/translations/translations.langs.ts:51
+msgid "Make it your language and reload the page"
+msgstr ""
+
+#: src/features/translations/translations.langs.ts:52
+msgid "Activate"
+msgstr ""
+
+#: src/features/translations/translations.langs.ts:52
+msgid "Activate %s and load its translations for every installed module?"
+msgstr ""
+
+#: src/features/translations/translations.langs.ts:55
+msgid "Yours"
+msgstr ""
+
+#: src/features/translations/translations.langs.ts:55
+msgid "Users"
+msgstr ""
+
+#: src/features/translations/translations.langs.ts:58
+msgid "Find a language to activate…"
+msgstr ""
+
+#: src/features/translations/translations.langs.ts:62
+msgid "%s languages found"
+msgstr ""
+
+#: src/features/translations/translations.langs.ts:62
+msgid "%s active languages"
+msgstr ""
+
+#: src/features/translations/translations.langs.ts:69
+msgid "You are seeing Odoo in %s."
+msgstr ""
+
+#: src/features/translations/translations.langs.ts:69
+msgid "Back to %s"
+msgstr ""
+
+#: src/features/translations/translations.langs.ts:75
+msgid "Users: internal users with this language. Update reloads the terms from the modules (what a module upgrade does)."
+msgstr ""
+
+#: src/features/translations/translations.modules.ts:29
+msgid "Exporting translations needs Settings rights (base.group_system)."
+msgstr ""
+
+#: src/features/translations/translations.modules.ts:38
+msgid "Template (.pot)"
+msgstr ""
+
+#: src/features/translations/translations.modules.ts:38
+msgid "Always exported: the empty template, <module>.pot"
+msgstr ""
+
+#: src/features/translations/translations.modules.ts:49
+msgid "Add at least one module."
+msgstr ""
+
+#: src/features/translations/translations.modules.ts:60
+msgid "%s files saved to Downloads/<module>/i18n/."
+msgstr ""
+
+#: src/features/translations/translations.modules.ts:64
+msgid "Check Coverage"
+msgstr ""
+
+#: src/features/translations/translations.modules.ts:64
+msgid "Download .pot / .po"
+msgstr ""
+
+#: src/features/translations/translations.modules.ts:65
+msgid "Odoo's export wizard: one run per language"
+msgstr ""
+
+#: src/features/translations/translations.modules.ts:65
+msgid "base.language.export, tgz"
+msgstr ""
+
+#: src/features/translations/translations.modules.ts:66
+msgid "Modules"
+msgstr ""
+
+#: src/features/translations/translations.modules.ts:66
+#: src/features/translations/translations.tab.ts:39
+msgid "Languages"
+msgstr ""
+
+#: src/features/translations/translations.modules.ts:67
+msgid "Import a .po into the database"
+msgstr ""
+
+#: src/features/translations/translations.modules.ts:75
+msgid "No module yet."
+msgstr ""
+
+#: src/features/translations/translations.modules.ts:117
+msgid "%s terms"
+msgstr ""
+
+#: src/features/translations/translations.modules.ts:121
+msgid "Share of the template's terms translated in each language; fuzzy ones count as not translated. Click a module for the missing terms."
+msgstr ""
+
+#: src/features/translations/translations.modules.ts:123
+msgid "Module"
+msgstr ""
+
+#: src/features/translations/translations.modules.ts:123
+msgid "Template"
+msgstr ""
+
+#: src/features/translations/translations.modules.ts:128
+msgid "no file"
+msgstr ""
+
+#: src/features/translations/translations.modules.ts:131
+msgid "%s translated, %s missing, %s fuzzy, of %s"
+msgstr ""
+
+#: src/features/translations/translations.modules.ts:140
+msgid "Missing in %s (%s)"
+msgstr ""
+
+#: src/features/translations/translations.modules.ts:142
+msgid "Nothing missing."
+msgstr ""
+
+#: src/features/translations/translations.modules.ts:162
+msgid "Choose a .po file and its language."
+msgstr ""
+
+#: src/features/translations/translations.modules.ts:163
+msgid "Import %s into %s%s?"
+msgstr ""
+
+#: src/features/translations/translations.modules.ts:163
+msgid ", replacing the existing translations"
+msgstr ""
+
+#: src/features/translations/translations.modules.ts:168
+msgid "Imported: %s terms in %s. Reload the page to see them."
+msgstr ""
+
+#: src/features/translations/translations.record.ts:16
+msgid "Open a record to see its translations."
+msgstr ""
+
+#: src/features/translations/translations.record.ts:19
+msgid "%s has no translated field."
+msgstr ""
+
+#: src/features/translations/translations.record.ts:29
+msgid "Fields translated whole"
+msgstr ""
+
+#: src/features/translations/translations.record.ts:34
+msgid "%s · translated term by term (%s terms)"
+msgstr ""
+
+#: src/features/translations/translations.record.ts:39
+msgid "✗ not translated: Odoo shows the English value. Click a row to edit its translations."
+msgstr ""
+
+#: src/features/translations/translations.tab.ts:35
+msgid "Find a Text"
+msgstr ""
+
+#: src/features/translations/translations.tab.ts:37
+msgid "View (%s)"
+msgstr ""
+
+#: src/features/translations/translations.tab.ts:38
+msgid "Modules (.po)"
+msgstr ""
+
+#: src/features/translations/translations.tpl.html:13
+#: src/features/translations/translations.tpl.html:13
+msgid "A text shown on the page, e.g. Confirm Order"
+msgstr ""
+
+#: src/features/translations/translations.tpl.html:14
+msgid "Find"
+msgstr ""
+
+#: src/features/translations/translations.tpl.html:15
+msgid "Click a text on the Odoo page (Esc to cancel)"
+msgstr ""
+
+#: src/features/translations/translations.tpl.html:24
+msgid "Save Translations"
+msgstr ""
+
+#: src/features/translations/translations.tpl.html:35
+#: src/features/translations/translations.tpl.html:35
+msgid "Add a module: name or title…"
+msgstr ""
+
+#: src/features/translations/translations.tpl.html:46
+msgid ".po file"
+msgstr ""
+
+#: src/features/translations/translations.tpl.html:47
+msgid "Language of the file"
+msgstr ""
+
+#: src/features/translations/translations.tpl.html:48
+msgid "Replace the existing translations"
+msgstr ""
+
+#: src/features/translations/translations.tpl.html:49
+msgid "Import"
+msgstr ""
+
+#: src/features/translations/translations.ui.ts:54
+msgid "Not translated in %s"
+msgstr ""
+
+#: src/features/translations/translations.ui.ts:77
+msgid "Nothing changed."
+msgstr ""
+
+#: src/features/translations/translations.ui.ts:78
+msgid "Save the translations in %s?"
+msgstr ""
+
+#: src/features/translations/translations.ui.ts:110
+msgid "Filter the texts…"
+msgstr ""
+
+#: src/features/translations/translations.ui.ts:114
+msgid "Everything is translated."
+msgstr ""
+
+#: src/features/translations/translations.ui.ts:116
+msgid "Only missing translations"
+msgstr ""
+
+#: src/features/translations/translations.view.ts:16
+msgid "This screen has no view."
+msgstr ""
+
+#: src/features/translations/translations.view.ts:20
+msgid "Reading the views needs Settings rights (base.group_system)."
+msgstr ""
+
+#: src/features/translations/translations.view.ts:24
+msgid "%s · %s terms"
+msgstr ""
+
+#: src/features/translations/translations.view.ts:24
+msgid "view"
+msgstr ""
+
+#: src/features/translations/translations.view.ts:24
+msgid "extension"
+msgstr ""
+
+#: src/features/translations/translations.view.ts:31
+msgid "The views of this screen have no translatable text."
+msgstr ""
+
+#: src/features/translations/translations.view.ts:33
+msgid "%s views"
+msgstr ""
+
+#: src/features/translations/translations.view.ts:34
+msgid "✗ not translated: the screen shows the English text. Click a row to edit its translations."
 msgstr ""
 
 #: src/features/view/view.action.ts:11
@@ -1579,15 +1959,6 @@ msgstr ""
 msgid "unknown: the inheritance needs Settings rights (base.group_system)"
 msgstr ""
 
-#: src/features/view/view.overview.ts:57
-msgid "Menu"
-msgstr ""
-
-#: src/features/view/view.overview.ts:58
-#: src/features/view/view.overview.ts:59
-msgid "Action"
-msgstr ""
-
 #: src/features/view/view.overview.ts:59
 msgid "none: opened directly by its URL"
 msgstr ""
@@ -1649,10 +2020,6 @@ msgstr ""
 #: src/features/view/view.tpl.html:48
 #: src/features/view/view.tpl.html:48
 msgid "Field to inspect, e.g. partner_id"
-msgstr ""
-
-#: src/features/view/view.tpl.html:50
-msgid "⌖ Pick on Page"
 msgstr ""
 
 #: src/features/view/view.tpl.html:50
@@ -1741,4 +2108,24 @@ msgstr ""
 
 #: src/ui/json-view.ts:71
 msgid "Show %s more (of %s)"
+msgstr ""
+
+#: src/ui/matrix.ts:32
+msgid "Allowed / matches"
+msgstr ""
+
+#: src/ui/matrix.ts:32
+msgid "Refused / doesn't match"
+msgstr ""
+
+#: src/ui/matrix.ts:32
+msgid "Does not apply"
+msgstr ""
+
+#: src/ui/matrix.ts:32
+msgid "Unknown: could not be checked"
+msgstr ""
+
+#: src/ui/matrix.ts:39
+msgid "Added by the groups being tried"
 msgstr ""

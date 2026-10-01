@@ -67,6 +67,7 @@ export const v19: OdooAdapter = {
     inheritsStoredOnly: true, // _compute_domain skips a non-stored _inherits link
     evalNames: ['user', 'company_ids', 'company_id'], // `time` is gone from ir.rule._eval_context
   },
+  i18n: { webTranslationsPath: '/web/webclient/translations' }, // ?hash= instead of the segment: without it, everything comes back
   profiler: { listFields: ['name', 'session', 'duration', 'cpu_duration', 'sql_count', 'create_date'] }, // cpu_duration is new
   // /json/2/<model>/<method> (addons/rpc/controllers/json2.py, auto_install): binds NAMED arguments only
   // (signature.bind(records, **kwargs)), 422 when ids are given to an @api.model method. /jsonrpc still answers but is

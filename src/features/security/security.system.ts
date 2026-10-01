@@ -16,7 +16,8 @@ import { frag, note } from '../../ui/parts.ts';
 import { pageCompanies, pageProbe } from './security.injected.ts';
 import { checkInstance, companyTree, managerState, type UserCompanies } from './security.logic.ts';
 import type { SecurityCtx } from './security.state.ts';
-import { box, button, facts, filterMatrix, findings, matrix, title, tpl, type MxRow } from './security.ui.ts';
+import { filterMatrix, matrix, type MxRow } from '../../ui/matrix.ts';
+import { box, button, facts, findings, title, tpl } from './security.ui.ts';
 
 const SECRET = /secret|passw|token|api_?key|private_?key/i; // a key-name heuristic: the value still shows when the row opens
 

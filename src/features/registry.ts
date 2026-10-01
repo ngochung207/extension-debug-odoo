@@ -6,6 +6,7 @@ import type { OdooContext } from '../odoo/detect.ts';
 import { recordTab } from './record/record.tab.ts';
 import { rpcTab } from './rpc/rpc.tab.ts';
 import { securityTab } from './security/security.tab.ts';
+import { translationsTab } from './translations/translations.tab.ts';
 import { viewTab } from './view/view.tab.ts';
 
 /** In the order of the tab bar (entrypoints/panel/index.html). */
@@ -43,7 +44,7 @@ export const TABS: Readonly<Record<TabName, TabModule | null>> = {
   view: viewTab,
   rpc: rpcTab,
   security: securityTab,
-  translations: null,
+  translations: translationsTab,
   apps: null,
   perf: null,
   code: null,

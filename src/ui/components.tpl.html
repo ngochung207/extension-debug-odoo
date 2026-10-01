@@ -164,3 +164,27 @@
 <template data-tpl="tooltip">
   <div class="tooltip" role="tooltip" data-ref="tip" hidden></div>
 </template>
+
+<!-- A table (matrix.ts): a first column naming the row, then one column per operation (or per user). Sections group
+     rows under a title; a row opens its detail below it. -->
+<template data-tpl="matrix">
+  <table class="matrix"><thead><tr data-ref="head"><th data-ref="first"></th></tr></thead></table>
+</template>
+<template data-tpl="mx-th">
+  <th class="c" data-ref="cell"></th>
+</template>
+<template data-tpl="mx-section">
+  <tbody data-ref="body"><tr class="mx-section" data-ref="row"><th data-ref="title"><span data-ref="text"></span><span class="mx-note" data-ref="note"></span></th></tr></tbody>
+</template>
+<template data-tpl="mx-row">
+  <tr data-ref="row"><td class="mx-label" data-ref="label"><div class="row" data-ref="main"></div><div class="meta" data-ref="sub"></div></td></tr>
+</template>
+<template data-tpl="mx-cell">
+  <td class="c" data-ref="cell"></td>
+</template>
+<template data-tpl="mx-detail">
+  <tr class="mx-detail" data-ref="row"><td data-ref="cell"></td></tr>
+</template>
+<template data-tpl="sym">
+  <span class="sym" data-ref="sym"></span>
+</template>

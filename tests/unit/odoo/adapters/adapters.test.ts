@@ -36,6 +36,11 @@ test('record rules: `time` only reaches the domains of 18', () => {
   assert.ok(!ADAPTERS[19].rules.evalNames.includes('time'));
 });
 
+test('the webclient translations route: a unique segment in 18, none in 19', () => {
+  assert.ok(ADAPTERS[18].i18n.webTranslationsPath.includes('{unique}'));
+  assert.equal(ADAPTERS[19].i18n.webTranslationsPath, '/web/webclient/translations');
+});
+
 test('self-check: missing fields', () => {
   const expects = ADAPTERS[19].expects;
   assert.deepEqual(missingFields(expects, Object.fromEntries(expects.map((e) => [e.model, expects.filter((x) => x.model === e.model).map((x) => x.field)]))), []);
