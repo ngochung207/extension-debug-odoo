@@ -12,6 +12,23 @@ export interface ExpectedField {
   usedBy: string;
 }
 
+/** A method's parameters, in order, and whether it is @api.model (called without ids). */
+export interface MethodSignature {
+  readonly params: readonly string[];
+  readonly model: boolean;
+}
+
+/**
+ * jsonrpc: /jsonrpc, object service, execute_kw(db, uid, API key, model, method, args, kwargs): the call_kw arguments
+ *          fit as they are (positional + keyword).
+ * json2:   /json/2/<model>/<method>, `Authorization: bearer <API key>`, a JSON object of NAMED arguments plus ids and
+ *          context: positional arguments must be named, from /doc/<model>.json (api_doc) when the user may read it,
+ *          else from `signatures` (the common ORM methods).
+ */
+export type ExternalApi =
+  | { readonly kind: 'jsonrpc' }
+  | { readonly kind: 'json2'; readonly signatures: Readonly<Record<string, MethodSignature>> };
+
 export interface OdooAdapter {
   readonly major: SupportedMajor;
 
@@ -39,10 +56,8 @@ export interface OdooAdapter {
     readonly listFields: readonly string[];
   };
 
-  readonly api: {
-    /** /json/2/<model>/<method> with a Bearer API key: the external API Copy as cURL targets */
-    readonly json2: boolean;
-  };
+  /** The external API a call of the page is replayed with (RPC tab → Copy as cURL). */
+  readonly api: ExternalApi;
 
   readonly orm: {
     /** methods that only read: allowed by the Code tab in read-only mode */

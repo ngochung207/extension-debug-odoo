@@ -162,13 +162,121 @@ msgstr "debug"
 msgid "No tab is open."
 msgstr "Không có tab đang mở."
 
-#: src/odoo/detect.ts:32
-msgid "Cannot read the Odoo version (%s)."
-msgstr "Không đọc được phiên bản Odoo (%s)."
+#: src/features/rpc/rpc.logic.ts:155
+msgid "Signature of %s.%s unknown: ids and argument names are guessed."
+msgstr "Không rõ chữ ký của %s.%s: ids và tên tham số được đoán."
 
+#: src/features/rpc/rpc.logic.ts:156
+msgid "JSON-2 takes named arguments only: rename %s."
+msgstr "JSON-2 chỉ nhận tham số có tên: hãy đổi tên %s."
+
+#: src/features/rpc/rpc.tab.ts:42
+msgid "Method · model · duration"
+msgstr "Method · model · thời gian"
+
+#: src/features/rpc/rpc.tab.ts:42
+msgid "Time · route"
+msgstr "Giờ · route"
+
+#: src/features/rpc/rpc.tab.ts:46
+msgid "Select a call to see its parameters and result."
+msgstr "Chọn một lời gọi để xem tham số và kết quả."
+
+#: src/features/rpc/rpc.tab.ts:95
+#: src/features/rpc/rpc.tab.ts:163
+msgid "error"
+msgstr "lỗi"
+
+#: src/features/rpc/rpc.tab.ts:108
+msgid "Parameters"
+msgstr "Tham số"
+
+#: src/features/rpc/rpc.tab.ts:120
+msgid "Result"
+msgstr "Kết quả"
+
+#: src/features/rpc/rpc.tab.ts:126
+msgid "… (%s characters)"
+msgstr "… (%s ký tự)"
+
+#: src/features/rpc/rpc.tab.ts:155
+msgid "Invalid JSON: %s"
+msgstr "JSON không hợp lệ: %s"
+
+#: src/features/rpc/rpc.tab.ts:160
 #: src/odoo/rpc.ts:25
 msgid "No response — is this an Odoo page?"
 msgstr "Không có phản hồi — đây có phải trang Odoo?"
+
+#: src/features/rpc/rpc.tab.ts:179
+msgid "call_kw: the JSON-2 API (/json/2, named arguments), with an API key of this user in $ODOO_API_KEY. Other routes: the session_id cookie in $ODOO_SESSION."
+msgstr "call_kw: API JSON-2 (/json/2, tham số có tên), với API key của người dùng này trong $ODOO_API_KEY. Các route khác: cookie session_id trong $ODOO_SESSION."
+
+#: src/features/rpc/rpc.tab.ts:180
+msgid "call_kw: the external API (execute_kw), with an API key of this user in $ODOO_API_KEY. Other routes: the session_id cookie in $ODOO_SESSION."
+msgstr "call_kw: qua API ngoài (execute_kw), với API key của người dùng này trong $ODOO_API_KEY. Các route khác: cookie session_id trong $ODOO_SESSION."
+
+#: src/features/rpc/rpc.tpl.html:6
+msgid "Filter model / method"
+msgstr "Lọc model / method"
+
+#: src/features/rpc/rpc.tpl.html:7
+msgid "Errors Only"
+msgstr "Chỉ lỗi"
+
+#: src/features/rpc/rpc.tpl.html:8
+msgid "Clear"
+msgstr "Xoá"
+
+#: src/features/rpc/rpc.tpl.html:9
+#: src/features/rpc/rpc.tpl.html:35
+msgid "New Request"
+msgstr "Request mới"
+
+#: src/features/rpc/rpc.tpl.html:26
+msgid "No RPC yet. Use the Odoo page to record some."
+msgstr "Chưa có RPC nào. Thao tác trên trang Odoo để ghi lại."
+
+#: src/features/rpc/rpc.tpl.html:27
+msgid "Calls Odoo answers from its own cache (views, actions…) never reach the network: they are not logged."
+msgstr "Các lời gọi Odoo trả lời từ cache của nó (view, action…) không đi ra mạng nên không được ghi lại."
+
+#: src/features/rpc/rpc.tpl.html:36
+#: src/features/rpc/rpc.tpl.html:36
+msgid "Close"
+msgstr "Đóng"
+
+#: src/features/rpc/rpc.tpl.html:59
+msgid "Edit & Resend"
+msgstr "Sửa & Gửi lại"
+
+#: src/features/rpc/rpc.tpl.html:60
+msgid "Why was it blocked? → Security"
+msgstr "Vì sao bị chặn? → Security"
+
+#: src/features/rpc/rpc.tpl.html:69
+msgid "Route"
+msgstr "Route"
+
+#: src/features/rpc/rpc.tpl.html:70
+msgid "Body (JSON)"
+msgstr "Body (JSON)"
+
+#: src/features/rpc/rpc.tpl.html:72
+msgid "Send"
+msgstr "Gửi"
+
+#: src/features/rpc/rpc.tpl.html:73
+msgid "Ctrl/⌘ + Enter"
+msgstr "Ctrl/⌘ + Enter"
+
+#: src/features/rpc/rpc.tpl.html:86
+msgid "Copy as cURL"
+msgstr "Sao chép dạng cURL"
+
+#: src/odoo/detect.ts:32
+msgid "Cannot read the Odoo version (%s)."
+msgstr "Không đọc được phiên bản Odoo (%s)."
 
 #: src/ui/components.tpl.html:28
 msgid "Traceback"
@@ -177,6 +285,10 @@ msgstr "Traceback"
 #: src/ui/components.tpl.html:42
 msgid "Click to copy"
 msgstr "Bấm để copy"
+
+#: src/ui/components.tpl.html:47
+msgid "Loading…"
+msgstr "Đang tải…"
 
 msgid "Needs Settings rights (base.group_system)."
 msgstr "Cần quyền Settings (base.group_system)."
@@ -192,9 +304,6 @@ msgstr "%s/%s module"
 
 msgid "Running…"
 msgstr "Đang chạy…"
-
-msgid "error"
-msgstr "lỗi"
 
 msgid "Reloading the Odoo page…"
 msgstr "Đang tải lại trang Odoo…"
@@ -594,72 +703,6 @@ msgstr "Nhãn · lưu trữ · compute · module"
 
 msgid "A computed field failed: values of the stored fields only."
 msgstr "Một field compute bị lỗi: chỉ hiện giá trị của các field stored."
-
-msgid "Filter model / method"
-msgstr "Lọc model / method"
-
-msgid "Errors Only"
-msgstr "Chỉ lỗi"
-
-msgid "Clear"
-msgstr "Xoá"
-
-msgid "New Request"
-msgstr "Request mới"
-
-msgid "Close"
-msgstr "Đóng"
-
-msgid "No RPC yet. Use the Odoo page to record some."
-msgstr "Chưa có RPC nào. Thao tác trên trang Odoo để ghi lại."
-
-msgid "Method · model · duration"
-msgstr "Method · model · thời gian"
-
-msgid "Time · route"
-msgstr "Giờ · route"
-
-msgid "Select a call to see its parameters and result."
-msgstr "Chọn một lời gọi để xem tham số và kết quả."
-
-msgid "Parameters"
-msgstr "Tham số"
-
-msgid "Edit & Resend"
-msgstr "Sửa & Gửi lại"
-
-msgid "Why was it blocked? → Security"
-msgstr "Vì sao bị chặn? → Security"
-
-msgid "Result"
-msgstr "Kết quả"
-
-msgid "… (%s characters)"
-msgstr "… (%s ký tự)"
-
-msgid "Route"
-msgstr "Route"
-
-msgid "Body (JSON)"
-msgstr "Body (JSON)"
-
-msgid "Send"
-msgstr "Gửi"
-
-msgid "Invalid JSON: %s"
-msgstr "JSON không hợp lệ: %s"
-
-msgid "Loading…"
-msgstr "Đang tải…"
-
-msgid "Ctrl/⌘ + Enter"
-msgstr "Ctrl/⌘ + Enter"
-
-msgid "call_kw: the external API (execute_kw), with an API key of this user in $ODOO_API_KEY. Other routes: the session_id cookie in $ODOO_SESSION."
-msgstr "call_kw: qua API ngoài (execute_kw), với API key của người dùng này trong $ODOO_API_KEY. Các route khác: cookie session_id trong $ODOO_SESSION."
-
-msgid "Copy as cURL"
-msgstr "Sao chép dạng cURL"
 
 msgid "No ACL grants this to the user's groups."
 msgstr "Không ACL nào cấp quyền này cho group của user."

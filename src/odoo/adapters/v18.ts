@@ -28,7 +28,9 @@ export const v18: OdooAdapter = {
   },
   rules: { inheritsStoredOnly: false }, // every _inherits parent's rules apply
   profiler: { listFields: ['name', 'session', 'duration', 'sql_count', 'create_date'] }, // no cpu_duration before 19
-  api: { json2: false }, // /jsonrpc (base) only
+  // /jsonrpc (base/controllers/rpc.py) → service/model.py execute_kw; the API key replaces the password
+  // (documentation/18.0 external_api: "simply replace your password by the key"). No /json/2 in 18.
+  api: { kind: 'jsonrpc' },
   orm: { readMethods: READ, modelMethods: MODEL },
   expects: [
     { model: 'res.users', field: 'groups_id', usedBy: 'Security: groups' },

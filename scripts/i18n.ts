@@ -22,6 +22,10 @@ const files = (dir: string): string[] => readdirSync(dir, { withFileTypes: true 
 // Literals are decoded with Function (our own source only): exact JS escape semantics for free.
 const decode = (lit: string) => new Function(`return ${lit}`)() as string;
 const lineOf = (text: string, i: number) => text.slice(0, i).split('\n').length;
+// HTML text and attribute values as the browser reads them (what translateDom looks up): entities decoded.
+const ENTITIES: Record<string, string> = { amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: '\u00a0' };
+const unescapeHtml = (s: string) => s.replace(/&(#\d+|#x[\da-f]+|\w+);/gi, (m, e: string) =>
+  e[0] === '#' ? String.fromCodePoint(e[1]?.toLowerCase() === 'x' ? parseInt(e.slice(2), 16) : Number(e.slice(1))) : ENTITIES[e] ?? m);
 
 const found = new Map<string, string[]>(); // msgid → ["file:line", …] in source order
 const add = (msgid: string, ref: string) => { if (!found.has(msgid)) found.set(msgid, []); found.get(msgid)!.push(ref); };
@@ -36,7 +40,7 @@ for (const f of files(SRC)) {
       const attrs = m[1]! + m[3]!;
       for (const what of m[2]!.split(',')) {
         const v = what === 'text' ? m[4]!.trim() : attrs.match(new RegExp(`\\b${what}="([^"]*)"`))?.[1];
-        if (v) add(v, `${rel}:${lineOf(text, m.index)}`);
+        if (v) add(unescapeHtml(v), `${rel}:${lineOf(text, m.index)}`);
       }
     }
   }

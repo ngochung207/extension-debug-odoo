@@ -162,12 +162,120 @@ msgstr ""
 msgid "No tab is open."
 msgstr ""
 
-#: src/odoo/detect.ts:32
-msgid "Cannot read the Odoo version (%s)."
+#: src/features/rpc/rpc.logic.ts:155
+msgid "Signature of %s.%s unknown: ids and argument names are guessed."
 msgstr ""
 
+#: src/features/rpc/rpc.logic.ts:156
+msgid "JSON-2 takes named arguments only: rename %s."
+msgstr ""
+
+#: src/features/rpc/rpc.tab.ts:42
+msgid "Method · model · duration"
+msgstr ""
+
+#: src/features/rpc/rpc.tab.ts:42
+msgid "Time · route"
+msgstr ""
+
+#: src/features/rpc/rpc.tab.ts:46
+msgid "Select a call to see its parameters and result."
+msgstr ""
+
+#: src/features/rpc/rpc.tab.ts:95
+#: src/features/rpc/rpc.tab.ts:163
+msgid "error"
+msgstr ""
+
+#: src/features/rpc/rpc.tab.ts:108
+msgid "Parameters"
+msgstr ""
+
+#: src/features/rpc/rpc.tab.ts:120
+msgid "Result"
+msgstr ""
+
+#: src/features/rpc/rpc.tab.ts:126
+msgid "… (%s characters)"
+msgstr ""
+
+#: src/features/rpc/rpc.tab.ts:155
+msgid "Invalid JSON: %s"
+msgstr ""
+
+#: src/features/rpc/rpc.tab.ts:160
 #: src/odoo/rpc.ts:25
 msgid "No response — is this an Odoo page?"
+msgstr ""
+
+#: src/features/rpc/rpc.tab.ts:179
+msgid "call_kw: the JSON-2 API (/json/2, named arguments), with an API key of this user in $ODOO_API_KEY. Other routes: the session_id cookie in $ODOO_SESSION."
+msgstr ""
+
+#: src/features/rpc/rpc.tab.ts:180
+msgid "call_kw: the external API (execute_kw), with an API key of this user in $ODOO_API_KEY. Other routes: the session_id cookie in $ODOO_SESSION."
+msgstr ""
+
+#: src/features/rpc/rpc.tpl.html:6
+msgid "Filter model / method"
+msgstr ""
+
+#: src/features/rpc/rpc.tpl.html:7
+msgid "Errors Only"
+msgstr ""
+
+#: src/features/rpc/rpc.tpl.html:8
+msgid "Clear"
+msgstr ""
+
+#: src/features/rpc/rpc.tpl.html:9
+#: src/features/rpc/rpc.tpl.html:35
+msgid "New Request"
+msgstr ""
+
+#: src/features/rpc/rpc.tpl.html:26
+msgid "No RPC yet. Use the Odoo page to record some."
+msgstr ""
+
+#: src/features/rpc/rpc.tpl.html:27
+msgid "Calls Odoo answers from its own cache (views, actions…) never reach the network: they are not logged."
+msgstr ""
+
+#: src/features/rpc/rpc.tpl.html:36
+#: src/features/rpc/rpc.tpl.html:36
+msgid "Close"
+msgstr ""
+
+#: src/features/rpc/rpc.tpl.html:59
+msgid "Edit & Resend"
+msgstr ""
+
+#: src/features/rpc/rpc.tpl.html:60
+msgid "Why was it blocked? → Security"
+msgstr ""
+
+#: src/features/rpc/rpc.tpl.html:69
+msgid "Route"
+msgstr ""
+
+#: src/features/rpc/rpc.tpl.html:70
+msgid "Body (JSON)"
+msgstr ""
+
+#: src/features/rpc/rpc.tpl.html:72
+msgid "Send"
+msgstr ""
+
+#: src/features/rpc/rpc.tpl.html:73
+msgid "Ctrl/⌘ + Enter"
+msgstr ""
+
+#: src/features/rpc/rpc.tpl.html:86
+msgid "Copy as cURL"
+msgstr ""
+
+#: src/odoo/detect.ts:32
+msgid "Cannot read the Odoo version (%s)."
 msgstr ""
 
 #: src/ui/components.tpl.html:28
@@ -176,4 +284,8 @@ msgstr ""
 
 #: src/ui/components.tpl.html:42
 msgid "Click to copy"
+msgstr ""
+
+#: src/ui/components.tpl.html:47
+msgid "Loading…"
 msgstr ""
