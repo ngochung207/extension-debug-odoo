@@ -106,3 +106,13 @@ test('the call a request targets (to look its signature up)', async () => {
   assert.equal(callTarget('/web/action/load', '{"params":{"action_id":5}}'), null);
   assert.equal(callTarget('/web/dataset/call_kw/x/y', '{"cut'), null);
 });
+
+test('bodies and answers cut by the recorder are flagged', () => {
+  const big = 'x'.repeat(200_000);
+  const e = parseRpc({ ...raw('https://x.com/web/dataset/call_kw/res.partner/web_search_read', big, 'POST', 200, `{"jsonrpc":"2.0","result":{"records":[${'1,'.repeat(100_000)}`), body: big })!;
+  assert.equal(e.bodyCut, true);
+  assert.equal(e.answerCut, true);
+  assert.equal(typeof e.result, 'string');
+  const ok = parseRpc(raw('https://x.com/web/dataset/call_kw/res.partner/read', { jsonrpc: '2.0', params: { model: 'res.partner', method: 'read', args: [[1]] } }))!;
+  assert.deepEqual([ok.bodyCut, ok.answerCut], [false, false]);
+});

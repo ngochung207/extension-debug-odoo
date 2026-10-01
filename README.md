@@ -12,7 +12,8 @@ TypeScript 7 with an esbuild bundle, one tab at a time, with the Odoo version di
 | Entrypoints: service worker, RPC recorder + relay, launcher button, panel shell, popup | ✅ |
 | Tab RPC: log, filter, Edit & Resend, New Request, Copy as cURL (18: `/jsonrpc` execute_kw · 19: `/json/2`, named arguments) | ✅ unit tests; Chrome against a simulated 18 / 19 |
 | Tab Record: identity, every field (definition, value, recomputes), filter + quick filters, copy a value / the record as JSON, ↗ many2one, selection labels | ✅ unit tests; Chrome against a simulated 18 / 19, admin and user |
-| Tabs: View · Code · Security · Translations · Apps · Perf | ⏳ not ported (placeholder) |
+| Tab View, told as a story: ① overview (view, file, modules, menu, action, record, fields) ② how the view is built (views in the order Odoo applies them, what each does, own arch; form / search) ③ one field (now, its story through the views, its groups) ④ action & context ⑤ combined arch | ✅ unit tests; Chrome against a simulated 18 / 19 webclient, admin and user |
+| Tabs: Code · Security · Translations · Apps · Perf | ⏳ not ported (placeholder) |
 | E2E against Odoo 18.0 / 19.0 (Docker) | ⏳ |
 
 ## Develop

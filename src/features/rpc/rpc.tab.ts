@@ -8,6 +8,8 @@ import { odoo } from '../../odoo/detect.ts';
 import { methodSignature } from '../../odoo/method-doc.ts';
 import { sessionInfo } from '../../odoo/reads.ts';
 import { copyText, details, errBox, listHead, loading, pill, pre } from '../../ui/components.ts';
+import { openDepthFor } from '../../ui/json.ts';
+import { jsonView } from '../../ui/json-view.ts';
 import { WIDE, expandable, masterDetail, resetPane } from '../../ui/lists.ts';
 import { templates } from '../../ui/template.ts';
 import type { PanelContext, TabModule } from '../registry.ts';
@@ -17,7 +19,6 @@ import html from './rpc.tpl.html';
 
 const tpl = templates(html, translateDom);
 const MAX = 300; // rows kept, as the recorder's buffer
-const RESULT_MAX = 50_000; // characters of a result shown (the rest is counted)
 
 let panel: PanelContext;
 let rows: HTMLUListElement;
@@ -105,7 +106,7 @@ function row(e: RpcEntry): HTMLLIElement {
 function detail(e: RpcEntry): HTMLElement {
   const { root, refs } = tpl('call-detail', { edit: HTMLButtonElement, why: HTMLButtonElement, body: HTMLDivElement });
   const unfolded = (d: HTMLDetailsElement) => { d.open = WIDE.matches; return d; }; // in the pane beside the list there is room
-  const params = unfolded(details(_t('Parameters'), pre({ args: e.args, kwargs: e.kwargs })));
+  const params = unfolded(details(_t('Parameters'), ...cutNote(e.bodyCut), readable({ args: e.args, kwargs: e.kwargs })));
   const curl = curlButton(() => ({ route: e.route, body: e.body }));
   refs.edit.after(curl);
   refs.edit.addEventListener('click', (ev) => {
@@ -117,13 +118,22 @@ function detail(e: RpcEntry): HTMLElement {
   if (isAccessDenied(e)) refs.why.addEventListener('click', () => panel.showTab('security'));
   else refs.why.remove();
   if (e.error) refs.body.append(errBox({ message: e.error, traceback: e.traceback }), params);
-  else refs.body.append(params, unfolded(details(_t('Result'), resultPre(e.result))));
+  else refs.body.append(params, unfolded(details(_t('Result'), ...cutNote(e.answerCut), readable(e.result))));
   return root;
 }
 
-function resultPre(result: unknown) {
-  const text = JSON.stringify(result, null, 2) ?? '';
-  return pre(text.length > RESULT_MAX ? `${text.slice(0, RESULT_MAX)}\n${_t('… (%s characters)', text.length)}` : text);
+/** Over 200 KB, the recorder keeps the start of a body / an answer only: say so, and how to get it whole. */
+function cutNote(cut: boolean): Node[] {
+  if (!cut) return [];
+  const { root, refs } = tpl('cut-note', { text: HTMLDivElement });
+  refs.text.textContent = _t('Cut at 200 KB by the recorder, so shown as text: Edit & Resend gets it whole.');
+  return [root];
+}
+
+/** A request's parameters or an answer, as fits it: a JSON tree (opening less for a big one), or text when it isn't
+ * JSON (a body cut by the recorder, an HTML error page). */
+function readable(v: unknown): Node {
+  return typeof v === 'string' ? pre(v) : jsonView(v, openDepthFor(v));
 }
 
 /** New Request: a card above the log, a search_read on the page's model to start from. */
@@ -162,7 +172,7 @@ function composer(route: string, body: string): HTMLFormElement {
     const head = tpl('sent-head', { pill: HTMLSpanElement, info: HTMLSpanElement });
     head.refs.pill.replaceWith(a.error ? pill(a.errorType?.split('.').pop() || _t('error'), 'err') : pill('ok', 'ok'));
     head.refs.info.textContent = `HTTP ${r.status} · ${r.ms} ms`;
-    out.replaceChildren(head.root, a.error ? errBox({ message: a.error, traceback: a.traceback }) : resultPre(a.result));
+    out.replaceChildren(head.root, a.error ? errBox({ message: a.error, traceback: a.traceback }) : readable(a.result));
   });
   text.addEventListener('keydown', (ev) => {
     if (ev.key === 'Enter' && (ev.metaKey || ev.ctrlKey)) { ev.preventDefault(); form.requestSubmit(); }

@@ -5,6 +5,7 @@ import type { PageState } from '../injected/page-state.ts';
 import type { OdooContext } from '../odoo/detect.ts';
 import { recordTab } from './record/record.tab.ts';
 import { rpcTab } from './rpc/rpc.tab.ts';
+import { viewTab } from './view/view.tab.ts';
 
 /** In the order of the tab bar (entrypoints/panel/index.html). */
 export const TAB_NAMES = ['record', 'view', 'rpc', 'code', 'security', 'translations', 'apps', 'perf'] as const;
@@ -36,7 +37,7 @@ export interface TabModule {
 
 export const TABS: Readonly<Record<TabName, TabModule | null>> = {
   record: recordTab,
-  view: null,
+  view: viewTab,
   rpc: rpcTab,
   code: null,
   security: null,

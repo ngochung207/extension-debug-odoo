@@ -81,3 +81,15 @@ export interface IrModule {
   latest_version: string | false;
   author: string | false;
 }
+
+/** ir.ui.view, the columns the View tab reads to rebuild an inheritance tree (same in 18.0 and 19.0). */
+export interface IrUiView {
+  id: number;
+  name: string;
+  xml_id: string | false;
+  inherit_id: Many2one;
+  mode: 'primary' | 'extension';
+  priority: number;
+  active: boolean;
+  arch_fs: string | false;
+}

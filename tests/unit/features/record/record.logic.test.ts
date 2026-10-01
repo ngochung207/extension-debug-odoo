@@ -68,12 +68,16 @@ test('the record as JSON: values read, fields in order', () => {
   assert.equal(recordJson({ name: 'A', country_id: [1, 'X'], unknown: 1 }, fields), '{\n  "country_id": [\n    1,\n    "X"\n  ],\n  "name": "A"\n}');
 });
 
-test('groups of a field: parsed, then shown by group name', async () => {
-  const { parseGroups, groupsLabel } = await import('../../../../src/features/record/record.logic.ts');
-  assert.deepEqual(parseGroups('base.group_user, base.group_portal,!base.group_system'),
-    [{ xmlid: 'base.group_user', not: false }, { xmlid: 'base.group_portal', not: false }, { xmlid: 'base.group_system', not: true }]);
-  const names = new Map([['base.group_system', 'Administration / Settings'], ['base.group_portal', 'User types / Portal']]);
-  assert.equal(groupsLabel('base.group_system', names), '🔒 Administration / Settings');
-  assert.equal(groupsLabel('base.group_user,!base.group_portal', names), '🔒 base.group_user · not User types / Portal'); // unknown name: the xmlid
-  assert.equal(groupsLabel('!base.group_portal', names), '🔒 not User types / Portal');
+
+test('how a value shows, by field type', async () => {
+  const { valueDisplay } = await import('../../../../src/features/record/record.logic.ts');
+  assert.equal(valueDisplay('char', 'Azure'), 'text');
+  assert.equal(valueDisplay('text', 'line 1\nline 2'), 'text');
+  assert.equal(valueDisplay('binary', '12.40 Kb'), 'text'); // bin_size: the size, as text
+  assert.equal(valueDisplay('html', '<p>Hi</p>'), 'code');
+  assert.equal(valueDisplay('many2one', [7, 'Azure']), 'json');
+  assert.equal(valueDisplay('many2many', [1, 2]), 'json');
+  assert.equal(valueDisplay('json', { a: [1] }), 'json');
+  assert.equal(valueDisplay('char', false), 'json'); // an empty char is false in Odoo: shown as the JSON false it is
+  assert.equal(valueDisplay('float', 1.5), 'json');
 });
