@@ -368,3 +368,31 @@ export function userRisks(u: RiskUser, has: (xmlid: string) => boolean): Finding
   if (!u.active) add('info', _t('User is archived.'));
   return out;
 }
+
+/** A company as get_session_info's user_companies lists it (18 and 19; 19 adds currency_id). */
+export interface SessionCompany { id: number; name: string; sequence: number; child_ids: number[]; parent_id: number | false }
+export interface UserCompanies {
+  current_company: number;
+  allowed_companies: Record<string, SessionCompany>;
+  disallowed_ancestor_companies?: Record<string, SessionCompany>;
+}
+
+/** The companies as a tree, parents before their children (by sequence, then name): each with its depth and whether the
+ * user may use it (an ancestor of an allowed one may not be allowed itself). */
+export function companyTree(uc: UserCompanies): { company: SessionCompany; depth: number; allowed: boolean }[] {
+  const all = new Map<number, { company: SessionCompany; allowed: boolean }>();
+  for (const c of Object.values(uc.disallowed_ancestor_companies ?? {})) all.set(c.id, { company: c, allowed: false });
+  for (const c of Object.values(uc.allowed_companies)) all.set(c.id, { company: c, allowed: true });
+  const order = (a: SessionCompany, b: SessionCompany) => a.sequence - b.sequence || a.name.localeCompare(b.name);
+  const out: { company: SessionCompany; depth: number; allowed: boolean }[] = [];
+  const seen = new Set<number>();
+  const visit = (id: number, depth: number) => {
+    const x = all.get(id);
+    if (!x || seen.has(id)) return;
+    seen.add(id);
+    out.push({ ...x, depth });
+    for (const child of x.company.child_ids.map((c) => all.get(c)?.company).filter((c): c is SessionCompany => !!c).sort(order)) visit(child.id, depth + 1);
+  };
+  for (const root of [...all.values()].map((x) => x.company).filter((c) => !c.parent_id || !all.has(c.parent_id)).sort(order)) visit(root.id, 0);
+  return out;
+}

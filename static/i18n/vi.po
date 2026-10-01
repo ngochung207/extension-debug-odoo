@@ -390,6 +390,7 @@ msgid "Copy as cURL"
 msgstr "Sao chép dạng cURL"
 
 #: src/features/security/security.bar.ts:25
+#: src/features/security/security.system.ts:43
 msgid "User"
 msgstr "User"
 
@@ -397,83 +398,84 @@ msgstr "User"
 msgid "Search a user by name or login…"
 msgstr "Tìm user theo tên hoặc login…"
 
-#: src/features/security/security.bar.ts:35
-msgid "My User"
-msgstr "User của tôi"
-
-#: src/features/security/security.bar.ts:37
-#: src/features/security/security.system.ts:47
+#: src/features/security/security.bar.ts:33
+#: src/features/security/security.system.ts:59
+#: src/features/security/security.system.ts:69
 msgid "Companies"
 msgstr "Công ty"
 
-#: src/features/security/security.bar.ts:41
+#: src/features/security/security.bar.ts:36
+msgid "My User"
+msgstr "User của tôi"
+
+#: src/features/security/security.bar.ts:43
 msgid "Compare with"
 msgstr "So sánh với"
 
-#: src/features/security/security.bar.ts:45
+#: src/features/security/security.bar.ts:47
 msgid "Stop comparing"
 msgstr "Thôi so sánh"
 
-#: src/features/security/security.bar.ts:49
+#: src/features/security/security.bar.ts:51
 msgid "Another user, to compare…"
 msgstr "User khác để so sánh…"
 
-#: src/features/security/security.bar.ts:69
+#: src/features/security/security.bar.ts:71
 msgid "%s · #%s · %s groups"
 msgstr "%s · #%s · %s nhóm"
 
-#: src/features/security/security.bar.ts:71
+#: src/features/security/security.bar.ts:73
 msgid "me"
 msgstr "tôi"
 
-#: src/features/security/security.bar.ts:72
+#: src/features/security/security.bar.ts:74
 msgid "superuser"
 msgstr "superuser"
 
-#: src/features/security/security.bar.ts:73
-#: src/features/security/security.ui.ts:237
+#: src/features/security/security.bar.ts:75
+#: src/features/security/security.ui.ts:252
 msgid "public"
 msgstr "public"
 
-#: src/features/security/security.bar.ts:73
-#: src/features/security/security.ui.ts:237
+#: src/features/security/security.bar.ts:75
+#: src/features/security/security.ui.ts:252
 msgid "portal"
 msgstr "portal"
 
-#: src/features/security/security.bar.ts:74
-#: src/features/security/security.ui.ts:237
+#: src/features/security/security.bar.ts:76
+#: src/features/security/security.ui.ts:252
 msgid "archived"
 msgstr "đã lưu trữ"
 
-#: src/features/security/security.bar.ts:88
+#: src/features/security/security.bar.ts:90
 msgid "The current company (the first one on)"
 msgstr "Công ty hiện tại (công ty bật đầu tiên)"
 
-#: src/features/security/security.bar.ts:92
+#: src/features/security/security.bar.ts:94
 msgid "as in the page's switcher"
 msgstr "giống bộ chọn công ty trên trang"
 
-#: src/features/security/security.bar.ts:92
+#: src/features/security/security.bar.ts:94
 msgid "their default company: their switcher can't be seen from here"
 msgstr "công ty mặc định của họ: không xem được bộ chọn công ty của họ từ đây"
 
-#: src/features/security/security.bar.ts:100
+#: src/features/security/security.bar.ts:102
 msgid "Trying %s: every view is simulated with it, nothing is written."
 msgstr "Đang thử %s: mọi màn hình được mô phỏng với nhóm này, chưa ghi gì."
 
-#: src/features/security/security.bar.ts:102
+#: src/features/security/security.bar.ts:104
 msgid "Add %s to %s?"
 msgstr "Thêm %s cho %s?"
 
-#: src/features/security/security.bar.ts:116
+#: src/features/security/security.bar.ts:118
 msgid "Applied…"
 msgstr "Đã áp…"
 
-#: src/features/security/security.bar.ts:121
+#: src/features/security/security.bar.ts:123
 msgid "Applied on %s: %s"
 msgstr "Đã áp trên %s: %s"
 
-#: src/features/security/security.bar.ts:122
+#: src/features/security/security.bar.ts:124
 msgid "Applied: no operation changed on this record."
 msgstr "Đã áp: không thao tác nào thay đổi trên bản ghi này."
 
@@ -1001,35 +1003,71 @@ msgstr "Tham số hệ thống (ir.config_parameter)"
 msgid "Instance check"
 msgstr "Kiểm tra instance"
 
-#: src/features/security/security.system.ts:48
+#: src/features/security/security.system.ts:49
 msgid "Become Superuser"
 msgstr "Chuyển sang superuser"
 
-#: src/features/security/security.system.ts:49
+#: src/features/security/security.system.ts:50
 msgid "Switch the current session to superuser (bypasses every rule)?"
 msgstr "Chuyển phiên hiện tại sang superuser (bỏ qua mọi rule)?"
 
-#: src/features/security/security.system.ts:50
+#: src/features/security/security.system.ts:51
 msgid "Odoo's built-in /web/become route, base.group_system only"
 msgstr "Route /web/become sẵn có của Odoo, chỉ base.group_system dùng được"
 
-#: src/features/security/security.system.ts:56
+#: src/features/security/security.system.ts:59
+msgid "Not in the session info."
+msgstr "Không có trong session info."
+
+#: src/features/security/security.system.ts:63
+msgid "parent only: the user is not in it"
+msgstr "chỉ là công ty cha: user không thuộc công ty này"
+
+#: src/features/security/security.system.ts:67
+msgid "Default: the company the user starts in. On: enabled in the page's company switcher (record rules read these)."
+msgstr "Mặc định: công ty user vào khi đăng nhập. Bật: đang bật trong bộ chọn công ty của trang (record rule đọc các công ty này)."
+
+#: src/features/security/security.system.ts:69
+msgid "Company"
+msgstr "Công ty"
+
+#: src/features/security/security.system.ts:69
+msgid "Default"
+msgstr "Mặc định"
+
+#: src/features/security/security.system.ts:69
+msgid "On"
+msgstr "Bật"
+
+#: src/features/security/security.system.ts:74
 msgid "Needs Settings rights (base.group_system)."
 msgstr "Cần quyền Settings (base.group_system)."
 
-#: src/features/security/security.system.ts:58
+#: src/features/security/security.system.ts:76
 msgid "No parameter."
 msgstr "Không có tham số."
 
-#: src/features/security/security.system.ts:71
+#: src/features/security/security.system.ts:77
+msgid "Key"
+msgstr "Key"
+
+#: src/features/security/security.system.ts:85
+msgid "Copy the value"
+msgstr "Sao chép giá trị"
+
+#: src/features/security/security.system.ts:91
 msgid "Filter key / value"
 msgstr "Lọc key / giá trị"
 
-#: src/features/security/security.system.ts:79
+#: src/features/security/security.system.ts:92
+msgid "%s of %s parameters"
+msgstr "%s / %s tham số"
+
+#: src/features/security/security.system.ts:103
 msgid "Raw data"
 msgstr "Dữ liệu thô"
 
-#: src/features/security/security.system.ts:80
+#: src/features/security/security.system.ts:104
 msgid "Check Again"
 msgstr "Kiểm tra lại"
 
@@ -1046,52 +1084,51 @@ msgstr "Theo model"
 msgid "Groups"
 msgstr "Nhóm"
 
-#: src/features/security/security.tpl.html:20
+#: src/features/security/security.tpl.html:23
 msgid "Archived too"
 msgstr "Gồm đã lưu trữ"
 
-#: src/features/security/security.tpl.html:32
+#: src/features/security/security.tpl.html:35
 msgid "Apply"
 msgstr "Áp dụng"
 
-#: src/features/security/security.tpl.html:33
+#: src/features/security/security.tpl.html:36
 msgid "Discard"
 msgstr "Bỏ thử"
 
-#: src/features/security/security.tpl.html:75
+#: src/features/security/security.tpl.html:78
 msgid "Diagnose an access error message"
 msgstr "Chẩn đoán thông báo lỗi phân quyền"
 
-#: src/features/security/security.tpl.html:77
+#: src/features/security/security.tpl.html:80
 msgid "Paste the message of the error dialog (debug mode adds the records and the rules)"
 msgstr "Dán nội dung hộp thoại lỗi (chế độ debug có thêm bản ghi và rule)"
 
-#: src/features/security/security.tpl.html:77
+#: src/features/security/security.tpl.html:80
 msgid "Access error message"
 msgstr "Thông báo lỗi phân quyền"
 
-#: src/features/security/security.tpl.html:78
+#: src/features/security/security.tpl.html:81
 msgid "Diagnose"
 msgstr "Chẩn đoán"
 
-#: src/features/security/security.tpl.html:85
-#: src/features/view/view.action.ts:25
-msgid "Domain"
-msgstr "Domain"
+#: src/features/security/security.tpl.html:88
+msgid "As written"
+msgstr "Domain gốc"
 
-#: src/features/security/security.tpl.html:86
+#: src/features/security/security.tpl.html:89
 msgid "For the user"
 msgstr "Với user"
 
-#: src/features/security/security.tpl.html:125
+#: src/features/security/security.tpl.html:128
 msgid "✓ No issue found."
 msgstr "✓ Không phát hiện vấn đề."
 
-#: src/features/security/security.ui.ts:199
+#: src/features/security/security.ui.ts:200
 msgid "cannot evaluate: %s"
 msgstr "không eval được: %s"
 
-#: src/features/security/security.ui.ts:266
+#: src/features/security/security.ui.ts:281
 msgid "Log in as %s in an incognito window"
 msgstr "Đăng nhập thành %s trong cửa sổ ẩn danh"
 
@@ -1114,6 +1151,10 @@ msgstr "Mở bản ghi action ↗"
 #: src/features/view/view.action.ts:24
 msgid "Context"
 msgstr "Context"
+
+#: src/features/view/view.action.ts:25
+msgid "Domain"
+msgstr "Domain"
 
 #: src/features/view/view.action.ts:26
 msgid "Full action (JSON)"
@@ -1498,6 +1539,26 @@ msgstr "Đang tải…"
 #: src/ui/components.ts:102
 msgid "Open /odoo/%s"
 msgstr "Mở /odoo/%s"
+
+#: src/ui/domain-view.ts:36
+msgid "always true"
+msgstr "luôn đúng"
+
+#: src/ui/domain-view.ts:36
+msgid "always false"
+msgstr "luôn sai"
+
+#: src/ui/domain-view.ts:41
+msgid "all of"
+msgstr "tất cả"
+
+#: src/ui/domain-view.ts:41
+msgid "any of"
+msgstr "một trong"
+
+#: src/ui/domain-view.ts:41
+msgid "not"
+msgstr "không"
 
 #: src/ui/json-view.ts:36
 msgid "Show %s more characters"
@@ -2249,9 +2310,6 @@ msgstr "%s tham số"
 
 msgid "%s/%s parameters"
 msgstr "%s/%s tham số"
-
-msgid "Key"
-msgstr "Key"
 
 msgid "Value"
 msgstr "Giá trị"

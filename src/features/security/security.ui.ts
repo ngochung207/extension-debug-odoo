@@ -4,6 +4,7 @@ import { translateDom, _t } from '../../i18n/i18n.ts';
 import type { OdooAdapter } from '../../odoo/adapter.ts';
 import { MODES, type Mode } from '../../odoo/models.ts';
 import { errBox, loading, pill, type PillKind } from '../../ui/components.ts';
+import { domainView, pyCode } from '../../ui/domain-view.ts';
 import { templates } from '../../ui/template.ts';
 import { keyGroups, searchUsers } from './security.data.ts';
 import type { Finding, Level, Tri } from './security.logic.ts';
@@ -86,7 +87,7 @@ export interface MxSection { title?: string; note?: string; rows: MxRow[]; /** s
 const SYMBOL = (v: Tri | 'na') => (v === true ? '✓' : v === false ? '✗' : v === 'na' ? '·' : '?');
 const CLASS = (v: Tri | 'na') => (v === true ? 'yes' : v === false ? 'no' : v === 'na' ? 'na' : 'unk');
 
-function symbol(v: Tri | 'na', plus = false): HTMLSpanElement {
+export function symbol(v: Tri | 'na', plus = false): HTMLSpanElement {
   const { mark: s } = tpl('mark', { mark: HTMLSpanElement }).refs;
   s.className = `sym ${CLASS(v)}${plus ? ' plus' : ''}`;
   s.textContent = `${plus && v === true ? '+' : ''}${SYMBOL(v)}`;
@@ -193,13 +194,27 @@ export function filterMatrix(table: HTMLTableElement, q: string, keep: (row: HTM
 /** A rule opened: its domain as written, as evaluated for the user, why it couldn't be checked. */
 export function domainDetail(domain: string, ev: { domain: unknown } | { error: string } | undefined, why?: string): Node {
   const d = tpl('rule-detail', { box: HTMLDivElement, domain: HTMLElement, evRow: HTMLDivElement, evaluated: HTMLElement, note: HTMLDivElement }).refs;
-  d.domain.textContent = domain;
-  if (ev && 'domain' in ev) d.evaluated.textContent = JSON.stringify(ev.domain);
+  d.domain.replaceWith(pyCode(domain));
+  if (ev && 'domain' in ev) d.evaluated.replaceWith(domainView(ev.domain));
   else d.evRow.remove();
   const text = why ? _t(why) : ev && 'error' in ev ? _t('cannot evaluate: %s', _t(ev.error)) : '';
   if (text) d.note.textContent = text;
   else d.note.remove();
   return d.box;
+}
+
+/** Key / value lines, each value as its type reads best: a boolean as ✓ / ✗, a number or identifier in code font. */
+export function facts(entries: [string, unknown][]): HTMLElement {
+  const { list } = tpl('facts', { list: HTMLDListElement }).refs;
+  for (const [k, v] of entries) {
+    const f = tpl('fact', { label: HTMLElement, value: HTMLElement }).refs;
+    f.label.textContent = k;
+    if (typeof v === 'boolean') f.value.append(symbol(v));
+    else if (v instanceof Node) f.value.append(v);
+    else { f.value.textContent = v == null || v === '' ? '—' : String(v); f.value.classList.add('mono'); }
+    list.append(f.label.parentElement!);
+  }
+  return list;
 }
 
 // ---------- users ----------

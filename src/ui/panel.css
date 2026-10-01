@@ -664,3 +664,12 @@ ul.plain li + li { margin-top: 3px; }
 .mx-label .row { flex-wrap: nowrap; align-items: baseline; }
 .mx-label .mark { flex: none; }
 .who .chip { padding: 1px 10px; }
+
+/* domain-view.ts: a domain as written (Python, one term per line) and as evaluated (a tree) */
+.code-plain { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.dom-group { display: flex; flex-direction: column; gap: 4px; }
+.dom-op { color: var(--muted); font-size: var(--fs-xs); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+.dom-children { display: flex; flex-direction: column; gap: 4px; padding-left: 12px; border-left: 2px solid var(--line); }
+.dom-group.any > .dom-children { border-left-color: color-mix(in srgb, var(--info) 50%, var(--line)); }
+.dom-group.not > .dom-children { border-left-color: color-mix(in srgb, var(--err) 50%, var(--line)); }
+.dom-leaf code { font-size: var(--fs-sm); }

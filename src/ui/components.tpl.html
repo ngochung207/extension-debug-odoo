@@ -146,3 +146,16 @@
 <template data-tpl="note">
   <div class="note" data-ref="text"></div>
 </template>
+
+<!-- A Python expression to read (domain-view.ts → pyCode): coloured tokens, lines kept. -->
+<template data-tpl="code-plain">
+  <pre class="code-plain" data-ref="code"></pre>
+</template>
+<!-- An evaluated domain as a tree (domain-view.ts → domainView): all of / any of / not, then its terms; a term: field,
+     operator, value. -->
+<template data-tpl="dom-group">
+  <div class="dom-group" data-ref="group"><span class="dom-op" data-ref="op"></span><div class="dom-children" data-ref="children"></div></div>
+</template>
+<template data-tpl="dom-leaf">
+  <div class="dom-leaf" data-ref="leaf"><code data-ref="code"></code></div>
+</template>
