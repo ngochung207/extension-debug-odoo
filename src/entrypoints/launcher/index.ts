@@ -1,12 +1,15 @@
 // ISOLATED-world content script: a draggable Odoo Debug button, on the bottom edge of the page until dragged elsewhere
 // (dropped back on that edge, it sticks to it again). Clicking it opens the panel (entrypoints/panel) in an iframe next
 // to it, following it: beside the button, aligned on its top (upper half of the window) or its bottom (lower half).
-// Shown on Odoo pages only; the toolbar popup toggles it too. Also: ⌥/Alt + click on a field of the page copies its
-// technical name.
-import { isExtMessage } from '../../contracts/messages.ts';
+// Shown on Odoo pages only; the toolbar popup toggles it too. The frame resizes from its free edges (grips), its size
+// kept per Odoo instance. The panel can also live in its own window (entrypoints/background/detached-panel.ts): the
+// frame then empties and the button brings that window to the front. Also: ⌥/Alt + click on a field of the page
+// copies its technical name.
+import { isExtMessage, type ExtMessage } from '../../contracts/messages.ts';
 import { templates } from '../../ui/template.ts';
 import html from './launcher.tpl.html';
 import css from './launcher.css';
+import { DEFAULT_SIZE, maxSize, placeFrame, readSize, resized, type Anchor, type Grip, type Side, type Size } from './geometry.ts';
 
 const tpl = templates(html); // no translation: the page is not in the panel's language
 
@@ -20,12 +23,16 @@ type Pos = { x: number; bottom: true } | { x: number; y: number; bottom: false }
   const POS_KEY = 'odoo-debug-pos'; // localStorage of the site, one per Odoo instance
   const OPEN_KEY = 'odoo-debug-open'; // sessionStorage: the panel reopens after a reload (debug switch, /web/become)
   const FULL_KEY = 'odoo-debug-full'; // sessionStorage too: full screen survives a reload
+  const SIZE_KEY = 'odoo-debug-size'; // localStorage of the site, like the position: { w, h } of the frame
   const store = (s: Storage, k: string, v: string | null) => { try { if (v == null) s.removeItem(k); else s.setItem(k, v); } catch { /* storage blocked */ } };
   const load = (s: Storage, k: string) => { try { return s.getItem(k); } catch { return null; } };
 
-  let mounted: { root: ShadowRoot; btn: HTMLButtonElement; frame: HTMLDivElement } | null = null;
+  let mounted: { root: ShadowRoot; btn: HTMLButtonElement; frame: HTMLDivElement; title: string } | null = null;
   let pos: Pos | null = null;
   let full = false;
+  let size: Size = readSize(load(localStorage, SIZE_KEY));
+  let detached = false; // the panel is in its own window
+  const ask = <R>(msg: ExtMessage) => chrome.runtime.sendMessage<ExtMessage, R>(msg);
 
   function mount() {
     if (mounted) return mounted;
@@ -36,12 +43,17 @@ type Pos = { x: number; bottom: true } | { x: number; y: number; bottom: false }
     const sheet = new CSSStyleSheet();
     sheet.replaceSync(css);
     root.adoptedStyleSheets = [sheet];
-    const { root: launcher, refs } = tpl('launcher', { button: HTMLButtonElement, icon: HTMLImageElement, frame: HTMLDivElement });
+    const { root: launcher, refs } = tpl('launcher', {
+      button: HTMLButtonElement, icon: HTMLImageElement, frame: HTMLDivElement, gripX: HTMLDivElement, gripY: HTMLDivElement, gripXY: HTMLDivElement,
+    });
     const { button: btn, frame } = refs;
     refs.icon.src = chrome.runtime.getURL('icons/icon-48.png');
     root.append(launcher);
     document.documentElement.append(host);
-    mounted = { root, btn, frame };
+    mounted = { root, btn, frame, title: btn.title };
+    applySize();
+    for (const [grip, el] of [['x', refs.gripX], ['y', refs.gripY], ['xy', refs.gripXY]] as const) resizeWith(el, grip);
+    refs.gripXY.addEventListener('dblclick', () => { size = DEFAULT_SIZE; applySize(); place(); store(localStorage, SIZE_KEY, null); });
 
     pos = readPos();
     place();
@@ -80,7 +92,44 @@ type Pos = { x: number; bottom: true } | { x: number; y: number; bottom: false }
 
     if (load(sessionStorage, FULL_KEY)) setFull(true);
     if (load(sessionStorage, OPEN_KEY)) toggle(true);
+    // the panel may be in its own window since before this page load
+    void ask<boolean>({ type: 'odoo-detached-state' }).then((on) => { if (on) setDetached(true); }, () => {});
     return mounted;
+  }
+
+  /** The frame's size, from what the user dragged it to (CSS keeps it inside the window). */
+  function applySize() {
+    mounted?.frame.style.setProperty('--panel-w', `${size.w}px`);
+    mounted?.frame.style.setProperty('--panel-h', `${size.h}px`);
+  }
+
+  /** Dragging `el` resizes the frame from its free edges (geometry.ts → resized); the size is saved on release. */
+  function resizeWith(el: HTMLElement, grip: Grip) {
+    el.addEventListener('pointerdown', (e) => {
+      if (e.button !== 0 || !mounted) return;
+      e.preventDefault();
+      const { frame } = mounted;
+      const start = { x: e.clientX, y: e.clientY, size: { w: frame.offsetWidth, h: frame.offsetHeight } };
+      const side = frame.dataset.side as Side;
+      const anchor = frame.dataset.anchor as Anchor;
+      el.setPointerCapture(e.pointerId);
+      frame.classList.add('resizing'); // the iframe would swallow the pointer otherwise
+      const move = (ev: PointerEvent) => {
+        size = resized(start.size, ev.clientX - start.x, ev.clientY - start.y, grip, side, anchor, maxSize({ w: innerWidth, h: innerHeight }, GAP));
+        applySize();
+        place();
+      };
+      const up = () => {
+        el.removeEventListener('pointermove', move);
+        el.removeEventListener('pointerup', up);
+        el.removeEventListener('pointercancel', up);
+        frame.classList.remove('resizing');
+        store(localStorage, SIZE_KEY, JSON.stringify(size));
+      };
+      el.addEventListener('pointermove', move);
+      el.addEventListener('pointerup', up);
+      el.addEventListener('pointercancel', up);
+    });
   }
 
   function readPos(): Pos | null {
@@ -109,13 +158,13 @@ type Pos = { x: number; bottom: true } | { x: number; y: number; bottom: false }
       Object.assign(frame.style, { left: `${GAP}px`, top: `${GAP}px`, bottom: '' });
       return;
     }
-    const w = frame.offsetWidth;
-    const h = frame.offsetHeight; // CSS: at most 100vh - 2 gaps, so the clamp below keeps the header on screen
-    const left = p.x + SIZE / 2 > innerWidth / 2 ? p.x - w - GAP : p.x + SIZE + GAP;
-    const by = btn.getBoundingClientRect().top;
-    // follows the button (also while dragging): its top edge on the button's top in the upper half, its bottom edge on the button's bottom below
-    const top = by + SIZE / 2 < innerHeight / 2 ? by : by + SIZE - h;
-    Object.assign(frame.style, { left: `${clamp(left, GAP, innerWidth - w - GAP)}px`, top: `${clamp(top, GAP, innerHeight - h - GAP)}px`, bottom: '' });
+    // follows the button (also while dragging it): beside it, its top edge on the button's top in the upper half of the
+    // window, its bottom edge on the button's bottom below; the size as rendered (CSS keeps it inside the window)
+    const at = placeFrame({ x: p.x, y: btn.getBoundingClientRect().top, size: SIZE }, { w: frame.offsetWidth, h: frame.offsetHeight },
+      { w: innerWidth, h: innerHeight }, GAP);
+    Object.assign(frame.style, { left: `${at.left}px`, top: `${at.top}px`, bottom: '' });
+    frame.dataset.side = at.side; // the grips go on the free edges (launcher.css)
+    frame.dataset.anchor = at.anchor;
   }
 
   /** Technical name of the field under `t`: form widget (or its label), list cell or list column header. */
@@ -159,9 +208,18 @@ type Pos = { x: number; bottom: true } | { x: number; y: number; bottom: false }
 
   function toggle(open?: boolean) {
     const { btn, frame } = mount();
+    if (detached) { // the panel is in its own window: bring it to the front (gone meanwhile: back in the page)
+      if (open === false) return;
+      void ask<boolean>({ type: 'odoo-focus-panel' }).then((focused) => {
+        if (focused) return;
+        setDetached(false);
+        toggle(true);
+      }, () => { setDetached(false); toggle(true); });
+      return;
+    }
     const show = open ?? frame.hidden;
-    // The panel is only created on first open: nothing runs (no RPC) until then.
-    if (show && !frame.firstChild) {
+    // The panel is only created on first open: nothing runs (no RPC) until then. (The frame holds its grips already.)
+    if (show && !frame.querySelector('iframe')) {
       const { iframe } = tpl('panel-frame', { iframe: HTMLIFrameElement }).refs;
       iframe.src = chrome.runtime.getURL('panel/index.html');
       frame.append(iframe);
@@ -169,6 +227,23 @@ type Pos = { x: number; bottom: true } | { x: number; y: number; bottom: false }
     frame.hidden = !show;
     btn.setAttribute('aria-expanded', String(show));
     store(sessionStorage, OPEN_KEY, show ? '1' : null);
+    place();
+  }
+
+  /** The panel left for its own window (on), or came back (off): the frame empties (its panel would keep running and
+   * logging next to the window's), the button marks it and then brings the window to the front. */
+  function setDetached(on: boolean) {
+    detached = on;
+    if (!mounted) return;
+    const { btn, frame } = mounted;
+    if (on) {
+      frame.hidden = true;
+      frame.querySelector('iframe')?.remove();
+      store(sessionStorage, OPEN_KEY, null);
+    }
+    btn.classList.toggle('detached', on);
+    btn.title = on ? btn.dataset.titleDetached || mounted.title : mounted.title;
+    btn.setAttribute('aria-expanded', 'false');
     place();
   }
 
@@ -206,6 +281,9 @@ type Pos = { x: number; bottom: true } | { x: number; y: number; bottom: false }
     } else if (msg.type === 'odoo-toggle') { // { open }: from the panel's minimize button; none: the toolbar popup / shortcut
       toggle(msg.open);
       if (msg.open === false) mounted?.btn.focus(); // keyboard users land on the button that reopens it
+    } else if (msg.type === 'odoo-detached') { // from the background: the panel left for its window, or came back
+      mount();
+      setDetached(msg.on);
     }
   });
 })();

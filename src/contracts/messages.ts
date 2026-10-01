@@ -20,11 +20,19 @@ export type ExtMessage =
   | { type: 'odoo-rpc'; raw: string } // rpc-relay → panel: a RawRpc as JSON text
   | { type: 'odoo-pick'; name: string } // rpc-relay → panel: field picked on the page ('' = cancelled)
   | { type: 'odoo-toggle'; open?: boolean } // popup / shortcut / panel → launcher: show or hide the panel (no `open`: toggle)
-  | { type: 'odoo-full'; on?: boolean }; // panel → launcher: full screen on / off (no `on`: ask); answer: the state (boolean)
+  | { type: 'odoo-full'; on?: boolean } // panel → launcher: full screen on / off (no `on`: ask); answer: the state (boolean)
+  // The panel in its own window (entrypoints/background/detached-panel.ts keeps which tab's panel is in which window):
+  | { type: 'odoo-detach'; tabId: number } // panel in the page → background: open it in its own window
+  | { type: 'odoo-attach'; tabId: number } // panel in its window → background: back into the page of tabId
+  | { type: 'odoo-detached'; on: boolean } // background → launcher: this tab's panel left for its window (on) or came back (off)
+  | { type: 'odoo-focus-panel' } // launcher → background: button clicked while detached; answer: a window was focused (boolean)
+  | { type: 'odoo-detached-state' }; // launcher → background: is this tab's panel in its own window? answer: boolean
 
 export type ExtMessageType = ExtMessage['type'];
 
-const TYPES: ReadonlySet<string> = new Set<ExtMessageType>(['odoo-rpc', 'odoo-pick', 'odoo-toggle', 'odoo-full']);
+const TYPES: ReadonlySet<string> = new Set<ExtMessageType>([
+  'odoo-rpc', 'odoo-pick', 'odoo-toggle', 'odoo-full', 'odoo-detach', 'odoo-attach', 'odoo-detached', 'odoo-focus-panel', 'odoo-detached-state',
+]);
 
 /** Messages come from other extensions' pages too (and older copies of ours): checked before use. */
 export const isExtMessage = (m: unknown): m is ExtMessage =>

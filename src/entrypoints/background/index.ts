@@ -1,7 +1,10 @@
 // Service worker: the toolbar icon (enabled on Odoo pages only), content scripts injected again after an install or an
-// update, keyboard shortcuts.
+// update, keyboard shortcuts, the panel in its own window (detached-panel.ts).
 import type { ExtMessage } from '../../contracts/messages.ts';
 import { pageToggleDebug } from '../../injected/debug-mode.ts';
+import { listenDetachedPanels } from './detached-panel.ts';
+
+listenDetachedPanels();
 
 // Toolbar icon: greyed out everywhere, enabled only on Odoo pages (Chrome can't hide a pinned icon per site).
 // declarativeContent re-checks every page load and navigation by itself. Clicking it opens entrypoints/popup.
