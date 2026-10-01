@@ -38,8 +38,19 @@ export interface FieldInfo {
   readonly?: boolean;
   required?: boolean;
   groups?: string;
+  /** selection fields: [value, label] pairs (in the user's language) */
+  selection?: [string | number, string][];
 }
 export type FieldsGet = Record<string, FieldInfo>;
+
+/** ir.model.fields, the columns fields_get doesn't give. */
+export interface IrModelField {
+  id: number;
+  name: string;
+  /** installed modules defining or extending the field, comma-separated */
+  modules: string | false;
+  index: boolean;
+}
 
 export interface IrModelAccess {
   id: number;

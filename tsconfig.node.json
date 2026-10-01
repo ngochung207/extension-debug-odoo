@@ -2,7 +2,7 @@
   // node: build scripts (scripts/) and tests (tests/), run by Node as .ts. DOM types only for the declarations of what tests import.
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "lib": ["es2023", "dom"],
+    "lib": ["es2023", "dom", "dom.iterable"],
     "types": ["node", "chrome"],
     "declarationDir": ".tsbuild/node",
     "tsBuildInfoFile": ".tsbuild/node.tsbuildinfo"

@@ -5,7 +5,7 @@ import { MODES, type FieldsGet, type IrModelAccess, type IrModule, type IrRule, 
 import { call, rpc } from './rpc.ts';
 import type { Json } from '../contracts/json.ts';
 
-const FIELD_ATTRS = ['string', 'type', 'relation', 'store', 'depends', 'related', 'readonly', 'required', 'groups'];
+const FIELD_ATTRS = ['string', 'type', 'relation', 'store', 'depends', 'related', 'readonly', 'required', 'groups', 'selection'];
 
 export const sessionInfo = () => cached('session', () => rpc<SessionInfo>('/web/session/get_session_info', {}));
 
@@ -19,3 +19,22 @@ const PERMS = MODES.map((m) => `perm_${m}`);
 const ofModel = (model: string): Json[] => [[['model_id.model', '=', model]]];
 export const readAcls = (model: string) => call<IrModelAccess[]>('ir.model.access', 'search_read', ofModel(model), { fields: ['name', 'group_id', ...PERMS] });
 export const readRules = (model: string) => call<IrRule[]>('ir.rule', 'search_read', ofModel(model), { fields: ['name', 'groups', 'domain_force', 'global', ...PERMS] });
+
+/** Group xmlids → their names (res.groups.full_name, e.g. "Administration / Settings"), for the groups the user may
+ * read. Each xmlid goes through ir.model.data.check_object_reference, which only reads the group itself: no Access
+ * Rights needed (ir.model.data is theirs). Unknown or unreadable: left out (callers show the xmlid). Cached per page load. */
+export async function groupNames(xmlids: readonly string[]): Promise<Map<string, string>> {
+  const ids = await Promise.all(xmlids.map((xmlid) => cached(`group id ${xmlid}`, async () => {
+    const [module, ...name] = xmlid.split('.');
+    if (!module || !name.length) return null;
+    const ref = await call<[string, number | false]>('ir.model.data', 'check_object_reference', [module, name.join('.')]).catch(() => null);
+    return ref?.[0] === 'res.groups' && typeof ref[1] === 'number' ? ref[1] : null;
+  })));
+  const known = ids.filter((id): id is number => id != null);
+  const rows = known.length ? await call<{ id: number; full_name: string }[]>('res.groups', 'read', [known, ['full_name']]).catch(() => []) : [];
+  const byId = new Map(rows.map((g) => [g.id, g.full_name]));
+  return new Map(xmlids.flatMap((xmlid, i) => {
+    const name = byId.get(ids[i] ?? -1);
+    return name ? [[xmlid, name] as const] : [];
+  }));
+}

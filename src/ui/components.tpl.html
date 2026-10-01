@@ -61,3 +61,23 @@
 <template data-tpl="master-detail">
   <div class="master-detail" data-ref="wrap"><aside class="pane" data-ref="pane"></aside></div>
 </template>
+
+<!-- A tab's collapsible card (cards.ts → block): closed until its title is clicked, its body built on first opening. -->
+<template data-tpl="block">
+  <details class="card" data-ref="card"><summary><h3 data-ref="title"></h3></summary><div class="card-body" data-ref="body"></div></details>
+</template>
+
+<!-- A tab's only card (cards.ts → card): no title, its body built right away. -->
+<template data-tpl="card">
+  <div class="card"><div class="card-body" data-ref="body"></div></div>
+</template>
+
+<!-- Search box of a filtered list (cards.ts → filterBox); placeholder set by the code. -->
+<template data-tpl="filter">
+  <input type="search" data-ref="input">
+</template>
+
+<!-- Opens /odoo/<path> of the inspected Odoo in a new tab (components.ts → odooLink). -->
+<template data-tpl="odoo-link">
+  <a class="btn" target="_blank" rel="noopener" data-ref="link">↗</a>
+</template>

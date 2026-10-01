@@ -511,3 +511,4 @@ textarea.code::selection { background: color-mix(in srgb, var(--accent) 35%, tra
   .pane > .empty { padding-top: 48px; }
 }
 .btn.warn { color: var(--warn); } /* rpc.tab.ts: Copy as cURL wrote warnings (unnamed JSON-2 arguments); its title lists them */
+.pill.lock { white-space: normal; text-align: left; } /* record.tab.ts: a field's groups=, by name: long names wrap */

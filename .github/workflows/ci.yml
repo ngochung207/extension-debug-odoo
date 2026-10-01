@@ -15,6 +15,8 @@ jobs:
       - run: npm ci
       - name: Type check (TypeScript 7, one project per execution context)
         run: npm run typecheck
+      - name: Type check with TypeScript 5.9 too (what editors run: VS Code bundles TS 5)
+        run: rm -rf .tsbuild && npx --yes -p typescript@5.9 tsc -b && rm -rf .tsbuild
       - name: Unit tests
         run: npm test
       - name: Build

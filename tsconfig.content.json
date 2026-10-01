@@ -2,7 +2,7 @@
   // content: content scripts in the ISOLATED world (launcher, rpc-relay). DOM and chrome.runtime / storage; not window.odoo (invisible from there).
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "lib": ["es2023", "dom"],
+    "lib": ["es2023", "dom", "dom.iterable"],
     "types": ["chrome"],
     "declarationDir": ".tsbuild/content",
     "tsBuildInfoFile": ".tsbuild/content.tsbuildinfo"
