@@ -88,18 +88,22 @@ function fill(body, fn) {
   Promise.resolve().then(fn).then((n) => body.replaceChildren(...[n].filter(Boolean)), (e) => body.replaceChildren(errBox(e)));
 }
 
+export async function copyText(text) {
+  try { await navigator.clipboard.writeText(text); } catch { // clipboard API refused (focus, permissions policy)
+    const ta = el('textarea', { value: text });
+    document.body.append(ta);
+    ta.select();
+    document.execCommand('copy');
+    ta.remove();
+  }
+}
+
 /** `text` (a field name, xmlid…) as a button copying it to the clipboard; ✓ for a second after. `label`: shown instead (e.g. masked). */
 export function copyable(text, cls = 'name', label = text) {
   const b = el('button', {
     class: `${cls} copy`, title: _t('Click to copy'),
     onclick: async () => {
-      try { await navigator.clipboard.writeText(text); } catch { // clipboard API refused (focus, permissions policy)
-        const ta = el('textarea', { value: text });
-        document.body.append(ta);
-        ta.select();
-        document.execCommand('copy');
-        ta.remove();
-      }
+      await copyText(text);
       b.classList.add('copied');
       setTimeout(() => b.classList.remove('copied'), 1000);
     },

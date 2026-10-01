@@ -91,6 +91,17 @@ function userSearch(users, pick) {
   return el('div', { class: 'user-search' }, input, list);
 }
 
+/** Logs in as the picked user in an incognito window (its own cookies: your session here stays), on Odoo's login page
+ * with their login filled in, back to the current page after. The password is typed there, in Odoo's form, 2FA too.
+ * Through /web/session/logout: an incognito window still logged in as someone else would skip the login page. */
+function loginAs(u, db, url, out) {
+  const { origin, pathname, search, hash } = new URL(url);
+  const login = `/web/login?${new URLSearchParams({ db, login: u.login, redirect: pathname + search + hash })}`;
+  const go = () => chrome.windows.create({ incognito: true, url: `${origin}/web/session/logout?redirect=${encodeURIComponent(login)}` })
+    .catch((e) => out.replaceChildren(errBox(e)));
+  return el('button', { class: 'user-name', title: _t('Log in as %s in an incognito window', u.name), onclick: go }, el('b', {}, u.name));
+}
+
 const section = (s, title) => s.append(el('h2', { class: 'section' }, title));
 
 export function renderSecurity(s, state) {
@@ -109,12 +120,15 @@ export function renderSecurity(s, state) {
   section(s, _t('User'));
   card(s, async () => {
     const { u, uid, me, users, groupIds } = await t;
+    const out = el('div', {}); // the incognito window's error, if any
     return el('div', {},
       el('div', { class: 'picker' }, userSearch(users, pick),
         uid !== me ? el('button', { class: 'chip', onclick: () => { targets.delete(origin); trials.delete(origin); rerender(); } }, _t('My User')) : null),
-      el('div', { class: 'user-line' }, el('b', {}, u.name), uid === me ? pill(_t('me'), 'accent') : null, u.share ? pill('portal') : null,
+      el('div', { class: 'user-line' }, uid !== me && u.active ? loginAs(u, (await sessionInfo()).db, state.url, out) : el('b', {}, u.name), uid === me ? pill(_t('me'), 'accent') : null, u.share ? pill('portal') : null,
         el('span', { class: 'muted' }, _t('%s · #%s · %s (%s companies) · %s groups', u.login, u.id, u.company_id?.[1] || '', u.company_ids.length, groupIds.size))),
-      el('div', { class: 'note' }, _t('Simulates the selected user\'s rights without logging in as them (reading other users\' groups needs admin rights).')));
+      el('div', { class: 'note' }, _t('Simulates the selected user\'s rights without logging in as them (reading other users\' groups needs admin rights).'),
+        uid !== me && u.active ? ` ${_t('Click their name to log in as them in an incognito window: your session here stays.')}` : ''),
+      out);
   });
   block(s, 'groups', _t('Groups'), () => groupsBlock(t, origin, tryGroup, rerender));
   block(s, 'user-risks', _t('User risks'), async () => {

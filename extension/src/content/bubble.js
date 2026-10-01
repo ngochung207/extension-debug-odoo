@@ -158,7 +158,23 @@
     place();
   }
 
-  document.addEventListener('odoo-debug-ready', mount);
+  /** Debug mode kept on for this Odoo (toolbar popup): a page opened without ?debug= reloads with it. An explicit
+   * ?debug= (also empty or 0: turned off on purpose) is left alone. */
+  async function autoDebug(debug) {
+    const u = new URL(location.href);
+    if (debug || u.searchParams.has('debug')) return;
+    const { autoDebug: on = {} } = await chrome.storage.local.get('autoDebug').catch(() => ({}));
+    if (!on[location.origin]) return;
+    u.searchParams.set('debug', on[location.origin]);
+    location.replace(u);
+  }
+
+  // Injected again by background.js after an update: the copy before it is orphaned (its chrome.* calls fail, the panel
+  // hangs on Connecting… and neither − nor the button work), so it makes way. The page is loaded already: no ready event
+  // will come, the DOM tells it is Odoo (webclient, or a frontend page), as for the toolbar icon.
+  for (const old of document.querySelectorAll('odoo-debug-root')) old.remove();
+  if (document.readyState !== 'loading' && document.querySelector('body.o_web_client, #wrapwrap')) mount();
+  document.addEventListener('odoo-debug-ready', (e) => { autoDebug(e.detail); mount(); });
   chrome.runtime.onMessage.addListener((msg, _sender, reply) => {
     if (msg?.type === 'odoo-full') { // from the panel: { on } sets it, no `on` just asks; the answer is the current state
       if (btn && typeof msg.on === 'boolean') setFull(msg.on);

@@ -101,6 +101,42 @@ test('RPC tab: the calls the webclient made to load the form are listed', async 
   assert.ok(methods.includes('web_read'), `methods: ${methods}`);
 });
 
+test('RPC tab: a call is edited and sent again, a new request is sent, the answers show below', async () => {
+  await click('.tabs [data-tab="rpc"]');
+  const send = async (form, body) => {
+    await panel.$eval(`${form} textarea`, (t, v) => { t.value = v; }, body);
+    await panel.$eval(`${form} button[type=submit]`, (b) => b.click());
+    await panel.waitForFunction((f) => document.querySelector(`${f} .pill`), { timeout: 15_000 }, form);
+    return panel.$eval(form, (f) => ({ pill: f.querySelector('.pill').textContent, out: f.querySelector('pre')?.textContent, error: f.querySelector('.error')?.textContent }));
+  };
+  await panel.$$eval('#rpc .list > li', (lis) => lis.find((li) => li.querySelector('.name').textContent === 'web_read').click());
+  await panel.waitForSelector('#rpc .detail .btn');
+  await panel.$eval('#rpc .detail .btn', (b) => b.click()); // Edit & Resend
+  const body = JSON.parse(await panel.$eval('#rpc .detail .composer textarea', (t) => t.value));
+  assert.equal(body.params.method, 'web_read', 'the body as sent');
+  assert.equal(await panel.$eval('#rpc .list > li:has(.composer)', (li) => li.classList.contains('open')), true, 'the row stays open');
+  assert.deepEqual(await panel.$$eval('#rpc .detail:has(.composer) summary', (ss) => ss.map((n) => n.textContent)), ['Result'], 'the editor replaces the parameters');
+  body.params.kwargs.specification = { login: {} };
+  const resent = await send('#rpc .detail .composer', JSON.stringify(body));
+  assert.equal(resent.pill, 'ok', resent.error);
+  assert.match(resent.out, /"login": "admin"/);
+  await panel.$eval('#rpc .detail .composer textarea', (t) => { t.value = '{ bad'; });
+  await panel.$eval('#rpc .detail .composer button[type=submit]', (b) => b.click());
+  assert.match(await panel.$eval('#rpc .detail .composer .error', (n) => n.textContent), /^Invalid JSON/, 'checked before sending');
+
+  // Copy as cURL, of what is typed: a call_kw becomes the external API's execute_kw
+  await panel.evaluate(() => { navigator.clipboard.writeText = async (t) => { window.copied = t; }; });
+  await panel.$eval('#rpc .detail .composer textarea', (t, v) => { t.value = v; }, JSON.stringify(body));
+  await panel.$$eval('#rpc .detail .composer .btn', (bs) => bs.find((b) => b.textContent === 'Copy as cURL').click());
+  const curl = await panel.waitForFunction(() => window.copied, { timeout: 5_000 }).then((h) => h.jsonValue());
+  assert.match(curl, /^curl 'http:\/\/localhost:8069\/jsonrpc'/);
+  assert.match(curl, /"execute_kw","args":\["e2e",2,"'"\$ODOO_API_KEY"'","res.users","web_read",\[\[2\]\]/);
+
+  await panel.$$eval('#rpc .toolbar .chip', (bs) => bs.find((b) => b.textContent === 'New Request').click());
+  const fresh = await send('#rpc .rpc-draft .composer', JSON.stringify({ jsonrpc: '2.0', params: { model: 'res.users', method: 'nope', args: [], kwargs: {} } }));
+  assert.equal(fresh.pill, 'AttributeError');
+});
+
 test('Code tab: a search runs as the logged-in user, writes are blocked by default', async () => {
   const run = async (code) => {
     await click('.tabs [data-tab="code"]');
@@ -296,6 +332,60 @@ test('toolbar popup: the debug mode of the page, switched from there', async () 
   assert.equal(await page.evaluate(() => window.odoo.debug), '1');
   await page.goto(page.url().replace('debug=1', 'debug=0')); // back to off for what follows
   await page.waitForSelector('.o_form_view');
+});
+
+test('toolbar popup: debug kept on for this Odoo, a page opened without ?debug= gets it, ?debug=0 is left alone', async () => {
+  const popup = async () => {
+    const [ext] = (await browser.extensions()).values();
+    await ext.triggerAction(page);
+    const p = await (await browser.waitForTarget((t) => t.url().endsWith('/src/popup/popup.html'))).asPage();
+    await p.waitForSelector('#debug button.on');
+    return p;
+  };
+  let p = await popup();
+  assert.match(await p.$eval('#shortcuts', (n) => n.textContent), /panel.*debug/);
+  await Promise.all([page.waitForNavigation(), p.$eval('#keep', (b) => b.click())]); // off → debug, and kept
+  assert.equal(await page.evaluate(() => window.odoo.debug), '1');
+  await page.goto(`${new URL(page.url()).origin}/odoo/action-base.action_res_users/2`); // no ?debug=
+  await page.waitForFunction(() => new URLSearchParams(location.search).get('debug') === '1', { timeout: 15_000 });
+  await page.goto(page.url().replace('debug=1', 'debug=0'));
+  await page.waitForSelector('.o_form_view');
+  assert.equal(await page.evaluate(() => window.odoo.debug), '');
+  p = await popup();
+  await p.$eval('#keep', (b) => b.click()); // not kept any more
+  await p.waitForFunction(async () => !Object.keys((await chrome.storage.local.get('autoDebug')).autoDebug).length);
+  await p.close();
+});
+
+test('Security tab: log in as the picked user in an incognito window, this session stays', async () => {
+  panel = await page.waitForFrame((f) => f.url().endsWith('/src/panel/panel.html')); // reopened after the reload above
+  await panel.waitForSelector('.tabs [data-tab="security"]');
+  await click('.tabs [data-tab="security"]');
+  const search = '#security .user-search input';
+  await panel.waitForSelector(search);
+  await panel.$eval(search, (i) => { i.focus(); i.value = 'e2e_d'; i.dispatchEvent(new Event('input')); });
+  await panel.$eval(search, (i) => i.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' })));
+  await panel.waitForSelector('#security .user-line .user-name', { timeout: 15_000 }); // the name: logs in as them
+  const opened = browser.waitForTarget((t) => t.type() === 'page' && t.url().includes('/web/login?'), { timeout: 15_000 });
+  await click('#security .user-line .user-name');
+  const login = await (await opened).asPage();
+  await login.waitForSelector('input[name=login]');
+  assert.equal(await login.$eval('input[name=login]', (i) => i.value), 'e2e_demo');
+  assert.match(await login.evaluate(() => new URLSearchParams(location.search).get('redirect')), /^\/odoo\/.*\/2(\?|$)/); // back to this record
+  await login.close();
+  // the window's link went through /web/session/logout: in this window's cookies, admin would be logged out
+  assert.equal((await rpc(page, '/web/session/get_session_info', {})).username, 'admin');
+});
+
+test('after an update of the extension, the page opened before gets a working button and panel again', async () => {
+  await browser.installExtension(EXT); // Chrome orphans the content scripts of the open tabs: background.js injects them again
+  panel = await page.waitForFrame(async (f) => f.url().endsWith('/src/panel/panel.html') && await f.evaluate(() => !!chrome.runtime?.id).catch(() => false), { timeout: 15_000 });
+  await panel.waitForFunction(() => document.querySelector('#status')?.textContent.includes('res.users'), { timeout: 15_000 });
+  assert.equal(await page.evaluate(() => document.querySelectorAll('odoo-debug-root').length), 1, 'the orphaned copy made way');
+  const frame = await panel.frameElement();
+  await click('#minimize');
+  for (let i = 0; i < 50 && await frame.boundingBox(); i++) await new Promise((r) => setTimeout(r, 100));
+  assert.equal(await frame.boundingBox(), null, 'minimized');
 });
 
 test('no error from the extension in the console', () => {

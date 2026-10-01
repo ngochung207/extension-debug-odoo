@@ -21,6 +21,16 @@
   "background": {
     "service_worker": "src/background.js"
   },
+  "commands": {
+    "toggle-panel": {
+      "suggested_key": { "default": "Alt+Shift+O" },
+      "description": "Show / hide the panel"
+    },
+    "toggle-debug": {
+      "suggested_key": { "default": "Alt+Shift+D" },
+      "description": "Debug mode on / off"
+    }
+  },
   "permissions": [
     "scripting",
     "cookies",
