@@ -1,0 +1,42 @@
+name: Release
+# Bump "version" in static/manifest.json (+ a CHANGELOG.md section) and push to main or ts: CI runs, then the extension
+# is built, zipped (dist/ as it is: what Load unpacked takes) and released as v<version> with that section as notes.
+# From ts the release is a pre-release (main is not the TypeScript version yet). Pushes that keep the same version only
+# run CI.
+on:
+  push:
+    branches: [main, ts]
+
+jobs:
+  ci:
+    uses: ./.github/workflows/ci.yml
+
+  release:
+    needs: ci
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # full history + tags for the notes
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - name: Tag + release if the manifest version is new
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VER=v$(jq -r .version static/manifest.json)
+          if git rev-parse -q --verify "refs/tags/$VER" >/dev/null; then echo "$VER already released"; exit 0; fi
+          npm ci
+          npm run build
+          ZIP="odoo-debug-$VER.zip"
+          (cd dist && zip -r "../$ZIP" . -x "*.DS_Store")
+          PREV=$(git describe --tags --abbrev=0 2>/dev/null || true)
+          # notes = this version's section of CHANGELOG.md, else the commit subjects since the previous tag
+          awk -v v="[${VER#v}]" '/^## \[/ { p = index($0, v) > 0; next } p' CHANGELOG.md > notes.md 2>/dev/null || true
+          [ -s notes.md ] || { echo "## Changes${PREV:+ since $PREV}"; git log --no-merges --pretty='- %s (%h)' ${PREV:+$PREV..}HEAD; } > notes.md
+          PRE=$([ "$GITHUB_REF_NAME" = main ] || echo --prerelease)
+          gh release create "$VER" "$ZIP" --target "$GITHUB_SHA" --title "$VER" --notes-file notes.md $PRE

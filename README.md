@@ -61,33 +61,36 @@ The guide — features tab by tab, shortcuts, privacy — is at
 Shortcuts: **Alt+Shift+O** shows / hides the panel, **Alt+Shift+D** turns Odoo's debug mode on / off (change them at
 `chrome://extensions/shortcuts`).
 
-## Install and run
+## Install
 
-Requirements: **Node.js 22.18 or later**, and **Chrome** (or Edge, Brave, any Chromium browser).
+In **Chrome** (or Edge, Brave, any Chromium browser). The extension is not on the Chrome Web Store: it is installed
+from its release, unpacked.
 
-1. **Get the code**
-   ```sh
-   git clone https://github.com/ngochung207/extension-debug-odoo-ts.git
-   cd extension-debug-odoo-ts
-   ```
-2. **Install the dependencies**
-   ```sh
-   npm install
-   ```
-3. **Build the extension** into `dist/`
-   ```sh
-   npm run build
-   ```
-4. **Load it in Chrome**
+1. **Download** `odoo-debug-v<version>.zip` from the [Releases](https://github.com/ngochung207/extension-debug-odoo/releases) and unzip it into a folder you keep (Chrome loads
+   the extension from there: don't delete it).
+2. **Load it in Chrome**
    1. Open `chrome://extensions`.
    2. Turn on **Developer mode** (top right).
-   3. Click **Load unpacked** and choose the `dist/` folder.
+   3. Click **Load unpacked** and choose the unzipped folder (the one holding `manifest.json`).
    4. If the JavaScript version of Odoo Debug is installed, turn it off: both would add their button to Odoo pages.
-5. **Use it**: open any page of an Odoo 18 or 19 database (logged in), then click the **Odoo Debug** button at the
+3. **Use it**: open any page of an Odoo 18 or 19 database (logged in), then click the **Odoo Debug** button at the
    bottom right of the page, or press **Alt+Shift+O**. From its header the panel goes full screen or into its own
    window (for a second screen).
-6. **Update it** after pulling new code: `npm run build`, then the ⟳ button on the extension's card in
-   `chrome://extensions`, then reload the Odoo page.
+4. **Update it**: unzip the new release over the same folder, click ⟳ on the extension's card in `chrome://extensions`,
+   then reload the Odoo page.
+
+## Build from source
+
+Requirements: **Node.js 22.18 or later**.
+
+```sh
+git clone -b ts https://github.com/ngochung207/extension-debug-odoo.git
+cd extension-debug-odoo
+npm install
+npm run build   # → dist/: Load unpacked this folder (step 2 above)
+```
+
+After pulling new code: `npm run build`, then ⟳ in `chrome://extensions` and reload the Odoo page.
 
 ### Working on it
 
@@ -99,6 +102,9 @@ npm run i18n    # refreshes the .pot / .po after adding a translatable string
 
 How the code is organized, the rules it follows and how the Odoo versions are handled:
 [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+
+To release: bump `version` in `static/manifest.json`, add its section to [CHANGELOG.md](CHANGELOG.md), push. CI checks,
+builds and publishes `odoo-debug-v<version>.zip` in the Releases (a pre-release from the `ts` branch).
 
 ## License
 
