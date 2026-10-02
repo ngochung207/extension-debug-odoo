@@ -797,3 +797,54 @@ button[data-tip] { cursor: pointer; }
 .ok-text { color: var(--ok); }
 .err-text { color: var(--err); }
 .strong { font-weight: 600; }
+
+/* ---------- Code tab (features/code): the bar, the screen it runs on, snippets, typed results ---------- */
+#code .console-bar { flex-wrap: wrap; row-gap: 6px; } /* more tools than the JS version's: they wrap */
+#code .console-bar .seg { flex-wrap: nowrap; }
+.console-screen { flex: none; align-items: center; gap: 8px; font-size: var(--fs-xs); }
+.console-screen .chip { padding: 0 8px; line-height: 18px; }
+.snippets-list { display: flex; flex-direction: column; gap: 4px; }
+.snippet { align-items: baseline; gap: 8px; flex-wrap: nowrap; }
+.snippet-name { border: 0; background: none; color: var(--accent); font-weight: 600; padding: 2px 0; cursor: pointer; white-space: nowrap; }
+.snippet-name:hover { text-decoration: underline; }
+.snippet .grow { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dry-note { display: block; margin: 0 0 6px; }
+.prints { display: flex; flex-direction: column; gap: 2px; margin: 6px 0; padding: 6px 8px; border-left: 3px solid var(--line);
+  font: var(--fs-sm)/var(--lh-code) var(--mono); }
+.print-line { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 4px; }
+.value-box { display: flex; flex-direction: column; gap: 6px; margin-top: 6px; }
+.value-head { align-items: center; gap: 8px; }
+table.result-table { border-collapse: collapse; width: 100%; font-size: var(--fs-xs); }
+.result-table th, .result-table td { padding: 4px 10px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+.result-table th { white-space: nowrap; font-family: var(--font); }
+.result-table .num { text-align: right; font-variant-numeric: tabular-nums; }
+.result-table td { font-family: var(--font); white-space: normal; }
+.col-type { font-weight: 400; font-size: 10px; margin-left: 4px; }
+.rec-link { color: var(--accent); text-decoration: none; }
+.rec-link:hover { text-decoration: underline; }
+.chip-text { display: inline-block; padding: 0 8px; border: 1px solid var(--line); border-radius: 999px; font-size: var(--fs-xs); }
+.big-value { display: flex; flex-direction: column; gap: 2px; padding: 8px 4px; }
+.big-value > span:first-child { font-size: 22px; font-weight: 600; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.big-value > .muted { font-size: var(--fs-xs); }
+pre.value-text { margin: 0; font-size: var(--fs-sm); font-weight: 400; white-space: pre-wrap; }
+.value-facts { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 4px 14px; margin: 0; }
+.value-facts .fact { display: contents; }
+.value-facts dt { color: var(--muted); font-family: var(--mono); font-size: var(--fs-xs); }
+.value-facts dd { margin: 0; }
+.output details.calls { margin-top: 8px; }
+.output details.calls > div { padding: 4px 0; border-top: 1px solid var(--line); }
+/* wide panel: the screen line spans the width under the bar, then the editor beside the guide / the result */
+@media (min-width: 900px) {
+  #code .console { grid-template: auto auto minmax(0, 1fr) minmax(0, 1fr) / minmax(0, 1fr) minmax(0, 1fr); }
+  #code .console > .console-screen { grid-column: 1 / -1; }
+  #code .console > .editor { grid-area: 3 / 1 / 5; }
+  #code .console > .code-help { grid-area: 3 / 2; }
+  #code .console > .output { grid-area: 4 / 2; }
+  #code .console:has(> .code-help[hidden]) > .output { grid-row: 3 / 5; }
+  #code .console:has(> .output:empty) > .code-help { grid-row: 3 / 5; }
+  #code .console:has(> .code-help[hidden]):has(> .output:empty) > .editor { grid-column: 1 / -1; } /* nothing beside it yet */
+}
+/* The editor's textarea has the class "code" too, as the code blocks of ui/code.ts (.code: max-height 60vh, a focus ring):
+   it fills the editor whatever its height, and the ring is the editor's (.editor:focus-within), not drawn again inside. */
+textarea.code { max-height: none; }
+textarea.code:focus-visible { box-shadow: none; }

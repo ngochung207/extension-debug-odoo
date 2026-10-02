@@ -3,14 +3,13 @@
 //   TS:   _t('literal', …) and N_('literal') (template literals / variables are not extracted: always pass a literal)
 //   HTML: elements with data-i18n="text,title,…" (the English text / attribute values are the msgids)
 // Existing translations are kept, new strings get an empty msgstr (en.po: msgstr = msgid).
-// MIGRATION: while features are being ported from the JavaScript extension, the .po files also keep the translated
-// strings no source uses yet (after the used ones, without references), so porting a tab finds its translations
-// waiting. Set KEEP_UNUSED to false once every tab is ported: they are then dropped.
+// The .po files keep only the strings a source uses. (While the tabs were being ported from the JavaScript extension they
+// also kept the unused ones, waiting for their tab: KEEP_UNUSED, off since the last one, Code, was ported.)
 import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { join, relative } from 'node:path';
 import { LANGS, parsePo } from '../src/i18n/i18n.ts';
 
-const KEEP_UNUSED = true;
+const KEEP_UNUSED = false;
 
 const ROOT = join(import.meta.dirname, '..');
 const SRC = join(ROOT, 'src');

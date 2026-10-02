@@ -40,7 +40,7 @@ Odoo Debug trả lời các câu hỏi này ngay trên màn hình, dưới dạn
 | **Translations** | Chữ đến từ đâu và sửa ở đâu; bản dịch của bản ghi và view theo từng ngôn ngữ; độ phủ `.po`, xuất và nhập; ngôn ngữ |
 | **Apps** | Module như menu Apps của Odoo (cùng bộ lọc, dạng facet): chọn nhiều module rồi Kích hoạt (Cập nhật danh sách ứng dụng + cài kèm phụ thuộc), Nâng cấp hoặc mở form; ⚠ khi manifest trên đĩa mới hơn database. Mở một module: mô tả (`index.html` hoặc README), manifest, phụ thuộc hai chiều (cài nó sẽ kéo theo những gì, gồm cả module tự cài, tính đúng như Odoo) và dạng sơ đồ, dữ liệu và model của nó, gỡ cài đặt có xem trước bằng chính wizard của Odoo; các thao tác đang treo, áp dụng hoặc huỷ (quyền Settings) |
 | **Perf** | Profiler có sẵn của Odoo, đọc lại: bật / tắt cho phiên của bạn, rồi xem SQL của từng request, dòng code gửi SQL, nghi vấn N+1, câu chậm nhất; so với một mốc (trước / sau khi sửa); profile riêng một lời gọi từ tab RPC; flame graph; dọn dẹp (quyền Settings) |
-| Code | Đang chuyển từ bản JavaScript |
+| **Code** | ORM console chạy dưới quyền người đang đăng nhập, trên bản ghi đang mở / đang chọn (`record`, `records`, `model`): **JavaScript** trong trang (`env['sale.order'].search(…)`, chỉ đọc, chạy thử hoặc ghi) hoặc **Python** trên server bằng một server action tạm (chạy thử được rollback thật; cần quyền Settings); kết quả hiển thị theo kiểu dữ liệu (bản ghi, bảng theo kiểu field, ngày giờ theo múi giờ của bạn), copy dạng CSV / Markdown / JSON; snippet; gợi ý model, field, method |
 
 Phiên bản Odoo được nhận diện trên từng trang, và mọi khác biệt giữa 18.0 và 19.0 mà panel cần đều nằm ở một chỗ
 (`src/odoo/adapters/`).
