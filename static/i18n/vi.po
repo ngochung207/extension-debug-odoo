@@ -3966,7 +3966,7 @@ msgstr "Bấm để copy"
 msgid "Loading…"
 msgstr "Đang tải…"
 
-#: src/ui/components.ts:102
+#: src/ui/components.ts:117
 msgid "Open /odoo/%s"
 msgstr "Mở /odoo/%s"
 
