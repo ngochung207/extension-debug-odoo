@@ -60,33 +60,36 @@ Hướng dẫn chi tiết từng tab, phím tắt và quyền riêng tư:
 Phím tắt: **Alt+Shift+O** ẩn / hiện panel, **Alt+Shift+D** bật / tắt chế độ debug của Odoo (đổi ở
 `chrome://extensions/shortcuts`).
 
-## Cài đặt và chạy
+## Cài đặt
 
-Cần có: **Node.js 22.18 trở lên**, và **Chrome** (hoặc Edge, Brave, mọi trình duyệt Chromium).
+Trên **Chrome** (hoặc Edge, Brave, mọi trình duyệt Chromium). Extension chưa có trên Chrome Web Store: cài từ bản phát
+hành, dạng giải nén.
 
-1. **Tải mã nguồn**
-   ```sh
-   git clone https://github.com/ngochung207/extension-debug-odoo-ts.git
-   cd extension-debug-odoo-ts
-   ```
-2. **Cài các thư viện**
-   ```sh
-   npm install
-   ```
-3. **Build extension** ra thư mục `dist/`
-   ```sh
-   npm run build
-   ```
-4. **Nạp vào Chrome**
+1. **Tải** `odoo-debug-v<phiên bản>.zip` ở trang [Releases](https://github.com/ngochung207/extension-debug-odoo/releases) rồi giải nén vào một thư mục cố định (Chrome nạp
+   extension từ thư mục đó: đừng xoá nó).
+2. **Nạp vào Chrome**
    1. Mở `chrome://extensions`.
    2. Bật **Developer mode** (góc trên bên phải).
-   3. Bấm **Load unpacked** và chọn thư mục `dist/`.
+   3. Bấm **Load unpacked** và chọn thư mục vừa giải nén (thư mục chứa `manifest.json`).
    4. Nếu đang cài bản JavaScript của Odoo Debug, hãy tắt nó đi: cả hai đều thêm nút vào trang Odoo.
-5. **Sử dụng**: mở một trang bất kỳ của database Odoo 18 hoặc 19 (đã đăng nhập), rồi bấm nút **Odoo Debug** ở góc dưới
+3. **Sử dụng**: mở một trang bất kỳ của database Odoo 18 hoặc 19 (đã đăng nhập), rồi bấm nút **Odoo Debug** ở góc dưới
    bên phải trang, hoặc nhấn **Alt+Shift+O**. Từ thanh tiêu đề của panel có thể phóng toàn màn hình hoặc tách ra cửa sổ
    riêng (dùng với màn hình thứ hai).
-6. **Cập nhật** sau khi kéo code mới: `npm run build`, bấm ⟳ trên thẻ của extension ở `chrome://extensions`, rồi tải lại
-   trang Odoo.
+4. **Cập nhật**: giải nén bản mới đè lên đúng thư mục cũ, bấm ⟳ trên thẻ của extension ở `chrome://extensions`, rồi tải
+   lại trang Odoo.
+
+## Build từ mã nguồn
+
+Cần có: **Node.js 22.18 trở lên**.
+
+```sh
+git clone -b ts https://github.com/ngochung207/extension-debug-odoo.git
+cd extension-debug-odoo
+npm install
+npm run build   # → dist/: Load unpacked thư mục này (bước 2 ở trên)
+```
+
+Sau khi kéo code mới: `npm run build`, bấm ⟳ ở `chrome://extensions` rồi tải lại trang Odoo.
 
 ### Phát triển
 
@@ -97,6 +100,9 @@ npm run i18n    # cập nhật .pot / .po sau khi thêm chuỗi cần dịch
 ```
 
 Cách tổ chức mã nguồn, các quy tắc và cách xử lý từng phiên bản Odoo: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+
+Phát hành: tăng `version` trong `static/manifest.json`, thêm mục tương ứng vào [CHANGELOG.md](CHANGELOG.md), rồi push. CI
+kiểm tra, build và đăng `odoo-debug-v<phiên bản>.zip` lên Releases (là pre-release nếu từ nhánh `ts`).
 
 ## Giấy phép
 
