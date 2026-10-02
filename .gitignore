@@ -1,0 +1,18 @@
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+node_modules/
+
+# Build output (npm run build): load it unpacked from chrome://extensions; release zips are made by CI
+dist/
+*.zip
+
+# Local tooling
+.claude/
+*.log
+
+# tsc -b: declarations between projects (tsconfig.*.json), never shipped
+.tsbuild/
