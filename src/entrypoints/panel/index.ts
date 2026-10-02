@@ -28,7 +28,6 @@ startClock($<HTMLTimeElement>('#clock-time'), $('#clock-date'), lang);
 const tpl = templates(html, translateDom);
 /** In its own window: the tab it inspects (?tab=), else null (in the page). */
 const ownWindowOf = Number(new URLSearchParams(location.search).get('tab')) || null;
-document.documentElement.classList.toggle('detached', ownWindowOf != null);
 for (const b of document.querySelectorAll<HTMLButtonElement>('.tabs button')) b.title = b.firstChild?.textContent?.trim() || ''; // narrow panel: icons only, the name on hover
 
 let state: PageState = { url: '', origin: '', loadedAt: 0, odoo: false, debug: '' };
@@ -146,11 +145,7 @@ async function refresh() {
 }
 
 // ---------- tabs ----------
-const setBadge = (name: TabName, text: string) => {
-  const badge = document.querySelector(`.tabs [data-tab="${name}"] .count`);
-  if (badge) badge.textContent = text;
-};
-const panel: PanelContext = { state: () => state, odoo: () => ctx, showTab, setBadge, rerender: (name) => { rendered.delete(name); showTab(name); } };
+const panel: PanelContext = { state: () => state, odoo: () => ctx, showTab, rerender: (name) => { rendered.delete(name); showTab(name); } };
 // before mounting: the RPC log reads what the page recorded already
 setTab(ownWindowOf != null ? await chrome.tabs.get(ownWindowOf).catch(() => undefined) : await chrome.tabs.getCurrent());
 for (const name of TAB_NAMES) await TABS[name]?.mount?.(section(name), panel);
@@ -208,8 +203,8 @@ addEventListener('keydown', (e) => { // Esc leaves full screen, unless it is cle
 // ---------- its own window: open it (from the page), back into the page (from the window) ----------
 const detachBtn = $('#detach');
 const attachBtn = $('#attach');
-detachBtn.hidden = ownWindowOf != null;
-attachBtn.hidden = ownWindowOf == null;
+// removed, not hidden: .icon-btn's display would win over [hidden]
+if (ownWindowOf != null) { detachBtn.remove(); $('#full').remove(); $('#minimize').remove(); } else attachBtn.remove();
 detachBtn.addEventListener('click', () => { if (tabId != null) chrome.runtime.sendMessage({ type: 'odoo-detach', tabId } satisfies ExtMessage).catch(() => {}); });
 attachBtn.addEventListener('click', () => { if (tabId != null) chrome.runtime.sendMessage({ type: 'odoo-attach', tabId } satisfies ExtMessage).catch(() => {}); });
 if (ownWindowOf != null) chrome.tabs.onRemoved.addListener((id) => { if (id === ownWindowOf) window.close(); }); // nothing left to inspect

@@ -19,22 +19,6 @@ msgstr ""
 msgid "Reload Data"
 msgstr ""
 
-#: src/entrypoints/panel/index.html:18
-msgid "Minimize (the Odoo Debug button reopens it)"
-msgstr ""
-
-#: src/entrypoints/panel/index.html:18
-msgid "Minimize"
-msgstr ""
-
-#: src/entrypoints/panel/index.html:19
-msgid "Full Screen (Esc to exit)"
-msgstr ""
-
-#: src/entrypoints/panel/index.html:19
-msgid "Full Screen"
-msgstr ""
-
 #: src/entrypoints/panel/index.html:21
 msgid "Open in Its Own Window (for a second screen)"
 msgstr ""
@@ -48,73 +32,95 @@ msgstr ""
 msgid "Back into the Odoo Page"
 msgstr ""
 
-#: src/entrypoints/panel/index.html:25
+#: src/entrypoints/panel/index.html:23
+msgid "Full Screen (Esc to exit)"
+msgstr ""
+
+#: src/entrypoints/panel/index.html:23
+msgid "Full Screen"
+msgstr ""
+
+#: src/entrypoints/panel/index.html:24
+msgid "Minimize (the Odoo Debug button reopens it)"
+msgstr ""
+
+#: src/entrypoints/panel/index.html:24
+msgid "Minimize"
+msgstr ""
+
+#: src/entrypoints/panel/index.html:28
 #: src/features/security/security.tab.ts:61
 #: src/features/translations/translations.find.ts:69
 #: src/features/view/view.overview.ts:64
 msgid "Record"
 msgstr ""
 
-#: src/entrypoints/panel/index.html:26
+#: src/entrypoints/panel/index.html:29
 #: src/features/translations/translations.find.ts:70
 #: src/features/view/view.overview.ts:34
 #: src/features/view/view.overview.ts:37
 msgid "View"
 msgstr ""
 
-#: src/entrypoints/panel/index.html:27
+#: src/entrypoints/panel/index.html:30
 msgid "RPC"
 msgstr ""
 
-#: src/entrypoints/panel/index.html:28
+#: src/entrypoints/panel/index.html:31
 msgid "Security"
 msgstr ""
 
-#: src/entrypoints/panel/index.html:29
+#: src/entrypoints/panel/index.html:32
 msgid "Translations"
 msgstr ""
 
-#: src/entrypoints/panel/index.html:30
+#: src/entrypoints/panel/index.html:33
 #: src/features/apps/apps.ui.ts:101
 msgid "Apps"
 msgstr ""
 
-#: src/entrypoints/panel/index.html:31
+#: src/entrypoints/panel/index.html:34
+#: src/features/apps/apps.module.ts:45
+#: src/features/menus/menus.logic.ts:12
+msgid "Menus"
+msgstr ""
+
+#: src/entrypoints/panel/index.html:35
 msgid "Perf"
 msgstr ""
 
-#: src/entrypoints/panel/index.html:32
+#: src/entrypoints/panel/index.html:36
 #: src/features/code/code.tab.ts:50
 #: src/features/translations/translations.find.ts:59
 msgid "Code"
 msgstr ""
 
+#: src/entrypoints/panel/index.ts:51
 #: src/entrypoints/panel/index.ts:52
-#: src/entrypoints/panel/index.ts:53
 msgid "Cannot read this tab: %s"
 msgstr ""
 
-#: src/entrypoints/panel/index.ts:52
+#: src/entrypoints/panel/index.ts:51
 msgid "The current tab is not an Odoo page."
 msgstr ""
 
-#: src/entrypoints/panel/index.ts:55
+#: src/entrypoints/panel/index.ts:54
 msgid "Not available on Odoo %s: %s"
 msgstr ""
 
-#: src/entrypoints/panel/index.ts:102
+#: src/entrypoints/panel/index.ts:101
 msgid "Odoo %s is not tested: the panel uses its Odoo %s support, some cards may fail."
 msgstr ""
 
-#: src/entrypoints/panel/index.ts:103
+#: src/entrypoints/panel/index.ts:102
 msgid "Odoo %s is older than every supported version: some cards may fail."
 msgstr ""
 
-#: src/entrypoints/panel/index.ts:104
+#: src/entrypoints/panel/index.ts:103
 msgid "This database lacks fields the panel expects for Odoo %s: %s"
 msgstr ""
 
-#: src/entrypoints/panel/index.ts:108
+#: src/entrypoints/panel/index.ts:107
 msgid "Odoo %s, supported"
 msgstr ""
 
@@ -309,10 +315,12 @@ msgstr ""
 
 #: src/features/apps/apps.module.ts:44
 #: src/features/apps/apps.module.ts:166
+#: src/features/menus/menus.logic.ts:8
 msgid "Models"
 msgstr ""
 
 #: src/features/apps/apps.module.ts:44
+#: src/features/menus/menus.logic.ts:9
 #: src/features/record/record.tab.ts:28
 #: src/features/view/view.overview.ts:73
 msgid "Fields"
@@ -323,11 +331,8 @@ msgid "Selection values"
 msgstr ""
 
 #: src/features/apps/apps.module.ts:45
+#: src/features/menus/menus.logic.ts:11
 msgid "Views"
-msgstr ""
-
-#: src/features/apps/apps.module.ts:45
-msgid "Menus"
 msgstr ""
 
 #: src/features/apps/apps.module.ts:45
@@ -339,6 +344,7 @@ msgid "Server actions"
 msgstr ""
 
 #: src/features/apps/apps.module.ts:46
+#: src/features/menus/menus.logic.ts:17
 msgid "Reports"
 msgstr ""
 
@@ -1078,8 +1084,8 @@ msgstr ""
 #: src/features/apps/apps.ui.ts:83
 #: src/features/code/code.result.ts:228
 #: src/features/code/code.result.ts:266
-#: src/features/rpc/rpc.tab.ts:99
-#: src/features/rpc/rpc.tab.ts:187
+#: src/features/rpc/rpc.tab.ts:98
+#: src/features/rpc/rpc.tab.ts:186
 msgid "error"
 msgstr ""
 
@@ -1117,8 +1123,9 @@ msgstr ""
 
 #: src/features/code/code.data.ts:25
 #: src/features/code/code.data.ts:75
+#: src/features/menus/menus.tab.ts:42
 #: src/features/perf/perf.data.ts:86
-#: src/features/rpc/rpc.tab.ts:184
+#: src/features/rpc/rpc.tab.ts:183
 #: src/odoo/rpc.ts:30
 msgid "No response — is this an Odoo page?"
 msgstr ""
@@ -1615,6 +1622,54 @@ msgstr ""
 msgid "Suggestions"
 msgstr ""
 
+#: src/features/menus/menus.logic.ts:10
+msgid "Record Rules"
+msgstr ""
+
+#: src/features/menus/menus.logic.ts:13
+msgid "Model Data"
+msgstr ""
+
+#: src/features/menus/menus.logic.ts:14
+msgid "Crons"
+msgstr ""
+
+#: src/features/menus/menus.logic.ts:15
+msgid "Actions Window"
+msgstr ""
+
+#: src/features/menus/menus.logic.ts:16
+msgid "Actions Server"
+msgstr ""
+
+#: src/features/menus/menus.logic.ts:18
+#: src/features/rpc/rpc.tab.ts:117
+msgid "Parameters"
+msgstr ""
+
+#: src/features/menus/menus.logic.ts:19
+msgid "Sequences"
+msgstr ""
+
+#: src/features/menus/menus.logic.ts:20
+msgid "Mail Templates"
+msgstr ""
+
+#: src/features/menus/menus.tab.ts:24
+msgid "Needs Access Rights (base.group_erp_manager)."
+msgstr ""
+
+#: src/features/menus/menus.tab.ts:51
+msgid "Menu · model"
+msgstr ""
+
+#: src/features/menus/menus.tab.ts:51
+#: src/features/translations/translations.find.ts:67
+#: src/features/view/view.overview.ts:58
+#: src/features/view/view.overview.ts:59
+msgid "Action"
+msgstr ""
+
 #: src/features/perf/perf.data.ts:16
 msgid "Profiling is not allowed on this database: allow it first."
 msgstr ""
@@ -2103,34 +2158,30 @@ msgstr ""
 msgid "Select a call to see its parameters and result."
 msgstr ""
 
-#: src/features/rpc/rpc.tab.ts:116
+#: src/features/rpc/rpc.tab.ts:115
 msgid "Cut at 200 KB by the recorder: Edit & Resend it to profile it whole."
 msgstr ""
 
-#: src/features/rpc/rpc.tab.ts:118
-msgid "Parameters"
-msgstr ""
-
-#: src/features/rpc/rpc.tab.ts:135
+#: src/features/rpc/rpc.tab.ts:134
 #: src/features/security/security.record.ts:144
 #: src/features/security/security.record.ts:145
 #: src/features/security/security.record.ts:148
 msgid "Result"
 msgstr ""
 
-#: src/features/rpc/rpc.tab.ts:143
+#: src/features/rpc/rpc.tab.ts:142
 msgid "Cut at 200 KB by the recorder, so shown as text: Edit & Resend gets it whole."
 msgstr ""
 
-#: src/features/rpc/rpc.tab.ts:179
+#: src/features/rpc/rpc.tab.ts:178
 msgid "Invalid JSON: %s"
 msgstr ""
 
-#: src/features/rpc/rpc.tab.ts:203
+#: src/features/rpc/rpc.tab.ts:202
 msgid "call_kw: the JSON-2 API (/json/2, named arguments), with an API key of this user in $ODOO_API_KEY. Other routes: the session_id cookie in $ODOO_SESSION."
 msgstr ""
 
-#: src/features/rpc/rpc.tab.ts:204
+#: src/features/rpc/rpc.tab.ts:203
 msgid "call_kw: the external API (execute_kw), with an API key of this user in $ODOO_API_KEY. Other routes: the session_id cookie in $ODOO_SESSION."
 msgstr ""
 
@@ -3363,12 +3414,6 @@ msgstr ""
 
 #: src/features/translations/translations.find.ts:63
 msgid "The menu's name (translated in Odoo, or the module's .po)"
-msgstr ""
-
-#: src/features/translations/translations.find.ts:67
-#: src/features/view/view.overview.ts:58
-#: src/features/view/view.overview.ts:59
-msgid "Action"
 msgstr ""
 
 #: src/features/translations/translations.find.ts:67

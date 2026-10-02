@@ -76,7 +76,6 @@ function add(raw: unknown) {
 
 function count() {
   const n = rows.children.length;
-  panel.setBadge('rpc', n ? String(n) : '');
   emptyLog.hidden = n > 0;
 }
 

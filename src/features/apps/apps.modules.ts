@@ -162,7 +162,7 @@ export function modulesView(body: HTMLElement, c: AppsCtx) {
     const warn = pending.length ? waitingLine(pending, c) : null;
     const { bar: tools } = tpl('toolbar', { bar: HTMLDivElement }).refs;
     tools.append(bar.root);
-    return box(tools, warn, p.bar, md.root);
+    return box(tools, warn, md.root, p.bar);
   });
 }
 

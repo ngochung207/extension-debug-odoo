@@ -20,7 +20,7 @@ declare global {
 
   interface ActionService {
     currentController?: ActionController;
-    doAction(action: string | Record<string, unknown>): Promise<unknown>;
+    doAction(action: string | Record<string, unknown>, options?: { clearBreadcrumbs?: boolean }): Promise<unknown>;
   }
 
   interface ActionController {

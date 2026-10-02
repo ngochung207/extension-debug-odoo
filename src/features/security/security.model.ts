@@ -75,7 +75,7 @@ async function fieldsTable(fields: Record<string, { string: string; groups?: str
   return matrix(_t('Field'), users.map((u) => u.user.name), [{
     rows: restricted.map(([name, f]): MxRow => ({
       label: [copyable(name)],
-      sub: `${f.string} · ${groupsLabel(f.groups!, names).replace(/^🔒 /, '')}`,
+      sub: `${f.string} · ${groupsLabel(f.groups!, names)}`,
       cells: users.map((u) => ({ v: sees(u, f.groups!), title: sees(u, f.groups!) ? _t('%s sees this field', u.user.name) : _t('Hidden from %s', u.user.name) })),
     })),
   }]);
