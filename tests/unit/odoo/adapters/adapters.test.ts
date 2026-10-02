@@ -46,6 +46,13 @@ test('modules: the uninstall wizard takes one module in 18, several in 19; only 
   assert.deepEqual(ADAPTERS[19].modules, { uninstallWizard: { moduleField: 'module_ids', many: true, impactedField: 'impacted_module_ids' }, refusesWhilePending: true });
 });
 
+test('speedscope: one profile in 18 (only while profiling is allowed), several side by side in 19', () => {
+  assert.deepEqual([ADAPTERS[18].profiler.speedscopeMany, ADAPTERS[18].profiler.speedscopeNeedsEnabled], [false, true]);
+  assert.deepEqual([ADAPTERS[19].profiler.speedscopeMany, ADAPTERS[19].profiler.speedscopeNeedsEnabled], [true, false]);
+  assert.ok(!ADAPTERS[18].profiler.listFields.includes('cpu_duration'));
+  assert.ok(ADAPTERS[19].profiler.listFields.includes('cpu_duration'));
+});
+
 test('self-check: missing fields', () => {
   const expects = ADAPTERS[19].expects;
   assert.deepEqual(missingFields(expects, Object.fromEntries(expects.map((e) => [e.model, expects.filter((x) => x.model === e.model).map((x) => x.field)]))), []);

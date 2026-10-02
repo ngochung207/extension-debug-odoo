@@ -20,8 +20,13 @@ export class RpcError extends Error {
 /** The server refused the call for lack of rights (ACL or record rule): the caller shows what it needs instead. */
 export const isAccessError = (e: unknown): boolean => e instanceof RpcError && /\bAccessError$/.test(e.type || '');
 
+/** Marks the panel's own calls in their URL (a JSON route ignores its query string, 18.0 and 19.0: http.py →
+ * JsonRPCDispatcher takes the body's params and the path's): the profiler names a profile after its full path, the
+ * server log shows the path, so both tell the panel's reads from the page's requests. */
+export const PANEL_MARK = 'odoo_debug_panel=1';
+
 export async function rpc<T = unknown>(route: string, params: { [key: string]: Json | undefined }): Promise<T> {
-  const r = await exec(pageRpc, route, params);
+  const r = await exec(pageRpc, `${route}${route.includes('?') ? '&' : '?'}${PANEL_MARK}`, params);
   if (!r) throw new Error(_t('No response — is this an Odoo page?'));
   if ('error' in r) {
     const { traceback, errorType } = r as { traceback?: string; errorType?: string }; // absent when exec() itself failed

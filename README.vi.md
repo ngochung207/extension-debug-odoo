@@ -39,7 +39,8 @@ Odoo Debug trả lời các câu hỏi này ngay trên màn hình, dưới dạn
 | **Security** | Quyền dạng bảng: ACL và rule của một bản ghi × đọc / ghi / tạo / xoá, domain được đánh giá với user; quyền trên mọi model; nhóm, nhóm cấp gì và ai đang có; thử một nhóm trước khi cấp; so sánh hai user |
 | **Translations** | Chữ đến từ đâu và sửa ở đâu; bản dịch của bản ghi và view theo từng ngôn ngữ; độ phủ `.po`, xuất và nhập; ngôn ngữ |
 | **Apps** | Module như menu Apps của Odoo (cùng bộ lọc, dạng facet): chọn nhiều module rồi Kích hoạt (Cập nhật danh sách ứng dụng + cài kèm phụ thuộc), Nâng cấp hoặc mở form; ⚠ khi manifest trên đĩa mới hơn database. Mở một module: mô tả (`index.html` hoặc README), manifest, phụ thuộc hai chiều (cài nó sẽ kéo theo những gì, gồm cả module tự cài, tính đúng như Odoo) và dạng sơ đồ, dữ liệu và model của nó, gỡ cài đặt có xem trước bằng chính wizard của Odoo; các thao tác đang treo, áp dụng hoặc huỷ (quyền Settings) |
-| Perf · Code | Đang chuyển từ bản JavaScript |
+| **Perf** | Profiler có sẵn của Odoo, đọc lại: bật / tắt cho phiên của bạn, rồi xem SQL của từng request, dòng code gửi SQL, nghi vấn N+1, câu chậm nhất; so với một mốc (trước / sau khi sửa); profile riêng một lời gọi từ tab RPC; flame graph; dọn dẹp (quyền Settings) |
+| Code | Đang chuyển từ bản JavaScript |
 
 Phiên bản Odoo được nhận diện trên từng trang, và mọi khác biệt giữa 18.0 và 19.0 mà panel cần đều nằm ở một chỗ
 (`src/odoo/adapters/`).

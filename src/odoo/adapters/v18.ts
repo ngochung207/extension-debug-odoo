@@ -33,7 +33,11 @@ export const v18: OdooAdapter = {
     evalNames: ['user', 'time', 'company_ids', 'company_id'],
   },
   i18n: { webTranslationsPath: '/web/webclient/translations/{unique}' }, // web/controllers/webclient.py: a mandatory unique segment
-  profiler: { listFields: ['name', 'session', 'duration', 'sql_count', 'create_date'] }, // no cpu_duration before 19
+  profiler: {
+    listFields: ['name', 'session', 'duration', 'sql_count', 'create_date'], // no cpu_duration before 19
+    speedscopeMany: false, // web/controllers/profiling.py: /web/speedscope/<model("ir.profile"):profile>
+    speedscopeNeedsEnabled: true, // "don't server speedscope index if profiling is not enabled"
+  },
   modules: {
     uninstallWizard: { moduleField: 'module_id', many: false, impactedField: 'module_ids' }, // base/wizard/base_module_uninstall.py
     refusesWhilePending: false, // ir_module.py → _button_immediate_function: no check, Registry.new runs every waiting module

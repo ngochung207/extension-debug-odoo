@@ -34,3 +34,16 @@ export async function pageFetch(url: string): Promise<{ status: number; text: st
     return { error: String(e) };
   }
 }
+
+/** POSTs `body` (JSON text) to `route` with the page's session, on the unwrapped fetch: a request sent again (RPC: Edit &
+ * Resend; Perf: profiled) stays out of the log. */
+export async function pageSend(route: string, body: string): Promise<{ status: number; text: string; ms: number } | { error: string }> {
+  const f = window.__odooDebugHook?.fetch || window.fetch;
+  const t0 = performance.now();
+  try {
+    const r = await f(route, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body });
+    return { status: r.status, text: await r.text(), ms: Math.round(performance.now() - t0) };
+  } catch (e) {
+    return { error: String(e) };
+  }
+}

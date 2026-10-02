@@ -69,7 +69,11 @@ export const v19: OdooAdapter = {
     evalNames: ['user', 'company_ids', 'company_id'], // `time` is gone from ir.rule._eval_context
   },
   i18n: { webTranslationsPath: '/web/webclient/translations' }, // ?hash= instead of the segment: without it, everything comes back
-  profiler: { listFields: ['name', 'session', 'duration', 'cpu_duration', 'sql_count', 'create_date'] }, // cpu_duration is new
+  profiler: {
+    listFields: ['name', 'session', 'duration', 'cpu_duration', 'sql_count', 'create_date'], // cpu_duration is new
+    speedscopeMany: true, // /web/speedscope/<profile>: "1,2,3", the profiles side by side
+    speedscopeNeedsEnabled: false,
+  },
   modules: {
     uninstallWizard: { moduleField: 'module_ids', many: true, impactedField: 'impacted_module_ids' }, // several modules at once, renamed
     refusesWhilePending: true, // _button_immediate_function: "Odoo is currently processing another module operation"

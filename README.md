@@ -40,7 +40,8 @@ Odoo Debug answers these on the screen itself, as tables, for the user you are �
 | **Security** | Rights as tables: a record's ACLs and rules × read / write / create / delete, with domains evaluated for the user; rights on every model; groups, what each grants and who has it; try a group before granting it; compare users |
 | **Translations** | Where a text comes from and where to change it; a record's and a view's translations per language; `.po` coverage, export and import; languages |
 | **Apps** | Modules as Odoo's Apps menu has them (same filters, as facets): pick several, then Activate (Update Apps List + install with dependencies), Upgrade or open their forms; ⚠ when a manifest on disk is newer than the database. A module opened: its description (`index.html` or README), manifest, dependencies both ways (what installing it brings, auto-installed modules included, as Odoo computes it) and as a diagram, its data and models, uninstall previewed with Odoo's own wizard; operations left pending, applied or cancelled (Settings rights) |
-| Perf · Code | Being ported from the JavaScript version |
+| **Perf** | Odoo's own profiler, read back: start / stop for your session, then each request's SQL, the lines of code sending them, N+1 suspects, the slowest queries; compare with a baseline (before / after a fix); profile one call of the RPC tab on its own; flame graph; clean up (Settings rights) |
+| Code | Being ported from the JavaScript version |
 
 The version of Odoo is detected on each page, and every difference between 18.0 and 19.0 the panel depends on lives in
 one place (`src/odoo/adapters/`).
