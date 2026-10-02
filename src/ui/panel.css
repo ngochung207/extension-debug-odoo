@@ -848,3 +848,15 @@ pre.value-text { margin: 0; font-size: var(--fs-sm); font-weight: 400; white-spa
    it fills the editor whatever its height, and the ring is the editor's (.editor:focus-within), not drawn again inside. */
 textarea.code { max-height: none; }
 textarea.code:focus-visible { box-shadow: none; }
+/* Security › By model: a module's title stays in sight while its models scroll by (under the sticky filter bar) */
+#security table.by-model tbody.foldable:not(.folded) .mx-section th { position: sticky; top: var(--mx-sticky-top, 0px); z-index: 1; }
+#security table.by-model .mx-section th { padding-block: 8px; }
+#security table.by-model .mx-note { font-weight: 400; }
+.model-sentence { color: var(--fg); font-size: var(--fs-sm); }
+/* Security › By model, a model opened: a sentence, then each part (a title, its table, what it means) spaced evenly;
+   not the view's own titles (.subview-body .story-title: tight, a negative margin under) */
+.model-detail { display: flex; flex-direction: column; gap: 6px; }
+.model-detail > .note { margin: 0; }
+.model-detail > .model-sentence { margin-bottom: 4px; line-height: var(--lh); }
+.subview-body .model-detail > .story-title { margin: 14px 0 2px; }
+.model-detail > table.matrix + .note { margin-top: 2px; }

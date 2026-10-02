@@ -642,7 +642,7 @@ msgstr "%s · also in %s"
 
 #: src/features/apps/apps.module.ts:180
 #: src/features/security/security.groups.ts:130
-#: src/features/security/security.models.ts:62
+#: src/features/security/security.models.ts:81
 msgid "Model"
 msgstr "Model"
 
@@ -2306,7 +2306,7 @@ msgid "Group"
 msgstr "Group"
 
 #: src/features/security/security.groups.ts:44
-#: src/features/security/security.models.ts:62
+#: src/features/security/security.models.ts:81
 msgid "Rules"
 msgstr "Rules"
 
@@ -2370,7 +2370,7 @@ msgid "Brought by (groups implying it)"
 msgstr "Brought by (groups implying it)"
 
 #: src/features/security/security.groups.ts:123
-#: src/features/security/security.models.ts:59
+#: src/features/security/security.models.ts:117
 msgid "%s models"
 msgstr "%s models"
 
@@ -2415,6 +2415,7 @@ msgstr "The rule doesn't cover this operation"
 
 #: src/features/security/security.groups.ts:143
 #: src/features/security/security.model.ts:49
+#: src/features/security/security.models.ts:159
 msgid "Rule"
 msgstr "Rule"
 
@@ -2566,124 +2567,124 @@ msgstr "Group set on the user"
 msgid "py_js is not loaded"
 msgstr "py_js is not loaded"
 
-#: src/features/security/security.logic.ts:289
+#: src/features/security/security.logic.ts:320
 #: src/features/security/security.model.ts:38
 msgid "No ACL: only the superuser can access this model."
 msgstr "No ACL: only the superuser can access this model."
 
-#: src/features/security/security.logic.ts:292
+#: src/features/security/security.logic.ts:323
 msgid "ACL \"%s\" has no group → applies to EVERY user, portal/public included (%s)."
 msgstr "ACL \"%s\" has no group → applies to EVERY user, portal/public included (%s)."
 
-#: src/features/security/security.logic.ts:293
+#: src/features/security/security.logic.ts:324
 msgid "ACL \"%s\" grants %s to %s."
 msgstr "ACL \"%s\" grants %s to %s."
 
-#: src/features/security/security.logic.ts:297
+#: src/features/security/security.logic.ts:328
 msgid "Has company_id but no global multi-company rule → records may leak across companies."
 msgstr "Has company_id but no global multi-company rule → records may leak across companies."
 
-#: src/features/security/security.logic.ts:299
+#: src/features/security/security.logic.ts:330
 msgid "Field \"%s\" looks sensitive but has no groups=."
 msgstr "Field \"%s\" looks sensitive but has no groups=."
 
-#: src/features/security/security.logic.ts:332
+#: src/features/security/security.logic.ts:363
 msgid "Not served over HTTPS."
 msgstr "Not served over HTTPS."
 
-#: src/features/security/security.logic.ts:333
+#: src/features/security/security.logic.ts:364
 msgid "Cannot read the session_id cookie."
 msgstr "Cannot read the session_id cookie."
 
-#: src/features/security/security.logic.ts:335
+#: src/features/security/security.logic.ts:366
 msgid "session_id cookie is not HttpOnly → readable by JS/XSS."
 msgstr "session_id cookie is not HttpOnly → readable by JS/XSS."
 
-#: src/features/security/security.logic.ts:336
+#: src/features/security/security.logic.ts:367
 msgid "session_id cookie lacks the Secure flag."
 msgstr "session_id cookie lacks the Secure flag."
 
-#: src/features/security/security.logic.ts:337
+#: src/features/security/security.logic.ts:368
 msgid "session_id cookie is SameSite=None → larger CSRF surface."
 msgstr "session_id cookie is SameSite=None → larger CSRF surface."
 
-#: src/features/security/security.logic.ts:340
+#: src/features/security/security.logic.ts:371
 msgid "Missing Strict-Transport-Security (HSTS) header."
 msgstr "Missing Strict-Transport-Security (HSTS) header."
 
-#: src/features/security/security.logic.ts:341
+#: src/features/security/security.logic.ts:372
 msgid "Missing X-Frame-Options / CSP frame-ancestors → clickjacking."
 msgstr "Missing X-Frame-Options / CSP frame-ancestors → clickjacking."
 
-#: src/features/security/security.logic.ts:342
+#: src/features/security/security.logic.ts:373
 msgid "Missing X-Content-Type-Options: nosniff."
 msgstr "Missing X-Content-Type-Options: nosniff."
 
-#: src/features/security/security.logic.ts:343
+#: src/features/security/security.logic.ts:374
 msgid "Missing Content-Security-Policy."
 msgstr "Missing Content-Security-Policy."
 
-#: src/features/security/security.logic.ts:344
+#: src/features/security/security.logic.ts:375
 msgid "Header %s discloses a version: %s"
 msgstr "Header %s discloses a version: %s"
 
-#: src/features/security/security.logic.ts:346
+#: src/features/security/security.logic.ts:377
 msgid "Database manager has NO master password (default \"admin\")!"
 msgstr "Database manager has NO master password (default \"admin\")!"
 
-#: src/features/security/security.logic.ts:347
+#: src/features/security/security.logic.ts:378
 msgid "/web/database/manager is reachable → block /web/database/* at the proxy or set list_db = False."
 msgstr "/web/database/manager is reachable → block /web/database/* at the proxy or set list_db = False."
 
-#: src/features/security/security.logic.ts:348
+#: src/features/security/security.logic.ts:379
 msgid "list_db is on: database names are exposed (%s)."
 msgstr "list_db is on: database names are exposed (%s)."
 
-#: src/features/security/security.logic.ts:349
+#: src/features/security/security.logic.ts:380
 msgid "Server version is public via /web/webclient/version_info: %s"
 msgstr "Server version is public via /web/webclient/version_info: %s"
 
-#: src/features/security/security.logic.ts:359
+#: src/features/security/security.logic.ts:390
 msgid "__system__ (superuser): bypasses every ACL and record rule."
 msgstr "__system__ (superuser): bypasses every ACL and record rule."
 
-#: src/features/security/security.logic.ts:360
+#: src/features/security/security.logic.ts:391
 msgid "Settings administrator (base.group_system)."
 msgstr "Settings administrator (base.group_system)."
 
-#: src/features/security/security.logic.ts:361
+#: src/features/security/security.logic.ts:392
 msgid "Access Rights manager (base.group_erp_manager): can grant itself any group."
 msgstr "Access Rights manager (base.group_erp_manager): can grant itself any group."
 
-#: src/features/security/security.logic.ts:362
+#: src/features/security/security.logic.ts:393
 msgid "Has Technical Features (base.group_no_one)."
 msgstr "Has Technical Features (base.group_no_one)."
 
-#: src/features/security/security.logic.ts:363
+#: src/features/security/security.logic.ts:394
 msgid "Public user."
 msgstr "Public user."
 
-#: src/features/security/security.logic.ts:363
+#: src/features/security/security.logic.ts:394
 msgid "Portal user (share)."
 msgstr "Portal user (share)."
 
-#: src/features/security/security.logic.ts:364
+#: src/features/security/security.logic.ts:395
 msgid "Login \"admin\" is the default, easy to guess."
 msgstr "Login \"admin\" is the default, easy to guess."
 
-#: src/features/security/security.logic.ts:365
+#: src/features/security/security.logic.ts:396
 msgid "auth_totp is not installed → no 2FA."
 msgstr "auth_totp is not installed → no 2FA."
 
-#: src/features/security/security.logic.ts:366
+#: src/features/security/security.logic.ts:397
 msgid "2FA (TOTP) is not enabled."
 msgstr "2FA (TOTP) is not enabled."
 
-#: src/features/security/security.logic.ts:367
+#: src/features/security/security.logic.ts:398
 msgid "%s API key(s): direct RPC calls with this user's rights."
 msgstr "%s API key(s): direct RPC calls with this user's rights."
 
-#: src/features/security/security.logic.ts:368
+#: src/features/security/security.logic.ts:399
 msgid "User is archived."
 msgstr "User is archived."
 
@@ -2698,7 +2699,6 @@ msgid "Reading the ACLs and record rules needs Access Rights (base.group_erp_man
 msgstr "Reading the ACLs and record rules needs Access Rights (base.group_erp_manager)."
 
 #: src/features/security/security.model.ts:32
-#: src/features/security/security.models.ts:86
 #: src/features/security/security.record.ts:87
 #: src/features/security/security.record.ts:106
 msgid "every user"
@@ -2762,61 +2762,177 @@ msgstr "%s sees this field"
 msgid "Hidden from %s"
 msgstr "Hidden from %s"
 
-#: src/features/security/security.models.ts:19
+#: src/features/security/security.models.ts:24
 msgid "The rights across models need Access Rights (base.group_erp_manager)."
 msgstr "The rights across models need Access Rights (base.group_erp_manager)."
 
-#: src/features/security/security.models.ts:43
-msgid "%s: granted by an ACL"
-msgstr "%s: granted by an ACL"
-
-#: src/features/security/security.models.ts:43
-msgid "%s: no ACL grants it"
-msgstr "%s: no ACL grants it"
-
-#: src/features/security/security.models.ts:51
-msgid "%s rules limit which records %s sees"
-msgstr "%s rules limit which records %s sees"
+#: src/features/security/security.models.ts:55
+msgid "%s may %s: an ACL grants it"
+msgstr "%s may %s: an ACL grants it"
 
 #: src/features/security/security.models.ts:55
-msgid "(unknown module)"
-msgstr "(unknown module)"
+msgid "%s may not %s: no ACL grants it"
+msgstr "%s may not %s: no ACL grants it"
 
-#: src/features/security/security.models.ts:68
+#: src/features/security/security.models.ts:63
+msgid "1 record rule decides which records %s sees"
+msgstr "1 record rule decides which records %s sees"
+
+#: src/features/security/security.models.ts:64
+msgid "%s record rules decide which records %s sees"
+msgstr "%s record rules decide which records %s sees"
+
+#: src/features/security/security.models.ts:74
+msgid "Custom models (no module)"
+msgstr "Custom models (no module)"
+
+#: src/features/security/security.models.ts:90
 msgid "%s of %s models"
 msgstr "%s of %s models"
 
-#: src/features/security/security.models.ts:69
+#: src/features/security/security.models.ts:93
 msgid "Filter models or modules…"
 msgstr "Filter models or modules…"
 
-#: src/features/security/security.models.ts:76
+#: src/features/security/security.models.ts:102
+msgid "Expand All"
+msgstr "Expand All"
+
+#: src/features/security/security.models.ts:102
+msgid "Show the models of every module"
+msgstr "Show the models of every module"
+
+#: src/features/security/security.models.ts:103
+msgid "Collapse All"
+msgstr "Collapse All"
+
+#: src/features/security/security.models.ts:103
+msgid "Fold every module back to its line"
+msgstr "Fold every module back to its line"
+
+#: src/features/security/security.models.ts:104
 msgid "Only what the tried groups add"
 msgstr "Only what the tried groups add"
 
-#: src/features/security/security.models.ts:76
+#: src/features/security/security.models.ts:104
 msgid "Only differences"
 msgstr "Only differences"
 
-#: src/features/security/security.models.ts:78
-msgid "Each cell: %s | %s. From the ACLs: the Rules column counts the rules limiting which records. Click a model for the details."
-msgstr "Each cell: %s | %s. From the ACLs: the Rules column counts the rules limiting which records. Click a model for the details."
+#: src/features/security/security.models.ts:108
+msgid "Each cell: %s | %s. ✓ an ACL grants the operation, · none does. Rules: how many record rules limit which records. Click a module to open it, a model for what decides it."
+msgstr "Each cell: %s | %s. ✓ an ACL grants the operation, · none does. Rules: how many record rules limit which records. Click a module to open it, a model for what decides it."
 
-#: src/features/security/security.models.ts:79
-msgid "From the ACLs: the Rules column counts the rules limiting which records. +✓ added by the tried groups. Click a model for the details."
-msgstr "From the ACLs: the Rules column counts the rules limiting which records. +✓ added by the tried groups. Click a model for the details."
+#: src/features/security/security.models.ts:109
+msgid "✓ an ACL grants the operation, · none does; +✓ added by the tried groups. Rules: how many record rules limit which records. Click a module to open it, a model for what decides it."
+msgstr "✓ an ACL grants the operation, · none does; +✓ added by the tried groups. Rules: how many record rules limit which records. Click a module to open it, a model for what decides it."
 
-#: src/features/security/security.models.ts:88
+#: src/features/security/security.models.ts:117
+msgid "1 model"
+msgstr "1 model"
+
+#: src/features/security/security.models.ts:117
+msgid "%s every operation"
+msgstr "%s every operation"
+
+#: src/features/security/security.models.ts:117
+msgid "%s read only"
+msgstr "%s read only"
+
+#: src/features/security/security.models.ts:118
+msgid "%s some operations"
+msgstr "%s some operations"
+
+#: src/features/security/security.models.ts:118
+msgid "%s limited by rules"
+msgstr "%s limited by rules"
+
+#: src/features/security/security.models.ts:129
+msgid "%s can %s %s."
+msgstr "%s can %s %s."
+
+#: src/features/security/security.models.ts:129
+msgid "%s has no access to %s."
+msgstr "%s has no access to %s."
+
+#: src/features/security/security.models.ts:130
+msgid "Not %s."
+msgstr "Not %s."
+
+#: src/features/security/security.models.ts:131
+msgid "1 record rule decides which records: only the ones it allows."
+msgstr "1 record rule decides which records: only the ones it allows."
+
+#: src/features/security/security.models.ts:132
+msgid "%s record rules decide which records: only the ones they allow."
+msgstr "%s record rules decide which records: only the ones they allow."
+
+#: src/features/security/security.models.ts:132
+msgid "No record rule: every record."
+msgstr "No record rule: every record."
+
+#: src/features/security/security.models.ts:133
+msgid "%s: %s."
+msgstr "%s: %s."
+
+#: src/features/security/security.models.ts:133
+msgid "no access"
+msgstr "no access"
+
+#: src/features/security/security.models.ts:139
+msgid "Every user (an ACL without a group)"
+msgstr "Every user (an ACL without a group)"
+
+#: src/features/security/security.models.ts:140
+msgid "being tried"
+msgstr "being tried"
+
+#: src/features/security/security.models.ts:141
+msgid "This ACL grants %s"
+msgstr "This ACL grants %s"
+
+#: src/features/security/security.models.ts:141
+msgid "Not granted by this ACL"
+msgstr "Not granted by this ACL"
+
+#: src/features/security/security.models.ts:148
+msgid "global: applies to every user"
+msgstr "global: applies to every user"
+
+#: src/features/security/security.models.ts:148
+msgid "for the group %s"
+msgstr "for the group %s"
+
+#: src/features/security/security.models.ts:149
+msgid "Limits the records for %s"
+msgstr "Limits the records for %s"
+
+#: src/features/security/security.models.ts:149
+msgid "Doesn't apply to %s"
+msgstr "Doesn't apply to %s"
+
+#: src/features/security/security.models.ts:156
+msgid "Access rights (ACL): who grants what"
+msgstr "Access rights (ACL): who grants what"
+
+#: src/features/security/security.models.ts:157
 msgid "Granted by"
 msgstr "Granted by"
 
-#: src/features/security/security.models.ts:88
-msgid "nothing for this user"
-msgstr "nothing for this user"
+#: src/features/security/security.models.ts:157
+msgid "No ACL of this user's groups grants anything on this model."
+msgstr "No ACL of this user's groups grants anything on this model."
 
-#: src/features/security/security.models.ts:89
-msgid "Rules limiting the records"
-msgstr "Rules limiting the records"
+#: src/features/security/security.models.ts:158
+msgid "An operation is allowed when at least one of these ACLs grants it."
+msgstr "An operation is allowed when at least one of these ACLs grants it."
+
+#: src/features/security/security.models.ts:159
+msgid "Record rules: which records"
+msgstr "Record rules: which records"
+
+#: src/features/security/security.models.ts:160
+msgid "For an operation, a record must match every global rule and at least one of the group rules. Click a rule for its domain; the Record view evaluates them on a record."
+msgstr "For an operation, a record must match every global rule and at least one of the group rules. Click a rule for its domain; the Record view evaluates them on a record."
 
 #: src/features/security/security.record.ts:34
 #: src/features/security/security.record.ts:146
