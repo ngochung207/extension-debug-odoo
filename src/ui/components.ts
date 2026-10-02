@@ -61,15 +61,30 @@ export function kv(obj: Record<string, unknown>): HTMLElement {
   return root;
 }
 
-export async function copyText(text: string) {
-  try { await navigator.clipboard.writeText(text); } catch { // clipboard API refused (focus, permissions policy): the old way
-    const ta = document.createElement('textarea'); // markup-ok: off-screen copy helper, not UI
-    ta.value = text;
-    document.body.append(ta);
-    ta.select();
-    document.execCommand('copy');
-    ta.remove();
+type PolicyDoc = Document & { permissionsPolicy?: { allowsFeature(f: string): boolean }; featurePolicy?: { allowsFeature(f: string): boolean } };
+
+/** Whether this document may use the Clipboard API. The panel is a frame of the Odoo page (it asks for clipboard-write,
+ * entrypoints/launcher), but the page — or a proxy in front of Odoo — can forbid it to its frames with a
+ * Permissions-Policy header: calling the API then fails and Chrome reports a "permissions policy violation". */
+export function clipboardAllowed(doc: PolicyDoc = document): boolean {
+  const policy = doc.permissionsPolicy ?? doc.featurePolicy;
+  try { return policy ? policy.allowsFeature('clipboard-write') : true; } catch { return true; }
+}
+
+/** Copies `text`: the Clipboard API when the page allows it, else (or when it refuses: focus) execCommand('copy'),
+ * which no permissions policy governs. → whether it was copied. */
+export async function copyText(text: string): Promise<boolean> {
+  if (clipboardAllowed() && navigator.clipboard) {
+    try { await navigator.clipboard.writeText(text); return true; } catch { /* not focused: the old way */ }
   }
+  const ta = document.createElement('textarea'); // markup-ok: off-screen copy helper, not UI
+  ta.value = text;
+  ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0;pointer-events:none'; // selecting it must not scroll the panel
+  document.body.append(ta);
+  ta.select();
+  const ok = document.execCommand('copy');
+  ta.remove();
+  return ok;
 }
 
 /** `text` (a field name, xmlid…) as a button copying it to the clipboard; ✓ for a second after. `label`: shown instead (e.g. masked). */
