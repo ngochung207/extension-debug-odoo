@@ -66,6 +66,10 @@ export interface OdooAdapter {
   readonly profiler: {
     /** ir.profile fields read for the list of profiled requests */
     readonly listFields: readonly string[];
+    /** /web/speedscope/<…>: several profiles at once (ids joined by commas) */
+    readonly speedscopeMany: boolean;
+    /** /web/speedscope answers 404 once profiling is no longer enabled on the database */
+    readonly speedscopeNeedsEnabled: boolean;
   };
 
   readonly modules: {

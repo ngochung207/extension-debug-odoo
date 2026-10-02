@@ -781,3 +781,19 @@ button[data-tip] { cursor: pointer; }
 .dep-graph.full { position: fixed; inset: 8px; z-index: 20; padding: 12px; background: var(--bg); border: 1px solid var(--line);
   border-radius: var(--r); box-shadow: 0 8px 30px rgb(0 0 0 / .35); }
 .dep-graph.full .graph-scroll { flex: 1; max-height: none; }
+
+/* ---------- Perf tab (features/perf): the recorder, the requests and the one opened beside them ---------- */
+#perf .subview { margin: 12px 8px 20px; }
+.perf-recorder { padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; }
+.perf-recorder .row { align-items: center; gap: 8px; }
+.perf-note { font-size: var(--fs-xs); }
+.perf-select { background: var(--surface); color: var(--fg); border: 1px solid var(--line); border-radius: var(--r); padding: 4px 8px; max-width: 360px; }
+.perf-totals { gap: 6px 16px; }
+.perf-total { display: inline-flex; align-items: baseline; gap: 4px; }
+.perf-total b { font-size: var(--fs-md); }
+.perf-query { display: flex; flex-direction: column; gap: 8px; }
+.perf-query pre { max-height: 260px; overflow: auto; }
+.perf-cleanup { align-items: center; gap: 6px; margin-top: 8px; }
+.ok-text { color: var(--ok); }
+.err-text { color: var(--err); }
+.strong { font-weight: 600; }

@@ -6,7 +6,9 @@ import { exec, isExecError } from '../../extension/run-in-tab.ts';
 import { _t, translateDom } from '../../i18n/i18n.ts';
 import { idsOfCall, modeOfCall, parseAccessError, reportAccessProblem } from '../../odoo/access-error.ts';
 import { odoo } from '../../odoo/detect.ts';
+import { pageSend } from '../../injected/json-rpc.ts';
 import { methodSignature } from '../../odoo/method-doc.ts';
+import { reportCallToProfile } from '../../odoo/profile-call.ts';
 import { sessionInfo } from '../../odoo/reads.ts';
 import { copyText, details, errBox, listHead, loading, pill, pre } from '../../ui/components.ts';
 import { openDepthFor } from '../../ui/json.ts';
@@ -14,7 +16,7 @@ import { jsonView } from '../../ui/json-view.ts';
 import { WIDE, expandable, masterDetail, resetPane } from '../../ui/lists.ts';
 import { templates } from '../../ui/template.ts';
 import type { PanelContext, TabModule } from '../registry.ts';
-import { pageRpcLog, pageSend } from './rpc.injected.ts';
+import { pageRpcLog } from './rpc.injected.ts';
 import { callTarget, parseRpc, parseRpcResponse, prettyJson, toCurl, type RpcEntry } from './rpc.logic.ts';
 import html from './rpc.tpl.html';
 
@@ -105,7 +107,13 @@ function row(e: RpcEntry): HTMLLIElement {
 /** A call opened: its actions, then the request (Parameters) and the answer (Result, or the error first). Edit & Resend
  * turns the request into its editor in place, which has its own Copy as cURL (of what is typed). */
 function detail(e: RpcEntry): HTMLElement {
-  const { root, refs } = tpl('call-detail', { edit: HTMLButtonElement, why: HTMLButtonElement, body: HTMLDivElement });
+  const { root, refs } = tpl('call-detail', { edit: HTMLButtonElement, why: HTMLButtonElement, profile: HTMLButtonElement, body: HTMLDivElement });
+  refs.profile.addEventListener('click', (ev) => { // the Perf tab sends it again with the profiler on, and opens its profile
+    ev.stopPropagation();
+    reportCallToProfile({ route: e.route, body: e.body, label: `${e.method} ${e.model}`.trim() });
+    panel.rerender('perf');
+  });
+  if (e.bodyCut) { refs.profile.disabled = true; refs.profile.title = _t('Cut at 200 KB by the recorder: Edit & Resend it to profile it whole.'); }
   const unfolded = (d: HTMLDetailsElement) => { d.open = WIDE.matches; return d; }; // in the pane beside the list there is room
   const params = unfolded(details(_t('Parameters'), ...cutNote(e.bodyCut), readable({ args: e.args, kwargs: e.kwargs })));
   const curl = curlButton(() => ({ route: e.route, body: e.body }));
