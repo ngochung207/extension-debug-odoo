@@ -84,6 +84,7 @@ msgid "Perf"
 msgstr "Perf"
 
 #: src/entrypoints/panel/index.html:32
+#: src/features/code/code.tab.ts:50
 #: src/features/translations/translations.find.ts:59
 msgid "Code"
 msgstr "Code"
@@ -800,6 +801,7 @@ msgid "Demo data loaded"
 msgstr "Demo data loaded"
 
 #: src/features/apps/apps.module.ts:275
+#: src/features/code/code.result.ts:156
 #: src/features/security/security.groups.ts:151
 #: src/features/security/security.record.ts:174
 #: src/features/translations/translations.modules.ts:139
@@ -1074,6 +1076,8 @@ msgid "Module description"
 msgstr "Module description"
 
 #: src/features/apps/apps.ui.ts:83
+#: src/features/code/code.result.ts:228
+#: src/features/code/code.result.ts:266
 #: src/features/rpc/rpc.tab.ts:99
 #: src/features/rpc/rpc.tab.ts:187
 msgid "error"
@@ -1111,6 +1115,506 @@ msgstr "To uninstall"
 msgid "To install"
 msgstr "To install"
 
+#: src/features/code/code.data.ts:25
+#: src/features/code/code.data.ts:75
+#: src/features/perf/perf.data.ts:86
+#: src/features/rpc/rpc.tab.ts:184
+#: src/odoo/rpc.ts:30
+msgid "No response — is this an Odoo page?"
+msgstr "No response — is this an Odoo page?"
+
+#: src/features/code/code.data.ts:39
+msgid "Unknown model: %s"
+msgstr "Unknown model: %s"
+
+#: src/features/code/code.data.ts:60
+msgid "The server action returned nothing: is this Odoo running it as code?"
+msgstr "The server action returned nothing: is this Odoo running it as code?"
+
+#: src/features/code/code.injected.ts:62
+msgid "%s writes: blocked in read-only mode (choose \"Dry run\" or \"Allow writes\")"
+msgstr "%s writes: blocked in read-only mode (choose \"Dry run\" or \"Allow writes\")"
+
+#: src/features/code/code.injected.ts:84
+msgid "Stopped after %s calls"
+msgstr "Stopped after %s calls"
+
+#: src/features/code/code.injected.ts:129
+msgid "%s has no field %s"
+msgstr "%s has no field %s"
+
+#: src/features/code/code.injected.ts:162
+#: src/features/code/code.injected.ts:167
+#: src/features/code/code.injected.ts:186
+#: src/features/code/code.injected.ts:222
+#: src/features/code/code.injected.ts:294
+msgid "%s.%s is not relational"
+msgstr "%s.%s is not relational"
+
+#: src/features/code/code.injected.ts:164
+#: src/features/code/code.injected.ts:260
+msgid "Expected singleton: %s"
+msgstr "Expected singleton: %s"
+
+#: src/features/code/code.injected.ts:208
+msgid "%s is read from the server: await it before using its value"
+msgstr "%s is read from the server: await it before using its value"
+
+#: src/features/code/code.injected.ts:465
+msgid "No view to refresh on this page"
+msgstr "No view to refresh on this page"
+
+#: src/features/code/code.result.ts:41
+msgid "true"
+msgstr "true"
+
+#: src/features/code/code.result.ts:41
+msgid "false"
+msgstr "false"
+
+#: src/features/code/code.result.ts:48
+#: src/features/code/code.result.ts:80
+#: src/features/code/code.result.ts:153
+msgid "%s records"
+msgstr "%s records"
+
+#: src/features/code/code.result.ts:62
+msgid "binary · %s"
+msgstr "binary · %s"
+
+#: src/features/code/code.result.ts:78
+msgid "Not created: a dry run answers create() with an id no record has"
+msgstr "Not created: a dry run answers create() with an id no record has"
+
+#: src/features/code/code.result.ts:131
+msgid "Download CSV"
+msgstr "Download CSV"
+
+#: src/features/code/code.result.ts:138
+msgid "Copy CSV"
+msgstr "Copy CSV"
+
+#: src/features/code/code.result.ts:138
+msgid "Copy Markdown"
+msgstr "Copy Markdown"
+
+#: src/features/code/code.result.ts:138
+msgid "Copy JSON"
+msgstr "Copy JSON"
+
+#: src/features/code/code.result.ts:153
+msgid "recordset"
+msgstr "recordset"
+
+#: src/features/code/code.result.ts:160
+msgid "rows of %s"
+msgstr "rows of %s"
+
+#: src/features/code/code.result.ts:160
+msgid "table"
+msgstr "table"
+
+#: src/features/code/code.result.ts:160
+msgid "%s rows (first %s shown)"
+msgstr "%s rows (first %s shown)"
+
+#: src/features/code/code.result.ts:160
+msgid "%s rows"
+msgstr "%s rows"
+
+#: src/features/code/code.result.ts:166
+msgid "list"
+msgstr "list"
+
+#: src/features/code/code.result.ts:166
+#: src/ui/json-view.ts:57
+msgid "%s items"
+msgstr "%s items"
+
+#: src/features/code/code.result.ts:174
+msgid "dict"
+msgstr "dict"
+
+#: src/features/code/code.result.ts:174
+#: src/ui/json-view.ts:57
+msgid "%s keys"
+msgstr "%s keys"
+
+#: src/features/code/code.result.ts:185
+msgid "%s bytes"
+msgstr "%s bytes"
+
+#: src/features/code/code.result.ts:189
+msgid "JSON"
+msgstr "JSON"
+
+#: src/features/code/code.result.ts:199
+msgid "nothing"
+msgstr "nothing"
+
+#: src/features/code/code.result.ts:206
+msgid "text · %s characters"
+msgstr "text · %s characters"
+
+#: src/features/code/code.result.ts:228
+msgid "ok"
+msgstr "ok"
+
+#: src/features/code/code.result.ts:229
+#: src/features/view/view.overview.ts:64
+msgid "read-only"
+msgstr "read-only"
+
+#: src/features/code/code.result.ts:229
+msgid "dry run"
+msgstr "dry run"
+
+#: src/features/code/code.result.ts:229
+msgid "writes committed"
+msgstr "writes committed"
+
+#: src/features/code/code.result.ts:230
+#: src/features/code/code.result.ts:266
+msgid "%s ms"
+msgstr "%s ms"
+
+#: src/features/code/code.result.ts:231
+msgid "%s calls"
+msgstr "%s calls"
+
+#: src/features/code/code.result.ts:232
+msgid "%s writes not sent"
+msgstr "%s writes not sent"
+
+#: src/features/code/code.result.ts:233
+msgid "%s write calls"
+msgstr "%s write calls"
+
+#: src/features/code/code.result.ts:234
+msgid "page refreshed"
+msgstr "page refreshed"
+
+#: src/features/code/code.result.ts:234
+msgid "page not refreshed"
+msgstr "page not refreshed"
+
+#: src/features/code/code.result.ts:238
+msgid "Dry run: the code ran for real, then everything it changed was rolled back."
+msgstr "Dry run: the code ran for real, then everything it changed was rolled back."
+
+#: src/features/code/code.result.ts:239
+msgid "Dry run: the writing calls below were listed, not sent; reads after them show the values before."
+msgstr "Dry run: the writing calls below were listed, not sent; reads after them show the values before."
+
+#: src/features/code/code.result.ts:248
+msgid "No return value: end with return … to see one."
+msgstr "No return value: end with return … to see one."
+
+#: src/features/code/code.result.ts:257
+msgid "Line %s"
+msgstr "Line %s"
+
+#: src/features/code/code.result.ts:257
+msgid "Go to Line"
+msgstr "Go to Line"
+
+#: src/features/code/code.result.ts:258
+msgid "This page's Content-Security-Policy forbids running code (a proxy in front of Odoo adds script-src)."
+msgstr "This page's Content-Security-Policy forbids running code (a proxy in front of Odoo adds script-src)."
+
+#: src/features/code/code.result.ts:259
+msgid "Nothing was saved: the error rolled back everything the code had changed."
+msgstr "Nothing was saved: the error rolled back everything the code had changed."
+
+#: src/features/code/code.result.ts:265
+msgid "not sent"
+msgstr "not sent"
+
+#: src/features/code/code.result.ts:265
+msgid "write"
+msgstr "write"
+
+#: src/features/code/code.result.ts:269
+msgid "Calls (%s)"
+msgstr "Calls (%s)"
+
+#: src/features/code/code.snippets.ts:10
+#: src/features/code/code.snippets.ts:26
+msgid "This record"
+msgstr "This record"
+
+#: src/features/code/code.snippets.ts:10
+#: src/features/code/code.snippets.ts:26
+msgid "every field of the record opened"
+msgstr "every field of the record opened"
+
+#: src/features/code/code.snippets.ts:11
+#: src/features/code/code.snippets.ts:27
+msgid "Selected records"
+msgstr "Selected records"
+
+#: src/features/code/code.snippets.ts:11
+#: src/features/code/code.snippets.ts:27
+msgid "the records ticked in the list, else the one opened"
+msgstr "the records ticked in the list, else the one opened"
+
+#: src/features/code/code.snippets.ts:12
+#: src/features/code/code.snippets.ts:28
+msgid "Count by a field"
+msgstr "Count by a field"
+
+#: src/features/code/code.snippets.ts:12
+#: src/features/code/code.snippets.ts:28
+msgid "how many records of the screen's model per value (change state)"
+msgstr "how many records of the screen's model per value (change state)"
+
+#: src/features/code/code.snippets.ts:17
+#: src/features/code/code.snippets.ts:31
+msgid "Empty field"
+msgstr "Empty field"
+
+#: src/features/code/code.snippets.ts:17
+#: src/features/code/code.snippets.ts:31
+msgid "records missing a value"
+msgstr "records missing a value"
+
+#: src/features/code/code.snippets.ts:18
+#: src/features/code/code.snippets.ts:32
+msgid "My access to this record"
+msgstr "My access to this record"
+
+#: src/features/code/code.snippets.ts:18
+#: src/features/code/code.snippets.ts:32
+msgid "what the server answers for each operation"
+msgstr "what the server answers for each operation"
+
+#: src/features/code/code.snippets.ts:22
+#: src/features/code/code.snippets.ts:37
+msgid "Record of an xmlid"
+msgstr "Record of an xmlid"
+
+#: src/features/code/code.snippets.ts:23
+#: src/features/code/code.snippets.ts:38
+msgid "Change a field (dry run first)"
+msgstr "Change a field (dry run first)"
+
+#: src/features/code/code.snippets.ts:23
+msgid "rec.field = value writes it, like in Python"
+msgstr "rec.field = value writes it, like in Python"
+
+#: src/features/code/code.snippets.ts:38
+msgid "a dry run rolls it back: see what it would do"
+msgstr "a dry run rolls it back: see what it would do"
+
+#: src/features/code/code.snippets.ts:41
+msgid "Time a piece of code"
+msgstr "Time a piece of code"
+
+#: src/features/code/code.snippets.ts:41
+msgid "how long a call takes on the server"
+msgstr "how long a call takes on the server"
+
+#: src/features/code/code.snippets.ts:69
+msgid "Delete the snippet \"%s\"?"
+msgstr "Delete the snippet \"%s\"?"
+
+#: src/features/code/code.snippets.ts:69
+msgid "Delete this snippet"
+msgstr "Delete this snippet"
+
+#: src/features/code/code.snippets.ts:73
+msgid "+ Save the code as a snippet…"
+msgstr "+ Save the code as a snippet…"
+
+#: src/features/code/code.snippets.ts:84
+msgid "Available variables:"
+msgstr "Available variables:"
+
+#: src/features/code/code.snippets.ts:85
+msgid "environment of the logged-in user, with their access rights and record rules; env['res.partner'] is an empty recordset"
+msgstr "environment of the logged-in user, with their access rights and record rules; env['res.partner'] is an empty recordset"
+
+#: src/features/code/code.snippets.ts:86
+msgid "the record opened, the records selected (else the one opened), the screen's model: as in a server action"
+msgstr "the record opened, the records selected (else the one opened), the screen's model: as in a server action"
+
+#: src/features/code/code.snippets.ts:87
+msgid "current user, current company, active companies"
+msgstr "current user, current company, active companies"
+
+#: src/features/code/code.snippets.ts:88
+msgid "record of an external id, if you can read it"
+msgstr "record of an external id, if you can read it"
+
+#: src/features/code/code.snippets.ts:89
+#: src/features/code/code.snippets.ts:104
+msgid "shows values above the result"
+msgstr "shows values above the result"
+
+#: src/features/code/code.snippets.ts:90
+msgid "x2many commands: Command.create(vals), link(id), set(ids)…"
+msgstr "x2many commands: Command.create(vals), link(id), set(ids)…"
+
+#: src/features/code/code.snippets.ts:92
+msgid "Recordsets:"
+msgstr "Recordsets:"
+
+#: src/features/code/code.snippets.ts:93
+msgid "read from the server"
+msgstr "read from the server"
+
+#: src/features/code/code.snippets.ts:94
+msgid "work like in Python"
+msgstr "work like in Python"
+
+#: src/features/code/code.snippets.ts:95
+msgid "field value of a single record, as in Python; await it inside an expression"
+msgstr "field value of a single record, as in Python; await it inside an expression"
+
+#: src/features/code/code.snippets.ts:96
+msgid "writes the field, like in Python"
+msgstr "writes the field, like in Python"
+
+#: src/features/code/code.snippets.ts:97
+msgid "write: refused in read-only, listed but not sent in a dry run"
+msgstr "write: refused in read-only, listed but not sent in a dry run"
+
+#: src/features/code/code.snippets.ts:101
+msgid "Available variables (a server action's):"
+msgstr "Available variables (a server action's):"
+
+#: src/features/code/code.snippets.ts:102
+msgid "environment of the logged-in user (their rights; sudo() is yours to call)"
+msgstr "environment of the logged-in user (their rights; sudo() is yours to call)"
+
+#: src/features/code/code.snippets.ts:103
+msgid "the record opened, the records selected (else the one opened), the screen's model"
+msgstr "the record opened, the records selected (else the one opened), the screen's model"
+
+#: src/features/code/code.snippets.ts:105
+msgid "the value shown, as what it is"
+msgstr "the value shown, as what it is"
+
+#: src/features/code/code.snippets.ts:106
+msgid "what a server action has"
+msgstr "what a server action has"
+
+#: src/features/code/code.snippets.ts:108
+msgid "Runs:"
+msgstr "Runs:"
+
+#: src/features/code/code.snippets.ts:109
+#: src/features/code/code.tab.ts:29
+#: src/features/code/code.tab.ts:30
+msgid "Dry run"
+msgstr "Dry run"
+
+#: src/features/code/code.snippets.ts:109
+msgid "the code runs for real, then everything is rolled back: try a write, see what it does"
+msgstr "the code runs for real, then everything is rolled back: try a write, see what it does"
+
+#: src/features/code/code.snippets.ts:110
+#: src/features/code/code.tab.ts:30
+msgid "Commit"
+msgstr "Commit"
+
+#: src/features/code/code.snippets.ts:110
+msgid "saved at once; an error rolls back everything the code changed"
+msgstr "saved at once; an error rolls back everything the code changed"
+
+#: src/features/code/code.snippets.ts:111
+msgid "Odoo's sandbox: no import, no dunder (__x__) names; Settings rights needed"
+msgstr "Odoo's sandbox: no import, no dunder (__x__) names; Settings rights needed"
+
+#: src/features/code/code.snippets.ts:131
+msgid "Suggestions: env[' (models), '… (fields), . (methods and fields); ↑ ↓ Enter / Tab, Esc, Ctrl+Space. ⌘/Ctrl+Enter runs."
+msgstr "Suggestions: env[' (models), '… (fields), . (methods and fields); ↑ ↓ Enter / Tab, Esc, Ctrl+Space. ⌘/Ctrl+Enter runs."
+
+#: src/features/code/code.tab.ts:25
+msgid "// JavaScript with env, record, records, model, print, Command. ⌘/Ctrl+Enter runs it."
+msgstr "// JavaScript with env, record, records, model, print, Command. ⌘/Ctrl+Enter runs it."
+
+#: src/features/code/code.tab.ts:26
+msgid "# Python with env, record, records, model, print, Command; return a value. ⌘/Ctrl+Enter runs it."
+msgstr "# Python with env, record, records, model, print, Command; return a value. ⌘/Ctrl+Enter runs it."
+
+#: src/features/code/code.tab.ts:29
+#: src/features/view/view.tpl.html:92
+msgid "Read-only"
+msgstr "Read-only"
+
+#: src/features/code/code.tab.ts:29
+msgid "Allow writes"
+msgstr "Allow writes"
+
+#: src/features/code/code.tab.ts:57
+msgid "Runs on:"
+msgstr "Runs on:"
+
+#: src/features/code/code.tab.ts:58
+msgid "no model on this screen: record, records and model are empty"
+msgstr "no model on this screen: record, records and model are empty"
+
+#: src/features/code/code.tab.ts:61
+msgid "record #%s"
+msgstr "record #%s"
+
+#: src/features/code/code.tab.ts:61
+msgid "no record opened"
+msgstr "no record opened"
+
+#: src/features/code/code.tab.ts:62
+msgid "%s selected"
+msgstr "%s selected"
+
+#: src/features/code/code.tab.ts:64
+msgid "Read the selection again"
+msgstr "Read the selection again"
+
+#: src/features/code/code.tab.ts:72
+msgid "Run"
+msgstr "Run"
+
+#: src/features/code/code.tab.ts:72
+msgid "Run (⌘/Ctrl+Enter)"
+msgstr "Run (⌘/Ctrl+Enter)"
+
+#: src/features/code/code.tab.ts:74
+msgid "Auto Refresh"
+msgstr "Auto Refresh"
+
+#: src/features/code/code.tab.ts:74
+msgid "After a run that wrote, reload the data of the view on screen (Odoo's soft_reload), without reloading the page"
+msgstr "After a run that wrote, reload the data of the view on screen (Odoo's soft_reload), without reloading the page"
+
+#: src/features/code/code.tab.ts:99
+msgid "Snippets"
+msgstr "Snippets"
+
+#: src/features/code/code.tab.ts:99
+msgid "Ready-made snippets, and the ones you saved for this Odoo"
+msgstr "Ready-made snippets, and the ones you saved for this Odoo"
+
+#: src/features/code/code.tab.ts:100
+msgid "Guide: available variables, recordset API, examples"
+msgstr "Guide: available variables, recordset API, examples"
+
+#: src/features/code/code.tab.ts:101
+msgid "Runs as %s (uid %s): their access rights, record rules and companies apply."
+msgstr "Runs as %s (uid %s): their access rights, record rules and companies apply."
+
+#: src/features/code/code.tab.ts:116
+msgid "Name of the snippet:"
+msgstr "Name of the snippet:"
+
+#: src/features/code/code.tab.ts:152
+msgid "Python runs as a server action: it needs Settings rights (base.group_system)."
+msgstr "Python runs as a server action: it needs Settings rights (base.group_system)."
+
+#: src/features/code/code.tpl.html:35
+msgid "Suggestions"
+msgstr "Suggestions"
+
 #: src/features/perf/perf.data.ts:16
 msgid "Profiling is not allowed on this database: allow it first."
 msgstr "Profiling is not allowed on this database: allow it first."
@@ -1118,12 +1622,6 @@ msgstr "Profiling is not allowed on this database: allow it first."
 #: src/features/perf/perf.data.ts:44
 msgid "Cannot call /web/set_profiling"
 msgstr "Cannot call /web/set_profiling"
-
-#: src/features/perf/perf.data.ts:86
-#: src/features/rpc/rpc.tab.ts:184
-#: src/odoo/rpc.ts:30
-msgid "No response — is this an Odoo page?"
-msgstr "No response — is this an Odoo page?"
 
 #: src/features/perf/perf.request.ts:48
 msgid "Flame Graph ↗"
@@ -3377,10 +3875,6 @@ msgstr "new"
 msgid "editing"
 msgstr "editing"
 
-#: src/features/view/view.overview.ts:64
-msgid "read-only"
-msgstr "read-only"
-
 #: src/features/view/view.overview.ts:73
 msgid "%s on the form"
 msgstr "%s on the form"
@@ -3448,10 +3942,6 @@ msgstr "Hidden"
 msgid "Not shown"
 msgstr "Not shown"
 
-#: src/features/view/view.tpl.html:92
-msgid "Read-only"
-msgstr "Read-only"
-
 #: src/features/view/view.tpl.html:94
 msgid "Expression error"
 msgstr "Expression error"
@@ -3504,14 +3994,6 @@ msgstr "not"
 msgid "Show %s more characters"
 msgstr "Show %s more characters"
 
-#: src/ui/json-view.ts:57
-msgid "%s items"
-msgstr "%s items"
-
-#: src/ui/json-view.ts:57
-msgid "%s keys"
-msgstr "%s keys"
-
 #: src/ui/json-view.ts:71
 msgid "Show %s more (of %s)"
 msgstr "Show %s more (of %s)"
@@ -3535,738 +4017,3 @@ msgstr "Unknown: could not be checked"
 #: src/ui/matrix.ts:44
 msgid "Added by the groups being tried"
 msgstr "Added by the groups being tried"
-
-msgid "Filter or try a group…"
-msgstr "Filter or try a group…"
-
-msgid "%s groups found"
-msgstr "%s groups found"
-
-msgid "● set on the user · ◐ implied by another group · + being tried · ○ not. Models: how many models the group's own ACLs open. Type to find a group the users don't have."
-msgstr "● set on the user · ◐ implied by another group · + being tried · ○ not. Models: how many models the group's own ACLs open. Type to find a group the users don't have."
-
-msgid "Give %s the groups of %s they lack (%s)"
-msgstr "Give %s the groups of %s they lack (%s)"
-
-msgid "Make the groups of %s the same as %s"
-msgstr "Make the groups of %s the same as %s"
-
-msgid "visible"
-msgstr "visible"
-
-msgid "Access on this record"
-msgstr "Access on this record"
-
-msgid "Access on this model"
-msgstr "Access on this model"
-
-msgid "+%s groups tried"
-msgstr "+%s groups tried"
-
-msgid "Click their name to log in as them in an incognito window: your session here stays."
-msgstr "Click their name to log in as them in an incognito window: your session here stays."
-
-msgid "Superuser: no ACL, no rule."
-msgstr "Superuser: no ACL, no rule."
-
-msgid "No ACL grants it to the user's groups."
-msgstr "No ACL grants it to the user's groups."
-
-msgid "Granted to %s. No record to check the rules against."
-msgstr "Granted to %s. No record to check the rules against."
-
-msgid "Granted to %s · the record passes the rules."
-msgstr "Granted to %s · the record passes the rules."
-
-msgid "Granted to %s · no rule applies."
-msgstr "Granted to %s · no rule applies."
-
-msgid "Refused by %s."
-msgstr "Refused by %s."
-
-msgid "A rule could not be checked: not certain."
-msgstr "A rule could not be checked: not certain."
-
-msgid "Applied: %s"
-msgstr "Applied: %s"
-
-msgid "server ✓"
-msgstr "server ✓"
-
-msgid "server ✗"
-msgstr "server ✗"
-
-msgid "server ?"
-msgstr "server ?"
-
-msgid "has_access, run by the server as you"
-msgstr "has_access, run by the server as you"
-
-msgid "Simulated from the ACLs and rules; \"server\" is Odoo's own answer (has_access) with the same companies."
-msgstr "Simulated from the ACLs and rules; \"server\" is Odoo's own answer (has_access) with the same companies."
-
-msgid "Simulated from the ACLs and rules with the user's groups and the companies above: nothing is written."
-msgstr "Simulated from the ACLs and rules with the user's groups and the companies above: nothing is written."
-
-msgid "Fields hidden from the user"
-msgstr "Fields hidden from the user"
-
-msgid "No field of %s is restricted to groups."
-msgstr "No field of %s is restricted to groups."
-
-msgid "%s of %s restricted fields hidden"
-msgstr "%s of %s restricted fields hidden"
-
-msgid "Filter fields"
-msgstr "Filter fields"
-
-msgid "Groups of the user"
-msgstr "Groups of the user"
-
-msgid "%s · %s groups"
-msgstr "%s · %s groups"
-
-msgid "Risks"
-msgstr "Risks"
-
-msgid "Compare with another user"
-msgstr "Compare with another user"
-
-msgid "Trying %s: every part is simulated with it, nothing is written."
-msgstr "Trying %s: every part is simulated with it, nothing is written."
-
-msgid "implied"
-msgstr "implied"
-
-msgid "trying"
-msgstr "trying"
-
-msgid "Simulate this group in every part, nothing is written"
-msgstr "Simulate this group in every part, nothing is written"
-
-msgid "Compare with…"
-msgstr "Compare with…"
-
-msgid "On %s"
-msgstr "On %s"
-
-msgid "Only %s (%s)"
-msgstr "Only %s (%s)"
-
-msgid "Groups: %s in common"
-msgstr "Groups: %s in common"
-
-msgid "This Odoo"
-msgstr "This Odoo"
-
-msgid "Rights on %s"
-msgstr "Rights on %s"
-
-msgid "%s ACLs · %s rules"
-msgstr "%s ACLs · %s rules"
-
-msgid "(every user)"
-msgstr "(every user)"
-
-msgid "not for the user"
-msgstr "not for the user"
-
-msgid "Companies on:"
-msgstr "Companies on:"
-
-msgid "Read"
-msgstr "Read"
-
-msgid "Write"
-msgstr "Write"
-
-msgid "Create"
-msgstr "Create"
-
-msgid "ACL / group"
-msgstr "ACL / group"
-
-msgid "allowed"
-msgstr "allowed"
-
-msgid "refused"
-msgstr "refused"
-
-msgid "unknown"
-msgstr "unknown"
-
-msgid "Why"
-msgstr "Why"
-
-msgid "Reading the ACLs and record rules needs Access Rights (base.group_erp_manager): the rule-by-rule explanation and the groups that would allow an operation are not available."
-msgstr "Reading the ACLs and record rules needs Access Rights (base.group_erp_manager): the rule-by-rule explanation and the groups that would allow an operation are not available."
-
-msgid "%s operations refused"
-msgstr "%s operations refused"
-
-msgid "everything allowed"
-msgstr "everything allowed"
-
-msgid "ACL"
-msgstr "ACL"
-
-msgid "none for the user's groups; granted to: %s"
-msgstr "none for the user's groups; granted to: %s"
-
-msgid "no ACL grants it to anyone: only the superuser"
-msgstr "no ACL grants it to anyone: only the superuser"
-
-msgid "none apply to the user for this operation"
-msgstr "none apply to the user for this operation"
-
-msgid "every global rule (and each parent's) AND any group rule"
-msgstr "every global rule (and each parent's) AND any group rule"
-
-msgid "no record: the rules are checked on a record"
-msgstr "no record: the rules are checked on a record"
-
-msgid "via %s → %s"
-msgstr "via %s → %s"
-
-msgid "global"
-msgstr "global"
-
-msgid "group"
-msgstr "group"
-
-msgid "matches"
-msgstr "matches"
-
-msgid "no match"
-msgstr "no match"
-
-msgid "Groups that would allow it:"
-msgstr "Groups that would allow it:"
-
-msgid "also allows: %s"
-msgstr "also allows: %s"
-
-msgid "implies %s more groups"
-msgstr "implies %s more groups"
-
-msgid "What else does it open?"
-msgstr "What else does it open?"
-
-msgid "new rights on %s other models"
-msgstr "new rights on %s other models"
-
-msgid "no new right on other models"
-msgstr "no new right on other models"
-
-msgid "The ACLs of these groups on every model, beyond what the user has"
-msgstr "The ACLs of these groups on every model, beyond what the user has"
-
-msgid "… and %s more groups"
-msgstr "… and %s more groups"
-
-msgid "… (%s characters)"
-msgstr "… (%s characters)"
-
-msgid "elements added"
-msgstr "elements added"
-
-msgid "read by"
-msgstr "read by"
-
-msgid "%s base view(s) + %s extension(s), from %s module(s)"
-msgstr "%s base view(s) + %s extension(s), from %s module(s)"
-
-msgid "Inherited views — %s"
-msgstr "Inherited views — %s"
-
-msgid "Form fields — invisible / readonly / required"
-msgstr "Form fields — invisible / readonly / required"
-
-msgid "Context & domain"
-msgstr "Context & domain"
-
-msgid "places it"
-msgstr "places it"
-
-msgid "targets it"
-msgstr "targets it"
-
-msgid "reads it"
-msgstr "reads it"
-
-msgid "Combined arch (view #%s)"
-msgstr "Combined arch (view #%s)"
-
-msgid "View · mode · priority"
-msgstr "View · mode · priority"
-
-msgid "Name · id · file"
-msgstr "Name · id · file"
-
-msgid "%s/%s views touch %s"
-msgstr "%s/%s views touch %s"
-
-msgid "%s/%s views"
-msgstr "%s/%s views"
-
-msgid "Select a view to see its own arch, what it restricts to groups and where it touches the traced field."
-msgstr "Select a view to see its own arch, what it restricts to groups and where it touches the traced field."
-
-msgid "Where it touches %s"
-msgstr "Where it touches %s"
-
-msgid "Cannot read the form."
-msgstr "Cannot read the form."
-
-msgid "Field · widget · label · state"
-msgstr "Field · widget · label · state"
-
-msgid "Modifier expressions"
-msgstr "Modifier expressions"
-
-msgid "The form is read-only: every field is readonly."
-msgstr "The form is read-only: every field is readonly."
-
-msgid "Trace %s through the inherited views"
-msgstr "Trace %s through the inherited views"
-
-msgid "Values used in the expressions"
-msgstr "Values used in the expressions"
-
-msgid "Full node"
-msgstr "Full node"
-
-msgid "Field the views touch (e.g. partner_id)"
-msgstr "Field the views touch (e.g. partner_id)"
-
-msgid "Views Touching It"
-msgstr "Views Touching It"
-
-msgid "Search or type: sale; stock; my_module"
-msgstr "Search or type: sale; stock; my_module"
-
-msgid "Enter at least one module."
-msgstr "Enter at least one module."
-
-msgid "Update Apps List, then install every module (with its dependencies)"
-msgstr "Update Apps List, then install every module (with its dependencies)"
-
-msgid "Upgrade every module (they must be installed)"
-msgstr "Upgrade every module (they must be installed)"
-
-msgid "Open the form of every module in a new tab"
-msgstr "Open the form of every module in a new tab"
-
-msgid "// JavaScript with env, print, Command. ⌘/Ctrl+Enter runs it."
-msgstr "// JavaScript with env, print, Command. ⌘/Ctrl+Enter runs it."
-
-msgid "After writes, reload the data of the view on screen (Odoo's soft_reload), without reloading the page"
-msgstr "After writes, reload the data of the view on screen (Odoo's soft_reload), without reloading the page"
-
-msgid "Auto Refresh"
-msgstr "Auto Refresh"
-
-msgid "Run (⌘/Ctrl+Enter)"
-msgstr "Run (⌘/Ctrl+Enter)"
-
-msgid "Run"
-msgstr "Run"
-
-msgid "Guide"
-msgstr "Guide"
-
-msgid "Available variables, recordset API, examples"
-msgstr "Available variables, recordset API, examples"
-
-msgid "Lets the code call write, create, unlink and any other method that is not a read"
-msgstr "Lets the code call write, create, unlink and any other method that is not a read"
-
-msgid "Read-only by default. With writes allowed, each call is committed at once: there is no rollback."
-msgstr "Read-only by default. With writes allowed, each call is committed at once: there is no rollback."
-
-msgid "Allow Writes"
-msgstr "Allow Writes"
-
-msgid "Runs as %s (uid %s): their access rights, record rules and companies apply."
-msgstr "Runs as %s (uid %s): their access rights, record rules and companies apply."
-
-msgid "page refreshed"
-msgstr "page refreshed"
-
-msgid "page not refreshed"
-msgstr "page not refreshed"
-
-msgid "ok"
-msgstr "ok"
-
-msgid "writes allowed"
-msgstr "writes allowed"
-
-msgid "%s ms"
-msgstr "%s ms"
-
-msgid "%s calls"
-msgstr "%s calls"
-
-msgid "%s write calls"
-msgstr "%s write calls"
-
-msgid "No return value: end with return … to see one."
-msgstr "No return value: end with return … to see one."
-
-msgid "(line %s)"
-msgstr "(line %s)"
-
-msgid "This page's Content-Security-Policy forbids running code (a proxy in front of Odoo adds script-src)."
-msgstr "This page's Content-Security-Policy forbids running code (a proxy in front of Odoo adds script-src)."
-
-msgid "%s rows (first %s shown)"
-msgstr "%s rows (first %s shown)"
-
-msgid "%s rows"
-msgstr "%s rows"
-
-msgid "JSON"
-msgstr "JSON"
-
-msgid "Calls (%s)"
-msgstr "Calls (%s)"
-
-msgid "write"
-msgstr "write"
-
-msgid "Copy code"
-msgstr "Copy code"
-
-msgid "Copied"
-msgstr "Copied"
-
-msgid "Available variables:"
-msgstr "Available variables:"
-
-msgid "environment of the logged-in user, with their access rights and record rules; env['res.partner'] is a void recordset"
-msgstr "environment of the logged-in user, with their access rights and record rules; env['res.partner'] is a void recordset"
-
-msgid "current user, current company, active companies"
-msgstr "current user, current company, active companies"
-
-msgid "user id, context sent with every call, language"
-msgstr "user id, context sent with every call, language"
-
-msgid "record of an external id, if you can read it"
-msgstr "record of an external id, if you can read it"
-
-msgid "shows values above the result"
-msgstr "shows values above the result"
-
-msgid "x2many commands namespace: Command.create(vals), link(id), set(ids)…"
-msgstr "x2many commands namespace: Command.create(vals), link(id), set(ids)…"
-
-msgid "Recordsets:"
-msgstr "Recordsets:"
-
-msgid "read from the server"
-msgstr "read from the server"
-
-msgid "work like in Python"
-msgstr "work like in Python"
-
-msgid "field value of a single record, as in Python; await it inside an expression: if (await rec.state === 'sale')"
-msgstr "field value of a single record, as in Python; await it inside an expression: if (await rec.state === 'sale')"
-
-msgid "records one by one; each field is read once for all of them"
-msgstr "records one by one; each field is read once for all of them"
-
-msgid "writes the field, like in Python (needs \"Allow Writes\"); later lines see the new value"
-msgstr "writes the field, like in Python (needs \"Allow Writes\"); later lines see the new value"
-
-msgid "record ids, first id, count"
-msgstr "record ids, first id, count"
-
-msgid "write to the server: need \"Allow Writes\""
-msgstr "write to the server: need \"Allow Writes\""
-
-msgid "any other public method, called on these records (also needs \"Allow Writes\")"
-msgstr "any other public method, called on these records (also needs \"Allow Writes\")"
-
-msgid "a method called on the model, without records"
-msgstr "a method called on the model, without records"
-
-msgid "Suggestions:"
-msgstr "Suggestions:"
-
-msgid "models of the installed modules"
-msgstr "models of the installed modules"
-
-msgid "fields of the last env[…] model, following relations (partner_id.country_id.)"
-msgstr "fields of the last env[…] model, following relations (partner_id.country_id.)"
-
-msgid "recordset methods, env and Command members"
-msgstr "recordset methods, env and Command members"
-
-msgid "pick, insert, close, ask for suggestions"
-msgstr "pick, insert, close, ask for suggestions"
-
-msgid "To show a result, return it: lists of records show as a table."
-msgstr "To show a result, return it: lists of records show as a table."
-
-msgid "JavaScript, not Python: await every server call, lists and objects in JS syntax (true / false / null)."
-msgstr "JavaScript, not Python: await every server call, lists and objects in JS syntax (true / false / null)."
-
-msgid "Every call goes through /web/dataset/call_kw as the logged-in user: no sudo(), no SQL, no private _methods. Methods that switch to sudo() inside still do so, as when clicked in Odoo."
-msgstr "Every call goes through /web/dataset/call_kw as the logged-in user: no sudo(), no SQL, no private _methods. Methods that switch to sudo() inside still do so, as when clicked in Odoo."
-
-msgid "The code runs in the Odoo page with its own JavaScript rights: only run code you understand. An endless loop freezes the page (reload it)."
-msgstr "The code runs in the Odoo page with its own JavaScript rights: only run code you understand. An endless loop freezes the page (reload it)."
-
-msgid "%s writes: blocked in read-only mode (tick \"Allow Writes\" to run it)"
-msgstr "%s writes: blocked in read-only mode (tick \"Allow Writes\" to run it)"
-
-msgid "Stopped after %s calls"
-msgstr "Stopped after %s calls"
-
-msgid "%s has no field %s"
-msgstr "%s has no field %s"
-
-msgid "%s.%s is not relational"
-msgstr "%s.%s is not relational"
-
-msgid "Expected singleton: %s"
-msgstr "Expected singleton: %s"
-
-msgid "%s is read from the server: await it before using its value"
-msgstr "%s is read from the server: await it before using its value"
-
-msgid "No view to refresh on this page"
-msgstr "No view to refresh on this page"
-
-msgid "Suggestions"
-msgstr "Suggestions"
-
-msgid "Profiling is not enabled on this database.\nEnable it for 5 minutes? (writes ir.config_parameter base.profiling_enabled_until)"
-msgstr "Profiling is not enabled on this database.\nEnable it for 5 minutes? (writes ir.config_parameter base.profiling_enabled_until)"
-
-msgid "Profiling could not be enabled."
-msgstr "Profiling could not be enabled."
-
-msgid "Each request of this session writes one ir.profile row; ⟳ reloads the list."
-msgstr "Each request of this session writes one ir.profile row; ⟳ reloads the list."
-
-msgid "Records the SQL + Python stacks of every request of this session (Odoo's built-in profiler, base.group_system)."
-msgstr "Records the SQL + Python stacks of every request of this session (Odoo's built-in profiler, base.group_system)."
-
-msgid "No request yet: use the Odoo page, then press ⟳."
-msgstr "No request yet: use the Odoo page, then press ⟳."
-
-msgid "No profile data yet."
-msgstr "No profile data yet."
-
-msgid "Filter request"
-msgstr "Filter request"
-
-msgid "%s/%s requests"
-msgstr "%s/%s requests"
-
-msgid "Request · SQL · duration"
-msgstr "Request · SQL · duration"
-
-msgid "Id · time · CPU"
-msgstr "Id · time · CPU"
-
-msgid "Select a request to see its SQL queries."
-msgstr "Select a request to see its SQL queries."
-
-msgid "Latest session: %s"
-msgstr "Latest session: %s"
-
-msgid "Flame Graph (speedscope)"
-msgstr "Flame Graph (speedscope)"
-
-msgid "No SQL recorded."
-msgstr "No SQL recorded."
-
-msgid "Full SQL + stack"
-msgstr "Full SQL + stack"
-
-msgid "%s queries · SQL %s / total %s · Python ≈ %s"
-msgstr "%s queries · SQL %s / total %s · Python ≈ %s"
-
-msgid "Repeated queries — N+1 suspects (%s)"
-msgstr "Repeated queries — N+1 suspects (%s)"
-
-msgid "Count · caller · time"
-msgstr "Count · caller · time"
-
-msgid "Query"
-msgstr "Query"
-
-msgid "✓ No repeated query."
-msgstr "✓ No repeated query."
-
-msgid "Slowest queries (%s)"
-msgstr "Slowest queries (%s)"
-
-msgid "Caller · time"
-msgstr "Caller · time"
-
-msgid "No ACL grants this to the user's groups."
-msgstr "No ACL grants this to the user's groups."
-
-msgid "ACL: %s. No record to check the rules against."
-msgstr "ACL: %s. No record to check the rules against."
-
-msgid "Blocked by a record rule (see below)."
-msgstr "Blocked by a record rule (see below)."
-
-msgid "A rule could not be evaluated, not certain."
-msgstr "A rule could not be evaluated, not certain."
-
-msgid "ACL: %s · %s rules pass."
-msgstr "ACL: %s · %s rules pass."
-
-msgid "HIGH"
-msgstr "HIGH"
-
-msgid "MEDIUM"
-msgstr "MEDIUM"
-
-msgid "LOW"
-msgstr "LOW"
-
-msgid "INFO"
-msgstr "INFO"
-
-msgid "Needs Access Rights (base.group_erp_manager)."
-msgstr "Needs Access Rights (base.group_erp_manager)."
-
-msgid "%s · #%s · %s (%s companies) · %s groups"
-msgstr "%s · #%s · %s (%s companies) · %s groups"
-
-msgid "Simulates the selected user's rights without logging in as them (reading other users' groups needs admin rights)."
-msgstr "Simulates the selected user's rights without logging in as them (reading other users' groups needs admin rights)."
-
-msgid "User risks"
-msgstr "User risks"
-
-msgid "Why allowed / blocked"
-msgstr "Why allowed / blocked"
-
-msgid "ACL (ir.model.access) — green = applies to the user"
-msgstr "ACL (ir.model.access) — green = applies to the user"
-
-msgid "No ACL."
-msgstr "No ACL."
-
-msgid "(all users)"
-msgstr "(all users)"
-
-msgid "Fields hidden from the user (groups=)"
-msgstr "Fields hidden from the user (groups=)"
-
-msgid "No field declares groups=."
-msgstr "No field declares groups=."
-
-msgid "Real groups only: the tried groups are not counted here."
-msgstr "Real groups only: the tried groups are not counted here."
-
-msgid "Field · label · for this user"
-msgstr "Field · label · for this user"
-
-msgid "Model configuration audit"
-msgstr "Model configuration audit"
-
-msgid "Instance"
-msgstr "Instance"
-
-msgid "%s parameters"
-msgstr "%s parameters"
-
-msgid "%s/%s parameters"
-msgstr "%s/%s parameters"
-
-msgid "Value"
-msgstr "Value"
-
-msgid "Check failed"
-msgstr "Check failed"
-
-msgid "Simulate this group below, nothing is written"
-msgstr "Simulate this group below, nothing is written"
-
-msgid "%s/%s groups"
-msgstr "%s/%s groups"
-
-msgid "Trying %s: every card below is simulated with it."
-msgstr "Trying %s: every card below is simulated with it."
-
-msgid "Try:"
-msgstr "Try:"
-
-msgid "Also adds %s"
-msgstr "Also adds %s"
-
-msgid "ALLOWED"
-msgstr "ALLOWED"
-
-msgid "BLOCKED"
-msgstr "BLOCKED"
-
-msgid "UNKNOWN"
-msgstr "UNKNOWN"
-
-msgid "not applicable"
-msgstr "not applicable"
-
-msgid "Rule · operations · result"
-msgstr "Rule · operations · result"
-
-msgid "Groups · domain"
-msgstr "Groups · domain"
-
-msgid "Assumes the user selected every allowed company. Rules of parent models through _inherits are not counted. This is a simulation; for your own user, “server” is the exact answer (has_access)."
-msgstr "Assumes the user selected every allowed company. Rules of parent models through _inherits are not counted. This is a simulation; for your own user, “server” is the exact answer (has_access)."
-
-msgid "Apps To Export"
-msgstr "Apps To Export"
-
-msgid "Export & Download"
-msgstr "Export & Download"
-
-msgid "Export & Download · 1 file"
-msgstr "Export & Download · 1 file"
-
-msgid "Export & Download · %s files"
-msgstr "Export & Download · %s files"
-
-msgid "%s/%s installed modules"
-msgstr "%s/%s installed modules"
-
-msgid "Technical names, separated by ;"
-msgstr "Technical names, separated by ;"
-
-msgid "Languages:"
-msgstr "Languages:"
-
-msgid "Always exported: the empty template, as <module>.pot"
-msgstr "Always exported: the empty template, as <module>.pot"
-
-msgid "Enter at least one app."
-msgstr "Enter at least one app."
-
-msgid "Not an active language: %s. Active: %s"
-msgstr "Not an active language: %s. Active: %s"
-
-msgid "Unknown app: %s"
-msgstr "Unknown app: %s"
-
-msgid "Not installed: %s"
-msgstr "Not installed: %s"
-
-msgid "Exporting…"
-msgstr "Exporting…"
-
-msgid "%s files"
-msgstr "%s files"
-
-msgid "nothing to export"
-msgstr "nothing to export"

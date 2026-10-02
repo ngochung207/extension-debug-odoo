@@ -84,6 +84,7 @@ msgid "Perf"
 msgstr ""
 
 #: src/entrypoints/panel/index.html:32
+#: src/features/code/code.tab.ts:50
 #: src/features/translations/translations.find.ts:59
 msgid "Code"
 msgstr ""
@@ -800,6 +801,7 @@ msgid "Demo data loaded"
 msgstr ""
 
 #: src/features/apps/apps.module.ts:275
+#: src/features/code/code.result.ts:156
 #: src/features/security/security.groups.ts:151
 #: src/features/security/security.record.ts:174
 #: src/features/translations/translations.modules.ts:139
@@ -1074,6 +1076,8 @@ msgid "Module description"
 msgstr ""
 
 #: src/features/apps/apps.ui.ts:83
+#: src/features/code/code.result.ts:228
+#: src/features/code/code.result.ts:266
 #: src/features/rpc/rpc.tab.ts:99
 #: src/features/rpc/rpc.tab.ts:187
 msgid "error"
@@ -1111,18 +1115,512 @@ msgstr ""
 msgid "To install"
 msgstr ""
 
+#: src/features/code/code.data.ts:25
+#: src/features/code/code.data.ts:75
+#: src/features/perf/perf.data.ts:86
+#: src/features/rpc/rpc.tab.ts:184
+#: src/odoo/rpc.ts:30
+msgid "No response — is this an Odoo page?"
+msgstr ""
+
+#: src/features/code/code.data.ts:39
+msgid "Unknown model: %s"
+msgstr ""
+
+#: src/features/code/code.data.ts:60
+msgid "The server action returned nothing: is this Odoo running it as code?"
+msgstr ""
+
+#: src/features/code/code.injected.ts:62
+msgid "%s writes: blocked in read-only mode (choose \"Dry run\" or \"Allow writes\")"
+msgstr ""
+
+#: src/features/code/code.injected.ts:84
+msgid "Stopped after %s calls"
+msgstr ""
+
+#: src/features/code/code.injected.ts:129
+msgid "%s has no field %s"
+msgstr ""
+
+#: src/features/code/code.injected.ts:162
+#: src/features/code/code.injected.ts:167
+#: src/features/code/code.injected.ts:186
+#: src/features/code/code.injected.ts:222
+#: src/features/code/code.injected.ts:294
+msgid "%s.%s is not relational"
+msgstr ""
+
+#: src/features/code/code.injected.ts:164
+#: src/features/code/code.injected.ts:260
+msgid "Expected singleton: %s"
+msgstr ""
+
+#: src/features/code/code.injected.ts:208
+msgid "%s is read from the server: await it before using its value"
+msgstr ""
+
+#: src/features/code/code.injected.ts:465
+msgid "No view to refresh on this page"
+msgstr ""
+
+#: src/features/code/code.result.ts:41
+msgid "true"
+msgstr ""
+
+#: src/features/code/code.result.ts:41
+msgid "false"
+msgstr ""
+
+#: src/features/code/code.result.ts:48
+#: src/features/code/code.result.ts:80
+#: src/features/code/code.result.ts:153
+msgid "%s records"
+msgstr ""
+
+#: src/features/code/code.result.ts:62
+msgid "binary · %s"
+msgstr ""
+
+#: src/features/code/code.result.ts:78
+msgid "Not created: a dry run answers create() with an id no record has"
+msgstr ""
+
+#: src/features/code/code.result.ts:131
+msgid "Download CSV"
+msgstr ""
+
+#: src/features/code/code.result.ts:138
+msgid "Copy CSV"
+msgstr ""
+
+#: src/features/code/code.result.ts:138
+msgid "Copy Markdown"
+msgstr ""
+
+#: src/features/code/code.result.ts:138
+msgid "Copy JSON"
+msgstr ""
+
+#: src/features/code/code.result.ts:153
+msgid "recordset"
+msgstr ""
+
+#: src/features/code/code.result.ts:160
+msgid "rows of %s"
+msgstr ""
+
+#: src/features/code/code.result.ts:160
+msgid "table"
+msgstr ""
+
+#: src/features/code/code.result.ts:160
+msgid "%s rows (first %s shown)"
+msgstr ""
+
+#: src/features/code/code.result.ts:160
+msgid "%s rows"
+msgstr ""
+
+#: src/features/code/code.result.ts:166
+msgid "list"
+msgstr ""
+
+#: src/features/code/code.result.ts:166
+#: src/ui/json-view.ts:57
+msgid "%s items"
+msgstr ""
+
+#: src/features/code/code.result.ts:174
+msgid "dict"
+msgstr ""
+
+#: src/features/code/code.result.ts:174
+#: src/ui/json-view.ts:57
+msgid "%s keys"
+msgstr ""
+
+#: src/features/code/code.result.ts:185
+msgid "%s bytes"
+msgstr ""
+
+#: src/features/code/code.result.ts:189
+msgid "JSON"
+msgstr ""
+
+#: src/features/code/code.result.ts:199
+msgid "nothing"
+msgstr ""
+
+#: src/features/code/code.result.ts:206
+msgid "text · %s characters"
+msgstr ""
+
+#: src/features/code/code.result.ts:228
+msgid "ok"
+msgstr ""
+
+#: src/features/code/code.result.ts:229
+#: src/features/view/view.overview.ts:64
+msgid "read-only"
+msgstr ""
+
+#: src/features/code/code.result.ts:229
+msgid "dry run"
+msgstr ""
+
+#: src/features/code/code.result.ts:229
+msgid "writes committed"
+msgstr ""
+
+#: src/features/code/code.result.ts:230
+#: src/features/code/code.result.ts:266
+msgid "%s ms"
+msgstr ""
+
+#: src/features/code/code.result.ts:231
+msgid "%s calls"
+msgstr ""
+
+#: src/features/code/code.result.ts:232
+msgid "%s writes not sent"
+msgstr ""
+
+#: src/features/code/code.result.ts:233
+msgid "%s write calls"
+msgstr ""
+
+#: src/features/code/code.result.ts:234
+msgid "page refreshed"
+msgstr ""
+
+#: src/features/code/code.result.ts:234
+msgid "page not refreshed"
+msgstr ""
+
+#: src/features/code/code.result.ts:238
+msgid "Dry run: the code ran for real, then everything it changed was rolled back."
+msgstr ""
+
+#: src/features/code/code.result.ts:239
+msgid "Dry run: the writing calls below were listed, not sent; reads after them show the values before."
+msgstr ""
+
+#: src/features/code/code.result.ts:248
+msgid "No return value: end with return … to see one."
+msgstr ""
+
+#: src/features/code/code.result.ts:257
+msgid "Line %s"
+msgstr ""
+
+#: src/features/code/code.result.ts:257
+msgid "Go to Line"
+msgstr ""
+
+#: src/features/code/code.result.ts:258
+msgid "This page's Content-Security-Policy forbids running code (a proxy in front of Odoo adds script-src)."
+msgstr ""
+
+#: src/features/code/code.result.ts:259
+msgid "Nothing was saved: the error rolled back everything the code had changed."
+msgstr ""
+
+#: src/features/code/code.result.ts:265
+msgid "not sent"
+msgstr ""
+
+#: src/features/code/code.result.ts:265
+msgid "write"
+msgstr ""
+
+#: src/features/code/code.result.ts:269
+msgid "Calls (%s)"
+msgstr ""
+
+#: src/features/code/code.snippets.ts:10
+#: src/features/code/code.snippets.ts:26
+msgid "This record"
+msgstr ""
+
+#: src/features/code/code.snippets.ts:10
+#: src/features/code/code.snippets.ts:26
+msgid "every field of the record opened"
+msgstr ""
+
+#: src/features/code/code.snippets.ts:11
+#: src/features/code/code.snippets.ts:27
+msgid "Selected records"
+msgstr ""
+
+#: src/features/code/code.snippets.ts:11
+#: src/features/code/code.snippets.ts:27
+msgid "the records ticked in the list, else the one opened"
+msgstr ""
+
+#: src/features/code/code.snippets.ts:12
+#: src/features/code/code.snippets.ts:28
+msgid "Count by a field"
+msgstr ""
+
+#: src/features/code/code.snippets.ts:12
+#: src/features/code/code.snippets.ts:28
+msgid "how many records of the screen's model per value (change state)"
+msgstr ""
+
+#: src/features/code/code.snippets.ts:17
+#: src/features/code/code.snippets.ts:31
+msgid "Empty field"
+msgstr ""
+
+#: src/features/code/code.snippets.ts:17
+#: src/features/code/code.snippets.ts:31
+msgid "records missing a value"
+msgstr ""
+
+#: src/features/code/code.snippets.ts:18
+#: src/features/code/code.snippets.ts:32
+msgid "My access to this record"
+msgstr ""
+
+#: src/features/code/code.snippets.ts:18
+#: src/features/code/code.snippets.ts:32
+msgid "what the server answers for each operation"
+msgstr ""
+
+#: src/features/code/code.snippets.ts:22
+#: src/features/code/code.snippets.ts:37
+msgid "Record of an xmlid"
+msgstr ""
+
+#: src/features/code/code.snippets.ts:23
+#: src/features/code/code.snippets.ts:38
+msgid "Change a field (dry run first)"
+msgstr ""
+
+#: src/features/code/code.snippets.ts:23
+msgid "rec.field = value writes it, like in Python"
+msgstr ""
+
+#: src/features/code/code.snippets.ts:38
+msgid "a dry run rolls it back: see what it would do"
+msgstr ""
+
+#: src/features/code/code.snippets.ts:41
+msgid "Time a piece of code"
+msgstr ""
+
+#: src/features/code/code.snippets.ts:41
+msgid "how long a call takes on the server"
+msgstr ""
+
+#: src/features/code/code.snippets.ts:69
+msgid "Delete the snippet \"%s\"?"
+msgstr ""
+
+#: src/features/code/code.snippets.ts:69
+msgid "Delete this snippet"
+msgstr ""
+
+#: src/features/code/code.snippets.ts:73
+msgid "+ Save the code as a snippet…"
+msgstr ""
+
+#: src/features/code/code.snippets.ts:84
+msgid "Available variables:"
+msgstr ""
+
+#: src/features/code/code.snippets.ts:85
+msgid "environment of the logged-in user, with their access rights and record rules; env['res.partner'] is an empty recordset"
+msgstr ""
+
+#: src/features/code/code.snippets.ts:86
+msgid "the record opened, the records selected (else the one opened), the screen's model: as in a server action"
+msgstr ""
+
+#: src/features/code/code.snippets.ts:87
+msgid "current user, current company, active companies"
+msgstr ""
+
+#: src/features/code/code.snippets.ts:88
+msgid "record of an external id, if you can read it"
+msgstr ""
+
+#: src/features/code/code.snippets.ts:89
+#: src/features/code/code.snippets.ts:104
+msgid "shows values above the result"
+msgstr ""
+
+#: src/features/code/code.snippets.ts:90
+msgid "x2many commands: Command.create(vals), link(id), set(ids)…"
+msgstr ""
+
+#: src/features/code/code.snippets.ts:92
+msgid "Recordsets:"
+msgstr ""
+
+#: src/features/code/code.snippets.ts:93
+msgid "read from the server"
+msgstr ""
+
+#: src/features/code/code.snippets.ts:94
+msgid "work like in Python"
+msgstr ""
+
+#: src/features/code/code.snippets.ts:95
+msgid "field value of a single record, as in Python; await it inside an expression"
+msgstr ""
+
+#: src/features/code/code.snippets.ts:96
+msgid "writes the field, like in Python"
+msgstr ""
+
+#: src/features/code/code.snippets.ts:97
+msgid "write: refused in read-only, listed but not sent in a dry run"
+msgstr ""
+
+#: src/features/code/code.snippets.ts:101
+msgid "Available variables (a server action's):"
+msgstr ""
+
+#: src/features/code/code.snippets.ts:102
+msgid "environment of the logged-in user (their rights; sudo() is yours to call)"
+msgstr ""
+
+#: src/features/code/code.snippets.ts:103
+msgid "the record opened, the records selected (else the one opened), the screen's model"
+msgstr ""
+
+#: src/features/code/code.snippets.ts:105
+msgid "the value shown, as what it is"
+msgstr ""
+
+#: src/features/code/code.snippets.ts:106
+msgid "what a server action has"
+msgstr ""
+
+#: src/features/code/code.snippets.ts:108
+msgid "Runs:"
+msgstr ""
+
+#: src/features/code/code.snippets.ts:109
+#: src/features/code/code.tab.ts:29
+#: src/features/code/code.tab.ts:30
+msgid "Dry run"
+msgstr ""
+
+#: src/features/code/code.snippets.ts:109
+msgid "the code runs for real, then everything is rolled back: try a write, see what it does"
+msgstr ""
+
+#: src/features/code/code.snippets.ts:110
+#: src/features/code/code.tab.ts:30
+msgid "Commit"
+msgstr ""
+
+#: src/features/code/code.snippets.ts:110
+msgid "saved at once; an error rolls back everything the code changed"
+msgstr ""
+
+#: src/features/code/code.snippets.ts:111
+msgid "Odoo's sandbox: no import, no dunder (__x__) names; Settings rights needed"
+msgstr ""
+
+#: src/features/code/code.snippets.ts:131
+msgid "Suggestions: env[' (models), '… (fields), . (methods and fields); ↑ ↓ Enter / Tab, Esc, Ctrl+Space. ⌘/Ctrl+Enter runs."
+msgstr ""
+
+#: src/features/code/code.tab.ts:25
+msgid "// JavaScript with env, record, records, model, print, Command. ⌘/Ctrl+Enter runs it."
+msgstr ""
+
+#: src/features/code/code.tab.ts:26
+msgid "# Python with env, record, records, model, print, Command; return a value. ⌘/Ctrl+Enter runs it."
+msgstr ""
+
+#: src/features/code/code.tab.ts:29
+#: src/features/view/view.tpl.html:92
+msgid "Read-only"
+msgstr ""
+
+#: src/features/code/code.tab.ts:29
+msgid "Allow writes"
+msgstr ""
+
+#: src/features/code/code.tab.ts:57
+msgid "Runs on:"
+msgstr ""
+
+#: src/features/code/code.tab.ts:58
+msgid "no model on this screen: record, records and model are empty"
+msgstr ""
+
+#: src/features/code/code.tab.ts:61
+msgid "record #%s"
+msgstr ""
+
+#: src/features/code/code.tab.ts:61
+msgid "no record opened"
+msgstr ""
+
+#: src/features/code/code.tab.ts:62
+msgid "%s selected"
+msgstr ""
+
+#: src/features/code/code.tab.ts:64
+msgid "Read the selection again"
+msgstr ""
+
+#: src/features/code/code.tab.ts:72
+msgid "Run"
+msgstr ""
+
+#: src/features/code/code.tab.ts:72
+msgid "Run (⌘/Ctrl+Enter)"
+msgstr ""
+
+#: src/features/code/code.tab.ts:74
+msgid "Auto Refresh"
+msgstr ""
+
+#: src/features/code/code.tab.ts:74
+msgid "After a run that wrote, reload the data of the view on screen (Odoo's soft_reload), without reloading the page"
+msgstr ""
+
+#: src/features/code/code.tab.ts:99
+msgid "Snippets"
+msgstr ""
+
+#: src/features/code/code.tab.ts:99
+msgid "Ready-made snippets, and the ones you saved for this Odoo"
+msgstr ""
+
+#: src/features/code/code.tab.ts:100
+msgid "Guide: available variables, recordset API, examples"
+msgstr ""
+
+#: src/features/code/code.tab.ts:101
+msgid "Runs as %s (uid %s): their access rights, record rules and companies apply."
+msgstr ""
+
+#: src/features/code/code.tab.ts:116
+msgid "Name of the snippet:"
+msgstr ""
+
+#: src/features/code/code.tab.ts:152
+msgid "Python runs as a server action: it needs Settings rights (base.group_system)."
+msgstr ""
+
+#: src/features/code/code.tpl.html:35
+msgid "Suggestions"
+msgstr ""
+
 #: src/features/perf/perf.data.ts:16
 msgid "Profiling is not allowed on this database: allow it first."
 msgstr ""
 
 #: src/features/perf/perf.data.ts:44
 msgid "Cannot call /web/set_profiling"
-msgstr ""
-
-#: src/features/perf/perf.data.ts:86
-#: src/features/rpc/rpc.tab.ts:184
-#: src/odoo/rpc.ts:30
-msgid "No response — is this an Odoo page?"
 msgstr ""
 
 #: src/features/perf/perf.request.ts:48
@@ -3377,10 +3875,6 @@ msgstr ""
 msgid "editing"
 msgstr ""
 
-#: src/features/view/view.overview.ts:64
-msgid "read-only"
-msgstr ""
-
 #: src/features/view/view.overview.ts:73
 msgid "%s on the form"
 msgstr ""
@@ -3448,10 +3942,6 @@ msgstr ""
 msgid "Not shown"
 msgstr ""
 
-#: src/features/view/view.tpl.html:92
-msgid "Read-only"
-msgstr ""
-
 #: src/features/view/view.tpl.html:94
 msgid "Expression error"
 msgstr ""
@@ -3502,14 +3992,6 @@ msgstr ""
 
 #: src/ui/json-view.ts:36
 msgid "Show %s more characters"
-msgstr ""
-
-#: src/ui/json-view.ts:57
-msgid "%s items"
-msgstr ""
-
-#: src/ui/json-view.ts:57
-msgid "%s keys"
 msgstr ""
 
 #: src/ui/json-view.ts:71
