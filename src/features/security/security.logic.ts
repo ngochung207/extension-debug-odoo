@@ -134,8 +134,37 @@ export function modelRights(rows: readonly AclRow[], groupIds: ReadonlySet<numbe
   return out;
 }
 
-/** The module a model comes from: the first of ir.model.modules ("sale, sale_stock" → "sale"). */
+/** The first of ir.model.modules ("sale, sale_stock" → "sale"). Odoo sorts that list by name (ir_model.py →
+ * _in_modules), so it is not the module creating the model: definingModules() is; this is only its fallback. */
 export const firstModule = (modules: string | false | null | undefined) => (modules || '').split(',')[0]?.trim() || '';
+
+/** The module creating each model, from the xmlids of the models (ir.model.data, model 'ir.model'), oldest first:
+ * modules load in the order of their dependencies, so the module defining a model registers it before any module
+ * extending it. → res_id (ir.model id) → module. */
+export function definingModules(rows: readonly { id: number; module: string; res_id: number }[]): Map<number, string> {
+  const out = new Map<number, string>();
+  for (const r of [...rows].sort((a, b) => a.id - b.id)) if (!out.has(r.res_id)) out.set(r.res_id, r.module);
+  return out;
+}
+
+/** How much a user may do on a model, in words: every operation, read only, some, or none. */
+export type AccessLevel = 'full' | 'read' | 'partial' | 'none';
+export function accessLevel(modes: ReadonlySet<Mode> | undefined): AccessLevel {
+  if (!modes?.size) return 'none';
+  if (MODES.every((m) => modes.has(m))) return 'full';
+  if (modes.size === 1 && modes.has('read')) return 'read';
+  return 'partial';
+}
+
+/** A module's models summed up: how many with full access, read only, some operations, and limited by rules. */
+export function accessSummary(rows: readonly { level: AccessLevel; rules: number }[]) {
+  return {
+    full: rows.filter((r) => r.level === 'full').length,
+    read: rows.filter((r) => r.level === 'read').length,
+    partial: rows.filter((r) => r.level === 'partial').length,
+    ruled: rows.filter((r) => r.rules > 0).length,
+  };
+}
 
 /** A group that would allow a refused operation: the groups it adds (itself and what it implies, not held yet) and
  * the other operations it allows on the way. */
@@ -163,6 +192,8 @@ export function unblockers(input: VerdictInput, mode: Mode, closure: (id: number
 
 /** An ir.model.access row as read across models (what a group opens). */
 export interface AclRow {
+  /** the ACL's own name (access_sale_order_user…) */
+  name?: string;
   model_id: Many2one;
   group_id: Many2one;
   perm_read: boolean;

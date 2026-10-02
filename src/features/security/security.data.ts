@@ -11,7 +11,7 @@ import { fieldsOf, groupIds, readAcls, readRules, sessionInfo } from '../../odoo
 import { call, isAccessError } from '../../odoo/rpc.ts';
 import { pageCompanies, pageEvalDomains, type Evaluated } from './security.injected.ts';
 import {
-  ruleEvalContext, unavailableNames, userPaths, verdicts, type AclRow, type ModeVerdict, type Rule, type Tri, type VerdictInput,
+  definingModules, ruleEvalContext, unavailableNames, userPaths, verdicts, type AclRow, type ModeVerdict, type Rule, type Tri, type VerdictInput,
 } from './security.logic.ts';
 
 /** null when the server refuses for lack of rights; any other failure goes on. */
@@ -303,7 +303,7 @@ export const aclRows = (groupIds: readonly number[]) => call<AclRow[]>('ir.model
   [['|', ['group_id', '=', false], ['group_id', 'in', [...groupIds]]]], { fields: ['model_id', 'group_id', ...MODES.map((m) => `perm_${m}`)] });
 
 /** Every ACL row, every model (Access Rights). */
-export const readAllAcls = () => unlessDenied(call<AclRow[]>('ir.model.access', 'search_read', [[]], { fields: ['model_id', 'group_id', ...MODES.map((m) => `perm_${m}`)] }));
+export const readAllAcls = () => unlessDenied(call<AclRow[]>('ir.model.access', 'search_read', [[]], { fields: ['name', 'model_id', 'group_id', ...MODES.map((m) => `perm_${m}`)] }));
 
 /** Every record rule, every model: which models restrict a user's records (Access Rights). */
 export const readAllRules = () => unlessDenied(call<(IrRule & { model_id: Many2one })[]>('ir.rule', 'search_read', [[]],
@@ -313,6 +313,21 @@ export const readAllRules = () => unlessDenied(call<(IrRule & { model_id: Many2o
 export const readModels = (ids: readonly number[]) => ids.length
   ? unlessDenied(call<{ id: number; model: string; name: string; modules: string | false }[]>('ir.model', 'read', [[...ids], ['model', 'name', 'modules']]))
   : Promise.resolve([]);
+
+/** The module creating each of the models `ids` (security.logic.ts → definingModules): their xmlids (Access Rights). */
+export async function readDefiningModules(ids: readonly number[]): Promise<Map<number, string> | null> {
+  if (!ids.length) return new Map();
+  const rows = await unlessDenied(call<{ id: number; module: string; res_id: number }[]>('ir.model.data', 'search_read',
+    [[['model', '=', 'ir.model'], ['res_id', 'in', [...ids]]]], { fields: ['module', 'res_id'], order: 'id' }));
+  return rows && definingModules(rows);
+}
+
+/** The titles of modules (Accounting for account): Settings rights only, else null (the technical names show). */
+export async function readModuleTitles(names: readonly string[]): Promise<Map<string, string> | null> {
+  if (!names.length) return new Map();
+  const rows = await unlessDenied(call<{ name: string; shortdesc: string }[]>('ir.module.module', 'search_read', [[['name', 'in', [...names]]]], { fields: ['name', 'shortdesc'] }));
+  return rows && new Map(rows.map((r) => [r.name, r.shortdesc]));
+}
 
 /** Writes the groups field of `uid`: x2many commands. */
 export const writeGroups = (uid: number, commands: Json[], a: OdooAdapter) => call('res.users', 'write', [[uid], { [a.users.writeGroupsField]: commands }]);

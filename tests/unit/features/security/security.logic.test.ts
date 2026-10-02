@@ -1,8 +1,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import {
-  byApp, compareGroups, copyGroups, directGroups, failingRules, groupsSpecAllows, impliedBy, managerState, modeVerdict, newGrants,
-  ruleEvalContext, rulesVerdict, shortGroupName, unavailableNames, unblockers, type Rule, type VerdictInput,
+  definingModules, accessSummary, accessLevel, byApp, compareGroups, copyGroups, directGroups, failingRules, groupsSpecAllows, impliedBy, managerState, modeVerdict, newGrants, ruleEvalContext, rulesVerdict, shortGroupName, unavailableNames, unblockers, type Rule, type VerdictInput,
 } from '../../../../src/features/security/security.logic.ts';
 import type { IrModelAccess } from '../../../../src/odoo/models.ts';
 
@@ -129,4 +128,23 @@ test('the user attributes the rules read, and a short evaluation error', async (
   ]), [['manager_crm_group_ids', 'ids'], ['id'], ['employee_id', 'department_id', 'id']]);
   assert.equal(shortError("Can not evaluate python expression: ([\n  '|',\n])\nError: Cannot read properties of undefined (reading 'ids')"),
     "Cannot read properties of undefined (reading 'ids')");
+});
+
+test('definingModules: the oldest xmlid of a model names the module creating it, not ir.model.modules\' first (sorted by name)', () => {
+  const rows = [
+    { id: 900, module: 'account', res_id: 7 }, // account extends res.groups: its xmlid is newer
+    { id: 12, module: 'base', res_id: 7 },
+    { id: 950, module: 'account', res_id: 8 },
+    { id: 990, module: 'account_asset', res_id: 8 },
+  ];
+  assert.deepEqual([...definingModules(rows)], [[7, 'base'], [8, 'account']]);
+});
+
+test('accessLevel / accessSummary: a model\'s access in words, summed per module', () => {
+  assert.equal(accessLevel(new Set(['read', 'write', 'create', 'unlink'] as const)), 'full');
+  assert.equal(accessLevel(new Set(['read'] as const)), 'read');
+  assert.equal(accessLevel(new Set(['read', 'write'] as const)), 'partial');
+  assert.equal(accessLevel(undefined), 'none');
+  assert.deepEqual(accessSummary([{ level: 'full', rules: 1 }, { level: 'full', rules: 0 }, { level: 'read', rules: 2 }, { level: 'partial', rules: 0 }]),
+    { full: 2, read: 1, partial: 1, ruled: 2 });
 });
